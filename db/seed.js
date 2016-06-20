@@ -46,7 +46,7 @@ function loadSeedData(eCallback) {
             host: connection.host,
             user: connection.user,
             password: connection.password,
-            database: connection.inventory_database
+            database: connection.stockDatabase
         }
     });
 
