@@ -1,18 +1,14 @@
 {
-    "basePath": "http://localhost:3014",
+    "basePath": "http://localhost:3015",
     "savePath": "/save_patient",
     "searchPath": "/search_for_patient",
     "districtQueryPath": "/district_query",
     "taQueryPath": "/ta_query",
     "villageQueryPath": "/village_query",
-    "nationalityQueryPath": "/nationality_query?nationality=",
-    "occupationsQueryPath": "/occupations_query?occupation=",
+    "nationalityQueryPath": "/nationality_query",
     "firstNamesPath": "/fnames_query",
     "lastNamesPath": "/lnames_query",
-    "afterCreatePath": "http://localhost:3014",
-    "userValidationPath": "/validate_credentials",
-    "demographicsQueryPath": "/demographics_by_field?field=",
-    "demographicsUpdatePath": "/demographics_update",
+    "afterCreatePath": "http://localhost:3015",
     "demographics" : {
         "First Name": true,
         "Middle Name": true,
@@ -26,11 +22,11 @@
         "Current Village": true,
         "Current T/A": true,
         "Current District": true,
-        "Closest Landmark": true,
-        "Cell Phone Number": true,
-        "Home Phone Number": true,
-        "Office Phone Number": true,
-        "Occupation": true,
-        "Nationality": true
+        "Closest Landmark": false,
+        "Cellphone Number": true,
+        "Home Phone Number": false,
+        "Office Phone Number": false,
+        "Occupation": false,
+        "Nationality": false
     }
 }

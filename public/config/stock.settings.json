@@ -1,5 +1,5 @@
 {
-    "basePath": "http://localhost:3014",
+    "basePath": "http://localhost:3015",
     "listPath": "/stock_list",
     "itemSavePath": "/save_item",
     "categorySearchPath": "/stock_categories",

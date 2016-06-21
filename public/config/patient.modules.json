@@ -134,7 +134,12 @@
             "Client Registration": "javascript:dashboard.navPanel('/spec/patient_registration.spec')",
             "Seizure Type": "javascript:dashboard.navPanel('/spec/epilepsy/seizure_type.spec')",
             "Family Histroy": "javascript:dashboard.navPanel('/spec/epilepsy/family_history.spec')",
-            "Medical Histroy": "javascript:dashboard.navPanel('/spec/epilepsy/medical_history.spec')"
+            "Patient Histroy at Enrolment": "javascript:dashboard.navPanel('/spec/epilepsy/enrolment_history.spec')",
+            "Medical and Surgical Histroy": "javascript:dashboard.navPanel('/spec/epilepsy/medical_history.spec')",
+            "Pre-ictal Warning": "javascript:dashboard.navPanel('/spec/epilepsy/pre_ictal_warning.spec')",
+            "Post-ictal Features": "javascript:dashboard.navPanel('/spec/epilepsy/post_ictal_features.spec')",
+            "Triggers": "javascript:dashboard.navPanel('/spec/epilepsy/triggers.spec')",
+            "Patient Overview": "javascript:dashboard.navPanel('/spec/epilepsy/patient_overview.spec')"
 
  
         },
@@ -149,17 +154,38 @@
                 "encounter": "SEIZURE TYPE"
             },
             "Family Histroy": {
-                "encounter": "FAMILY MEDICAL HISTORY"
+                "encounter": "FAMILY HISTORY"
+            }
+            ,
+            "Patient Histroy at Enrolment": {
+                "encounter": "PATIENT HISTORY AT ENROLMENT"
             },
-            "Medical Histroy": {
-                "encounter": "MEDICAL HISTORY"
+            "Medical and Surgical Histroy": {
+                "encounter": "MEDICAL AND SURGICAL HISTORY"
+            },
+            "Pre-ictal Warning": {
+                "encounter": "PRE-ICTAL WARNING"
+            },
+            "Post-ictal Features": {
+                "encounter": "POST-ICTAL FEATURES"
+            },
+            "Triggers": {
+                "encounter": "TRIGGERS"
+            },
+            "Patient Overview": {
+                "encounter": "PATIENT OVERVIEW"
             }
         },
         "workflow": [
             "Client Registration",
             "Seizure Type",
             "Family Histroy",
-            "Medical Histroy"
+            "Patient Histroy at Enrolment",
+            "Medical and Surgical Histroy",
+            "Pre-ictal Warning",
+            "Post-ictal Features",
+            "Triggers",
+            "Patient Overview"
         ]
     }
 }
