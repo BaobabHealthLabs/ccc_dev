@@ -23,6 +23,6 @@ O.1.7.2. No
 Q.1.8. Complex [pos:: 7$$ id:: complex$$ tt_requirenextclick:: false]
 O.1.8.1. Yes
 O.1.8.2. No
-Q.1.9. Unclassified [pos:: 8$$ id:: unclassified]
+Q.1.9. Unclassified [pos:: 8$$ id:: unclassified$$tt_requirenextclick::false]
 O.1.9.1. Yes
 O.1.9.2. No
