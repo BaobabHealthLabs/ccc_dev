@@ -2,5 +2,6 @@
     "host": "localhost",
     "user": "",
     "password": "",
-    "database": "hotline_1_7_development"
+    "database": "ccc1_7",
+    "stockDatabase": "ccc_inventory"
 }
