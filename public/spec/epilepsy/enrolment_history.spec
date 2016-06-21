@@ -6,5 +6,5 @@ O.1.3.1. Single
 O.1.3.2. Married
 O.1.3.3. Widowed
 Q.1.4. Occupation [pos:: 3]
-Q.1.5. Education level[pos:: 4]
-Q.1.6. Medication History[pos::5$$field_type::text]
+Q.1.5. Education level [pos:: 4]
+Q.1.6. Medication History [pos::5$$field_type::text]
