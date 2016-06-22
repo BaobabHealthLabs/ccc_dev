@@ -16,7 +16,8 @@
         ["TRIGGERS","Epilepsy triggers encounter"],
         ["POST-ICTAL FEATURES","Epilepsy Post-ictal Features encounter"],
         ["PRE-ICTAL WARNING","Epilepsy Pre-ictal Warning encounter"],
-        ["ART","Epilepsy ART encounter"]
+        ["HIV STATUS","Epilepsy HIV status encounter"],
+        ["EPILEPSY VISIT","Epilepsy visit"]
     ],
     "patient_identifier_types": [
         ["HTS Number", "HTS client clinic number"]

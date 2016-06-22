@@ -140,7 +140,8 @@
             "Pre-ictal Warning": "javascript:dashboard.navPanel('/spec/epilepsy/pre_ictal_warning.spec')",
             "Post-ictal Features": "javascript:dashboard.navPanel('/spec/epilepsy/post_ictal_features.spec')",
             "Triggers": "javascript:dashboard.navPanel('/spec/epilepsy/triggers.spec')",
-            "Patient Overview": "javascript:dashboard.navPanel('/spec/epilepsy/patient_overview.spec')"
+            "Patient Overview": "javascript:dashboard.navPanel('/spec/epilepsy/patient_overview.spec')",
+            "Epilepsy visit": "javascript:dashboard.navPanel('/spec/epilepsy/visit.spec')"
 
  
         },
@@ -159,7 +160,7 @@
             }
             ,
             "HIV Status" :{
-            	"encounter": "ART"
+            	"encounter": "HIV STATUS"
             }
             ,
             "Patient Histroy at Enrolment": {
@@ -180,6 +181,9 @@
             "Patient Overview": {
                 "encounter": "PATIENT OVERVIEW"
             }
+            ,"Epilepsy visit" :{
+            	"encounter" :"EPILEPSY VISIT"
+            }
         },
         "workflow": [
             "Client Registration",
@@ -191,7 +195,8 @@
             "Pre-ictal Warning",
             "Post-ictal Features",
             "Triggers",
-            "Patient Overview"
+            "Patient Overview",
+            "Epilepsy visit"
         ]
     }
 }
