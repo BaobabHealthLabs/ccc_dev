@@ -1,15 +1,41 @@
-P.1. PATIENT OVERVIEW [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;hts]
-Q.1.1. Exposures [pos:: 1id:: exposures$$ multiple:: multiple]
+P.1. PATIENT OVERVIEW [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
+Q.1.1. Exposures [pos:: 0$$id:: exposures$$ multiple:: multiple$$ tt_beforeUnLoad:: loadExposureConditions()]
 O.1.1.1. Smoking
 O.1.1.2. Alcohol
 O.1.1.3. Pigs
 O.1.1.4. Traditional medicine
 O.1.1.5. Other
-Q.1.2. Complications [pos::2$$multiple:: multiple]
-O.1.2.1. Injuries
-O.1.2.2. Burns
-O.1.2.3. Status Epilepticus
-O.1.2.4. Psychosis
-O.1.2.5. Drug Related
-O.1.2.6. Other
-Q.1.3. Smoking Date [pos:: 3$$ condition:: __$("exposures").value == "Smoking"]
+
+Q.1.2. Smoking Date [pos:: 1$$field_type::date$$ id:: smoking_date]
+
+Q.1.3. Alcohol Date [pos:: 2$$field_type::date$$ id:: alcohol_date]
+
+Q.1.4. Pigs Date [pos:: 3$$field_type::date$$ id:: pigs_date]
+
+Q.1.5. Traditional medicine Date [pos:: 4$$field_type::date$$ id:: traditional_date]
+
+Q.1.6. Other Exposures Specify [pos:: 5$$id:: other_exposures_specify]
+
+Q.1.7. Other Exposures Date [pos:: 6$$field_type::date$$ id:: other_exposures_date]
+
+Q.1.8. Complications [pos::7$$id::complications$$multiple:: multiple$$tt_beforeUnLoad:: loadComplicationsConditions()]
+O.1.8.1. Injuries
+O.1.8.2. Burns
+O.1.8.3. Status Epilepticus
+O.1.8.4. Psychosis
+O.1.8.5. Drug Related
+O.1.8.6. Other
+
+Q.1.9. Injuries Date [pos:: 8$$field_type::date$$ id:: injuries_date]
+
+Q.1.10. Burns Date   [pos:: 9$$field_type::date$$ id:: burns_date]
+
+Q.1.11. Status Epilepticus Date [pos:: 10$$field_type::date$$id:: status_epilepticus_date]
+
+Q.1.12. Psychosis Date [pos:: 11$$field_type::date$$ id:: psychosis_date]
+
+Q.1.13. Drug Related Date[pos:: 12$$field_type::date$$ id:: drug_related_date]
+
+Q.1.15. Other Date [pos:: 14$$field_type::date$$ id:: other_complications_date]
+
+Q.1.14. Other Complications Specify [pos:: 13$$id:: other_complications_specify]

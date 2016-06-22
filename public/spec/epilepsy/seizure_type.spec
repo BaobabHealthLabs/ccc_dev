@@ -1,4 +1,4 @@
-P.1. SEIZURE TYPE [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;hts]
+P.1. SEIZURE TYPE [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
 Q.1.1. Tonic Clonic [pos:: 0$$ id:: tonic_clonic$$ tt_requirenextclick:: false]
 O.1.1.1. Yes
 O.1.1.2. No

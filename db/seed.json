@@ -15,7 +15,8 @@
         ["MEDICAL AND SURGICAL HISTORY","Epilepsy Patient Medical and Surgical History encounter"],
         ["TRIGGERS","Epilepsy triggers encounter"],
         ["POST-ICTAL FEATURES","Epilepsy Post-ictal Features encounter"],
-        ["PRE-ICTAL WARNING","Epilepsy Pre-ictal Warning encounter"]
+        ["PRE-ICTAL WARNING","Epilepsy Pre-ictal Warning encounter"],
+        ["ART","Epilepsy ART encounter"]
     ],
     "patient_identifier_types": [
         ["HTS Number", "HTS client clinic number"]
@@ -165,6 +166,20 @@
         "Missed medication",
         "Menstruation",
         "Exposures",
-        "Complications"
+        "Complications",
+        "Smoking Date",
+        "Alcohol Date",
+        "Pigs Date",
+        "Traditional medicine Date",
+        "Other Exposures Specify",
+        "Other Exposures Date",
+        "Injuries Date",
+        "Burns Date",
+        "Status Epilepticus Date",
+        "Psychosis Date",
+        "Drug Related Date",
+        "Other Date",
+        "Other Complications Specify",
+        "HIV Status"
     ]
 }

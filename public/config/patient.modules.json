@@ -134,6 +134,7 @@
             "Client Registration": "javascript:dashboard.navPanel('/spec/patient_registration.spec')",
             "Seizure Type": "javascript:dashboard.navPanel('/spec/epilepsy/seizure_type.spec')",
             "Family Histroy": "javascript:dashboard.navPanel('/spec/epilepsy/family_history.spec')",
+            "HIV Status" :"javascript:dashboard.navPanel('/spec/epilepsy/hiv_status.spec')",
             "Patient Histroy at Enrolment": "javascript:dashboard.navPanel('/spec/epilepsy/enrolment_history.spec')",
             "Medical and Surgical Histroy": "javascript:dashboard.navPanel('/spec/epilepsy/medical_history.spec')",
             "Pre-ictal Warning": "javascript:dashboard.navPanel('/spec/epilepsy/pre_ictal_warning.spec')",
@@ -155,6 +156,10 @@
             },
             "Family Histroy": {
                 "encounter": "FAMILY HISTORY"
+            }
+            ,
+            "HIV Status" :{
+            	"encounter": "ART"
             }
             ,
             "Patient Histroy at Enrolment": {
@@ -180,6 +185,7 @@
             "Client Registration",
             "Seizure Type",
             "Family Histroy",
+            "HIV Status",
             "Patient Histroy at Enrolment",
             "Medical and Surgical Histroy",
             "Pre-ictal Warning",

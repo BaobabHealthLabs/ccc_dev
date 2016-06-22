@@ -1,4 +1,4 @@
-P.1. TRIGGERS [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;hts]
+P.1. TRIGGERS [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
 Q.1.1. Smoking [pos:: 0$$tt_requirenextclick::false]
 O.1.1.1. Yes
 O.1.1.2. No

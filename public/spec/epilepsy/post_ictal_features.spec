@@ -1,4 +1,4 @@
-P.1. POST-ICTAL FEATURES [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;hts]
+P.1. POST-ICTAL FEATURES [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
 Q.1.1. Headache [pos:: 0$$tt_requirenextclick::false]
 O.1.1.1. Yes
 O.1.1.2. No
@@ -23,6 +23,6 @@ O.1.7.2. No
 Q.1.8. Memory loss [pos:: 7$$tt_requirenextclick::false]
 O.1.8.1. Yes
 O.1.8.2. No
-Q.1.9. Hyperactivity [pos:: 6$$tt_requirenextclick::false]
+Q.1.9. Hyperactivity [pos:: 6]
 O.1.9.1. Yes
 O.1.9.2. No
