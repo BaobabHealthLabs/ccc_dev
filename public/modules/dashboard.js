@@ -117,7 +117,8 @@ var dashboard = ({
      * */
     queryActiveObs: function (program, visit, encounter, concept) {
 
-        if (this.data && this.data.data && this.data.data.programs && Object.keys(this.data.data.programs).length > 0) {
+        if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
+            Object.keys(this.data.data.programs).length > 0) {
 
             var patientPrograms = this.data.data.programs[program].patient_programs;
 
@@ -165,11 +166,12 @@ var dashboard = ({
 
     queryExistingEncounters: function (program, visit, encounter) {
 
-        if (this.data && this.data.data && this.data.data.programs && Object.keys(this.data.data.programs).length > 0) {
+        var result = false;
+
+        if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
+            Object.keys(this.data.data.programs).length > 0) {
 
             var patientPrograms = this.data.data.programs[program].patient_programs;
-
-            var result = false;
 
             var pKeys = Object.keys(patientPrograms);
 
@@ -186,6 +188,104 @@ var dashboard = ({
                             result = true;
 
                             break;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return result;
+
+    },
+
+    queryAnyExistingEncounters: function (program, encounter) {
+
+        if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
+            Object.keys(this.data.data.programs).length > 0) {
+
+            var patientPrograms = this.data.data.programs[program].patient_programs;
+
+            var result = false;
+
+            var pKeys = Object.keys(patientPrograms);
+
+            for (var i = 0; i < pKeys.length; i++) {
+
+                var key = pKeys[i];
+
+                if (!patientPrograms[key].date_completed) {
+
+                    var vKeys = Object.keys(patientPrograms[key].visits);
+
+                    for (var j = 0; j < vKeys.length; j++) {
+
+                        var visit = vKeys[j];
+
+                        if (patientPrograms[key].visits[visit][encounter]) {
+
+                            result = true;
+
+                            return result;
+
+                            break;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return result;
+
+    },
+
+    queryAnyExistingObs: function (program, concept) {
+
+        if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
+            Object.keys(this.data.data.programs).length > 0) {
+
+            var patientPrograms = this.data.data.programs[program].patient_programs;
+
+            var result = false;
+
+            var pKeys = Object.keys(patientPrograms);
+
+            for (var i = 0; i < pKeys.length; i++) {
+
+                var key = pKeys[i];
+
+                if (!patientPrograms[key].date_completed) {
+
+                    var vKeys = Object.keys(patientPrograms[key].visits);
+
+                    for (var j = 0; j < vKeys.length; j++) {
+
+                        var visit = vKeys[j];
+
+                        var eKeys = Object.keys(patientPrograms[key].visits[visit]);
+
+                        for (var k = 0; k < eKeys.length; k++) {
+
+                            var encounter = eKeys[k];
+
+                            if (patientPrograms[key].visits[visit][encounter][concept]) {
+
+                                result = true;
+
+                                return result;
+
+                                break;
+
+                            }
 
                         }
 
@@ -1905,9 +2005,9 @@ var dashboard = ({
 
         }
 
-        if(dashboard.getCookie("print").trim() != "") {
+        if (dashboard.getCookie("print").trim() != "") {
 
-            dashboard.printBarcode(dashboard.getCookie("print"), function(){
+            dashboard.printBarcode(dashboard.getCookie("print"), function () {
 
                 dashboard.setCookie("print", "", -1);
 
@@ -3028,7 +3128,7 @@ var dashboard = ({
 
     },
 
-    exitNavPanel: function() {
+    exitNavPanel: function () {
 
         dashboard.autoContinue = false;
 
@@ -3182,6 +3282,8 @@ var dashboard = ({
                 socket.emit('relationship', data);
 
             } else {
+
+                console.log(data);
 
                 socket.emit('update', data);
 
@@ -3473,15 +3575,15 @@ var dashboard = ({
         dashboard.ajaxRequest(dashboard.settings.patientBarcodeDataPath + dashboard.getCookie("token") + "&npid=" + npid,
             function (data) {
 
-            var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + data.npid + "\"\nA40,50,0,2,2,2,N,\"" +
-                data.first_name + " " + data.family_name + "\"\nA40,96,0,2,2,2,N,\"" +
-                data.npid.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
-                (parseInt(data.date_of_birth_estimated) == 1 ? "~" : "") + (new Date(data.date_of_birth)).format("dd/mmm/YYYY") +
-                "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + data.residence + "\"\nP1\n";
+                var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + data.npid + "\"\nA40,50,0,2,2,2,N,\"" +
+                    data.first_name + " " + data.family_name + "\"\nA40,96,0,2,2,2,N,\"" +
+                    data.npid.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
+                    (parseInt(data.date_of_birth_estimated) == 1 ? "~" : "") + (new Date(data.date_of_birth)).format("dd/mmm/YYYY") +
+                    "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + data.residence + "\"\nP1\n";
 
-            dashboard.saveAs(text, callback);
+                dashboard.saveAs(text, callback);
 
-        });
+            });
 
     },
 

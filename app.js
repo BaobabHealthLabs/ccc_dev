@@ -1,5 +1,6 @@
 // var app = require('express')();
 var express = require('express');
+var cookieParser = require('cookie-parser');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -29,6 +30,8 @@ app.use(function (req, res, next) {
 // for forms
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+app.use(cookieParser());
 
 var numClients = 0;
 
@@ -647,6 +650,8 @@ function saveData(data, callback) {
 
         }
 
+        console.log(JSON.stringify(data));
+
         var patient_program_id;
 
         var patient_id;
@@ -1073,6 +1078,31 @@ function saveData(data, callback) {
                     icallback();
 
                 })
+
+            },
+
+            function(icallback) {
+
+                console.log(data.data.create_clinic_number);
+
+                if(data.data.create_clinic_number) {
+
+                    generateId(patient_id, data.data.userId, (data.data.location != undefined ? data.data.location : "Unknown"),
+                        data.data.create_clinic_number, undefined, function (response) {
+
+                            var npid = response;
+
+                            console.log(npid);
+
+                            icallback();
+
+                        });
+
+                } else {
+
+                    icallback();
+
+                }
 
             }
 
