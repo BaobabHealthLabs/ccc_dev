@@ -57,7 +57,7 @@
 
     landing.init("/config/landing.settings.json");
 
-    patient.init("/config/patient.settings.json", user.getCookie("username"));
+    patient.init("/config/patient.settings.json", user.getCookie("username"), "/config/patient.modules.json");
 
     stock.init("/config/stock.settings.json", user.getCookie("username"));
 

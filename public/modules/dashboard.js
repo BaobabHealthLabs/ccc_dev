@@ -1785,6 +1785,8 @@ var dashboard = ({
 
                 dashboard.selectedProgram = this.id;
 
+                dashboard.setCookie("currentProgram", this.id, 0.33333);
+
                 dashboard.standardWorkflow = dashboard.modules[dashboard.selectedProgram].workflow;
 
                 dashboard.loadModule(this.getAttribute("label"), this.getAttribute("icon"), sourceData[this.getAttribute("label")]);
@@ -1822,7 +1824,7 @@ var dashboard = ({
 
             tr.appendChild(td2);
 
-            if (i == 0) {
+            if (keys[i] == dashboard.getCookie("currentProgram")) {
 
                 li.click();
 
@@ -1900,6 +1902,16 @@ var dashboard = ({
         if (dashboard.__$("bmi")) {
 
             dashboard.__$("bmi").innerHTML = (dashboard.data["data"]["vitals"] ? dashboard.data["data"]["vitals"]["BMI"] : "&nbsp;");
+
+        }
+
+        if(dashboard.getCookie("print").trim() != "") {
+
+            dashboard.printBarcode(dashboard.getCookie("print"), function(){
+
+                dashboard.setCookie("print", "", -1);
+
+            })
 
         }
 
@@ -3416,6 +3428,60 @@ var dashboard = ({
         }
 
         tdf.appendChild(btn);
+
+    },
+
+    saveAs: function (data, callback) {
+
+        var randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
+
+        var uri = 'data:application/label;charset=utf-8;disposition=inline,' + escape(data);
+
+        var filename = randomString + ".lbl";
+
+        var link = document.createElement('a');
+
+        if (typeof link.download === 'string') {
+
+            link.href = uri;
+
+            link.download = filename;
+
+            //Firefox requires the link to be in the body
+            document.body.appendChild(link);
+
+            //simulate click
+            link.click();
+
+            //remove the link when done
+            document.body.removeChild(link);
+
+            callback();
+
+        } else {
+
+            window.open(uri);
+
+            callback();
+
+        }
+
+    },
+
+    printBarcode: function (npid, callback) {
+
+        dashboard.ajaxRequest(dashboard.settings.patientBarcodeDataPath + dashboard.getCookie("token") + "&npid=" + npid,
+            function (data) {
+
+            var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + data.npid + "\"\nA40,50,0,2,2,2,N,\"" +
+                data.first_name + " " + data.family_name + "\"\nA40,96,0,2,2,2,N,\"" +
+                data.npid.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
+                (parseInt(data.date_of_birth_estimated) == 1 ? "~" : "") + (new Date(data.date_of_birth)).format("dd/mmm/YYYY") +
+                "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + data.residence + "\"\nP1\n";
+
+            dashboard.saveAs(text, callback);
+
+        });
 
     },
 

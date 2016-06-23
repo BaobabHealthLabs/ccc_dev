@@ -211,8 +211,6 @@ var patient = ({
 
             var json = JSON.parse(result);
 
-            console.log(json);
-
             patient.showMsg(json.message, "Status", "javascript:patient.buildEditPage(patient.patientId)");
 
         })
@@ -237,6 +235,8 @@ var patient = ({
         data.data.token = patient.getCookie("token");
 
         patient.ajaxPostRequest(url, data, function (npid) {
+
+            patient.setCookie("print", npid, 0.3333);
 
             if (patient.settings.basePath != undefined) {
 
@@ -896,7 +896,7 @@ var patient = ({
                             btn.id = "btn_" + field;
                             btn.setAttribute("field", field);
 
-                            btn.onclick = function() {
+                            btn.onclick = function () {
 
                                 patient.buildEditFieldPage(this.getAttribute("field"),
                                     this.getAttribute("field_target_id"), this.getAttribute("field_target_id_value"))
@@ -1706,6 +1706,15 @@ var patient = ({
 
         form.appendChild(table);
 
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.id = "data.prefix";
+        input.name = "data.prefix";
+        input.value = (patient.modules[patient.getCookie("currentProgram")].clinicPrefix ?
+            patient.modules[patient.getCookie("currentProgram")].clinicPrefix : "");
+
+        form.appendChild(input);
+
         var fields = ["First Name", "Last Name", "Gender", "Middle Name", "Maiden Name", "Date of birth", "Nationality",
             "Current Region", "Current District", "Current T/A", "Current Village", "Region of Origin", "Home District",
             "Home T/A", "Home Village", "Closest Landmark", "Cellphone Number", "Home Phone Number",
@@ -2285,7 +2294,7 @@ var patient = ({
 
     },
 
-    init: function (settingsPath, userId) {
+    init: function (settingsPath, userId, modulesPath) {
 
         this['settings'] = {};
 
@@ -2297,7 +2306,17 @@ var patient = ({
 
                 patient.settings = JSON.parse(settings);
 
-            })
+            });
+
+        }
+
+        if (typeof modulesPath != undefined) {
+
+            this.ajaxRequest(modulesPath, function (modules) {
+
+                patient.modules = JSON.parse(modules);
+
+            });
 
         }
 

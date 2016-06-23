@@ -127,7 +127,7 @@ function encrypt(password, salt) {
 
 }
 
-function generateId(patientId, username, location, callback) {
+function generateId(patientId, username, location, prefix, suffix, callback) {
 
     if (mutex.isLocked()) {
 
@@ -137,10 +137,27 @@ function generateId(patientId, username, location, callback) {
 
         mutex.lock();
 
-        // Year runs from July 1 to June 30
-        var yr = ((new Date()).getMonth() < 6 ? (new Date()).getFullYear() - 1 : ((new Date()).getFullYear()));
+        var months = {
+            "january": 0,
+            "february": 1,
+            "march": 2,
+            "april": 3,
+            "may": 4,
+            "june": 5,
+            "july": 6,
+            "august": 7,
+            "september": 8,
+            "october": 9,
+            "november": 10,
+            "december": 11
+        }
 
-        var sql = "SELECT property_value FROM global_property WHERE property = 'htc.id.counter." + yr + "'";
+        // Year runs from July 1 to June 30
+        var yr = ((new Date()).getMonth() < months[site['reset month'].toLowerCase()] ? (new Date()).getFullYear() - 1 :
+            ((new Date()).getFullYear()));
+
+        var sql = "SELECT property_value FROM global_property WHERE property = '" + prefix.trim().toLowerCase() +
+            ".id.counter." + yr + "'";
 
         queryRaw(sql, function (res) {
 
@@ -150,17 +167,18 @@ function generateId(patientId, username, location, callback) {
 
                 nextId = parseInt(res[0][0].property_value) + 1;
 
-                sql = "UPDATE global_property SET property_value = '" + nextId + "' WHERE property = 'htc.id.counter." + yr + "'";
+                sql = "UPDATE global_property SET property_value = '" + nextId + "' WHERE property = '" +
+                    prefix.trim().toLowerCase() + ".id.counter." + yr + "'";
 
                 queryRaw(sql, function (res) {
 
-                    var id = nextId + "-" + yr;
+                    var id = prefix.trim().toUpperCase() + "-" + nextId + "-" + yr;
 
                     var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
                         "creator, date_created, uuid) VALUES ('" + patientId + "', '" + id +
-                        "', (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = 'HTS Number'), " +
-                        "(SELECT location_id FROM location WHERE name = '" + location + "'), (SELECT user_id FROM users " +
-                        " WHERE username = '" + username + "'), NOW(), '" + uuid.v1() + "')";
+                        "', (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = '" +
+                        prefix.trim() + " Number'), (SELECT location_id FROM location WHERE name = '" + location +
+                        "'), (SELECT user_id FROM users WHERE username = '" + username + "'), NOW(), '" + uuid.v1() + "')";
 
                     queryRaw(sql, function (res) {
 
@@ -176,18 +194,19 @@ function generateId(patientId, username, location, callback) {
 
             } else {
 
-                sql = "INSERT INTO global_property (property, property_value, uuid) VALUES ('htc.id.counter." + yr + "', '" +
-                    nextId + "', '" + uuid.v1() + "')"; // ON DUPLICATE KEY UPDATE property = 'htc.id.counter." + yr + "'";
+                sql = "INSERT INTO global_property (property, property_value, uuid) VALUES ('" +
+                    prefix.trim().toLowerCase() + ".id.counter." + yr + "', '" +
+                    nextId + "', '" + uuid.v1() + "')";
 
                 queryRaw(sql, function (res) {
 
-                    var id = nextId + "-" + yr;
+                    var id = prefix.trim().toUpperCase() + "-" + nextId + "-" + yr;
 
                     var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
                         "creator, date_created, uuid) VALUES ('" + patientId + "', '" + id +
-                        "', (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = 'HTS Number'), " +
-                        "(SELECT location_id FROM location WHERE name = '" + location + "'), (SELECT user_id FROM users " +
-                        " WHERE username = '" + username + "'), NOW(), '" + uuid.v1() + "')";
+                        "', (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = '" +
+                        prefix.trim() + " Number'), (SELECT location_id FROM location WHERE name = '" + location +
+                        "'), (SELECT user_id FROM users  WHERE username = '" + username + "'), NOW(), '" + uuid.v1() + "')";
 
                     queryRaw(sql, function (res) {
 
@@ -467,14 +486,14 @@ function saveRelationship(params, callback) {
 
                                     console.log(relation_id);
 
-                                    generateId(relation_id, data.userId, (data.location != undefined ? data.location : "Unknown"),
-                                        function (response) {
+                                    generateId(relation_id, data.userId, (data.location != undefined ? data.location :
+                                        "Unknown"), (data.prefix ? data.prefix : "HTC"), undefined, function (response) {
 
-                                            var npid = response;
+                                        var npid = response;
 
-                                            iCallback();
+                                        iCallback();
 
-                                        });
+                                    });
 
                                 });
 
@@ -2900,7 +2919,7 @@ app.post('/save_dummy_patient', function (req, res) {
                         console.log(patient_id);
 
                         generateId(patient_id, data.userId, (data.location != undefined ? data.location : "Unknown"),
-                            function (response) {
+                            (data.prefix ? data.prefix : "HTC"), undefined, function (response) {
 
                                 npid = response;
 
@@ -3342,14 +3361,14 @@ app.post('/save_patient', function (req, res) {
 
                         console.log(patient_id);
 
-                        generateId(patient_id, data["User ID"], (data["Location"] != undefined ? data["Location"] : "Unknown"),
-                            function (response) {
+                        generateId(patient_id, data["User ID"], (data["Location"] != undefined ? data["Location"] :
+                            "Unknown"), (data.prefix ? data.prefix : "HTC"), undefined, function (response) {
 
-                                npid = response;
+                            npid = response;
 
-                                res.send(npid);
+                            res.send(npid);
 
-                            });
+                        });
 
                     })
 
@@ -4073,13 +4092,18 @@ app.get('/search_for_patient', function (req, res) {
 
 app.get('/test_id', function (req, res) {
 
-    generateId(24, "admin", "Unknown", function (response) {
+    var url_parts = url.parse(req.url, true);
 
-        console.log(response);
+    var query = url_parts.query;
 
-        res.send(response);
+    generateId(24, "admin", "Unknown", (query.prefix ? query.prefix : "HTC"), (query.suffix ? query.suffix : undefined),
+        function (response) {
 
-    });
+            console.log(response);
+
+            res.send(response);
+
+        });
 
 })
 
@@ -5705,7 +5729,7 @@ app.get("/available_stock_stats", function (req, res) {
 
 })
 
-app.get('/test_1_kit_name', function(req, res){
+app.get('/test_1_kit_name', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -5734,7 +5758,7 @@ app.get('/test_1_kit_name', function(req, res){
 
 })
 
-app.get('/test_2_kit_name', function(req, res){
+app.get('/test_2_kit_name', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -5800,7 +5824,7 @@ app.get("/total_tests_received_during_month", function (req, res) {
 
     var sql = "SELECT item_name, SUM(receipt_quantity) AS received_quantity FROM report WHERE COALESCE(receipt_quantity,0) " +
         "> 0 AND item_name = '" + query.item_name + "' " + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
-        query.start_date + "')" : "") +  (query.end_date ? " AND DATE(transaction_date) <= DATE('" + query.end_date +
+        query.start_date + "')" : "") + (query.end_date ? " AND DATE(transaction_date) <= DATE('" + query.end_date +
         "')" : "") + " GROUP BY item_name";
 
     console.log(sql);
@@ -5857,8 +5881,8 @@ app.get("/total_other_tests", function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,'') " +
-        "NOT IN ('Normal use', 'Disposal') AND item_name = '" + query.item_name + "' "  + (query.start_date ?
-        " AND DATE(transaction_date) >= DATE('" + query.start_date + "')" : "")+ (query.end_date ?
+        "NOT IN ('Normal use', 'Disposal') AND item_name = '" + query.item_name + "' " + (query.start_date ?
+        " AND DATE(transaction_date) >= DATE('" + query.start_date + "')" : "") + (query.end_date ?
         " AND DATE(transaction_date) <= DATE('" + query.end_date + "')" : "") + " GROUP BY item_name";
 
     console.log(sql);
@@ -5937,15 +5961,69 @@ app.get("/total_in_rooms_at_month_end", function (req, res) {
 
 })
 
-app.get('/facility', function(req, res) {
+app.get('/facility', function (req, res) {
 
     res.status(200).json({facility: site.facility});
 
 })
 
-app.get('/location', function(req, res) {
+app.get('/location', function (req, res) {
 
     res.status(200).json({location: site.location});
+
+})
+
+app.get('/patient_barcode_data', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var data = url_parts.query;
+
+    loggedIn(data.token, function (authentic, user_id, username) {
+
+        if (!authentic) {
+
+            return res.status(200).json({message: "Unauthorized access!"});
+
+        }
+
+        console.log(data);
+
+        var sql = "SELECT DISTINCT o.patient_id, COALESCE((SELECT identifier FROM patient_identifier WHERE patient_id = " +
+            "o.patient_id AND identifier_type = (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE " +
+            "name = 'National id' LIMIT 1) LIMIT 1), (SELECT identifier FROM patient_identifier WHERE patient_id = " +
+            "o.patient_id LIMIT 1)) AS npid, given_name, family_name, birthdate, birthdate_estimated, gender, city_village " +
+            "FROM patient_identifier o LEFT OUTER JOIN person_name ON person_name.person_id = o.patient_id LEFT OUTER " +
+            "JOIN person ON person.person_id = o.patient_id LEFT OUTER JOIN person_address ON person_address.person_id " +
+            "= o.patient_id WHERE identifier = '" + data.npid + "' LIMIT 1";
+
+        console.log(sql);
+
+        queryRaw(sql, function (patient) {
+
+            if(patient[0].length > 0) {
+
+                var result = {
+                    npid: patient[0][0].npid,
+                    first_name: patient[0][0].given_name,
+                    family_name: patient[0][0].family_name,
+                    date_of_birth: patient[0][0].birthdate,
+                    date_of_birth_estimated: patient[0][0].birthdate_estimated,
+                    residence: patient[0][0].city_village,
+                    gender: patient[0][0].gender
+                }
+
+                res.status(200).json(result);
+
+            } else {
+
+                res.status(200).json({message: "No match found!"});
+
+            }
+
+        });
+
+    });
 
 })
 

@@ -9,6 +9,7 @@
     "firstNamesPath": "/fnames_query",
     "lastNamesPath": "/lnames_query",
     "afterCreatePath": "http://localhost:3015",
+    "patientBarcodeDataPath": "/patient_barcode_data?token=",
     "demographics" : {
         "First Name": true,
         "Middle Name": true,

@@ -16,13 +16,25 @@
         ["MEDICAL HISTORY", "Medical history encounter"],
         ["VITALS", "Vitals encounter"],
         ["LAB RESULTS", "Lab results encounter"],
-        ["COMPLICATIONS", "Complications encounter"]
+        ["COMPLICATIONS", "Complications encounter"],
+        ["DIABETES INITIAL QUESTIONS", "Diabetes clinic initial questions encounter"],
+        ["OUTCOME", "Visit patient outcome encounter"],
+        ["MEDICAL HISTORY", "Patient medical history encounter"],
+        ["DIABETES HISTORY", "Diabetes patient history"],
+        ["PAST DIABETES MEDICAL HISTORY", "Past diabetes patient medical history"],
+        ["GENERAL HEALTH", "Patient general health encounter"],
+        ["VITALS", "Patient vitals encounter"]
+        ["LAB RESULTS", "Patient lab results"],
+        ["COMPLICATIONS", "Patient complications encounter"],
+        ["TREATMENTS", "Patient treatments encounter"],
+        ["HIV/ART STATUS", "Patient HIV/ART status encounter"],
+        ["APPOINTMENTS", "Patient appointments encounter"]
     ],
     "patient_identifier_types": [
-        ["Diabetes Clinic Number", "Diabetes clinic number"],
-        ["Epilepsy Clinic Number", "Epilepsy clinic number"],
-        ["Asthma Clinic Number", "Asthma clinic number"],
-        ["Hypertension Clinic Number", "Hypertension clinic number"]
+        ["DTM Number", "Diabetes clinic number"],
+        ["EPL Number", "Epilepsy clinic number"],
+        ["AST Number", "Asthma clinic number"],
+        ["HTN Number", "Hypertension clinic number"]
     ],
     "person_attribute_types": [
         ["HTS Provider ID", "HTS service provider clinic code"]

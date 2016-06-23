@@ -72,6 +72,26 @@ var landing = ({
         return document.getElementById(id);
     },
 
+    $$: function (id) {
+
+        if (this.$("ifrMain")) {
+
+            return this.$("ifrMain").contentWindow.document.getElementById(id);
+
+        }
+
+    },
+
+    __: function (id) {
+
+        if (this.$("ifrMain")) {
+
+            return this.$("ifrMain").contentWindow;
+
+        }
+
+    },
+
     setData: function (key, data) {
         this[key] = data;
     },
@@ -812,6 +832,8 @@ var landing = ({
 
                 landing.selectedProgram = this.id;
 
+                landing.setCookie("currentProgram", this.id, 0.33333);
+
                 landing.loadModule(this.getAttribute("label"), this.getAttribute("icon"), sourceData[this.getAttribute("label")]);
 
             }
@@ -847,7 +869,7 @@ var landing = ({
 
             tr.appendChild(td2);
 
-            if (i == 0) {
+            if (keys[i] == landing.getCookie("currentProgram")) {
 
                 li.click();
 

@@ -279,11 +279,7 @@ var protocol = ({
 
             }
 
-            // console.log(v);
-
         }
-
-        // console.log(this.questions);
 
     },
 
@@ -316,7 +312,7 @@ var protocol = ({
             "\"javascript:window.parent.dashboard.exitNavPanel()\"; tt_cancel_destination = " +
             "\"javascript:window.parent.dashboard.exitNavPanel()\";" +
             "function submitData(){" +
-            "var data = form2js(document.getElementById('data'), undefined, true); console.log(data);" +
+            "var data = form2js(document.getElementById('data'), undefined, true); " +
             "if(window.parent) window.parent.dashboard.submitData(data);" +
             "}";
 
