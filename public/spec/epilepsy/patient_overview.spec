@@ -1,4 +1,4 @@
-P.1. PATIENT OVERVIEW [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
+P.1. EPILEPSY PATIENT OVERVIEW [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
 Q.1.1. Exposures [pos:: 0$$id:: exposures$$ multiple:: multiple$$ tt_beforeUnLoad:: loadExposureConditions()]
 O.1.1.1. Smoking
 O.1.1.2. Alcohol
