@@ -1,11 +1,5 @@
 {
     "encounter_types": [
-        ["HTS CLIENT REGISTRATION", "Client registration encounter in HTS program"],
-        ["HTS VISIT", "Client HTS clinic visit encounter"],
-        ["HIV TESTING", "HIV Testing encounter"],
-        ["PARTNER STATUS", "HTS Client partner status"],
-        ["CLIENT RISK ASSESSMENT", "HTS Client risk assessment encounter"],
-        ["ITEMS GIVEN", "HTS Client items given encounter"],
         ["APPOINTMENT", "Appointment encounter"],
         ["COMMENTS", "Clinical comments encounter"],
         ["SEIZURE TYPE","Epilepsy Seizure encounter"],
@@ -17,16 +11,27 @@
         ["POST-ICTAL FEATURES","Epilepsy Post-ictal Features encounter"],
         ["PRE-ICTAL WARNING","Epilepsy Pre-ictal Warning encounter"],
         ["EPILEPSY HIV STATUS","Epilepsy HIV status encounter"],
-        ["EPILEPSY VISIT","Epilepsy visit"]
+        ["EPILEPSY VISIT","Epilepsy visit"],
+        ["OUTCOME", "Outcome encounter"],
+        ["MEDICAL HISTORY", "Medical history encounter"],
+        ["VITALS", "Vitals encounter"],
+        ["LAB RESULTS", "Lab results encounter"],
+        ["COMPLICATIONS", "Complications encounter"]
     ],
     "patient_identifier_types": [
-        ["HTS Number", "HTS client clinic number"]
+        ["Diabetes Clinic Number", "Diabetes clinic number"],
+        ["Epilepsy Clinic Number", "Epilepsy clinic number"],
+        ["Asthma Clinic Number", "Asthma clinic number"],
+        ["Hypertension Clinic Number", "Hypertension clinic number"]
     ],
     "person_attribute_types": [
         ["HTS Provider ID", "HTS service provider clinic code"]
     ],
     "programs": [
-        "HTS PROGRAM"
+        "EPILEPSY PROGRAM",
+        "ASTHMA PROGRAM",
+        "HYPERTENSION PROGRAM",
+        "DIABETES PROGRAM"
     ],
     "concepts": [
         "Sex/Pregnancy",

@@ -1,4 +1,4 @@
 .idea/
 .nvmrc
-db/database.json
-config/database.json
+db/*.json
+config/*.json

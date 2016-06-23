@@ -84,7 +84,7 @@ if (Object.getOwnPropertyNames(String.prototype).indexOf("beautify") < 0) {
 
 var patient = ({
 
-    version: "0.0.1",
+    version: "0.1.0",
 
     patients: [],
 
