@@ -66,7 +66,7 @@ Object.defineProperty(Array.prototype, "shuffle", {
 
 var landing = ({
 
-    version: "0.0.1",
+    version: "0.1.0",
 
     $: function (id) {
         return document.getElementById(id);
@@ -142,7 +142,7 @@ var landing = ({
         return padded;
     },
 
-    buildPage: function () {
+    buildPage: function (callback) {
 
         var style = this.sheet();
         this.addCSSRule(style, "body", "padding: 0px !important");
@@ -408,7 +408,7 @@ var landing = ({
 
         var tdDiv1_3_1_1_3 = document.createElement("td");
         tdDiv1_3_1_1_3.id = "facility";
-        tdDiv1_3_1_1_3.innerHTML = "Kamuzu Central Hospital";
+        tdDiv1_3_1_1_3.innerHTML = "&nbsp;";
 
         trDiv1_3_1_1.appendChild(tdDiv1_3_1_1_3);
 
@@ -471,7 +471,7 @@ var landing = ({
 
         var tdDiv1_3_1_2_3 = document.createElement("td");
         tdDiv1_3_1_2_3.id = "location";
-        tdDiv1_3_1_2_3.innerHTML = "HIV Reception";
+        tdDiv1_3_1_2_3.innerHTML = "&nbsp;";
 
         trDiv1_3_1_2.appendChild(tdDiv1_3_1_2_3);
 
@@ -676,25 +676,36 @@ var landing = ({
 
         td3_1.appendChild(btnFinish);
 
-        var btnStart = document.createElement("button");
-        btnStart.className = "blue";
-        btnStart.style.cssFloat = "right";
-        btnStart.innerHTML = "Start Session";
-        btnStart.id = "landing.btnStart";
-        btnStart.style.minWidth = "180px";
+        if(landing.settings.useStartSessionButton === undefined ||
+            (landing.settings.useStartSessionButton !== undefined && landing.settings.useStartSessionButton)) {
 
-        btnStart.onclick = function () {
+            var btnStart = document.createElement("button");
+            btnStart.className = "blue";
+            btnStart.style.cssFloat = "right";
+            btnStart.innerHTML = "Start Session";
+            btnStart.id = "landing.btnStart";
+            btnStart.style.minWidth = "180px";
 
-            if (this.className.match(/gray/))
-                return;
+            btnStart.onclick = function () {
 
-            landing.startProtocol();
+                if (this.className.match(/gray/))
+                    return;
+
+                landing.startProtocol();
+
+            }
+
+            td3_1.appendChild(btnStart);
 
         }
 
-        td3_1.appendChild(btnStart);
-
         landing.loadPrograms(landing['modules'], landing.$("programs"));
+
+        if(callback) {
+
+            callback();
+
+        }
 
     },
 
@@ -1411,7 +1422,19 @@ var landing = ({
 
                 landing['modules'] = modules;
 
-                landing.buildPage();
+                landing.buildPage(function() {
+
+                    landing.ajaxRequest(landing.settings.facilityPath, function (response) {
+
+                        if(landing.$("facility")) {
+
+                            landing.$("facility").innerHTML = response.facility;
+
+                        }
+
+                    });
+
+                });
 
                 setInterval(function () {
 

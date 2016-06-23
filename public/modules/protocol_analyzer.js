@@ -46,7 +46,7 @@ Object.defineProperty(Date.prototype, "format", {
 
 var protocol = ({
 
-    version: "0.0.1",
+    version: "0.1.0",
 
     setCookie: function (cname, cvalue, exdays) {
 
