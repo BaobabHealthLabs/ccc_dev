@@ -1621,11 +1621,6 @@ var datePicker = ({
                 if (datePicker.$("text1-0") && datePicker.$("text1-1") && datePicker.$("text1-2") && datePicker.$("text1-3") &&
                     datePicker.$("text1-5") && datePicker.$("text1-7") && datePicker.$("text1-8")) {
 
-                    console.log((datePicker.$("text1-0").value.trim().length <= 0 || datePicker.$("text1-1").value.trim().length <= 0 ||
-                        datePicker.$("text1-2").value.trim().length <= 0 || datePicker.$("text1-3").value.trim().length <= 0 ||
-                        datePicker.$("text1-5").value.trim().length <= 0 || datePicker.$("text1-7").value.trim().length <= 0 ||
-                        datePicker.$("text1-8").value.trim().length <= 0));
-
                     if (datePicker.$("text1-0").value.trim().length <= 0 || datePicker.$("text1-1").value.trim().length <= 0 ||
                         datePicker.$("text1-2").value.trim().length <= 0 || datePicker.$("text1-3").value.trim().length <= 0 ||
                         datePicker.$("text1-5").value.trim().length <= 0 || datePicker.$("text1-7").value.trim().length <= 0 ||
