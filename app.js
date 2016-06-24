@@ -437,9 +437,13 @@ function saveRelationship(params, callback) {
 
                     queryRaw(sql, function (reverseRelationshipType) {
 
-                        console.log(reverseRelationshipType[0][0].relationship_type_id);
+                        if (reverseRelationshipType[0].length > 0) {
 
-                        reverse_relationship_type_id = reverseRelationshipType[0][0].relationship_type_id;
+                            console.log(reverseRelationshipType[0][0].relationship_type_id);
+
+                            reverse_relationship_type_id = reverseRelationshipType[0][0].relationship_type_id;
+
+                        }
 
                         iCallback();
 
@@ -552,19 +556,66 @@ function saveRelationship(params, callback) {
 
                     console.log(relationship[0].insertId);
 
-                    var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
-                        "'" + relation_id + "', '" + reverse_relationship_type_id + "', '" + person_id + "', " +
-                        "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                    if (reverse_relationship_type_id) {
 
-                    console.log(sql);
+                        var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
+                            "'" + relation_id + "', '" + reverse_relationship_type_id + "', '" + person_id + "', " +
+                            "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
-                    queryRaw(sql, function (relationship) {
+                        console.log(sql);
+
+                        queryRaw(sql, function (relationship) {
+
+                            iCallback();
+
+                        });
+
+                    } else {
+
+                        iCallback();
+
+                    }
+
+                });
+
+            },
+
+            function (iCallback) {
+
+                if (data["Phone Number"]) {
+
+                    var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
+                        "creator, date_created, uuid) VALUES ('" + relation_id + "', '" + data["Phone Number"] +
+                        "', (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
+                        "'Cell Phone Number' LIMIT 1), '" + user_id + "', NOW(), '" +
+                        uuid.v1() + "')";
+
+                    queryRaw(sql, function (res) {
 
                         iCallback();
 
                     });
 
-                });
+                } else {
+
+                    iCallback();
+
+                }
+
+            },
+
+            function (iCallback) {
+
+                generateId(relation_id, username, (data.location != undefined ? data.location : "Unknown"),
+                    "GDN", undefined, function (response) {
+
+                        var npid = response;
+
+                        console.log(npid);
+
+                        iCallback();
+
+                    });
 
             }
 
@@ -1030,11 +1081,10 @@ function saveData(data, callback) {
 
                                     if (attr[0].length <= 0) {
 
-                                        // TODO: Need to find a way to push a proper user who creates here
                                         var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
                                             "creator, date_created, uuid) VALUES ('" + patient_id + "', '" + phoneNumber +
                                             "', (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
-                                            "'Cell Phone Number' LIMIT 1), (SELECT user_id FROM users LIMIT 1), NOW(), '" +
+                                            "'Cell Phone Number' LIMIT 1), '" + user_id + "', NOW(), '" +
                                             uuid.v1() + "')";
 
                                         queryRaw(sql, function (res) {
@@ -1081,11 +1131,11 @@ function saveData(data, callback) {
 
             },
 
-            function(icallback) {
+            function (icallback) {
 
                 console.log(data.data.create_clinic_number);
 
-                if(data.data.create_clinic_number) {
+                if (data.data.create_clinic_number) {
 
                     generateId(patient_id, data.data.userId, (data.data.location != undefined ? data.data.location : "Unknown"),
                         data.data.create_clinic_number, undefined, function (response) {
@@ -5617,7 +5667,7 @@ app.get('/relationship_types', function (req, res) {
 
     var sql = "SELECT relationship_type_id, CONCAT(a_is_to_b, ' - ', b_is_to_a) AS relation FROM relationship_type " +
         "WHERE CONCAT(a_is_to_b, ' -> ', b_is_to_a) LIKE '" + query.type + "%' AND a_is_to_b IN ('Sibling', 'Parent', " +
-        "'Aunt/Uncle', 'Child', 'Spouse/Partner', 'Other')";
+        "'Aunt/Uncle', 'Child', 'Spouse/Partner', 'Other', 'Patient')";
 
     console.log(sql);
 
@@ -6031,7 +6081,7 @@ app.get('/patient_barcode_data', function (req, res) {
 
         queryRaw(sql, function (patient) {
 
-            if(patient[0].length > 0) {
+            if (patient[0].length > 0) {
 
                 var result = {
                     npid: patient[0][0].npid,
@@ -6057,7 +6107,7 @@ app.get('/patient_barcode_data', function (req, res) {
 
 })
 
-app.get('/static_locations', function(req, res) {
+app.get('/static_locations', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -6067,13 +6117,13 @@ app.get('/static_locations', function(req, res) {
 
     var results = "";
 
-    for(var i = 0; i < locations.length; i++) {
+    for (var i = 0; i < locations.length; i++) {
 
         var loc = locations[i];
 
-        if(query.s && query.s.trim().length > 0) {
+        if (query.s && query.s.trim().length > 0) {
 
-            if(loc.match(query.s)) {
+            if (loc.match(query.s)) {
 
                 results += "<li>" + loc + "</li>";
 

@@ -30,7 +30,8 @@
         ["DTM Number", "Diabetes clinic number"],
         ["EPL Number", "Epilepsy clinic number"],
         ["AST Number", "Asthma clinic number"],
-        ["HTN Number", "Hypertension clinic number"]
+        ["HTN Number", "Hypertension clinic number"],
+        ["GDN Number", "Guardian number"]
     ],
     "person_attribute_types": [
         ["HTS Provider ID", "HTS service provider clinic code"]
