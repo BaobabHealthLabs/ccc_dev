@@ -11,7 +11,7 @@
 
     var socket = io.connect('/');
     socket.on('stats', function(data) {
-        console.log('Connected clients on ' + data.id + ':', data.numClients);
+        // console.log('Connected clients on ' + data.id + ':', data.numClients);
     });
 
     socket.emit("init", {id: id});
@@ -31,7 +31,6 @@
         });
 
         nsp.on('kickout ' + id, function(data){
-            // console.log(data);
 
             user.logout();
 
@@ -40,8 +39,6 @@
         socket.emit('demographics', {id: id});
 
         nsp.on('demographics', function(data){
-
-            // console.log(data);
 
             var json = JSON.parse(data);
 

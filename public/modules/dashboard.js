@@ -1268,6 +1268,14 @@ var dashboard = ({
                 id: "data.relationship_type",
                 ajaxURL: dashboard.settings.relationshipTypePath
             },
+            "Phone Number": {
+                tt_pageStyleClass: "NumbersWithUnknown nota",
+                validationRule: "^0\\d{7}$|Unknown|Not Available|^0\\d{9}$|^N\\/A$",
+                validationMessage: "Not a valid phone number",
+                field_type: "number",
+                optional: true
+
+            },
             "Select or Create New Person": {
                 id: "selected_patient",
                 name: "data.relation_id",
