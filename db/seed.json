@@ -14,21 +14,17 @@
         ["EPILEPSY VISIT","Epilepsy visit"],
         ["OUTCOME", "Outcome encounter"],
         ["MEDICAL HISTORY", "Medical history encounter"],
-        ["VITALS", "Vitals encounter"],
         ["LAB RESULTS", "Lab results encounter"],
-        ["COMPLICATIONS", "Complications encounter"],
         ["DIABETES INITIAL QUESTIONS", "Diabetes clinic initial questions encounter"],
         ["OUTCOME", "Visit patient outcome encounter"],
         ["MEDICAL HISTORY", "Patient medical history encounter"],
         ["DIABETES HISTORY", "Diabetes patient history"],
         ["PAST DIABETES MEDICAL HISTORY", "Past diabetes patient medical history"],
         ["GENERAL HEALTH", "Patient general health encounter"],
-        ["VITALS", "Patient vitals encounter"]
-        ["LAB RESULTS", "Patient lab results"],
+        ["VITALS", "Patient vitals encounter"],
         ["COMPLICATIONS", "Patient complications encounter"],
         ["TREATMENTS", "Patient treatments encounter"],
-        ["HIV/ART STATUS", "Patient HIV/ART status encounter"],
-        ["APPOINTMENTS", "Patient appointments encounter"]
+        ["HIV/ART STATUS", "Patient HIV/ART status encounter"]
     ],
     "patient_identifier_types": [
         ["DTM Number", "Diabetes clinic number"],
