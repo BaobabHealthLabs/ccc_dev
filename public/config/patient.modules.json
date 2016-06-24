@@ -71,7 +71,8 @@
         "tasks": {
             "Client Registration": "javascript:dashboard.navPanel('/spec/patient_registration.spec')",
             "Patient Overview": "javascript:dashboard.navPanel('/spec/asthma/patient_overview.spec')",
-            "Asthma Visit": "javascript:dashboard.navPanel('/spec/asthma/visit.spec')"
+            "Asthma Visit": "javascript:dashboard.navPanel('/spec/asthma/visit.spec')",
+            "Next Appointment": "javascript:dashboard.navPanel('/spec/asthma/appointment.spec')"
 
         },
         "program": "ASTHMA PROGRAM",
@@ -86,12 +87,16 @@
             },
             "Asthma Visit": {
                 "encounter": "ASTHMA VISIT"
+            },
+            "Next Appointment" :{
+            	"encounter":"APPOINTMENT"
             }
         },
         "workflow": [
             "Client Registration",
             "Patient Overview",
-            "Asthma Visit"
+            "Asthma Visit",
+            "Next Appointment"
         ],
         "clinicPrefix": "AST"
     },
@@ -108,7 +113,8 @@
             "Post-ictal Features": "javascript:dashboard.navPanel('/spec/epilepsy/post_ictal_features.spec')",
             "Triggers": "javascript:dashboard.navPanel('/spec/epilepsy/triggers.spec')",
             "Patient Overview": "javascript:dashboard.navPanel('/spec/epilepsy/patient_overview.spec')",
-            "Epilepsy visit": "javascript:dashboard.navPanel('/spec/epilepsy/visit.spec')"
+            "Epilepsy visit": "javascript:dashboard.navPanel('/spec/epilepsy/visit.spec')",
+            "Next Appointment": "javascript:dashboard.navPanel('/spec/asthma/appointment.spec')"
 
  
         },
@@ -150,6 +156,9 @@
             }
             ,"Epilepsy visit" :{
             	"encounter" :"EPILEPSY VISIT"
+            },
+            "Next Appointment" :{
+            	"encounter" : "APPOINTMENT"
             }
         },
         "workflow": [
