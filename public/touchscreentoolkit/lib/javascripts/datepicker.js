@@ -765,13 +765,13 @@ var datePicker = ({
 
                         if (datePicker.$("text1-0") && datePicker.$("text1-0").value.trim().length <= 0) {
 
-                            if(datePicker.$("btn5-0")) {
+                            if (datePicker.$("btn5-0")) {
 
                                 datePicker.$("btn5-0").className = "datePickerGray datePickerButton";
 
                             }
 
-                            if(datePicker.$("btn5-1")) {
+                            if (datePicker.$("btn5-1")) {
 
                                 datePicker.$("btn5-1").className = "datePickerGray datePickerButton";
 
@@ -779,13 +779,13 @@ var datePicker = ({
 
                         } else {
 
-                            if(datePicker.$("btn5-0")) {
+                            if (datePicker.$("btn5-0")) {
 
                                 datePicker.$("btn5-0").className = "datePickerBlue datePickerButton";
 
                             }
 
-                            if(datePicker.$("btn5-1")) {
+                            if (datePicker.$("btn5-1")) {
 
                                 datePicker.$("btn5-1").className = "datePickerBlue datePickerButton";
 
@@ -794,13 +794,13 @@ var datePicker = ({
                             var date = ((new Date()).getFullYear() - parseInt(datePicker.$("text1-0").value.trim())) +
                                 "-07-15";
 
-                            if(datePicker.seedDate) {
+                            if (datePicker.seedDate) {
 
                                 datePicker.seedDate.value = date;
 
                             }
 
-                            if(datePicker.estimate) {
+                            if (datePicker.estimate) {
 
                                 datePicker.estimate.value = 1;
 
@@ -837,7 +837,7 @@ var datePicker = ({
         label.style.padding = "5px";
         label.style.color = "black";
 
-        if(document.getElementById("date.picker.div")) {
+        if (document.getElementById("date.picker.div")) {
 
             document.getElementById("date.picker.div").appendChild(label);
 
@@ -1507,7 +1507,7 @@ var datePicker = ({
 
                     }
 
-                    switch(j) {
+                    switch (j) {
 
                         case 0:
                         case 1:
@@ -1584,7 +1584,7 @@ var datePicker = ({
         label.style.padding = "5px";
         label.style.color = "black";
 
-        if(document.getElementById("date.picker.div")) {
+        if (document.getElementById("date.picker.div")) {
 
             document.getElementById("date.picker.div").appendChild(label);
 
@@ -1608,68 +1608,68 @@ var datePicker = ({
 
         this.targetValue = this.seedDate.value;
 
-        if(datePicker.$("nextButton")) {
+        this.buildControl();
+
+        if (!datePicker.seedDate.getAttribute("optional")) {
 
             var currentClass = datePicker.$("nextButton").className;
 
             datePicker.$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
 
-        }
+            setInterval(function () {
 
-        this.buildControl();
+                if (datePicker.$("text1-0") && datePicker.$("text1-1") && datePicker.$("text1-2") && datePicker.$("text1-3") &&
+                    datePicker.$("text1-5") && datePicker.$("text1-7") && datePicker.$("text1-8")) {
 
-        setInterval(function () {
+                    console.log((datePicker.$("text1-0").value.trim().length <= 0 || datePicker.$("text1-1").value.trim().length <= 0 ||
+                        datePicker.$("text1-2").value.trim().length <= 0 || datePicker.$("text1-3").value.trim().length <= 0 ||
+                        datePicker.$("text1-5").value.trim().length <= 0 || datePicker.$("text1-7").value.trim().length <= 0 ||
+                        datePicker.$("text1-8").value.trim().length <= 0));
 
-            if(datePicker.$("text1-0") && datePicker.$("text1-1") && datePicker.$("text1-2") && datePicker.$("text1-3") &&
-                datePicker.$("text1-5") && datePicker.$("text1-7") && datePicker.$("text1-8")) {
+                    if (datePicker.$("text1-0").value.trim().length <= 0 || datePicker.$("text1-1").value.trim().length <= 0 ||
+                        datePicker.$("text1-2").value.trim().length <= 0 || datePicker.$("text1-3").value.trim().length <= 0 ||
+                        datePicker.$("text1-5").value.trim().length <= 0 || datePicker.$("text1-7").value.trim().length <= 0 ||
+                        datePicker.$("text1-8").value.trim().length <= 0) {
 
-                console.log((datePicker.$("text1-0").value.trim().length <= 0 || datePicker.$("text1-1").value.trim().length <= 0 ||
-                    datePicker.$("text1-2").value.trim().length <= 0 || datePicker.$("text1-3").value.trim().length <= 0 ||
-                    datePicker.$("text1-5").value.trim().length <= 0 || datePicker.$("text1-7").value.trim().length <= 0 ||
-                    datePicker.$("text1-8").value.trim().length <= 0));
+                        if (datePicker.seedDate) {
 
-                if(datePicker.$("text1-0").value.trim().length <= 0 || datePicker.$("text1-1").value.trim().length <= 0 ||
-                    datePicker.$("text1-2").value.trim().length <= 0 || datePicker.$("text1-3").value.trim().length <= 0 ||
-                    datePicker.$("text1-5").value.trim().length <= 0 || datePicker.$("text1-7").value.trim().length <= 0 ||
-                    datePicker.$("text1-8").value.trim().length <= 0) {
+                            datePicker.seedDate.value = "";
 
-                    if(datePicker.seedDate) {
-
-                        datePicker.seedDate.value = "";
+                        }
 
                     }
 
                 }
 
-            }
+                if (datePicker.seedDate.value.trim() != datePicker.targetValue.trim() && datePicker.seedDate.value.trim().length > 0) {
 
-            if(datePicker.seedDate.value.trim() != datePicker.targetValue.trim() && datePicker.seedDate.value.trim().length > 0) {
+                    datePicker.targetValue = datePicker.seedDate.value.trim();
 
-                datePicker.targetValue = datePicker.seedDate.value.trim();
+                    var testDate = isNaN((new Date(datePicker.seedDate.value.trim())).getFullYear());
 
-                var testDate = isNaN((new Date(datePicker.seedDate.value.trim())).getFullYear());
+                    if (!testDate && datePicker.seedDate.value.trim().match(/^\d{4}\-\d{2}-\d{2}/) && datePicker.$("nextButton")) {
 
-                if (!testDate && datePicker.seedDate.value.trim().match(/^\d{4}\-\d{2}-\d{2}/) && datePicker.$("nextButton")) {
+                        var currentClass = datePicker.$("nextButton").className;
 
-                    var currentClass = datePicker.$("nextButton").className;
+                        datePicker.$("nextButton").className = currentClass.replace(/gray/i, "green");
 
-                    datePicker.$("nextButton").className = currentClass.replace(/gray/i, "green");
+                    }
+
+                } else if (datePicker.seedDate.value.trim().length <= 0) {
+
+                    if (datePicker.$("nextButton")) {
+
+                        var currentClass = datePicker.$("nextButton").className;
+
+                        datePicker.$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
+
+                    }
 
                 }
 
-            } else if(datePicker.seedDate.value.trim().length <= 0) {
+            }, 100);
 
-                if(datePicker.$("nextButton")) {
-
-                    var currentClass = datePicker.$("nextButton").className;
-
-                    datePicker.$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
-
-                }
-
-            }
-
-        }, 100);
+        }
 
     }
 
