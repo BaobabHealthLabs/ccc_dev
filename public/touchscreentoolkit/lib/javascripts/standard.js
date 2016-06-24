@@ -1348,6 +1348,18 @@ function gotoPage(destPage, validate, navback) {
 
     var navback = (navback ? navback : false);
 
+    if(navback) {
+
+        if(__$("nextButton")) {
+
+            var currentClass = __$("nextButton").className;
+
+            __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+        }
+
+    }
+
     tstMultipleSelected[tstCurrentPage] = {};
 
     //	tt_BeforeUnload
@@ -1955,6 +1967,15 @@ function gotoNextPage() {
     if (__$("category")) {
         document.body.removeChild(__$("category"));
     }
+
+    if(__$("nextButton")) {
+
+        var currentClass = __$("nextButton").className;
+
+        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+    }
+
     gotoPage(tstCurrentPage + 1, true);
 }
 
