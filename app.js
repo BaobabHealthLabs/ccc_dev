@@ -6057,6 +6057,40 @@ app.get('/patient_barcode_data', function (req, res) {
 
 })
 
+app.get('/static_locations', function(req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var locations = require(__dirname + "/config/locations");
+
+    var results = "";
+
+    for(var i = 0; i < locations.length; i++) {
+
+        var loc = locations[i];
+
+        if(query.s && query.s.trim().length > 0) {
+
+            if(loc.match(query.s)) {
+
+                results += "<li>" + loc + "</li>";
+
+            }
+
+        } else {
+
+            results += "<li>" + loc + "</li>";
+
+        }
+
+    }
+
+    res.send(results);
+
+})
+
 app.get('/patient/:id', function (req, res) {
     res.sendFile(__dirname + '/public/views/patient.html');
 });
