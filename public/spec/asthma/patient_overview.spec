@@ -1,4 +1,4 @@
-P.1. ASTHMA PATIENT OVERVIEW [program:: ASTHMA PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;asthma]
+P.1. ASTHMA PATIENT OVERVIEW [program:: ASTHMA PROGRAM$$ scope:: EXISTS$$includejs:: touchScreenToolkit;asthma]
 Q.1.1. Diagnosis [pos:: 0$$id:: diagnosis$$ multiple:: multiple$$tt_beforeUnLoad::loadCheckConditions()]
 O.1.1.1. Asthma
 O.1.1.2. COPD
