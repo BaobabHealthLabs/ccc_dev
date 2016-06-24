@@ -665,7 +665,8 @@ var datePicker = ({
 
         var grid = [
             [
-                ["Age Estimate", 3, "font-weight: normal; font-size: 30px; padding: 8px;"]
+                [(datePicker.seedDate.getAttribute("estimate_label") ? datePicker.seedDate.getAttribute("estimate_label") :
+                    "Age Estimate"), 3, "font-weight: normal; font-size: 30px; padding: 8px;"]
             ],
             [
                 [undefined, 3, "width: 210px; height: 30px; text-align: center; font-size: 24px; min-height: 50px;", undefined, undefined, true]
