@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Statistics</title>
+    <title>Epilepsy Card</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
 </head>
 <style type="text/css">
@@ -25,6 +25,21 @@
         padding: 0.4em;
         text-align: left;
         
+    }
+    td.rotate {
+      /* Something you can count on */
+      height: 110px;
+      white-space: nowrap;
+    }
+
+    td.rotate > div {
+      transform: 
+        translate(0px, 51px)
+        rotate(270deg);
+      width: 30px;
+    }
+    td.rotate > div > span {
+      padding: 5px 10px;
     }
     
 </style>
@@ -117,5 +132,163 @@
         <td colspan="4"></td>
     </tr>
 </table>
+<table width="100%" class="card">
+    <tr>
+        <td rowspan="2">Visit Date</td>
+        <td>Planed visit?</td>
+        <td>WT</td>
+        <td>Day sx</td>
+        <td>Night sx</td>
+        <td colspan="4">Beta-agonist inhaler use: frequesncy</td>
+        <td>Steroid inhaler daily?</td>
+        <td>Smoking</td>
+        <td>Passive</td>
+        <td>Indoor cooking</td>
+        <td>Exacerbation today?</td>
+        <td colspan="6">Asthma severity</td>
+        <td colspan="4">Treatment</td>
+        <td rowspan="2">Comments</td>
+        <td rowspan="2">Next Appointment</td>
+    </tr>
+     <tr>
+        <td>Y/N</td>
+        <td>kg</td>
+        <td>#/week</td>
+        <td>#/week</td>
+        <td class="rotate"><div><span>day</span></div></td>
+        <td class="rotate"><div><span>wk</span></div></td>
+        <td class="rotate"><div><span>mo</span></td>
+        <td class="rotate"><div><span>yr</span></div></td>
+        <td>Y/N</td>
+        <td>#cig/day</td>
+        <td>Y/N</td>
+        <td>Y/N</td>
+        <td>Y/N</td>
+        <td class="rotate"><div><span>Not Asthma</span></div></td>
+        <td class="rotate"><div><span>Intermittent</span></div></td>
+        <td class="rotate"><div><span>Mild persistent</span></div></td>
+        <td class="rotate"><div><span>Mod persistent</span></div></td>
+        <td class="rotate"><div><span>Severe persistent</span></div></td>
+        <td class="rotate"><div><span>Uncontrolled</span></div></td>
+        <td class="rotate"><div><span>Inhaler B-agonist</span></div></td>
+        <td class="rotate"><div><span>Inhaled steroid</span></div></td>
+        <td class="rotate"><div><span>Oral steroid</span></div></td>
+        <td class="rotate"><div><span>Other</span></div></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+<table width="100%" style="margin-bottom:2%;margin-top:2%">
+    <tr>
+        <td>Notes</td>
+        <td colspan="2"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+    </tr>
+</table>
+<div width="100" style="margin-bottom:5%">
+<table class="card" style="width:48%;float:left;margin-top:0%;margin-right:2%">
+    <tr>
+        <th colspan="5">Peak Flow / Spirometry</th>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Date</td>
+        <td>Results</td>
+    </tr>
+    <tr>
+        <td>Initial</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="2">Follow ups <i>see criteria</i></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+<table class="card" style="width:48%;margin-top:2%">
+    <tr><th colspan="5">Hospitalization for Lung Disease</th></tr>
+    <tr>
+        <td>Date</td>
+        <td>Length of Stay (days)</td>
+        <td>Reason for Admission</td>
+        <td>Discharge Diagnosis</td>
+        <td>Discharge Medications</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+</div>
 </body>
 </html>

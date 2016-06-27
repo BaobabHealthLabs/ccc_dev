@@ -26,6 +26,23 @@
         text-align: left;
         
     }
+    td.rotate {
+      /* Something you can count on */
+      height: 140px;
+      white-space: nowrap;
+    }
+
+    td.rotate > div {
+      transform: 
+        /* Magic Numbers */
+        translate(0px, 51px)
+        /* 45 is really 360 - 90 */
+        rotate(270deg);
+      width: 30px;
+    }
+    td.rotate > div > span {
+      padding: 5px 10px;
+    }
     
 </style>
 <body style="text-align: center; margin: 20px;" oncontextmenu="return false;">
@@ -118,5 +135,91 @@
         <td colspan="6">Outcome: Discharge / Default /Stop Tx /Transfer Out Date</td>
     </tr>
 </table>
+<table width="100%" style="margin-bottom:2%;margin-top:2%">
+    <tr>
+        <td>Notes</td>
+        <td colspan="2"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+    </tr>
+</table>
+<div width="100" style="margin-bottom:5%">
+<table class="card" style="width:48%;float:left;margin-top:0%;margin-right:2%">
+    <tr>
+        <th colspan="5">Peak Flow / Spirometry</th>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Date</td>
+        <td>Results</td>
+    </tr>
+    <tr>
+        <td>Initial</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="2">Follow ups <i>see criteria</i></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+<table class="card" style="width:48%;margin-top:2%">
+    <tr><th colspan="5">Hospitalization for Lung Disease</th></tr>
+    <tr>
+        <td>Date</td>
+        <td>Length of Stay (days)</td>
+        <td>Reason for Admission</td>
+        <td>Discharge Diagnosis</td>
+        <td>Discharge Medications</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+</div>
 </body>
 </html>
