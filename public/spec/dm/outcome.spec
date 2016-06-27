@@ -1,4 +1,4 @@
-P.1. UPDATE OUTCOME [program:: DIABETES PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;dm]
+P.1. UPDATE OUTCOME [program:: DIABETES PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 
 Q.1.1. Discharge outcome [pos:: 0$$ concept:: OUTCOME]
 O.1.1.1. Alive
