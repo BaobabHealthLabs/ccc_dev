@@ -1,4 +1,4 @@
-P.1. DIABETES INITIAL QUESTIONS [program:: DIABETES PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;dm]
+P.1. DIABETES INITIAL QUESTIONS [program:: DIABETES PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 
 Q.1.1. Is the patient a: [pos:: 0$$ concept:: TYPE OF PATIENT$$ id:: patient_type$$ condition:: !existingDiabetesPatient()]
 O.1.1.1. New Patient

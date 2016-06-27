@@ -3595,6 +3595,18 @@ var dashboard = ({
 
     },
 
+    loadCustomScript: function (path, target) {
+
+        if (!dashboard.$(target))
+            return;
+
+        var script = document.createElement("script");
+        script.src = path;
+
+        dashboard.$(target).appendChild(script);
+
+    },
+
     init: function (dataPath, modulesPath, settingsPath) {
 
         this['selectedProgram'] = null;
