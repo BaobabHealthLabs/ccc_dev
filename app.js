@@ -1,25 +1,25 @@
-// var app = require('express')();
-var express = require('express');
-var cookieParser = require('cookie-parser');
+// var app = require("express")();
+var express = require("express");
+var cookieParser = require("cookie-parser");
 var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-var portfinder = require('portfinder');
-var async = require('async');
+var server = require("http").Server(app);
+var io = require("socket.io")(server);
+var portfinder = require("portfinder");
+var async = require("async");
 var uuid = require("node-uuid");
-var bodyParser = require('body-parser');
-var Mutex = require('Mutex');
-var md5 = require('md5');
+var bodyParser = require("body-parser");
+var Mutex = require("Mutex");
+var md5 = require("md5");
 var randomstring = require("randomstring");
 
-var mutex = new Mutex('htc_lock');
+var mutex = new Mutex("htc_lock");
 
-var url = require('url');
+var url = require("url");
 
 var site = require(__dirname + "/config/site.json");
 
-app.set('views', __dirname + '/views');
-app.use(express.static(__dirname + '/public'));
+app.set("views", __dirname + "/views");
+app.use(express.static(__dirname + "/public"));
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -156,11 +156,11 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
         }
 
         // Year runs from July 1 to June 30
-        var yr = ((new Date()).getMonth() < months[site['reset month'].toLowerCase()] ? (new Date()).getFullYear() - 1 :
+        var yr = ((new Date()).getMonth() < months[site["reset month"].toLowerCase()] ? (new Date()).getFullYear() - 1 :
             ((new Date()).getFullYear()));
 
-        var sql = "SELECT property_value FROM global_property WHERE property = '" + prefix.trim().toLowerCase() +
-            ".id.counter." + yr + "'";
+        var sql = "SELECT property_value FROM global_property WHERE property = \"" + prefix.trim().toLowerCase() +
+            ".id.counter." + yr + "\"";
 
         queryRaw(sql, function (res) {
 
@@ -170,18 +170,18 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
 
                 nextId = parseInt(res[0][0].property_value) + 1;
 
-                sql = "UPDATE global_property SET property_value = '" + nextId + "' WHERE property = '" +
-                    prefix.trim().toLowerCase() + ".id.counter." + yr + "'";
+                sql = "UPDATE global_property SET property_value = \"" + nextId + "\" WHERE property = \"" +
+                    prefix.trim().toLowerCase() + ".id.counter." + yr + "\"";
 
                 queryRaw(sql, function (res) {
 
                     var id = prefix.trim().toUpperCase() + "-" + nextId + "-" + yr;
 
                     var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
-                        "creator, date_created, uuid) VALUES ('" + patientId + "', '" + id +
-                        "', (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = '" +
-                        prefix.trim() + " Number'), (SELECT location_id FROM location WHERE name = '" + location +
-                        "'), (SELECT user_id FROM users WHERE username = '" + username + "'), NOW(), '" + uuid.v1() + "')";
+                        "creator, date_created, uuid) VALUES (\"" + patientId + "\", \"" + id +
+                        "\", (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = \"" +
+                        prefix.trim() + " Number\"), (SELECT location_id FROM location WHERE name = \"" + location +
+                        "\"), (SELECT user_id FROM users WHERE username = \"" + username + "\"), NOW(), \"" + uuid.v1() + "\")";
 
                     queryRaw(sql, function (res) {
 
@@ -197,19 +197,19 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
 
             } else {
 
-                sql = "INSERT INTO global_property (property, property_value, uuid) VALUES ('" +
-                    prefix.trim().toLowerCase() + ".id.counter." + yr + "', '" +
-                    nextId + "', '" + uuid.v1() + "')";
+                sql = "INSERT INTO global_property (property, property_value, uuid) VALUES (\"" +
+                    prefix.trim().toLowerCase() + ".id.counter." + yr + "\", \"" +
+                    nextId + "\", \"" + uuid.v1() + "\")";
 
                 queryRaw(sql, function (res) {
 
                     var id = prefix.trim().toUpperCase() + "-" + nextId + "-" + yr;
 
                     var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
-                        "creator, date_created, uuid) VALUES ('" + patientId + "', '" + id +
-                        "', (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = '" +
-                        prefix.trim() + " Number'), (SELECT location_id FROM location WHERE name = '" + location +
-                        "'), (SELECT user_id FROM users  WHERE username = '" + username + "'), NOW(), '" + uuid.v1() + "')";
+                        "creator, date_created, uuid) VALUES (\"" + patientId + "\", \"" + id +
+                        "\", (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = \"" +
+                        prefix.trim() + " Number\"), (SELECT location_id FROM location WHERE name = \"" + location +
+                        "\"), (SELECT user_id FROM users  WHERE username = \"" + username + "\"), NOW(), \"" + uuid.v1() + "\")";
 
                     queryRaw(sql, function (res) {
 
@@ -244,55 +244,55 @@ function padZeros(number, positions) {
     return padded;
 }
 
-io.on('connection', function (socket) {
+io.on("connection", function (socket) {
     numClients++;
-    io.emit('stats', { numClients: numClients, id: "ALL" });
+    io.emit("stats", { numClients: numClients, id: "ALL" });
 
-    socket.on('disconnect', function (me) {
+    socket.on("disconnect", function (me) {
 
         numClients--;
-        io.emit('stats', { numClients: numClients, id: "ALL" });
+        io.emit("stats", { numClients: numClients, id: "ALL" });
 
     });
 
-    socket.on('init', function (custom) {
+    socket.on("init", function (custom) {
 
         verifyPatientById(custom.id, function (valid) {
 
             if (!valid) {
 
-                socket.emit('reject', {message: "No match found!"});
+                socket.emit("reject", {message: "No match found!"});
 
                 return;
 
             }
 
-            nsp[custom.id] = io.of('/' + custom.id);
-            nsp[custom.id].on('connection', function (me) {
+            nsp[custom.id] = io.of("/" + custom.id);
+            nsp[custom.id].on("connection", function (me) {
 
                 var id = me.id.match(/\/([^\#]+)/)[1];
 
             });
 
-            nsp[custom.id].on('disconnect', function (me) {
+            nsp[custom.id].on("disconnect", function (me) {
 
                 var id = me.id.match(/\/([^\#]+)/)[1];
 
             });
 
-            socket.on('demographics', function (data) {
+            socket.on("demographics", function (data) {
 
                 updateUserView(data);
 
             });
 
-            socket.on('click', function (data) {
+            socket.on("click", function (data) {
 
-                nsp[data.id].emit('hi', "Someone says: " + data.message + " on " + data.id);
+                nsp[data.id].emit("hi", "Someone says: " + data.message + " on " + data.id);
 
             })
 
-            socket.on('update', function (data) {
+            socket.on("update", function (data) {
 
                 console.log(JSON.stringify(data));
 
@@ -300,8 +300,8 @@ io.on('connection', function (socket) {
 
                     if (unathorized) {
 
-                        nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
-                            data.data.patient_id + '!');
+                        nsp[custom.id].emit("kickout " + data.data.patient_id, "Unathorized connection detected. Locking " +
+                            data.data.patient_id + "!");
 
                         return;
 
@@ -315,7 +315,7 @@ io.on('connection', function (socket) {
 
             })
 
-            socket.on('void', function (data) {
+            socket.on("void", function (data) {
 
                 console.log(JSON.stringify(data));
 
@@ -323,8 +323,8 @@ io.on('connection', function (socket) {
 
                     if (unathorized) {
 
-                        nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
-                            data.data.patient_id + '!');
+                        nsp[custom.id].emit("kickout " + data.data.patient_id, "Unathorized connection detected. Locking " +
+                            data.data.patient_id + "!");
 
                         return;
 
@@ -338,7 +338,7 @@ io.on('connection', function (socket) {
 
             })
 
-            socket.on('relationship', function (data) {
+            socket.on("relationship", function (data) {
 
                 console.log(JSON.stringify(data));
 
@@ -346,8 +346,8 @@ io.on('connection', function (socket) {
 
                     if (unathorized) {
 
-                        nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
-                            data.data.patient_id + '!');
+                        nsp[custom.id].emit("kickout " + data.data.patient_id, "Unathorized connection detected. Locking " +
+                            data.data.patient_id + "!");
 
                         return;
 
@@ -361,9 +361,9 @@ io.on('connection', function (socket) {
 
             })
 
-            nsp[custom.id].emit('hi ' + custom.id, 'New connection in ' + custom.id + '!');
+            nsp[custom.id].emit("hi " + custom.id, "New connection in " + custom.id + "!");
 
-            socket.emit('newConnection', {id: custom.id});
+            socket.emit("newConnection", {id: custom.id});
 
         });
 
@@ -373,7 +373,7 @@ io.on('connection', function (socket) {
 
 function verifyPatientById(id, callback) {
 
-    var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + id + "'";
+    var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = \"" + id + "\"";
 
     queryRaw(sql, function (patient) {
 
@@ -419,8 +419,8 @@ function saveRelationship(params, callback) {
 
                 var relationship = data.relationship_type.split(" - ");
 
-                var sql = "SELECT relationship_type_id FROM relationship_type WHERE a_is_to_b = '" + relationship[0].trim() +
-                    "' AND b_is_to_a = '" + relationship[1].trim() + "'";
+                var sql = "SELECT relationship_type_id FROM relationship_type WHERE a_is_to_b = \"" + relationship[0].trim() +
+                    "\" AND b_is_to_a = \"" + relationship[1].trim() + "\"";
 
                 console.log(sql);
 
@@ -430,8 +430,8 @@ function saveRelationship(params, callback) {
 
                     relationship_type_id = relationshipType[0][0].relationship_type_id;
 
-                    var sql = "SELECT relationship_type_id FROM relationship_type WHERE a_is_to_b = '" + relationship[1].trim() +
-                        "' AND b_is_to_a = '" + relationship[0].trim() + "'";
+                    var sql = "SELECT relationship_type_id FROM relationship_type WHERE a_is_to_b = \"" + relationship[1].trim() +
+                        "\" AND b_is_to_a = \"" + relationship[0].trim() + "\"";
 
                     console.log(sql);
 
@@ -457,9 +457,9 @@ function saveRelationship(params, callback) {
 
                 if (!data.relation_id || (data.relation_id && data.relation_id.trim().length <= 0)) {
 
-                    var sql = "INSERT INTO person (gender, creator, date_created, uuid) VALUES ('" +
-                        data.gender.substring(0, 1).toUpperCase() + "', (SELECT user_id FROM users WHERE username = '" +
-                        data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                    var sql = "INSERT INTO person (gender, creator, date_created, uuid) VALUES (\"" +
+                        data.gender.substring(0, 1).toUpperCase() + "\", (SELECT user_id FROM users WHERE username = \"" +
+                        data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
                     console.log(sql);
 
@@ -468,22 +468,22 @@ function saveRelationship(params, callback) {
                         person_id = person[0].insertId;
 
                         var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, " +
-                            "uuid) VALUES ('" + person_id + "', '" + data.first_name + "', '" + data.last_name + "', " +
-                            "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                            "uuid) VALUES (\"" + person_id + "\", \"" + data.first_name + "\", \"" + data.last_name + "\", " +
+                            "(SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
                         console.log(sql);
 
                         queryRaw(sql, function (name) {
 
-                            var sql = "INSERT INTO person_address (person_id, creator, date_created, uuid) VALUES ('" + person_id +
-                                "', " + "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                            var sql = "INSERT INTO person_address (person_id, creator, date_created, uuid) VALUES (\"" + person_id +
+                                "\", " + "(SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
                             console.log(sql);
 
                             queryRaw(sql, function (address) {
 
-                                var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES ('" +
-                                    person_id + "', (SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW())";
+                                var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES (\"" +
+                                    person_id + "\", (SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW())";
 
                                 console.log(sql);
 
@@ -512,7 +512,7 @@ function saveRelationship(params, callback) {
 
                 } else {
 
-                    var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + data.relation_id.trim() + "'";
+                    var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = \"" + data.relation_id.trim() + "\"";
 
                     console.log(sql);
 
@@ -530,7 +530,7 @@ function saveRelationship(params, callback) {
 
             function (iCallback) {
 
-                var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + data.patient_id.trim() + "'";
+                var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = \"" + data.patient_id.trim() + "\"";
 
                 console.log(sql);
 
@@ -547,8 +547,8 @@ function saveRelationship(params, callback) {
             function (iCallback) {
 
                 var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
-                    "'" + person_id + "', '" + relationship_type_id + "', '" + relation_id + "', " +
-                    "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                    "\"" + person_id + "\", \"" + relationship_type_id + "\", \"" + relation_id + "\", " +
+                    "(SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
                 console.log(sql);
 
@@ -559,8 +559,8 @@ function saveRelationship(params, callback) {
                     if (reverse_relationship_type_id) {
 
                         var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
-                            "'" + relation_id + "', '" + reverse_relationship_type_id + "', '" + person_id + "', " +
-                            "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                            "\"" + relation_id + "\", \"" + reverse_relationship_type_id + "\", \"" + person_id + "\", " +
+                            "(SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
                         console.log(sql);
 
@@ -585,10 +585,10 @@ function saveRelationship(params, callback) {
                 if (data["Phone Number"]) {
 
                     var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
-                        "creator, date_created, uuid) VALUES ('" + relation_id + "', '" + data["Phone Number"] +
-                        "', (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
-                        "'Cell Phone Number' LIMIT 1), '" + user_id + "', NOW(), '" +
-                        uuid.v1() + "')";
+                        "creator, date_created, uuid) VALUES (\"" + relation_id + "\", \"" + data["Phone Number"] +
+                        "\", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
+                        "\"Cell Phone Number\" LIMIT 1), \"" + user_id + "\", NOW(), \"" +
+                        uuid.v1() + "\")";
 
                     queryRaw(sql, function (res) {
 
@@ -641,19 +641,19 @@ function voidConcept(data, callback) {
 
         console.log(Object.keys(data));
 
-        var sql = "SELECT encounter_id FROM obs WHERE voided = 0 AND uuid = '" + data.uuid + "'";
+        var sql = "SELECT encounter_id FROM obs WHERE voided = 0 AND uuid = \"" + data.uuid + "\"";
 
         queryRaw(sql, function (encounter) {
 
-            var sql = "UPDATE obs SET voided = 1, voided_by = (SELECT user_id FROM users WHERE username = '" + data.username +
-                "'), date_voided = NOW(), void_reason = 'Patient dashboard data void.' WHERE uuid = '" + data.uuid + "'";
+            var sql = "UPDATE obs SET voided = 1, voided_by = (SELECT user_id FROM users WHERE username = \"" + data.username +
+                "\"), date_voided = NOW(), void_reason = \"Patient dashboard data void.\" WHERE uuid = \"" + data.uuid + "\"";
 
             queryRaw(sql, function (obs) {
 
                 console.log(obs);
 
-                var sql = "SELECT COUNT(obs_id) AS total FROM obs WHERE voided = 0 AND encounter_id = '" +
-                    encounter[0][0].encounter_id + "'";
+                var sql = "SELECT COUNT(obs_id) AS total FROM obs WHERE voided = 0 AND encounter_id = \"" +
+                    encounter[0][0].encounter_id + "\"";
 
                 console.log(sql);
 
@@ -663,9 +663,9 @@ function voidConcept(data, callback) {
 
                     if (total[0][0].total <= 0) {
 
-                        var sql = "UPDATE encounter SET voided = 1, void_reason = 'No more existing active obs', " +
-                            "voided_by = (SELECT user_id FROM users WHERE username = '" + data.username +
-                            "'), date_voided = NOW() WHERE encounter_id = '" + encounter[0][0].encounter_id + "'";
+                        var sql = "UPDATE encounter SET voided = 1, void_reason = \"No more existing active obs\", " +
+                            "voided_by = (SELECT user_id FROM users WHERE username = \"" + data.username +
+                            "\"), date_voided = NOW() WHERE encounter_id = \"" + encounter[0][0].encounter_id + "\"";
 
                         console.log(sql);
 
@@ -715,7 +715,7 @@ function saveData(data, callback) {
 
                 var npid = data.data.patient_id;
 
-                var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + npid + "' AND voided = 0";
+                var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = \"" + npid + "\" AND voided = 0";
 
                 queryRaw(sql, function (res) {
 
@@ -731,8 +731,8 @@ function saveData(data, callback) {
             function (icallback) {
 
                 var sql = "SELECT patient_program_id FROM patient_program LEFT OUTER JOIN program ON program.program_id = " +
-                    "patient_program.program_id WHERE patient_id = '" + patient_id + "' AND voided = 0 AND program.name = '" +
-                    data.data.program + "'";
+                    "patient_program.program_id WHERE patient_id = \"" + patient_id + "\" AND voided = 0 AND program.name = \"" +
+                    data.data.program + "\"";
 
                 queryRaw(sql, function (res) {
 
@@ -750,16 +750,16 @@ function saveData(data, callback) {
                 if (!patient_program_id) {
 
                     var sql = "INSERT INTO patient_program (patient_id, program_id, date_enrolled, creator, date_created, " +
-                        "uuid, location_id) VALUES ('" + patient_id + "', (SELECT program_id FROM program WHERE name = '" +
-                        data.data.program + "'), NOW(), (SELECT user_id FROM users WHERE username = '" + data.data.userId +
-                        "'), NOW(), '" + uuid.v1() + "', (SELECT location_id FROM location WHERE name = '" +
-                        (data.data.location ? data.data.location : "Unknown") + "'))";
+                        "uuid, location_id) VALUES (\"" + patient_id + "\", (SELECT program_id FROM program WHERE name = \"" +
+                        data.data.program + "\"), NOW(), (SELECT user_id FROM users WHERE username = \"" + data.data.userId +
+                        "\"), NOW(), \"" + uuid.v1() + "\", (SELECT location_id FROM location WHERE name = \"" +
+                        (data.data.location ? data.data.location : "Unknown") + "\"))";
 
                     queryRaw(sql, function (res) {
 
                         var sql = "SELECT patient_program_id FROM patient_program LEFT OUTER JOIN program ON program.program_id = " +
-                            "patient_program.program_id WHERE patient_id = '" + patient_id +
-                            "' AND voided = 0 AND program.name = '" + data.data.program + "'";
+                            "patient_program.program_id WHERE patient_id = \"" + patient_id +
+                            "\" AND voided = 0 AND program.name = \"" + data.data.program + "\"";
 
                         queryRaw(sql, function (res) {
 
@@ -784,10 +784,10 @@ function saveData(data, callback) {
 
                 var sql = "INSERT INTO encounter (encounter_type, patient_id, provider_id, location_id, encounter_datetime, " +
                     "creator, date_created, uuid, patient_program_id) VALUES ((SELECT encounter_type_id FROM encounter_type " +
-                    " WHERE name = '" + data.data.encounter_type + "'), '" + patient_id + "', (SELECT user_id FROM users " +
-                    "WHERE username = '" + data.data.userId + "'), (SELECT location_id FROM location WHERE name = '" +
-                    (data.data.location ? data.data.location : "Unknown") + "'), NOW(), (SELECT user_id FROM users WHERE " +
-                    "username = '" + data.data.userId + "'), NOW(), '" + uuid.v1() + "', '" + patient_program_id + "')";
+                    " WHERE name = \"" + data.data.encounter_type + "\"), \"" + patient_id + "\", (SELECT user_id FROM users " +
+                    "WHERE username = \"" + data.data.userId + "\"), (SELECT location_id FROM location WHERE name = \"" +
+                    (data.data.location ? data.data.location : "Unknown") + "\"), NOW(), (SELECT user_id FROM users WHERE " +
+                    "username = \"" + data.data.userId + "\"), NOW(), \"" + uuid.v1() + "\", \"" + patient_program_id + "\")";
 
                 queryRaw(sql, function (res) {
 
@@ -823,11 +823,11 @@ function saveData(data, callback) {
 
                         var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, obs_datetime, location_id, " +
                             category + "," +
-                            " creator, date_created, uuid) VALUES ('" + patient_id + "', (SELECT concept_id FROM concept_name " +
-                            "WHERE name = '" + concept + "' AND voided = 0 LIMIT 1), '" + encounter_id + "', NOW(), " +
-                            "(SELECT location_id FROM location WHERE name = '" + (data.data.location ? data.data.location :
-                            "Unknown") + "'), '" + data.data.obs[group][concept] + "', (SELECT user_id FROM users WHERE username = '" +
-                            data.data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                            " creator, date_created, uuid) VALUES (\"" + patient_id + "\", (SELECT concept_id FROM concept_name " +
+                            "WHERE name = \"" + concept + "\" AND voided = 0 LIMIT 1), \"" + encounter_id + "\", NOW(), " +
+                            "(SELECT location_id FROM location WHERE name = \"" + (data.data.location ? data.data.location :
+                            "Unknown") + "\"), \"" + data.data.obs[group][concept] + "\", (SELECT user_id FROM users WHERE username = \"" +
+                            data.data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
                         queryRaw(sql, function (res) {
 
@@ -882,8 +882,8 @@ function saveData(data, callback) {
 
                                     }
 
-                                    var sql = "UPDATE person SET birthdate = '" + dob + "', birthdate_estimated = 1 WHERE " +
-                                        "person_id = '" + patient_id + "'";
+                                    var sql = "UPDATE person SET birthdate = \"" + dob + "\", birthdate_estimated = 1 WHERE " +
+                                        "person_id = \"" + patient_id + "\"";
 
                                     queryRaw(sql, function (res) {
 
@@ -902,7 +902,7 @@ function saveData(data, callback) {
                                 var gender = String(data.data.obs[group][concept]).trim().substring(0, 1).toUpperCase();
 
 
-                                var sql = "UPDATE person SET gender = '" + gender + "' WHERE person_id = '" + patient_id + "'";
+                                var sql = "UPDATE person SET gender = \"" + gender + "\" WHERE person_id = \"" + patient_id + "\"";
 
                                 queryRaw(sql, function (res) {
 
@@ -915,7 +915,7 @@ function saveData(data, callback) {
                                 var firstName = String(data.data.obs[group][concept]).trim();
 
 
-                                var sql = "UPDATE person_name SET given_name = '" + firstName + "' WHERE person_id = '" + patient_id + "'";
+                                var sql = "UPDATE person_name SET given_name = \"" + firstName + "\" WHERE person_id = \"" + patient_id + "\"";
 
                                 queryRaw(sql, function (res) {
 
@@ -928,7 +928,7 @@ function saveData(data, callback) {
                                 var lastName = String(data.data.obs[group][concept]).trim();
 
 
-                                var sql = "UPDATE person_name SET family_name = '" + lastName + "' WHERE person_id = '" + patient_id + "'";
+                                var sql = "UPDATE person_name SET family_name = \"" + lastName + "\" WHERE person_id = \"" + patient_id + "\"";
 
                                 queryRaw(sql, function (res) {
 
@@ -940,13 +940,13 @@ function saveData(data, callback) {
 
                                 var currentDistrict = String(data.data.obs[group][concept]).trim();
 
-                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
+                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
 
                                 queryRaw(sql, function (address) {
 
-                                    var sql = "UPDATE person_address SET state_province = '" + currentDistrict +
-                                        "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
-                                        address[0][0].person_address_id + "'";
+                                    var sql = "UPDATE person_address SET state_province = \"" + currentDistrict +
+                                        "\" WHERE person_id = \"" + patient_id + "\" AND person_address_id = \"" +
+                                        address[0][0].person_address_id + "\"";
 
                                     queryRaw(sql, function (res) {
 
@@ -959,13 +959,13 @@ function saveData(data, callback) {
 
                                 var currentTA = String(data.data.obs[group][concept]).trim();
 
-                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
+                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
 
                                 queryRaw(sql, function (address) {
 
-                                    var sql = "UPDATE person_address SET township_division = '" + currentTA +
-                                        "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
-                                        address[0][0].person_address_id + "'";
+                                    var sql = "UPDATE person_address SET township_division = \"" + currentTA +
+                                        "\" WHERE person_id = \"" + patient_id + "\" AND person_address_id = \"" +
+                                        address[0][0].person_address_id + "\"";
 
                                     queryRaw(sql, function (res) {
 
@@ -979,13 +979,13 @@ function saveData(data, callback) {
 
                                 var currentVillage = String(data.data.obs[group][concept]).trim();
 
-                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
+                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
 
                                 queryRaw(sql, function (address) {
 
-                                    var sql = "UPDATE person_address SET city_village = '" + currentVillage +
-                                        "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
-                                        address[0][0].person_address_id + "'";
+                                    var sql = "UPDATE person_address SET city_village = \"" + currentVillage +
+                                        "\" WHERE person_id = \"" + patient_id + "\" AND person_address_id = \"" +
+                                        address[0][0].person_address_id + "\"";
 
                                     queryRaw(sql, function (res) {
 
@@ -999,13 +999,13 @@ function saveData(data, callback) {
 
                                 var closestLandmark = String(data.data.obs[group][concept]).trim();
 
-                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
+                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
 
                                 queryRaw(sql, function (address) {
 
-                                    var sql = "UPDATE person_address SET address1 = '" + closestLandmark +
-                                        "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
-                                        address[0][0].person_address_id + "'";
+                                    var sql = "UPDATE person_address SET address1 = \"" + closestLandmark +
+                                        "\" WHERE person_id = \"" + patient_id + "\" AND person_address_id = \"" +
+                                        address[0][0].person_address_id + "\"";
 
                                     queryRaw(sql, function (res) {
 
@@ -1075,17 +1075,17 @@ function saveData(data, callback) {
 
                                 var phoneNumber = String(data.data.obs[group][concept]).trim();
 
-                                var sql = "SELECT person_attribute_id FROM person_attribute WHERE person_id = '" + patient_id + "'";
+                                var sql = "SELECT person_attribute_id FROM person_attribute WHERE person_id = \"" + patient_id + "\"";
 
                                 queryRaw(sql, function (attr) {
 
                                     if (attr[0].length <= 0) {
 
                                         var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
-                                            "creator, date_created, uuid) VALUES ('" + patient_id + "', '" + phoneNumber +
-                                            "', (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
-                                            "'Cell Phone Number' LIMIT 1), '" + user_id + "', NOW(), '" +
-                                            uuid.v1() + "')";
+                                            "creator, date_created, uuid) VALUES (\"" + patient_id + "\", \"" + phoneNumber +
+                                            "\", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
+                                            "\"Cell Phone Number\" LIMIT 1), \"" + user_id + "\", NOW(), \"" +
+                                            uuid.v1() + "\")";
 
                                         queryRaw(sql, function (res) {
 
@@ -1095,9 +1095,9 @@ function saveData(data, callback) {
 
                                     } else {
 
-                                        var sql = "UPDATE person_attribute SET value = '" + phoneNumber +
-                                            "' WHERE person_id = '" + patient_id + "' AND person_attribute_id = '" +
-                                            attr[0][0].person_attribute_id + "'";
+                                        var sql = "UPDATE person_attribute SET value = \"" + phoneNumber +
+                                            "\" WHERE person_id = \"" + patient_id + "\" AND person_attribute_id = \"" +
+                                            attr[0][0].person_attribute_id + "\"";
 
                                         queryRaw(sql, function (res) {
 
@@ -1187,13 +1187,13 @@ function updateUserView(data) {
 
             if (!people[data.id] || isDirty[data.id]) {
 
-                queryData('patient_identifier', ['patient_id'], {identifier: data.id}, function (identifier) {
+                queryData("patient_identifier", ["patient_id"], {identifier: data.id}, function (identifier) {
 
                     if (identifier.length > 0) {
 
                         patient_id = identifier[0].patient_id;
 
-                        queryData('person_name', ['given_name', 'middle_name', 'family_name', 'family_name2', 'uuid'],
+                        queryData("person_name", ["given_name", "middle_name", "family_name", "family_name2", "uuid"],
                             {person_id: patient_id}, function (names) {
 
                                 // console.log(names);
@@ -1204,17 +1204,17 @@ function updateUserView(data) {
 
                                     var demographics = {};
 
-                                    demographics['First Name'] = names[i].given_name;
+                                    demographics["First Name"] = names[i].given_name;
 
-                                    demographics['Family Name'] = names[i].family_name;
+                                    demographics["Family Name"] = names[i].family_name;
 
-                                    demographics['Middle Name'] =
+                                    demographics["Middle Name"] =
                                         (String(names[i].middle_name).trim().toLowerCase() != "unknown" ?
                                             names[i].middle_name : "");
 
-                                    demographics['Maiden Name'] = names[i].maiden_name;
+                                    demographics["Maiden Name"] = names[i].maiden_name;
 
-                                    demographics['UUID'] = names[i].uuid;
+                                    demographics["UUID"] = names[i].uuid;
 
                                     collection.push(demographics);
 
@@ -1242,7 +1242,7 @@ function updateUserView(data) {
 
                                 people[data.id].data.names = collection;
 
-                                nsp[data.id].emit('demographics',
+                                nsp[data.id].emit("demographics",
                                     JSON.stringify({names: people[data.id].data.names }));
 
                                 callback();
@@ -1255,7 +1255,7 @@ function updateUserView(data) {
 
             } else {
 
-                queryData('patient_identifier', ['patient_id'], {identifier: data.id}, function (identifier) {
+                queryData("patient_identifier", ["patient_id"], {identifier: data.id}, function (identifier) {
 
                     if (identifier.length > 0) {
 
@@ -1265,7 +1265,7 @@ function updateUserView(data) {
 
                     console.log("Sent existing names data");
 
-                    nsp[data.id].emit('demographics',
+                    nsp[data.id].emit("demographics",
                         JSON.stringify({names: people[data.id].data.names }));
 
                     callback();
@@ -1280,8 +1280,8 @@ function updateUserView(data) {
 
             if (people[data.id].data.addresses.length <= 0 || isDirty[data.id]) {
 
-                queryData('person_address', ['address1', 'address2', 'city_village', 'state_province',
-                        'county_district', 'neighborhood_cell', 'township_division', 'uuid'],
+                queryData("person_address", ["address1", "address2", "city_village", "state_province",
+                        "county_district", "neighborhood_cell", "township_division", "uuid"],
                     {person_id: patient_id}, function (addresses) {
 
                         var collection = [];
@@ -1290,21 +1290,21 @@ function updateUserView(data) {
 
                             var address = {};
 
-                            address['Current District'] = addresses[i].state_province;
+                            address["Current District"] = addresses[i].state_province;
 
-                            address['Current T/A'] = addresses[i].township_division;
+                            address["Current T/A"] = addresses[i].township_division;
 
-                            address['Current Village'] = addresses[i].city_village;
+                            address["Current Village"] = addresses[i].city_village;
 
-                            address['Closest Landmark'] = addresses[i].address1;
+                            address["Closest Landmark"] = addresses[i].address1;
 
-                            address['Home District'] = addresses[i].address2;
+                            address["Home District"] = addresses[i].address2;
 
-                            address['Home T/A'] = addresses[i].county_district;
+                            address["Home T/A"] = addresses[i].county_district;
 
-                            address['Home Village'] = addresses[i].neigborhood_cell;
+                            address["Home Village"] = addresses[i].neigborhood_cell;
 
-                            address['UUID'] = addresses[i].uuid;
+                            address["UUID"] = addresses[i].uuid;
 
                             collection.push(address);
 
@@ -1332,7 +1332,7 @@ function updateUserView(data) {
 
                         people[data.id].data.addresses = collection;
 
-                        nsp[data.id].emit('demographics',
+                        nsp[data.id].emit("demographics",
                             JSON.stringify({addresses: people[data.id].data.addresses }));
 
                         callback();
@@ -1344,7 +1344,7 @@ function updateUserView(data) {
 
                 console.log("Sent existing address data");
 
-                nsp[data.id].emit('demographics',
+                nsp[data.id].emit("demographics",
                     JSON.stringify({addresses: people[data.id].data.addresses }));
 
                 callback();
@@ -1357,7 +1357,7 @@ function updateUserView(data) {
 
             if (!people[data.id].data.gender || isDirty[data.id]) {
 
-                queryData('person', ['gender', 'birthdate', 'birthdate_estimated', 'uuid'],
+                queryData("person", ["gender", "birthdate", "birthdate_estimated", "uuid"],
                     {person_id: patient_id}, function (person) {
 
                         if (!people[data.id]) {
@@ -1384,13 +1384,13 @@ function updateUserView(data) {
 
                         people[data.id].data.birthdate_estimated = person[0].birthdate_estimated;
 
-                        nsp[data.id].emit('demographics',
+                        nsp[data.id].emit("demographics",
                             JSON.stringify({ gender: people[data.id].data.gender }));
 
-                        nsp[data.id].emit('demographics',
+                        nsp[data.id].emit("demographics",
                             JSON.stringify({ birthdate: people[data.id].data.birthdate }));
 
-                        nsp[data.id].emit('demographics',
+                        nsp[data.id].emit("demographics",
                             JSON.stringify({ birthdate_estimated: people[data.id].data.birthdate_estimated }));
 
                         console.log("Sent first basic data");
@@ -1404,13 +1404,13 @@ function updateUserView(data) {
 
                 console.log("Sent existing basic data");
 
-                nsp[data.id].emit('demographics',
+                nsp[data.id].emit("demographics",
                     JSON.stringify({ gender: people[data.id].data.gender }));
 
-                nsp[data.id].emit('demographics',
+                nsp[data.id].emit("demographics",
                     JSON.stringify({ birthdate: people[data.id].data.birthdate }));
 
-                nsp[data.id].emit('demographics',
+                nsp[data.id].emit("demographics",
                     JSON.stringify({ birthdate_estimated: people[data.id].data.birthdate_estimated }));
 
                 callback();
@@ -1423,9 +1423,9 @@ function updateUserView(data) {
 
             if (Object.keys(people[data.id].data.identifiers).length <= 0 || isDirty[data.id]) {
 
-                queryJoinData('patient_identifier', 'patient_identifier_type', 'patient_identifier.identifier_type',
-                    'patient_identifier_type.patient_identifier_type_id', ['identifier', 'patient_identifier.uuid',
-                        'name'],
+                queryJoinData("patient_identifier", "patient_identifier_type", "patient_identifier.identifier_type",
+                    "patient_identifier_type.patient_identifier_type_id", ["identifier", "patient_identifier.uuid",
+                        "name"],
                     {patient_id: patient_id, voided: 0}, function (identifiers) {
 
                         var collection = {};
@@ -1461,7 +1461,7 @@ function updateUserView(data) {
 
                         people[data.id].data.identifiers = collection;
 
-                        nsp[data.id].emit('demographics',
+                        nsp[data.id].emit("demographics",
                             JSON.stringify({identifiers: people[data.id].data.identifiers }));
 
                         callback();
@@ -1473,7 +1473,7 @@ function updateUserView(data) {
 
                 console.log("Sent existing identifiers data");
 
-                nsp[data.id].emit('demographics',
+                nsp[data.id].emit("demographics",
                     JSON.stringify({identifiers: people[data.id].data.identifiers }));
 
                 callback();
@@ -1486,18 +1486,18 @@ function updateUserView(data) {
 
             if (Object.keys(people[data.id].data.programs).length <= 0 || isDirty[data.id]) {
 
-                queryJoinData('patient_program', 'program', 'patient_program.program_id',
-                    'program.program_id', ['patient_program_id', 'date_enrolled', 'date_completed', 'name',
-                        'program.uuid AS pUuid', 'patient_program.uuid AS mUuid'],
+                queryJoinData("patient_program", "program", "patient_program.program_id",
+                    "program.program_id", ["patient_program_id", "date_enrolled", "date_completed", "name",
+                        "program.uuid AS pUuid", "patient_program.uuid AS mUuid"],
                     {patient_id: patient_id, voided: 0}, function (programs) {
 
                         var collection = {};
 
                         async.each(programs, function (program, iCallback) {
 
-                            queryJoinData('encounter', 'encounter_type', 'encounter.encounter_type',
-                                'encounter_type.encounter_type_id', ['encounter_id', 'encounter_datetime', 'name', 'voided',
-                                    'encounter.uuid'],
+                            queryJoinData("encounter", "encounter_type", "encounter.encounter_type",
+                                "encounter_type.encounter_type_id", ["encounter_id", "encounter_datetime", "name", "voided",
+                                    "encounter.uuid"],
                                 {patient_program_id: program.patient_program_id, voided: 0}, function (encounters) {
 
                                     console.log(encounters);
@@ -1511,35 +1511,35 @@ function updateUserView(data) {
 
                                     }
 
-                                    collection[program.name]['UUID'] = program.pUuid;
+                                    collection[program.name]["UUID"] = program.pUuid;
 
-                                    if (!collection[program.name]['patient_programs']) {
+                                    if (!collection[program.name]["patient_programs"]) {
 
-                                        collection[program.name]['patient_programs'] = {};
+                                        collection[program.name]["patient_programs"] = {};
 
                                     }
 
-                                    if (!collection[program.name]['patient_programs'][program.mUuid]) {
+                                    if (!collection[program.name]["patient_programs"][program.mUuid]) {
 
-                                        collection[program.name]['patient_programs'][program.mUuid] = {};
+                                        collection[program.name]["patient_programs"][program.mUuid] = {};
 
                                     }
 
                                     if (!patientProgramIds[program.patient_program_id]) {
 
-                                        patientProgramIds[program.mUuid] = program['patient_program_id'];
+                                        patientProgramIds[program.mUuid] = program["patient_program_id"];
 
                                     }
 
-                                    collection[program.name]['patient_programs'][program.mUuid]['date_enrolled'] =
-                                        program['date_enrolled'];
+                                    collection[program.name]["patient_programs"][program.mUuid]["date_enrolled"] =
+                                        program["date_enrolled"];
 
-                                    collection[program.name]['patient_programs'][program.mUuid]['date_completed'] =
-                                        program['date_completed'];
+                                    collection[program.name]["patient_programs"][program.mUuid]["date_completed"] =
+                                        program["date_completed"];
 
-                                    if (!collection[program.name]['patient_programs'][program.mUuid]['visits']) {
+                                    if (!collection[program.name]["patient_programs"][program.mUuid]["visits"]) {
 
-                                        collection[program.name]['patient_programs'][program.mUuid]['visits'] = {};
+                                        collection[program.name]["patient_programs"][program.mUuid]["visits"] = {};
 
                                     }
 
@@ -1547,15 +1547,15 @@ function updateUserView(data) {
 
                                         var encounterDatetime = (new Date(encounter.encounter_datetime)).format("YYYY-mm-dd");
 
-                                        if (!collection[program.name]['patient_programs'][program.mUuid]['visits'][encounterDatetime]) {
+                                        if (!collection[program.name]["patient_programs"][program.mUuid]["visits"][encounterDatetime]) {
 
-                                            collection[program.name]['patient_programs'][program.mUuid]['visits'][encounterDatetime] = {};
+                                            collection[program.name]["patient_programs"][program.mUuid]["visits"][encounterDatetime] = {};
 
                                         }
 
-                                        if (!collection[program.name]['patient_programs'][program.mUuid]['visits'][encounterDatetime][encounter.name]) {
+                                        if (!collection[program.name]["patient_programs"][program.mUuid]["visits"][encounterDatetime][encounter.name]) {
 
-                                            collection[program.name]['patient_programs'][program.mUuid]['visits'][encounterDatetime][encounter.name] = [];
+                                            collection[program.name]["patient_programs"][program.mUuid]["visits"][encounterDatetime][encounter.name] = [];
 
                                         }
 
@@ -1563,8 +1563,8 @@ function updateUserView(data) {
 
                                             for (var i = 0; i < data.length; i++) {
 
-                                                collection[program.name]['patient_programs'][program.mUuid]
-                                                    ['visits'][encounterDatetime][encounter.name].push(data[i]);
+                                                collection[program.name]["patient_programs"][program.mUuid]
+                                                    ["visits"][encounterDatetime][encounter.name].push(data[i]);
 
                                             }
 
@@ -1580,7 +1580,7 @@ function updateUserView(data) {
 
                                     });
 
-                                }, 'encounter_datetime');
+                                }, "encounter_datetime");
 
                         }, function () {
 
@@ -1606,7 +1606,7 @@ function updateUserView(data) {
 
                             console.log("Sent new programs data");
 
-                            nsp[data.id].emit('demographics',
+                            nsp[data.id].emit("demographics",
                                 JSON.stringify({programs: people[data.id].data.programs }));
 
                             callback();
@@ -1620,7 +1620,7 @@ function updateUserView(data) {
 
                 console.log("Sent existing programs data");
 
-                nsp[data.id].emit('demographics',
+                nsp[data.id].emit("demographics",
                     JSON.stringify({programs: people[data.id].data.programs }));
 
                 callback();
@@ -1633,12 +1633,12 @@ function updateUserView(data) {
 
             if (Object.keys(people[data.id].data.relationships).length <= 0 || isDirty[data.id]) {
 
-                var sql = "SELECT CONCAT(given_name, ' ', family_name) AS relative_name, (SELECT identifier FROM " +
+                var sql = "SELECT CONCAT(given_name, \" \", family_name) AS relative_name, (SELECT identifier FROM " +
                     "patient_identifier WHERE patient_id = person_b LIMIT 1) AS relative_id, b_is_to_a, gender, " +
                     "relationship.uuid AS uuid FROM relationship LEFT OUTER JOIN person_name ON person_name.person_id = " +
                     "relationship.person_b LEFT OUTER JOIN relationship_type ON relationship_type.relationship_type_id " +
                     "= relationship.relationship LEFT OUTER JOIN person ON person.person_id = relationship. person_b " +
-                    "WHERE person_a = '" + patient_id + "'";
+                    "WHERE person_a = \"" + patient_id + "\"";
 
                 queryRaw(sql, function (relationships) {
 
@@ -1682,7 +1682,7 @@ function updateUserView(data) {
 
                     people[data.id].data.relationships = collection;
 
-                    nsp[data.id].emit('demographics',
+                    nsp[data.id].emit("demographics",
                         JSON.stringify({relationships: people[data.id].data.relationships }));
 
                     callback();
@@ -1694,7 +1694,7 @@ function updateUserView(data) {
 
                 console.log("Sent existing relationships data");
 
-                nsp[data.id].emit('demographics',
+                nsp[data.id].emit("demographics",
                     JSON.stringify({relationships: people[data.id].data.relationships }));
 
                 callback();
@@ -1707,13 +1707,13 @@ function updateUserView(data) {
 
         if (err) {
 
-            nsp[data.id].emit('error', err.message);
+            nsp[data.id].emit("error", err.message);
 
             console.log(err.message);
 
         } else {
 
-            nsp[data.id].emit('demographics',
+            nsp[data.id].emit("demographics",
                 JSON.stringify({done: true }));
 
         }
@@ -1725,18 +1725,18 @@ function updateUserView(data) {
 function buildObs(encounter, oCallback) {
 
     var sql = "SELECT (SELECT name FROM concept_name WHERE concept_name.concept_id = o.concept_id LIMIT 1) AS name, o.uuid, c.uuid AS cUuid, " +
-        "CASE WHEN COALESCE(value_coded_name_id,'') != '' THEN (SELECT name FROM concept_name WHERE concept_name_id = " +
+        "CASE WHEN COALESCE(value_coded_name_id,\"\") != \"\" THEN (SELECT name FROM concept_name WHERE concept_name_id = " +
         "value_coded_name_id LIMIT 1)" +
-        " WHEN COALESCE(value_coded,'') != '' THEN (SELECT name FROM concept_name WHERE concept_id = value_coded LIMIT 1)" +
-        " WHEN COALESCE(value_boolean,'') != '' THEN value_boolean" +
-        " WHEN COALESCE(value_datetime,'') != '' THEN DATE(value_datetime)" +
-        " WHEN COALESCE(value_numeric,'') != '' THEN value_numeric" +
+        " WHEN COALESCE(value_coded,\"\") != \"\" THEN (SELECT name FROM concept_name WHERE concept_id = value_coded LIMIT 1)" +
+        " WHEN COALESCE(value_boolean,\"\") != \"\" THEN value_boolean" +
+        " WHEN COALESCE(value_datetime,\"\") != \"\" THEN DATE(value_datetime)" +
+        " WHEN COALESCE(value_numeric,\"\") != \"\" THEN value_numeric" +
         " ELSE value_text END AS value, " +
-        "CASE WHEN COALESCE(value_coded_name_id,'') != '' OR COALESCE(value_coded,'') != '' THEN 'SPECIFIC NAME' " +
-        " WHEN COALESCE(value_boolean,'') != '' THEN 'TRUE/FALSE' " +
-        " WHEN COALESCE(value_datetime,'') != '' THEN 'DATE AND TIME' " +
-        " WHEN COALESCE(value_numeric,'') != '' THEN 'NUMERIC' " +
-        " ELSE 'TEXT' END AS category " +
+        "CASE WHEN COALESCE(value_coded_name_id,\"\") != \"\" OR COALESCE(value_coded,\"\") != \"\" THEN \"SPECIFIC NAME\" " +
+        " WHEN COALESCE(value_boolean,\"\") != \"\" THEN \"TRUE/FALSE\" " +
+        " WHEN COALESCE(value_datetime,\"\") != \"\" THEN \"DATE AND TIME\" " +
+        " WHEN COALESCE(value_numeric,\"\") != \"\" THEN \"NUMERIC\" " +
+        " ELSE \"TEXT\" END AS category " +
         " FROM obs o LEFT OUTER JOIN concept c ON c.concept_id = o.concept_id " +
         " WHERE o.encounter_id = " + encounter.encounter_id + " AND o.voided = 0";
 
@@ -1777,8 +1777,8 @@ function queryRaw(sql, callback) {
 
     var config = require(__dirname + "/config/database.json");
 
-    var knex = require('knex')({
-        client: 'mysql',
+    var knex = require("knex")({
+        client: "mysql",
         connection: {
             host: config.host,
             user: config.user,
@@ -1811,8 +1811,8 @@ function queryJoinData(table, jointTable, srcField, jointField, fields, conditio
 
     var config = require(__dirname + "/config/database.json");
 
-    var knex = require('knex')({
-        client: 'mysql',
+    var knex = require("knex")({
+        client: "mysql",
         connection: {
             host: config.host,
             user: config.user,
@@ -1829,10 +1829,10 @@ function queryJoinData(table, jointTable, srcField, jointField, fields, conditio
 
         if (orderByField) {
 
-            // console.log(knex(table).leftOuterJoin(jointTable, srcField, jointField).where(condition).orderBy(orderByField, 'DESC')
+            // console.log(knex(table).leftOuterJoin(jointTable, srcField, jointField).where(condition).orderBy(orderByField, "DESC")
             //    .select(fields).toSQL());
 
-            knex(table).leftOuterJoin(jointTable, srcField, jointField).where(condition).orderBy(orderByField, 'DESC')
+            knex(table).leftOuterJoin(jointTable, srcField, jointField).where(condition).orderBy(orderByField, "DESC")
                 .select(fields)
                 .then(function (values) {
 
@@ -1920,8 +1920,8 @@ function queryData(table, fields, condition, callback) {
 
     var config = require(__dirname + "/config/database.json");
 
-    var knex = require('knex')({
-        client: 'mysql',
+    var knex = require("knex")({
+        client: "mysql",
         connection: {
             host: config.host,
             user: config.user,
@@ -1997,8 +1997,8 @@ function queryRawStock(sql, callback) {
 
     var config = require(__dirname + "/config/database.json");
 
-    var knex = require('knex')({
-        client: 'mysql',
+    var knex = require("knex")({
+        client: "mysql",
         connection: {
             host: config.host,
             user: config.user,
@@ -2031,12 +2031,12 @@ function transferStock(data, res) {
 
     if (data.receipt_id) {
 
-        var sql = "UPDATE transfer SET dispatch_id = '" + data.dispatch_id + "', transfer_quantity = '" + data.transfer_quantity +
-            "', transfer_datetime = '" + data.transfer_datetime + "', transfer_who_transfered = '" + data.userId +
-            "transfer_who_received = '" + (data.transfer_who_received ? data.transfer_who_received : "") +
-            "', transfer_who_authorised = '" + (data.transfer_who_authorised ? data.transfer_who_authorised : "") +
-            "', transfer_destination = '" + (data.transfer_destination ? data.transfer_destination : "") + "' WHERE " +
-            "transfer_id = '" + data.transfer_id;
+        var sql = "UPDATE transfer SET dispatch_id = \"" + data.dispatch_id + "\", transfer_quantity = \"" + data.transfer_quantity +
+            "\", transfer_datetime = \"" + data.transfer_datetime + "\", transfer_who_transfered = \"" + data.userId +
+            "transfer_who_received = \"" + (data.transfer_who_received ? data.transfer_who_received : "") +
+            "\", transfer_who_authorised = \"" + (data.transfer_who_authorised ? data.transfer_who_authorised : "") +
+            "\", transfer_destination = \"" + (data.transfer_destination ? data.transfer_destination : "") + "\" WHERE " +
+            "transfer_id = \"" + data.transfer_id;
 
         console.log(sql);
 
@@ -2052,11 +2052,11 @@ function transferStock(data, res) {
     else {
 
         var sql = "INSERT INTO transfer (dispatch_id, transfer_quantity, transfer_datetime, transfer_who_transfered, " +
-            " transfer_who_received, transfer_who_authorised, transfer_destination) VALUES('" +
-            data.dispatch_id + "', '" + data.transfer_quantity + "', '" + data.transfer_datetime + "', '" + data.userId +
-            "', '" + (data.transfer_who_received ? data.transfer_who_received : "") + "', '" +
-            (data.transfer_who_authorised ? data.transfer_who_authorised : "") + "', '" +
-            (data.transfer_location ? data.transfer_location : "") + "')";
+            " transfer_who_received, transfer_who_authorised, transfer_destination) VALUES(\"" +
+            data.dispatch_id + "\", \"" + data.transfer_quantity + "\", \"" + data.transfer_datetime + "\", \"" + data.userId +
+            "\", \"" + (data.transfer_who_received ? data.transfer_who_received : "") + "\", \"" +
+            (data.transfer_who_authorised ? data.transfer_who_authorised : "") + "\", \"" +
+            (data.transfer_location ? data.transfer_location : "") + "\")";
 
         console.log(sql);
 
@@ -2064,7 +2064,7 @@ function transferStock(data, res) {
 
             console.log(stock[0]);
 
-            var sql = "SELECT stock_id FROM dispatch WHERE dispatch_id = '" + data.dispatch_id + "' LIMIT 1";
+            var sql = "SELECT stock_id FROM dispatch WHERE dispatch_id = \"" + data.dispatch_id + "\" LIMIT 1";
 
             console.log(sql);
 
@@ -2076,18 +2076,18 @@ function transferStock(data, res) {
 
                 var sql = "INSERT INTO dispatch (stock_id, batch_number, dispatch_quantity, dispatch_datetime, " +
                     "dispatch_who_dispatched, dispatch_who_received, dispatch_who_authorised, dispatch_destination) " +
-                    "VALUES('" + stock_id + "', '" + data.batch_number + "', '" + data.transfer_quantity + "', '" +
-                    data.transfer_datetime + "', '" + data.userId + "', '" + (data.transfer_who_received ?
-                    data.transfer_who_received : "") + "', '" + (data.transfer_who_authorised ?
-                    data.transfer_who_authorised : "") + "', '" + (data.transfer_location ?
-                    data.transfer_location : "") + "')";
+                    "VALUES(\"" + stock_id + "\", \"" + data.batch_number + "\", \"" + data.transfer_quantity + "\", \"" +
+                    data.transfer_datetime + "\", \"" + data.userId + "\", \"" + (data.transfer_who_received ?
+                    data.transfer_who_received : "") + "\", \"" + (data.transfer_who_authorised ?
+                    data.transfer_who_authorised : "") + "\", \"" + (data.transfer_location ?
+                    data.transfer_location : "") + "\")";
 
                 console.log(sql);
 
                 queryRawStock(sql, function (dispatch) {
 
                     var sql = "UPDATE dispatch SET dispatch_quantity = (@cur_quantity := dispatch_quantity) - " +
-                        data.transfer_quantity + " WHERE " + "dispatch_id = '" + data.dispatch_id + "'";
+                        data.transfer_quantity + " WHERE " + "dispatch_id = \"" + data.dispatch_id + "\"";
 
                     console.log(sql);
 
@@ -2113,12 +2113,12 @@ function dispatchStock(data, res) {
 
     if (data.receipt_id) {
 
-        var sql = "UPDATE dispatch SET stock_id = '" + data.stock_id + "', batch_number = '" + data.batch_number +
-            "', dispatch_quantity = '" + data.dispatch_quantity + "', dispatch_datetime = '" + data.dispatch_datetime +
-            "', dispatch_who_dispatched = '" + data.userId + "dispatch_who_received = '" + (data.dispatch_who_received ?
-            data.dispatch_who_received : "") + "', dispatch_who_authorised = '" + (data.dispatch_who_authorised ?
-            data.dispatch_who_authorised : "") + "', dispatch_destination = '" + (data.dispatch_destination ?
-            data.dispatch_destination : "") + "' WHERE " + "dispatch_id = '" + data.dispatch_id;
+        var sql = "UPDATE dispatch SET stock_id = \"" + data.stock_id + "\", batch_number = \"" + data.batch_number +
+            "\", dispatch_quantity = \"" + data.dispatch_quantity + "\", dispatch_datetime = \"" + data.dispatch_datetime +
+            "\", dispatch_who_dispatched = \"" + data.userId + "dispatch_who_received = \"" + (data.dispatch_who_received ?
+            data.dispatch_who_received : "") + "\", dispatch_who_authorised = \"" + (data.dispatch_who_authorised ?
+            data.dispatch_who_authorised : "") + "\", dispatch_destination = \"" + (data.dispatch_destination ?
+            data.dispatch_destination : "") + "\" WHERE " + "dispatch_id = \"" + data.dispatch_id;
 
         console.log(sql);
 
@@ -2134,11 +2134,11 @@ function dispatchStock(data, res) {
     else {
 
         var sql = "INSERT INTO dispatch (stock_id, batch_number, dispatch_quantity, dispatch_datetime, dispatch_who_dispatched, " +
-            " dispatch_who_received, dispatch_who_authorised, dispatch_destination) VALUES('" +
-            data.stock_id + "', '" + data.batch_number + "', '" + data.dispatch_quantity + "', '" +
-            data.dispatch_datetime + "', '" + data.userId + "', '" + (data.dispatch_who_received ?
-            data.dispatch_who_received : "") + "', '" + (data.dispatch_who_authorised ? data.dispatch_who_authorised :
-            "") + "', '" + (data.dispatch_destination ? data.dispatch_destination : "") + "')";
+            " dispatch_who_received, dispatch_who_authorised, dispatch_destination) VALUES(\"" +
+            data.stock_id + "\", \"" + data.batch_number + "\", \"" + data.dispatch_quantity + "\", \"" +
+            data.dispatch_datetime + "\", \"" + data.userId + "\", \"" + (data.dispatch_who_received ?
+            data.dispatch_who_received : "") + "\", \"" + (data.dispatch_who_authorised ? data.dispatch_who_authorised :
+            "") + "\", \"" + (data.dispatch_destination ? data.dispatch_destination : "") + "\")";
 
         console.log(sql);
 
@@ -2158,10 +2158,10 @@ function receiveStock(data, res) {
 
     if (data.receipt_id) {
 
-        var sql = "UPDATE receipt SET stock_id = '" + data.stock_id + "', batch_number = '" + data.batch_number +
-            "', expiry_date = '" + data.expiry_date + "', receipt_quantity = '" + data.receipt_quantity +
-            "', receipt_datetime = '" + data.receipt_datetime + "', receipt_who_received = '" + data.userId + "' WHERE " +
-            "receipt_id = '" + data.receipt_id;
+        var sql = "UPDATE receipt SET stock_id = \"" + data.stock_id + "\", batch_number = \"" + data.batch_number +
+            "\", expiry_date = \"" + data.expiry_date + "\", receipt_quantity = \"" + data.receipt_quantity +
+            "\", receipt_datetime = \"" + data.receipt_datetime + "\", receipt_who_received = \"" + data.userId + "\" WHERE " +
+            "receipt_id = \"" + data.receipt_id;
 
         console.log(sql);
 
@@ -2176,9 +2176,9 @@ function receiveStock(data, res) {
     }
     else {
 
-        var sql = "INSERT INTO receipt (stock_id, batch_number, expiry_date, receipt_quantity, receipt_datetime, receipt_who_received) VALUES('" +
-            data.stock_id + "', '" + data.batch_number + "', '" + data.expiry_date + "', '" + data.receipt_quantity +
-            "', '" + data.receipt_datetime + "', '" + data.userId + "')";
+        var sql = "INSERT INTO receipt (stock_id, batch_number, expiry_date, receipt_quantity, receipt_datetime, receipt_who_received) VALUES(\"" +
+            data.stock_id + "\", \"" + data.batch_number + "\", \"" + data.expiry_date + "\", \"" + data.receipt_quantity +
+            "\", \"" + data.receipt_datetime + "\", \"" + data.userId + "\")";
 
         console.log(sql);
 
@@ -2198,7 +2198,7 @@ function saveStock(data, res) {
 
     if (data.stock_id) {
 
-        var sql = "SELECT category_id FROM category WHERE name = '" + data.category + "'";
+        var sql = "SELECT category_id FROM category WHERE name = \"" + data.category + "\"";
 
         console.log(sql);
 
@@ -2206,18 +2206,18 @@ function saveStock(data, res) {
 
             if (category[0].length <= 0) {
 
-                var sql = "INSERT INTO category (name) VALUES('" + data.category + "')";
+                var sql = "INSERT INTO category (name) VALUES(\"" + data.category + "\")";
 
                 queryRawStock(sql, function (category) {
 
                     var category_id = category[0].insertId;
 
-                    var sql = "UPDATE stock SET name = '" + data.item_name + "', " +
-                        "description = '" + (data.description ? data.description : "") + "', " +
-                        "reorder_level = '" + data.re_order_level + "', " +
-                        "category_id = '" + category_id + "', " +
+                    var sql = "UPDATE stock SET name = \"" + data.item_name + "\", " +
+                        "description = \"" + (data.description ? data.description : "") + "\", " +
+                        "reorder_level = \"" + data.re_order_level + "\", " +
+                        "category_id = \"" + category_id + "\", " +
                         "date_created = NOW(), " +
-                        "creator= '" + data.userId + "' WHERE stock_id = '" + data.stock_id + "'";
+                        "creator= \"" + data.userId + "\" WHERE stock_id = \"" + data.stock_id + "\"";
 
                     console.log(sql);
 
@@ -2226,8 +2226,8 @@ function saveStock(data, res) {
                         if (data.batch_number && data.expiry_date) {
 
                             sql = "INSERT INTO stock_batch (stock_id, batch_number, expiry_date, date_created, creator) " +
-                                "VALUES ('" + stock[0].insertId + "', '" + data.batch_number + "', '" + data.expiry_date +
-                                "', NOW(), '" + data.userId + "')";
+                                "VALUES (\"" + stock[0].insertId + "\", \"" + data.batch_number + "\", \"" + data.expiry_date +
+                                "\", NOW(), \"" + data.userId + "\")";
 
                             console.log(sql);
 
@@ -2251,12 +2251,12 @@ function saveStock(data, res) {
 
                 var category_id = category[0][0].category_id;
 
-                var sql = "UPDATE stock SET name = '" + data.item_name + "', " +
-                    "description = '" + (data.description ? data.description : "") + "', " +
-                    "reorder_level = '" + data.re_order_level + "', " +
-                    "category_id = '" + category_id + "', " +
+                var sql = "UPDATE stock SET name = \"" + data.item_name + "\", " +
+                    "description = \"" + (data.description ? data.description : "") + "\", " +
+                    "reorder_level = \"" + data.re_order_level + "\", " +
+                    "category_id = \"" + category_id + "\", " +
                     "date_created = NOW(), " +
-                    "creator= '" + data.userId + "' WHERE stock_id = '" + data.stock_id + "'";
+                    "creator= \"" + data.userId + "\" WHERE stock_id = \"" + data.stock_id + "\"";
 
                 console.log(sql);
 
@@ -2275,7 +2275,7 @@ function saveStock(data, res) {
     }
     else {
 
-        var sql = "SELECT category_id FROM category WHERE name = '" + data.category + "'";
+        var sql = "SELECT category_id FROM category WHERE name = \"" + data.category + "\"";
 
         console.log(sql);
 
@@ -2283,15 +2283,15 @@ function saveStock(data, res) {
 
             if (category[0].length <= 0) {
 
-                var sql = "INSERT INTO category (name) VALUES('" + data.category + "')";
+                var sql = "INSERT INTO category (name) VALUES(\"" + data.category + "\")";
 
                 queryRawStock(sql, function (category) {
 
                     var category_id = category[0].insertId;
 
-                    var sql = "INSERT INTO stock (name, description, reorder_level, category_id, date_created, creator) VALUES('" +
-                        data.item_name + "', '" + (data.description ? data.description : "") + "', '" + data.re_order_level +
-                        "', '" + category_id + "', NOW(), '" + data.userId + "')";
+                    var sql = "INSERT INTO stock (name, description, reorder_level, category_id, date_created, creator) VALUES(\"" +
+                        data.item_name + "\", \"" + (data.description ? data.description : "") + "\", \"" + data.re_order_level +
+                        "\", \"" + category_id + "\", NOW(), \"" + data.userId + "\")";
 
                     console.log(sql);
 
@@ -2300,8 +2300,8 @@ function saveStock(data, res) {
                         if (data.batch_number && data.expiry_date) {
 
                             sql = "INSERT INTO stock_batch (stock_id, batch_number, expiry_date, date_created, creator) " +
-                                "VALUES ('" + stock[0].insertId + "', '" + data.batch_number + "', '" + data.expiry_date +
-                                "', NOW(), '" + data.userId + "')";
+                                "VALUES (\"" + stock[0].insertId + "\", \"" + data.batch_number + "\", \"" + data.expiry_date +
+                                "\", NOW(), \"" + data.userId + "\")";
 
                             console.log(sql);
 
@@ -2325,9 +2325,9 @@ function saveStock(data, res) {
 
                 var category_id = category[0][0].category_id;
 
-                var sql = "INSERT INTO stock (name, description, reorder_level, category_id, date_created, creator) VALUES('" +
-                    data.item_name + "', '" + (data.description ? data.description : "") + "', '" + data.re_order_level +
-                    "', '" + category_id + "', NOW(), '" + data.userId + "')";
+                var sql = "INSERT INTO stock (name, description, reorder_level, category_id, date_created, creator) VALUES(\"" +
+                    data.item_name + "\", \"" + (data.description ? data.description : "") + "\", \"" + data.re_order_level +
+                    "\", \"" + category_id + "\", NOW(), \"" + data.userId + "\")";
 
                 console.log(sql);
 
@@ -2336,8 +2336,8 @@ function saveStock(data, res) {
                     if (data.batch_number && data.expiry_date) {
 
                         sql = "INSERT INTO stock_batch (stock_id, batch_number, expiry_date, date_created, creator) " +
-                            "VALUES ('" + stock[0].insertId + "', '" + data.batch_number + "', '" + data.expiry_date +
-                            "', NOW(), '" + data.userId + "')";
+                            "VALUES (\"" + stock[0].insertId + "\", \"" + data.batch_number + "\", \"" + data.expiry_date +
+                            "\", NOW(), \"" + data.userId + "\")";
 
                         console.log(sql);
 
@@ -2372,11 +2372,11 @@ function saveConsumption(data, res, callback) {
             if (data.consumption_type && data.dispatch_id) {
 
                 var sql = "UPDATE consumption SET consumption_type_id = (SELECT consumption_type_id FROM consumption_type " +
-                    "WHERE name = '" + data.consumption_type + "'), dispatch_id = '" + data.dispatch_id + "', " +
-                    "consumption_quantity = '" + data.consumption_quantity + "', who_consumed = '" + data.who_consumed +
-                    "', date_consumed = '" + data.date_consumed + "', " + "reason_for_consumption = '" +
-                    data.reason_for_consumption + "', location = '" + data.location + "', date_changed = NOW(), " +
-                    "changed_by ='" + data.userId + "' WHERE consumption_id = '" + data.consumption_id + "'";
+                    "WHERE name = \"" + data.consumption_type + "\"), dispatch_id = \"" + data.dispatch_id + "\", " +
+                    "consumption_quantity = \"" + data.consumption_quantity + "\", who_consumed = \"" + data.who_consumed +
+                    "\", date_consumed = \"" + data.date_consumed + "\", " + "reason_for_consumption = \"" +
+                    data.reason_for_consumption + "\", location = \"" + data.location + "\", date_changed = NOW(), " +
+                    "changed_by =\"" + data.userId + "\" WHERE consumption_id = \"" + data.consumption_id + "\"";
 
                 console.log(sql);
 
@@ -2412,9 +2412,9 @@ function saveConsumption(data, res, callback) {
 
             var sql = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
                 "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
-                "consumption_type WHERE name = '" + data.consumption_type + "'), '" + +data.dispatch_id + "', '" +
-                data.consumption_quantity + "', '" + data.who_consumed + "', '" + data.date_consumed + "', '" +
-                data.reason_for_consumption + "', '" + data.location + "', NOW(), '" + data.userId + "')";
+                "consumption_type WHERE name = \"" + data.consumption_type + "\"), \"" + +data.dispatch_id + "\", \"" +
+                data.consumption_quantity + "\", \"" + data.who_consumed + "\", \"" + data.date_consumed + "\", \"" +
+                data.reason_for_consumption + "\", \"" + data.location + "\", NOW(), \"" + data.userId + "\")";
 
             console.log(sql);
 
@@ -2448,7 +2448,7 @@ function reverseConsumption(data, res, callback) {
 
     if (data.consumption_id) {
 
-        var sql = "DELETE FROM consumption WHERE consumption_id = '" + data.consumption_id + "'";
+        var sql = "DELETE FROM consumption WHERE consumption_id = \"" + data.consumption_id + "\"";
 
         console.log(sql);
 
@@ -2490,11 +2490,11 @@ function saveBatch(data, res) {
 
             if (data.batch_number || data.expiry_date) {
 
-                var sql = "UPDATE stock_batch SET " + (data.batch_number ? "batch_number = '" + data.batch_number +
-                    "' " : "") + (data.batch_number && data.expiry_date ? "," : "") + (data.expiry_date ?
-                    " expiry_date = '" + data.expiry_date + "'" : "") + ", date_created, creator) " +
-                    "VALUES ('" + data.stock_id + "', '" + data.batch_number + "', '" + data.expiry_date +
-                    "', NOW(), '" + data.userId + "')";
+                var sql = "UPDATE stock_batch SET " + (data.batch_number ? "batch_number = \"" + data.batch_number +
+                    "\" " : "") + (data.batch_number && data.expiry_date ? "," : "") + (data.expiry_date ?
+                    " expiry_date = \"" + data.expiry_date + "\"" : "") + ", date_created, creator) " +
+                    "VALUES (\"" + data.stock_id + "\", \"" + data.batch_number + "\", \"" + data.expiry_date +
+                    "\", NOW(), \"" + data.userId + "\")";
 
                 console.log(sql);
 
@@ -2513,8 +2513,8 @@ function saveBatch(data, res) {
         } else {
 
             var sql = "INSERT INTO stock_batch (stock_id, batch_number, expiry_date, date_created, creator) " +
-                "VALUES ('" + data.stock_id + "', '" + data.batch_number + "', '" + data.expiry_date +
-                "', NOW(), '" + data.userId + "')";
+                "VALUES (\"" + data.stock_id + "\", \"" + data.batch_number + "\", \"" + data.expiry_date +
+                "\", NOW(), \"" + data.userId + "\")";
 
             console.log(sql);
 
@@ -2537,7 +2537,7 @@ function saveBatch(data, res) {
 function loggedIn(token, callback) {
 
     var sql = "SELECT user_property.user_id, username FROM user_property LEFT OUTER JOIN users ON users.user_id = " +
-        "user_property.user_id WHERE property = 'token' AND property_value = '" + token + "'";
+        "user_property.user_id WHERE property = \"token\" AND property_value = \"" + token + "\"";
 
     console.log(sql);
 
@@ -2557,7 +2557,7 @@ function loggedIn(token, callback) {
 
 }
 
-app.post('/validate_credentials', function (req, res) {
+app.post("/validate_credentials", function (req, res) {
 
     console.log(req.body);
 
@@ -2573,8 +2573,8 @@ app.post('/validate_credentials', function (req, res) {
 
         }
 
-        var sql = "SELECT user_id FROM users WHERE username = '" + data.checkUsername + "' AND password = MD5(CONCAT('" +
-            data.checkPassword + "', salt))";
+        var sql = "SELECT user_id FROM users WHERE username = \"" + data.checkUsername + "\" AND password = MD5(CONCAT(\"" +
+            data.checkPassword + "\", salt))";
 
         console.log(sql);
 
@@ -2598,7 +2598,7 @@ app.post('/validate_credentials', function (req, res) {
 
 })
 
-app.get('/authentic/:id', function (req, res) {
+app.get("/authentic/:id", function (req, res) {
 
     loggedIn(req.params.id, function (result, user_id, username) {
 
@@ -2608,13 +2608,13 @@ app.get('/authentic/:id', function (req, res) {
 
 })
 
-app.get('/logout/:id', function (req, res) {
+app.get("/logout/:id", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "DELETE FROM user_property WHERE property = 'token' AND property_value = '" + req.params.id + "'";
+    var sql = "DELETE FROM user_property WHERE property = \"token\" AND property_value = \"" + req.params.id + "\"";
 
     console.log(sql);
 
@@ -2628,14 +2628,14 @@ app.get('/logout/:id', function (req, res) {
 
 })
 
-app.post('/login', function (req, res) {
+app.post("/login", function (req, res) {
 
     console.log(req.body);
 
     var data = req.body;
 
-    var sql = "SELECT user_id, username, person_id FROM users WHERE username = '" + data.username + "' AND password = MD5(CONCAT('" +
-        data.password + "', salt)) AND retired = 0";
+    var sql = "SELECT user_id, username, person_id FROM users WHERE username = \"" + data.username + "\" AND password = MD5(CONCAT(\"" +
+        data.password + "\", salt)) AND retired = 0";
 
     console.log(sql);
 
@@ -2649,8 +2649,8 @@ app.post('/login', function (req, res) {
 
             var token = randomstring.generate(12);
 
-            sql = "INSERT INTO user_property (user_id, property, property_value) VALUES('" + user[0][0].user_id +
-                "', 'token', '" + token + "') ON DUPLICATE KEY UPDATE property_value = '" + token + "'";
+            sql = "INSERT INTO user_property (user_id, property, property_value) VALUES(\"" + user[0][0].user_id +
+                "\", \"token\", \"" + token + "\") ON DUPLICATE KEY UPDATE property_value = \"" + token + "\"";
 
             console.log(sql);
 
@@ -2658,8 +2658,8 @@ app.post('/login', function (req, res) {
 
                 sql = "SELECT role, gender, given_name, family_name FROM user_role LEFT OUTER JOIN users ON " +
                     "users.user_id = user_role.user_id LEFT OUTER JOIN person ON person.person_id = users.person_id " +
-                    "LEFT OUTER JOIN person_name ON person_name.person_id = person.person_id WHERE users.user_id = '" +
-                    user[0][0].user_id + "'";
+                    "LEFT OUTER JOIN person_name ON person_name.person_id = person.person_id WHERE users.user_id = \"" +
+                    user[0][0].user_id + "\"";
 
                 console.log(sql);
 
@@ -2683,7 +2683,7 @@ app.post('/login', function (req, res) {
 
                     sql = "SELECT value, name AS attribute FROM person_attribute LEFT OUTER JOIN person_attribute_type " +
                         "ON person_attribute.person_attribute_type_id = person_attribute_type.person_attribute_type_id " +
-                        " WHERE person_id = '" + user[0][0].person_id + "'";
+                        " WHERE person_id = \"" + user[0][0].person_id + "\"";
 
                     console.log(sql);
 
@@ -2699,7 +2699,7 @@ app.post('/login', function (req, res) {
 
                         }
 
-                        var sql = "SELECT name FROM location WHERE name = '" + data.location + "'";
+                        var sql = "SELECT name FROM location WHERE name = \"" + data.location + "\"";
 
                         console.log(sql);
 
@@ -2733,23 +2733,23 @@ app.post('/login', function (req, res) {
 
 })
 
-app.get('/data/person.json', function (req, res) {
-    res.sendFile(__dirname + '/data/person.json');
+app.get("/data/person.json", function (req, res) {
+    res.sendFile(__dirname + "/data/person.json");
 });
 
-app.get('/data/modules.json', function (req, res) {
-    res.sendFile(__dirname + '/data/modules.json');
+app.get("/data/modules.json", function (req, res) {
+    res.sendFile(__dirname + "/data/modules.json");
 });
 
-app.get('/nationality_query', function (req, res) {
+app.get("/nationality_query", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
     var sql = "SELECT DISTINCT value FROM person_attribute WHERE person_attribute_type_id = " +
-        "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = 'Citizenship' LIMIT 1) AND value LIKE '" +
-        (query.nationality ? query.nationality : "") + "%'";
+        "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = \"Citizenship\" LIMIT 1) AND value LIKE \"" +
+        (query.nationality ? query.nationality : "") + "%\"";
 
     queryRaw(sql, function (data) {
 
@@ -2771,15 +2771,15 @@ app.get('/nationality_query', function (req, res) {
 
 });
 
-app.get('/occupations_query', function (req, res) {
+app.get("/occupations_query", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
     var sql = "SELECT DISTINCT value FROM person_attribute WHERE person_attribute_type_id = " +
-        "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = 'Occupation' LIMIT 1) AND value LIKE '" +
-        (query.occupation ? query.occupation : "") + "%'";
+        "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = \"Occupation\" LIMIT 1) AND value LIKE \"" +
+        (query.occupation ? query.occupation : "") + "%\"";
 
     queryRaw(sql, function (data) {
 
@@ -2801,15 +2801,15 @@ app.get('/occupations_query', function (req, res) {
 
 });
 
-app.get('/district_query', function (req, res) {
+app.get("/district_query", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
     var sql = "SELECT district.name FROM district LEFT OUTER JOIN region ON district.region_id = region.region_id " +
-        "WHERE region.name = '" + query.region + "' AND district.name LIKE '" + (query.district ?
-        query.district : "") + "%'";
+        "WHERE region.name = \"" + query.region + "\" AND district.name LIKE \"" + (query.district ?
+        query.district : "") + "%\"";
 
     queryRaw(sql, function (data) {
 
@@ -2831,15 +2831,15 @@ app.get('/district_query', function (req, res) {
 
 });
 
-app.get('/ta_query', function (req, res) {
+app.get("/ta_query", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
     var sql = "SELECT traditional_authority.name FROM traditional_authority LEFT OUTER JOIN district ON " +
-        "traditional_authority.district_id = district.district_id WHERE district.name = '" + query.district +
-        "' AND traditional_authority.name LIKE '" + (query.ta ? query.ta : "") + "%'";
+        "traditional_authority.district_id = district.district_id WHERE district.name = \"" + query.district +
+        "\" AND traditional_authority.name LIKE \"" + (query.ta ? query.ta : "") + "%\"";
 
     queryRaw(sql, function (data) {
 
@@ -2861,7 +2861,7 @@ app.get('/ta_query', function (req, res) {
 
 });
 
-app.get('/village_query', function (req, res) {
+app.get("/village_query", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -2869,9 +2869,9 @@ app.get('/village_query', function (req, res) {
 
     var sql = "SELECT village.name FROM village LEFT OUTER JOIN traditional_authority ON " +
         "village.traditional_authority_id = traditional_authority.traditional_authority_id LEFT OUTER JOIN district ON " +
-        "traditional_authority.district_id = district.district_id WHERE district.name = '" + query.district +
-        "' AND traditional_authority.name = '" + query.ta + "' AND village.name LIKE '" +
-        (query.village ? query.village : "") + "%'";
+        "traditional_authority.district_id = district.district_id WHERE district.name = \"" + query.district +
+        "\" AND traditional_authority.name = \"" + query.ta + "\" AND village.name LIKE \"" +
+        (query.village ? query.village : "") + "%\"";
 
     queryRaw(sql, function (data) {
 
@@ -2893,14 +2893,14 @@ app.get('/village_query', function (req, res) {
 
 });
 
-app.get('/fnames_query', function (req, res) {
+app.get("/fnames_query", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT DISTINCT given_name AS name FROM person_name WHERE given_name LIKE '" +
-        (query.name ? query.name : "") + "%' AND given_name != '-'";
+    var sql = "SELECT DISTINCT given_name AS name FROM person_name WHERE given_name LIKE \"" +
+        (query.name ? query.name : "") + "%\" AND given_name != \"-\"";
 
     queryRaw(sql, function (data) {
 
@@ -2922,14 +2922,14 @@ app.get('/fnames_query', function (req, res) {
 
 });
 
-app.get('/lnames_query', function (req, res) {
+app.get("/lnames_query", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT DISTINCT family_name AS name FROM person_name WHERE family_name LIKE '" +
-        (query.name ? query.name : "") + "%' AND family_name != '-'";
+    var sql = "SELECT DISTINCT family_name AS name FROM person_name WHERE family_name LIKE \"" +
+        (query.name ? query.name : "") + "%\" AND family_name != \"-\"";
 
     queryRaw(sql, function (data) {
 
@@ -2951,7 +2951,7 @@ app.get('/lnames_query', function (req, res) {
 
 });
 
-app.post('/save_dummy_patient', function (req, res) {
+app.post("/save_dummy_patient", function (req, res) {
 
     console.log(req.body.data);
 
@@ -2971,26 +2971,26 @@ app.post('/save_dummy_patient', function (req, res) {
 
         var patient_id;
 
-        var sql = "INSERT INTO person (creator, date_created, uuid) VALUES ((SELECT user_id FROM users WHERE username = '" +
-            data.userId + "'), NOW(), '" + uuid.v1() + "')";
+        var sql = "INSERT INTO person (creator, date_created, uuid) VALUES ((SELECT user_id FROM users WHERE username = \"" +
+            data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
         queryRaw(sql, function (person) {
 
             person_id = person[0].insertId;
 
             var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, " +
-                "uuid) VALUES ('" + person_id + "', '-', '-', " + "(SELECT user_id FROM users WHERE " +
-                "username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                "uuid) VALUES (\"" + person_id + "\", \"-\", \"-\", " + "(SELECT user_id FROM users WHERE " +
+                "username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
             queryRaw(sql, function (name) {
 
-                var sql = "INSERT INTO person_address (person_id, creator, date_created, uuid) VALUES ('" + person_id +
-                    "', " + "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                var sql = "INSERT INTO person_address (person_id, creator, date_created, uuid) VALUES (\"" + person_id +
+                    "\", " + "(SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
                 queryRaw(sql, function (address) {
 
-                    var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES ('" +
-                        person_id + "', (SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW())";
+                    var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES (\"" +
+                        person_id + "\", (SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW())";
 
                     queryRaw(sql, function (patient) {
 
@@ -3019,7 +3019,7 @@ app.post('/save_dummy_patient', function (req, res) {
 
 });
 
-app.post('/update_patient', function (req, res) {
+app.post("/update_patient", function (req, res) {
 
     console.log(req.body.data);
 
@@ -3039,8 +3039,8 @@ app.post('/update_patient', function (req, res) {
 
             case "first_name":
 
-                var sql = "UPDATE person_name SET given_name = '" + data.value + "' WHERE person_id = '" +
-                    data.person_id + "'";
+                var sql = "UPDATE person_name SET given_name = \"" + data.value + "\" WHERE person_id = \"" +
+                    data.person_id + "\"";
 
                 queryRaw(sql, function (name) {
 
@@ -3052,8 +3052,8 @@ app.post('/update_patient', function (req, res) {
 
             case "last_name":
 
-                var sql = "UPDATE person_name SET family_name = '" + data.value + "' WHERE person_id = '" +
-                    data.person_id + "'";
+                var sql = "UPDATE person_name SET family_name = \"" + data.value + "\" WHERE person_id = \"" +
+                    data.person_id + "\"";
 
                 queryRaw(sql, function (name) {
 
@@ -3065,8 +3065,8 @@ app.post('/update_patient', function (req, res) {
 
             case "middle_name":
 
-                var sql = "UPDATE person_name SET middle_name = '" + data.value + "' WHERE person_id = '" +
-                    data.person_id + "'";
+                var sql = "UPDATE person_name SET middle_name = \"" + data.value + "\" WHERE person_id = \"" +
+                    data.person_id + "\"";
 
                 queryRaw(sql, function (name) {
 
@@ -3078,8 +3078,8 @@ app.post('/update_patient', function (req, res) {
 
             case "gender":
 
-                var sql = "UPDATE person SET gender = '" + data.value + "' WHERE person_id = '" +
-                    data.person_id + "'";
+                var sql = "UPDATE person SET gender = \"" + data.value + "\" WHERE person_id = \"" +
+                    data.person_id + "\"";
 
                 queryRaw(sql, function (name) {
 
@@ -3091,8 +3091,8 @@ app.post('/update_patient', function (req, res) {
 
             case "birthdate":
 
-                var sql = "UPDATE person SET birthdate = '" + data.value + "', bithdate_estimated = '" +
-                    (data.estimated ? data.estimated : 0) + "' WHERE person_id = '" + data.person_id + "'";
+                var sql = "UPDATE person SET birthdate = \"" + data.value + "\", bithdate_estimated = \"" +
+                    (data.estimated ? data.estimated : 0) + "\" WHERE person_id = \"" + data.person_id + "\"";
 
                 queryRaw(sql, function (name) {
 
@@ -3104,9 +3104,9 @@ app.post('/update_patient', function (req, res) {
 
             case "current_residence":
 
-                var sql = "UPDATE person_address SET address1 = '" + data.closest_landmark + ", city_village = '" +
-                    data.current_village + "', state_province = '" + data.current_district + "', township_division = '" +
-                    data.current_ta + "' WHERE person_address_id = '" + data.person_address_id + "'";
+                var sql = "UPDATE person_address SET address1 = \"" + data.closest_landmark + ", city_village = \"" +
+                    data.current_village + "\", state_province = \"" + data.current_district + "\", township_division = \"" +
+                    data.current_ta + "\" WHERE person_address_id = \"" + data.person_address_id + "\"";
 
                 queryRaw(sql, function (name) {
 
@@ -3118,9 +3118,9 @@ app.post('/update_patient', function (req, res) {
 
             case "place_of_origin":
 
-                var sql = "UPDATE person_address SET address2 = '" + data.home_district + ", county_district = '" +
-                    data.home_ta + "', neighborhood_cell = '" + data.home_village + "' WHERE person_address_id = '" +
-                    data.person_address_id + "'";
+                var sql = "UPDATE person_address SET address2 = \"" + data.home_district + ", county_district = \"" +
+                    data.home_ta + "\", neighborhood_cell = \"" + data.home_village + "\" WHERE person_address_id = \"" +
+                    data.person_address_id + "\"";
 
                 queryRaw(sql, function (name) {
 
@@ -3136,7 +3136,7 @@ app.post('/update_patient', function (req, res) {
 
 })
 
-app.post('/demographics_update', function (req, res) {
+app.post("/demographics_update", function (req, res) {
 
     console.log(req.body.data);
 
@@ -3156,8 +3156,8 @@ app.post('/demographics_update', function (req, res) {
 
                 case "first_name":
 
-                    var sql = "UPDATE person_name SET given_name = '" + data[data.target_field] + "' WHERE " +
-                        data.target_field_id + " = '" + data.target_field_id_value + "'";
+                    var sql = "UPDATE person_name SET given_name = \"" + data[data.target_field] + "\" WHERE " +
+                        data.target_field_id + " = \"" + data.target_field_id_value + "\"";
 
                     console.log(sql);
 
@@ -3173,8 +3173,8 @@ app.post('/demographics_update', function (req, res) {
 
                 case "last_name":
 
-                    var sql = "UPDATE person_name SET family_name = '" + data[data.target_field] + "' WHERE " +
-                        data.target_field_id + " = '" + data.target_field_id_value + "'";
+                    var sql = "UPDATE person_name SET family_name = \"" + data[data.target_field] + "\" WHERE " +
+                        data.target_field_id + " = \"" + data.target_field_id_value + "\"";
 
                     console.log(sql);
 
@@ -3190,9 +3190,9 @@ app.post('/demographics_update', function (req, res) {
 
                 case "middle_name":
 
-                    var sql = "UPDATE person_name SET middle_name = '" + (data[data.target_field] ?
-                        data[data.target_field] : "") + "' WHERE " + data.target_field_id + " = '" +
-                        data.target_field_id_value + "'";
+                    var sql = "UPDATE person_name SET middle_name = \"" + (data[data.target_field] ?
+                        data[data.target_field] : "") + "\" WHERE " + data.target_field_id + " = \"" +
+                        data.target_field_id_value + "\"";
 
                     console.log(sql);
 
@@ -3208,8 +3208,8 @@ app.post('/demographics_update', function (req, res) {
 
                 case "gender":
 
-                    var sql = "UPDATE person SET gender = '" + (data[data.target_field] ? data[data.target_field].substring(0, 1).toUpperCase() :
-                        "") + "' WHERE " + data.target_field_id + " = '" + data.target_field_id_value + "'";
+                    var sql = "UPDATE person SET gender = \"" + (data[data.target_field] ? data[data.target_field].substring(0, 1).toUpperCase() :
+                        "") + "\" WHERE " + data.target_field_id + " = \"" + data.target_field_id_value + "\"";
 
                     console.log(sql);
 
@@ -3225,9 +3225,9 @@ app.post('/demographics_update', function (req, res) {
 
                 case "date_of_birth":
 
-                    var sql = "UPDATE person SET birthdate = '" + data[data.target_field] + "', birthdate_estimated = '" +
-                        data.date_of_birth_estimated + "' WHERE " + data.target_field_id + " = '" +
-                        data.target_field_id_value + "'";
+                    var sql = "UPDATE person SET birthdate = \"" + data[data.target_field] + "\", birthdate_estimated = \"" +
+                        data.date_of_birth_estimated + "\" WHERE " + data.target_field_id + " = \"" +
+                        data.target_field_id_value + "\"";
 
                     console.log(sql);
 
@@ -3247,9 +3247,9 @@ app.post('/demographics_update', function (req, res) {
 
                 case "current_district":
 
-                    var sql = "UPDATE person_address SET city_village = '" + data.current_village + "', township_division = '" +
-                        data.current_ta + "', state_province = '" + data.current_district + "' WHERE " +
-                        data.target_field_id + " = '" + data.target_field_id_value + "'";
+                    var sql = "UPDATE person_address SET city_village = \"" + data.current_village + "\", township_division = \"" +
+                        data.current_ta + "\", state_province = \"" + data.current_district + "\" WHERE " +
+                        data.target_field_id + " = \"" + data.target_field_id_value + "\"";
 
                     console.log(sql);
 
@@ -3269,9 +3269,9 @@ app.post('/demographics_update', function (req, res) {
 
                 case "home_village":
 
-                    var sql = "UPDATE person_address SET address2 = '" + data.home_district + "', county_district = '" +
-                        data.home_ta + "', neighborhood_cell = '" + data.home_village + "' WHERE " +
-                        data.target_field_id + " = '" + data.target_field_id_value + "'";
+                    var sql = "UPDATE person_address SET address2 = \"" + data.home_district + "\", county_district = \"" +
+                        data.home_ta + "\", neighborhood_cell = \"" + data.home_village + "\" WHERE " +
+                        data.target_field_id + " = \"" + data.target_field_id_value + "\"";
 
                     console.log(sql);
 
@@ -3287,8 +3287,8 @@ app.post('/demographics_update', function (req, res) {
 
                 case "closest_landmark":
 
-                    var sql = "UPDATE person_address SET address1 = '" + data.closest_landmark + "' WHERE " +
-                        data.target_field_id + " = '" + data.target_field_id_value + "'";
+                    var sql = "UPDATE person_address SET address1 = \"" + data.closest_landmark + "\" WHERE " +
+                        data.target_field_id + " = \"" + data.target_field_id_value + "\"";
 
                     console.log(sql);
 
@@ -3322,8 +3322,8 @@ app.post('/demographics_update', function (req, res) {
 
                     if (data.target_field_id_value) {
 
-                        var sql = "UPDATE person_attribute SET value = '" + data[data.target_field] + "' WHERE " +
-                            data.target_field_id + " = '" + data.target_field_id_value + "'";
+                        var sql = "UPDATE person_attribute SET value = \"" + data[data.target_field] + "\" WHERE " +
+                            data.target_field_id + " = \"" + data.target_field_id_value + "\"";
 
                         console.log(sql);
 
@@ -3338,9 +3338,9 @@ app.post('/demographics_update', function (req, res) {
                     } else {
 
                         var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, " +
-                            "date_created, uuid) VALUES('" + data.patient_id + "', '" + data[data.target_field] + "', " +
-                            "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = '" +
-                            attributeMapping[data.target_field] + "' LIMIT 1), '" + user_id + "', NOW(), '" + uuid.v1() + "')";
+                            "date_created, uuid) VALUES(\"" + data.patient_id + "\", \"" + data[data.target_field] + "\", " +
+                            "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = \"" +
+                            attributeMapping[data.target_field] + "\" LIMIT 1), \"" + user_id + "\", NOW(), \"" + uuid.v1() + "\")";
 
                         console.log(sql);
 
@@ -3374,7 +3374,7 @@ app.post('/demographics_update', function (req, res) {
 
 })
 
-app.post('/save_patient', function (req, res) {
+app.post("/save_patient", function (req, res) {
 
     console.log(req.body.data);
 
@@ -3394,9 +3394,9 @@ app.post('/save_patient', function (req, res) {
 
         var patient_id;
 
-        var sql = "INSERT INTO person (gender, birthdate, birthdate_estimated, creator, date_created, uuid) VALUES ('" +
-            data["Gender"] + "', '" + data["Date of birth"] + "', '" + data["Birthdate Estimated"] + "', " +
-            "(SELECT user_id FROM users WHERE username = '" + data["User ID"] + "'), NOW(), '" + uuid.v1() + "')";
+        var sql = "INSERT INTO person (gender, birthdate, birthdate_estimated, creator, date_created, uuid) VALUES (\"" +
+            data["Gender"] + "\", \"" + data["Date of birth"] + "\", \"" + data["Birthdate Estimated"] + "\", " +
+            "(SELECT user_id FROM users WHERE username = \"" + data["User ID"] + "\"), NOW(), \"" + uuid.v1() + "\")";
 
         queryRaw(sql, function (person) {
 
@@ -3405,19 +3405,19 @@ app.post('/save_patient', function (req, res) {
             console.log(person[0].insertId);
 
             var sql = "INSERT INTO person_address (person_id, address1, address2, city_village, state_province, " +
-                " creator, date_created, county_district, neighborhood_cell, township_division, uuid) VALUES ('" +
-                person_id + "', '" +
-                (data['Closest Landmark'] ? data['Closest Landmark'] : "") + "', '" +
-                (data['Home District'] ? data['Home District'] : "") + "', '" +
-                (data['Current Village'] ? data['Current Village'] : "") + "', '" +
-                (data['Current District'] ? data['Current District'] : "") + "', " +
-                "(SELECT user_id FROM users WHERE username = '" + data["User ID"] + "')," +
-                " NOW(), '" +
-                (data['Home T/A'] ? data['Home T/A'] : "") + "', '" +
-                (data['Home Village'] ? data['Home Village'] : "") + "', '" +
-                (data['Current T/A'] ? data['Current T/A'] : "") + "', '" +
+                " creator, date_created, county_district, neighborhood_cell, township_division, uuid) VALUES (\"" +
+                person_id + "\", \"" +
+                (data["Closest Landmark"] ? data["Closest Landmark"] : "") + "\", \"" +
+                (data["Home District"] ? data["Home District"] : "") + "\", \"" +
+                (data["Current Village"] ? data["Current Village"] : "") + "\", \"" +
+                (data["Current District"] ? data["Current District"] : "") + "\", " +
+                "(SELECT user_id FROM users WHERE username = \"" + data["User ID"] + "\")," +
+                " NOW(), \"" +
+                (data["Home T/A"] ? data["Home T/A"] : "") + "\", \"" +
+                (data["Home Village"] ? data["Home Village"] : "") + "\", \"" +
+                (data["Current T/A"] ? data["Current T/A"] : "") + "\", \"" +
                 uuid.v1() +
-                "')";
+                "\")";
 
             queryRaw(sql, function (address) {
 
@@ -3425,15 +3425,15 @@ app.post('/save_patient', function (req, res) {
 
                 console.log(address_id);
 
-                var sql = "INSERT INTO person_name (person_id, given_name, middle_name, family_name, creator, date_created, uuid) VALUES ('" +
-                    person_id + "', '" + data["First Name"] + "', '" + (data["Middle Name"] ? data["Middle Name"] : "") + "', '" +
-                    data["Last Name"] + "', " + "(SELECT user_id FROM users WHERE username = '" + data["User ID"] +
-                    "'), NOW(), '" + uuid.v1() + "')";
+                var sql = "INSERT INTO person_name (person_id, given_name, middle_name, family_name, creator, date_created, uuid) VALUES (\"" +
+                    person_id + "\", \"" + data["First Name"] + "\", \"" + (data["Middle Name"] ? data["Middle Name"] : "") + "\", \"" +
+                    data["Last Name"] + "\", " + "(SELECT user_id FROM users WHERE username = \"" + data["User ID"] +
+                    "\"), NOW(), \"" + uuid.v1() + "\")";
 
                 queryRaw(sql, function (name) {
 
-                    var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES ('" +
-                        person_id + "', (SELECT user_id FROM users WHERE username = '" + data["User ID"] + "'), NOW())";
+                    var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES (\"" +
+                        person_id + "\", (SELECT user_id FROM users WHERE username = \"" + data["User ID"] + "\"), NOW())";
 
                     queryRaw(sql, function (patient) {
 
@@ -3462,7 +3462,7 @@ app.post('/save_patient', function (req, res) {
 
 });
 
-app.post('/updateUser', function (req, res) {
+app.post("/updateUser", function (req, res) {
 
     console.log(req.body);
 
@@ -3484,7 +3484,7 @@ app.post('/updateUser', function (req, res) {
 
         var person_id;
 
-        sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
+        sql = "SELECT user_id FROM users WHERE username = \"" + data.username + "\"";
 
         queryRaw(sql, function (verification) {
 
@@ -3495,9 +3495,9 @@ app.post('/updateUser', function (req, res) {
             } else {
 
                 var sql = "INSERT INTO person (gender, " + (data.date_of_birth ? "birthdate, birthdate_estimated, " : "") +
-                    "creator, date_created, uuid) VALUES ('" + String(data.gender).substring(0, 1) + "', " + (data.date_of_birth ? "'" +
-                    data.date_of_birth + "', '" + data.estimated + "', " : "") + " (SELECT user_id FROM users WHERE " +
-                    "username = '" + (data.userId ? data.userId : "admin" ) + "'), NOW(), '" + uuid.v1() + "')";
+                    "creator, date_created, uuid) VALUES (\"" + String(data.gender).substring(0, 1) + "\", " + (data.date_of_birth ? "\"" +
+                    data.date_of_birth + "\", \"" + data.estimated + "\", " : "") + " (SELECT user_id FROM users WHERE " +
+                    "username = \"" + (data.userId ? data.userId : "admin" ) + "\"), NOW(), \"" + uuid.v1() + "\")";
 
                 queryRaw(sql, function (person) {
 
@@ -3506,33 +3506,33 @@ app.post('/updateUser', function (req, res) {
                     console.log(person[0].insertId);
 
 
-                    var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, uuid) VALUES ('" +
-                        person_id + "', '" + data.first_name + "', '" + data.last_name + "', " + "(SELECT user_id FROM " +
-                        "users WHERE username = '" + (data.userId != undefined ? data.userId : "admin" ) +
-                        "'), NOW(), '" + uuid.v1() + "')";
+                    var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, uuid) VALUES (\"" +
+                        person_id + "\", \"" + data.first_name + "\", \"" + data.last_name + "\", " + "(SELECT user_id FROM " +
+                        "users WHERE username = \"" + (data.userId != undefined ? data.userId : "admin" ) +
+                        "\"), NOW(), \"" + uuid.v1() + "\")";
 
                     queryRaw(sql, function (name) {
 
                         sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, " +
-                            "date_created, uuid) VALUES ('" + person_id + "', '" + data.hts_provider_id + "', " +
-                            "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = 'HTS Provider ID'), " +
-                            "(SELECT user_id FROM users WHERE username = '" + (data.userId ? data.userId : "admin" ) +
-                            "'), NOW(), '" + uuid.v1() + "')";
+                            "date_created, uuid) VALUES (\"" + person_id + "\", \"" + data.hts_provider_id + "\", " +
+                            "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = \"HTS Provider ID\"), " +
+                            "(SELECT user_id FROM users WHERE username = \"" + (data.userId ? data.userId : "admin" ) +
+                            "\"), NOW(), \"" + uuid.v1() + "\")";
 
                         queryRaw(sql, function (attr) {
 
                             console.log(attr[0]);
 
-                            sql = "SELECT user_id FROM users WHERE username = '" + (req.body["User ID"] ? req.body["User ID"] : "admin" ) + "'"
+                            sql = "SELECT user_id FROM users WHERE username = \"" + (req.body["User ID"] ? req.body["User ID"] : "admin" ) + "\""
 
                             queryRaw(sql, function (updater) {
 
                                 console.log(updater[0][0].user_id);
 
                                 var sql = "INSERT INTO users (system_id, username, password, salt, creator, date_created, " +
-                                    "person_id, uuid) VALUES ('" + data.username + "', '" + data.username + "', '" +
-                                    password + "', '" + salt + "', '" + updater[0][0].user_id + "', NOW(), '" + person_id +
-                                    "', '" + uuid.v1() + "')";
+                                    "person_id, uuid) VALUES (\"" + data.username + "\", \"" + data.username + "\", \"" +
+                                    password + "\", \"" + salt + "\", \"" + updater[0][0].user_id + "\", NOW(), \"" + person_id +
+                                    "\", \"" + uuid.v1() + "\")";
 
                                 queryRaw(sql, function (user) {
 
@@ -3542,8 +3542,8 @@ app.post('/updateUser', function (req, res) {
 
                                     for (var i = 0; i < data.roles.length; i++) {
 
-                                        values += (values.trim().length > 0 ? ", " : "") + "('" + user[0].insertId + "', '" +
-                                            data.roles[i] + "')";
+                                        values += (values.trim().length > 0 ? ", " : "") + "(\"" + user[0].insertId + "\", \"" +
+                                            data.roles[i] + "\")";
 
                                     }
 
@@ -3577,7 +3577,7 @@ app.post('/updateUser', function (req, res) {
 
 })
 
-app.get('/list_locations', function (req, res) {
+app.get("/list_locations", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3589,8 +3589,8 @@ app.get('/list_locations', function (req, res) {
 
     var sql = "SELECT location.name FROM location_tag LEFT OUTER JOIN location_tag_map ON location_tag.location_tag_id = " +
         "location_tag_map.location_tag_id LEFT OUTER JOIN location ON location.location_id = location_tag_map.location_id " +
-        " WHERE location.name LIKE '" + query.name + "%' AND location.retired = 0 AND location_tag.retired = 0 AND " +
-        "location_tag.name = 'HTS'";
+        " WHERE location.name LIKE \"" + query.name + "%\" AND location.retired = 0 AND location_tag.retired = 0 AND " +
+        "location_tag.name = \"HTS\"";
 
     console.log(sql);
 
@@ -3612,7 +3612,7 @@ app.get('/list_locations', function (req, res) {
 
 })
 
-app.get('/list_users', function (req, res) {
+app.get("/list_users", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3623,8 +3623,8 @@ app.get('/list_users', function (req, res) {
     var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
 
     var sql = "SELECT username, given_name, family_name FROM users LEFT OUTER JOIN person_name ON users.person_id = " +
-        "person_name.person_id WHERE CONCAT(given_name, ' ', family_name) LIKE '" + query.name + "%' AND retired = 0 " +
-        "AND COALESCE(users.person_id,'') != ''";
+        "person_name.person_id WHERE CONCAT(given_name, \" \", family_name) LIKE \"" + query.name + "%\" AND retired = 0 " +
+        "AND COALESCE(users.person_id,\"\") != \"\"";
 
     console.log(sql);
 
@@ -3636,7 +3636,7 @@ app.get('/list_users', function (req, res) {
 
             var user = data[0][i];
 
-            result += "<li tstValue='" + user.username + "'>" + user.given_name + " " + user.family_name +
+            result += "<li tstValue=\"" + user.username + "\">" + user.given_name + " " + user.family_name +
                 " (" + user.username + ")" + "</li>";
 
         }
@@ -3647,7 +3647,7 @@ app.get('/list_users', function (req, res) {
 
 })
 
-app.get('/list_usernames', function (req, res) {
+app.get("/list_usernames", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3657,8 +3657,8 @@ app.get('/list_usernames', function (req, res) {
 
     var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
 
-    var sql = "SELECT username FROM users WHERE username LIKE '" +
-        query.username + "%' AND retired = 0 AND COALESCE(person_id,'') != ''";
+    var sql = "SELECT username FROM users WHERE username LIKE \"" +
+        query.username + "%\" AND retired = 0 AND COALESCE(person_id,\"\") != \"\"";
 
     console.log(sql);
 
@@ -3680,7 +3680,7 @@ app.get('/list_usernames', function (req, res) {
 
 })
 
-app.get('/search_by_username', function (req, res) {
+app.get("/search_by_username", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3692,8 +3692,8 @@ app.get('/search_by_username', function (req, res) {
 
     var sql = "SELECT users.user_id, username, role, gender, birthdate, given_name, family_name FROM users LEFT OUTER " +
         "JOIN user_role ON user_role.user_id = users.user_id LEFT OUTER JOIN person ON person.person_id = " +
-        "users.person_id LEFT OUTER JOIN person_name ON person_name.person_id = person.person_id WHERE username LIKE '" +
-        query.username + "%' AND COALESCE(family_name,'') != ''";
+        "users.person_id LEFT OUTER JOIN person_name ON person_name.person_id = person.person_id WHERE username LIKE \"" +
+        query.username + "%\" AND COALESCE(family_name,\"\") != \"\"";
 
     console.log(sql);
 
@@ -3715,24 +3715,24 @@ app.get('/search_by_username', function (req, res) {
 
             }
 
-            if (!collection[user.username]['roles']) {
+            if (!collection[user.username]["roles"]) {
 
-                collection[user.username]['roles'] = [];
+                collection[user.username]["roles"] = [];
 
             }
 
-            collection[user.username]['username'] = user.username;
+            collection[user.username]["username"] = user.username;
 
             if (user.role)
-                collection[user.username]['roles'].push(user.role);
+                collection[user.username]["roles"].push(user.role);
 
-            collection[user.username]['gender'] = user.gender;
+            collection[user.username]["gender"] = user.gender;
 
-            collection[user.username]['birthdate'] = user.birthdate;
+            collection[user.username]["birthdate"] = user.birthdate;
 
-            collection[user.username]['first_name'] = user.given_name;
+            collection[user.username]["first_name"] = user.given_name;
 
-            collection[user.username]['family_name'] = user.family_name;
+            collection[user.username]["family_name"] = user.family_name;
 
         }
 
@@ -3762,7 +3762,7 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "first_name":
 
-                var sql = "SELECT person_name_id, given_name FROM person_name WHERE person_id = '" + query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_name_id, given_name FROM person_name WHERE person_id = \"" + query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -3781,7 +3781,7 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "last_name":
 
-                var sql = "SELECT person_name_id, family_name FROM person_name WHERE person_id = '" + query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_name_id, family_name FROM person_name WHERE person_id = \"" + query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -3800,7 +3800,7 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "middle_name":
 
-                var sql = "SELECT person_name_id, middle_name FROM person_name WHERE person_id = '" + query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_name_id, middle_name FROM person_name WHERE person_id = \"" + query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -3819,7 +3819,7 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "gender":
 
-                var sql = "SELECT person_id, gender FROM person WHERE person_id = '" + query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_id, gender FROM person WHERE person_id = \"" + query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -3838,8 +3838,8 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "date_of_birth":
 
-                var sql = "SELECT person_id, birthdate, birthdate_estimated FROM person WHERE person_id = '" +
-                    query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_id, birthdate, birthdate_estimated FROM person WHERE person_id = \"" +
+                    query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -3858,8 +3858,8 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "current_village":
 
-                var sql = "SELECT person_address_id, city_village FROM person_address WHERE person_id = '" +
-                    query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_address_id, city_village FROM person_address WHERE person_id = \"" +
+                    query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -3877,8 +3877,8 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "current_ta":
 
-                var sql = "SELECT person_address_id, township_division FROM person_address WHERE person_id = '" +
-                    query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_address_id, township_division FROM person_address WHERE person_id = \"" +
+                    query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -3896,8 +3896,8 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "current_district":
 
-                var sql = "SELECT person_address_id, state_province FROM person_address WHERE person_id = '" +
-                    query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_address_id, state_province FROM person_address WHERE person_id = \"" +
+                    query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -3915,8 +3915,8 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "home_district":
 
-                var sql = "SELECT person_address_id, address2 FROM person_address WHERE person_id = '" +
-                    query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_address_id, address2 FROM person_address WHERE person_id = \"" +
+                    query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -3934,8 +3934,8 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "home_ta":
 
-                var sql = "SELECT person_address_id, county_district FROM person_address WHERE person_id = '" +
-                    query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_address_id, county_district FROM person_address WHERE person_id = \"" +
+                    query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -3953,8 +3953,8 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "home_village":
 
-                var sql = "SELECT person_address_id, neighborhood_cell FROM person_address WHERE person_id = '" +
-                    query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_address_id, neighborhood_cell FROM person_address WHERE person_id = \"" +
+                    query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -3972,8 +3972,8 @@ app.get("/demographics_by_field", function (req, res) {
 
             case "closest_landmark":
 
-                var sql = "SELECT person_address_id, address1 FROM person_address WHERE person_id = '" +
-                    query.person_id + "' LIMIT 1";
+                var sql = "SELECT person_address_id, address1 FROM person_address WHERE person_id = \"" +
+                    query.person_id + "\" LIMIT 1";
 
                 console.log(sql);
 
@@ -4009,9 +4009,9 @@ app.get("/demographics_by_field", function (req, res) {
                     occupation: "Occupation"
                 };
 
-                var sql = "SELECT person_attribute_id, value FROM person_attribute WHERE person_id = '" +
-                    query.person_id + "' AND person_attribute_type_id = (SELECT person_attribute_type_id FROM " +
-                    "person_attribute_type WHERE name = '" + attributeMapping[query.field] + "' LIMIT 1) LIMIT 1";
+                var sql = "SELECT person_attribute_id, value FROM person_attribute WHERE person_id = \"" +
+                    query.person_id + "\" AND person_attribute_type_id = (SELECT person_attribute_type_id FROM " +
+                    "person_attribute_type WHERE name = \"" + attributeMapping[query.field] + "\" LIMIT 1) LIMIT 1";
 
                 console.log(sql);
 
@@ -4067,7 +4067,7 @@ app.get("/demographics_by_field", function (req, res) {
 
 })
 
-app.get('/search_for_patient', function (req, res) {
+app.get("/search_for_patient", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -4082,9 +4082,9 @@ app.get('/search_for_patient', function (req, res) {
         "identifier_type) AS idtype, (SELECT city_village FROM person_address WHERE person_address.person_id = " +
         "person.person_id AND voided = 0 LIMIT 1) AS city_village FROM person_name LEFT OUTER JOIN person ON person.person_id = " +
         "person_name.person_id LEFT OUTER JOIN patient_identifier ON patient_identifier.patient_id = person.person_id " +
-        "WHERE patient_identifier.voided = 0 AND person_name.voided = 0 AND person.voided = 0 AND family_name = '" +
-        (query.last_name ? query.last_name : "") + "' AND given_name = '" + (query.first_name ? query.first_name : "") +
-        "' AND gender = '" + (query.gender ? query.gender : "") + "' LIMIT " + lowerLimit + ", " + pageSize;
+        "WHERE patient_identifier.voided = 0 AND person_name.voided = 0 AND person.voided = 0 AND family_name = \"" +
+        (query.last_name ? query.last_name : "") + "\" AND given_name = \"" + (query.first_name ? query.first_name : "") +
+        "\" AND gender = \"" + (query.gender ? query.gender : "") + "\" LIMIT " + lowerLimit + ", " + pageSize;
 
     console.log(sql);
 
@@ -4170,7 +4170,7 @@ app.get('/search_for_patient', function (req, res) {
 
 })
 
-app.get('/test_id', function (req, res) {
+app.get("/test_id", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -4187,7 +4187,7 @@ app.get('/test_id', function (req, res) {
 
 })
 
-app.post('/activate_user', function (req, res) {
+app.post("/activate_user", function (req, res) {
 
     var data = req.body;
 
@@ -4201,7 +4201,7 @@ app.post('/activate_user', function (req, res) {
 
         console.log(data);
 
-        var sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
+        var sql = "SELECT user_id FROM users WHERE username = \"" + data.username + "\"";
 
         console.log(sql);
 
@@ -4209,7 +4209,7 @@ app.post('/activate_user', function (req, res) {
 
             if (user[0].length > 0) {
 
-                var sql = "SELECT user_id FROM users WHERE username = '" + data.userId + "'";
+                var sql = "SELECT user_id FROM users WHERE username = \"" + data.userId + "\"";
 
                 console.log(sql);
 
@@ -4218,7 +4218,7 @@ app.post('/activate_user', function (req, res) {
                     console.log(updater[0][0].user_id);
 
                     var sql = "UPDATE users SET retired = 0, retired_by = NULL, date_retired = NULL, retire_reason = NULL " +
-                        " WHERE user_id = '" + user[0][0].user_id + "'";
+                        " WHERE user_id = \"" + user[0][0].user_id + "\"";
 
                     console.log(sql);
 
@@ -4242,7 +4242,7 @@ app.post('/activate_user', function (req, res) {
 
 })
 
-app.post('/block_user', function (req, res) {
+app.post("/block_user", function (req, res) {
 
     var data = req.body;
 
@@ -4256,7 +4256,7 @@ app.post('/block_user', function (req, res) {
 
         console.log(data);
 
-        var sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
+        var sql = "SELECT user_id FROM users WHERE username = \"" + data.username + "\"";
 
         console.log(sql);
 
@@ -4264,7 +4264,7 @@ app.post('/block_user', function (req, res) {
 
             if (user[0].length > 0) {
 
-                var sql = "SELECT user_id FROM users WHERE username = '" + data.userId + "'";
+                var sql = "SELECT user_id FROM users WHERE username = \"" + data.userId + "\"";
 
                 console.log(sql);
 
@@ -4272,8 +4272,8 @@ app.post('/block_user', function (req, res) {
 
                     console.log(updater[0][0].user_id);
 
-                    var sql = "UPDATE users SET retired = 1, retired_by = '" + updater[0][0].user_id +
-                        "', date_retired = NOW(), retire_reason ='Blocked user.' WHERE user_id = '" + user[0][0].user_id + "'";
+                    var sql = "UPDATE users SET retired = 1, retired_by = \"" + updater[0][0].user_id +
+                        "\", date_retired = NOW(), retire_reason =\"Blocked user.\" WHERE user_id = \"" + user[0][0].user_id + "\"";
 
                     console.log(sql);
 
@@ -4297,7 +4297,7 @@ app.post('/block_user', function (req, res) {
 
 })
 
-app.post('/update_user', function (req, res) {
+app.post("/update_user", function (req, res) {
 
     var data = req.body;
 
@@ -4311,7 +4311,7 @@ app.post('/update_user', function (req, res) {
 
         console.log(data);
 
-        var sql = "SELECT user_id, person_id FROM users WHERE username = '" + data.userId + "'";
+        var sql = "SELECT user_id, person_id FROM users WHERE username = \"" + data.userId + "\"";
 
         console.log(sql);
 
@@ -4319,15 +4319,15 @@ app.post('/update_user', function (req, res) {
 
             console.log(person[0][0].person_id);
 
-            var sql = "UPDATE person_name SET given_name = '" + data.first_name + "', family_name = '" + data.last_name +
-                "' WHERE person_id = '" + person[0][0].person_id + "'";
+            var sql = "UPDATE person_name SET given_name = \"" + data.first_name + "\", family_name = \"" + data.last_name +
+                "\" WHERE person_id = \"" + person[0][0].person_id + "\"";
 
             console.log(sql);
 
             queryRaw(sql, function (name) {
 
-                var sql = "UPDATE person SET gender = '" + data.gender.substring(0, 1).toUpperCase() +
-                    "' WHERE person_id = '" + person[0][0].person_id + "'";
+                var sql = "UPDATE person SET gender = \"" + data.gender.substring(0, 1).toUpperCase() +
+                    "\" WHERE person_id = \"" + person[0][0].person_id + "\"";
 
                 console.log(sql);
 
@@ -4335,9 +4335,9 @@ app.post('/update_user', function (req, res) {
 
                     if (data.hts_provider_id) {
 
-                        var sql = "UPDATE person_attribute SET value = '" + data.hts_provider_id + "' WHERE person_id " +
-                            "= '" + person[0][0].person_id + "' AND person_attribute_type_id = (SELECT " +
-                            "person_attribute_type_id FROM person_attribute_type WHERE name = 'HTS Provider ID' LIMIT 1)";
+                        var sql = "UPDATE person_attribute SET value = \"" + data.hts_provider_id + "\" WHERE person_id " +
+                            "= \"" + person[0][0].person_id + "\" AND person_attribute_type_id = (SELECT " +
+                            "person_attribute_type_id FROM person_attribute_type WHERE name = \"HTS Provider ID\" LIMIT 1)";
 
                         console.log(sql);
 
@@ -4345,7 +4345,7 @@ app.post('/update_user', function (req, res) {
 
                             if (data.roles) {
 
-                                var sql = "DELETE FROM user_role WHERE user_id = '" + person[0][0].user_id + "'";
+                                var sql = "DELETE FROM user_role WHERE user_id = \"" + person[0][0].user_id + "\"";
 
                                 queryRaw(sql, function (user) {
 
@@ -4353,8 +4353,8 @@ app.post('/update_user', function (req, res) {
 
                                     for (var i = 0; i < data.roles.length; i++) {
 
-                                        values += (values.trim().length > 0 ? ", " : "") + "('" + person[0][0].user_id + "', '" +
-                                            data.roles[i] + "')";
+                                        values += (values.trim().length > 0 ? ", " : "") + "(\"" + person[0][0].user_id + "\", \"" +
+                                            data.roles[i] + "\")";
 
                                     }
 
@@ -4384,7 +4384,7 @@ app.post('/update_user', function (req, res) {
 
                         if (data.roles) {
 
-                            var sql = "DELETE FROM user_role WHERE user_id = '" + person[0][0].user_id + "'";
+                            var sql = "DELETE FROM user_role WHERE user_id = \"" + person[0][0].user_id + "\"";
 
                             queryRaw(sql, function (user) {
 
@@ -4392,8 +4392,8 @@ app.post('/update_user', function (req, res) {
 
                                 for (var i = 0; i < data.roles.length; i++) {
 
-                                    values += (values.trim().length > 0 ? ", " : "") + "('" + person[0][0].user_id + "', '" +
-                                        data.roles[i] + "')";
+                                    values += (values.trim().length > 0 ? ", " : "") + "(\"" + person[0][0].user_id + "\", \"" +
+                                        data.roles[i] + "\")";
 
                                 }
 
@@ -4429,7 +4429,7 @@ app.post('/update_user', function (req, res) {
 
 })
 
-app.get('/users_listing', function (req, res) {
+app.get("/users_listing", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -4442,7 +4442,7 @@ app.get('/users_listing', function (req, res) {
     var sql = "SELECT users.user_id, users.retired, person.person_id, username, role, gender, given_name, family_name " +
         "FROM users LEFT OUTER JOIN user_role ON users.user_id = user_role.user_id LEFT OUTER JOIN person ON " +
         "person.person_id = users.person_id LEFT OUTER JOIN person_name ON person_name.person_id = person.person_id " +
-        "WHERE COALESCE(password,'') != '' LIMIT " + lowerLimit + ", " + pageSize;
+        "WHERE COALESCE(password,\"\") != \"\" LIMIT " + lowerLimit + ", " + pageSize;
 
     console.log(sql);
 
@@ -4473,7 +4473,7 @@ app.get('/users_listing', function (req, res) {
 
             sql = "SELECT value, name AS attribute FROM person_attribute LEFT OUTER JOIN person_attribute_type " +
                 "ON person_attribute.person_attribute_type_id = person_attribute_type.person_attribute_type_id " +
-                " WHERE person_id = '" + user.person_id + "'";
+                " WHERE person_id = \"" + user.person_id + "\"";
 
             console.log(sql);
 
@@ -4504,10 +4504,10 @@ app.get('/users_listing', function (req, res) {
 
 })
 
-app.get('/roles/:id', function (req, res) {
+app.get("/roles/:id", function (req, res) {
 
-    var sql = "SELECT role FROM users LEFT OUTER JOIN user_role ON user_role.user_id = users.user_id WHERE username = '" +
-        req.params.id + "'";
+    var sql = "SELECT role FROM users LEFT OUTER JOIN user_role ON user_role.user_id = users.user_id WHERE username = \"" +
+        req.params.id + "\"";
 
     var roles = [];
 
@@ -4529,9 +4529,9 @@ app.get('/roles/:id', function (req, res) {
 
 })
 
-app.get('/roles', function (req, res) {
+app.get("/roles", function (req, res) {
 
-    var sql = "SELECT role FROM role WHERE description LIKE 'HTS%'";
+    var sql = "SELECT role FROM role WHERE description LIKE \"HTS%\"";
 
     var roles = [];
 
@@ -4553,7 +4553,7 @@ app.get('/roles', function (req, res) {
 
 })
 
-app.get('/stock_list', function (req, res) {
+app.get("/stock_list", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -4606,7 +4606,7 @@ app.get('/stock_list', function (req, res) {
 
 })
 
-app.get('/consumption_types', function (req, res) {
+app.get("/consumption_types", function (req, res) {
 
     var sql = "SELECT name FROM consumption_type";
 
@@ -4628,15 +4628,15 @@ app.get('/consumption_types', function (req, res) {
 
 })
 
-app.get('/available_batches_to_user_summary', function (req, res) {
+app.get("/available_batches_to_user_summary", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
     var sql = "SELECT batch_number, dispatch_id, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
-        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
-        query.item_name + "' AND COALESCE(dispatch_who_received,'') = '" + query.userId + "' GROUP BY batch_number " +
+        "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" +
+        query.item_name + "\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId + "\" GROUP BY batch_number " +
         "HAVING available > 0";
 
     console.log(sql);
@@ -4653,7 +4653,7 @@ app.get('/available_batches_to_user_summary', function (req, res) {
 
 })
 
-app.get('/available_batches_to_user', function (req, res) {
+app.get("/available_batches_to_user", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -4661,9 +4661,9 @@ app.get('/available_batches_to_user', function (req, res) {
 
     var sql = "SELECT item_name, report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
         "SUM(COALESCE(consumption_quantity,0))) AS available FROM report LEFT OUTER JOIN receipt ON report.batch_number " +
-        " = receipt.batch_number WHERE COALESCE(report.batch_number,'') != '' AND item_name LIKE '" +
-        (query.item_name ? query.item_name : "") + "%' AND COALESCE(dispatch_who_received,'') = '" + query.userId +
-        "' AND report.batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY report.batch_number " +
+        " = receipt.batch_number WHERE COALESCE(report.batch_number,\"\") != \"\" AND item_name LIKE \"" +
+        (query.item_name ? query.item_name : "") + "%\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId +
+        "\" AND report.batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" GROUP BY report.batch_number " +
         "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
 
     console.log(sql);
@@ -4674,17 +4674,17 @@ app.get('/available_batches_to_user', function (req, res) {
 
         for (var i = 0; i < data[0].length; i++) {
 
-            var expiryCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute('expiry')) {" +
-                "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute('expiry')).value = '" +
-                (data[0][i].expiry_date ? data[0][i].expiry_date.format("YYYY-mm-dd") : "") + "';} ";
+            var expiryCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute(\"expiry\")) {" +
+                "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute(\"expiry\")).value = \"" +
+                (data[0][i].expiry_date ? data[0][i].expiry_date.format("YYYY-mm-dd") : "") + "\";} ";
 
-            var dispatchCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute('dispatch')) {" +
-                "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute('dispatch')).value = '" +
-                (data[0][i].dispatch_id ? data[0][i].dispatch_id : "") + "';} ";
+            var dispatchCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute(\"dispatch\")) {" +
+                "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute(\"dispatch\")).value = \"" +
+                (data[0][i].dispatch_id ? data[0][i].dispatch_id : "") + "\";} ";
 
-            result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available +
-                "' dispatch_id='" + data[0][i].dispatch_id + "' onclick=\"if(__$('data.dispatch_id')){" +
-                "__$('data.dispatch_id').value = '" + data[0][i].dispatch_id + "'} " + expiryCmd + dispatchCmd + " \" >" +
+            result += "<li tstValue=\"" + data[0][i].batch_number + "\" available=\"" + data[0][i].available +
+                "\" dispatch_id=\"" + data[0][i].dispatch_id + "\" onclick=\"if(__$('data.dispatch_id')){" +
+                "__$('data.dispatch_id').value = \"" + data[0][i].dispatch_id + "\"} " + expiryCmd + dispatchCmd + " \" >" +
                 (!query.item_name ? data[0][i].item_name + ": " : "") + data[0][i].batch_number + " (" +
                 ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
                 data[0][i].available + ")" + "</li>";
@@ -4697,15 +4697,15 @@ app.get('/available_batches_to_user', function (req, res) {
 
 })
 
-app.get('/available_batches', function (req, res) {
+app.get("/available_batches", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
     var sql = "SELECT batch_number, expiry_date, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(dispatch_quantity,0))) " +
-        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
-        query.item_name + "' AND batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY batch_number " +
+        "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" +
+        query.item_name + "\" AND batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" GROUP BY batch_number " +
         "HAVING available > 0 ORDER BY expiry_date ASC";
 
     queryRawStock(sql, function (data) {
@@ -4718,7 +4718,7 @@ app.get('/available_batches', function (req, res) {
 
         for (var i = 0; i < data[0].length; i++) {
 
-            result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available + "'>" +
+            result += "<li tstValue=\"" + data[0][i].batch_number + "\" available=\"" + data[0][i].available + "\">" +
                 data[0][i].batch_number + " (" +
                 ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
                 data[0][i].available + ")" + "</li>";
@@ -4731,13 +4731,13 @@ app.get('/available_batches', function (req, res) {
 
 })
 
-app.get('/stock_categories', function (req, res) {
+app.get("/stock_categories", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT name FROM category WHERE name LIKE '" + query.category + "%'";
+    var sql = "SELECT name FROM category WHERE name LIKE \"" + query.category + "%\"";
 
     queryRawStock(sql, function (data) {
 
@@ -4759,14 +4759,14 @@ app.get('/stock_categories', function (req, res) {
 
 })
 
-app.get('/stock_items', function (req, res) {
+app.get("/stock_items", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
     var sql = "SELECT stock.name FROM stock LEFT OUTER JOIN category ON stock.category_id = category.category_id WHERE " +
-        "category.name = '" + query.category + "' AND stock.name LIKE '" + query.item_name + "%'";
+        "category.name = \"" + query.category + "\" AND stock.name LIKE \"" + query.item_name + "%\"";
 
     queryRawStock(sql, function (data) {
 
@@ -4788,13 +4788,13 @@ app.get('/stock_items', function (req, res) {
 
 })
 
-app.get('/items_list', function (req, res) {
+app.get("/items_list", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT stock.stock_id, stock.name FROM stock WHERE stock.name LIKE '" + query.item_name + "%'";
+    var sql = "SELECT stock.stock_id, stock.name FROM stock WHERE stock.name LIKE \"" + query.item_name + "%\"";
 
     queryRawStock(sql, function (data) {
 
@@ -4804,7 +4804,7 @@ app.get('/items_list', function (req, res) {
 
         for (var i = 0; i < data[0].length; i++) {
 
-            result += "<li tstValue='" + data[0][i].stock_id + "'>" + data[0][i].name + "</li>";
+            result += "<li tstValue=\"" + data[0][i].stock_id + "\">" + data[0][i].name + "</li>";
 
         }
 
@@ -4814,7 +4814,7 @@ app.get('/items_list', function (req, res) {
 
 })
 
-app.get('/stock_search', function (req, res) {
+app.get("/stock_search", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -4830,8 +4830,8 @@ app.get('/stock_search', function (req, res) {
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
         "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
         "stock.category_id WHERE COALESCE(report.voided,0) = 0 " + (query.category && query.item_name ?
-        "AND category.name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND stock.name = '" +
-        query.item_name + "'" : "") + " GROUP BY stock.stock_id LIMIT " +
+        "AND category.name = \"" + query.category + "\" AND COALESCE(report.voided,0) = 0 AND stock.name = \"" +
+        query.item_name + "\"" : "") + " GROUP BY stock.stock_id LIMIT " +
         lowerLimit + ", " + pageSize;
 
     console.log(sql);
@@ -4870,7 +4870,7 @@ app.get('/stock_search', function (req, res) {
 })
 
 
-app.post('/delete_item', function (req, res) {
+app.post("/delete_item", function (req, res) {
 
     var data = req.body.data;
 
@@ -4882,7 +4882,7 @@ app.post('/delete_item', function (req, res) {
 
         }
 
-        var sql = "DELETE FROM stock WHERE stock_id = '" + data.stock_id + "'";
+        var sql = "DELETE FROM stock WHERE stock_id = \"" + data.stock_id + "\"";
 
         console.log(sql);
 
@@ -4898,7 +4898,7 @@ app.post('/delete_item', function (req, res) {
 
 })
 
-app.post('/save_item', function (req, res) {
+app.post("/save_item", function (req, res) {
 
     var data = req.body.data;
 
@@ -4926,7 +4926,7 @@ app.post('/save_item', function (req, res) {
 
                 break;
 
-            case 'dispatch':
+            case "dispatch":
 
                 dispatchStock(data, res);
 
@@ -4962,7 +4962,7 @@ app.post('/save_item', function (req, res) {
 
 })
 
-app.post('/update_password', function (req, res) {
+app.post("/update_password", function (req, res) {
 
     var data = req.body;
 
@@ -4977,7 +4977,7 @@ app.post('/update_password', function (req, res) {
 
         console.log(data);
 
-        var sql = "SELECT user_id, password, salt FROM users WHERE username = '" + data.userId + "'";
+        var sql = "SELECT user_id, password, salt FROM users WHERE username = \"" + data.userId + "\"";
 
         console.log(sql);
 
@@ -4985,13 +4985,13 @@ app.post('/update_password', function (req, res) {
 
             if (user[0].length > 0) {
 
-                var oldPassword = encrypt(data['currentPassword'], user[0][0].salt);
+                var oldPassword = encrypt(data["currentPassword"], user[0][0].salt);
 
                 if (oldPassword == user[0][0].password) {
 
-                    var newPassword = encrypt(data['newPassword'], user[0][0].salt);
+                    var newPassword = encrypt(data["newPassword"], user[0][0].salt);
 
-                    var sql = "UPDATE users SET password = '" + newPassword + "' WHERE username = '" + data.userId + "'";
+                    var sql = "UPDATE users SET password = \"" + newPassword + "\" WHERE username = \"" + data.userId + "\"";
 
                     console.log(sql);
 
@@ -5019,15 +5019,15 @@ app.post('/update_password', function (req, res) {
 
 })
 
-app.get('/report_q_sex_pregnancy_m', function (req, res) {
+app.get("/report_q_sex_pregnancy_m", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(sex_pregnancy) AS total FROM htc_report WHERE COALESCE(sex_pregnancy,'') = 'M' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(sex_pregnancy) AS total FROM htc_report WHERE COALESCE(sex_pregnancy,\"\") = \"M\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5041,15 +5041,15 @@ app.get('/report_q_sex_pregnancy_m', function (req, res) {
 
 })
 
-app.get('/report_q_sex_pregnancy_fnp', function (req, res) {
+app.get("/report_q_sex_pregnancy_fnp", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(sex_pregnancy) AS total FROM htc_report WHERE COALESCE(sex_pregnancy,'') = 'FNP' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(sex_pregnancy) AS total FROM htc_report WHERE COALESCE(sex_pregnancy,\"\") = \"FNP\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5063,15 +5063,15 @@ app.get('/report_q_sex_pregnancy_fnp', function (req, res) {
 
 })
 
-app.get('/report_q_sex_pregnancy_fp', function (req, res) {
+app.get("/report_q_sex_pregnancy_fp", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(sex_pregnancy) AS total FROM htc_report WHERE COALESCE(sex_pregnancy,'') = 'FP' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(sex_pregnancy) AS total FROM htc_report WHERE COALESCE(sex_pregnancy,\"\") = \"FP\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5085,15 +5085,15 @@ app.get('/report_q_sex_pregnancy_fp', function (req, res) {
 
 })
 
-app.get('/report_q_last_hiv_test_lnev', function (req, res) {
+app.get("/report_q_last_hiv_test_lnev", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,'') = 'Never Tested' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,\"\") = \"Never Tested\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5107,15 +5107,15 @@ app.get('/report_q_last_hiv_test_lnev', function (req, res) {
 
 })
 
-app.get('/report_q_last_hiv_test_ln', function (req, res) {
+app.get("/report_q_last_hiv_test_ln", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,'') = 'Last Negative' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,\"\") = \"Last Negative\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5129,15 +5129,15 @@ app.get('/report_q_last_hiv_test_ln', function (req, res) {
 
 })
 
-app.get('/report_q_last_hiv_test_lp', function (req, res) {
+app.get("/report_q_last_hiv_test_lp", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,'') = 'Last Positive' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,\"\") = \"Last Positive\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5151,15 +5151,15 @@ app.get('/report_q_last_hiv_test_lp', function (req, res) {
 
 })
 
-app.get('/report_q_last_hiv_test_lex', function (req, res) {
+app.get("/report_q_last_hiv_test_lex", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,'') = 'Last Exposed Infant' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,\"\") = \"Last Exposed Infant\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5173,15 +5173,15 @@ app.get('/report_q_last_hiv_test_lex', function (req, res) {
 
 })
 
-app.get('/report_q_last_hiv_test_lin', function (req, res) {
+app.get("/report_q_last_hiv_test_lin", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,'') = 'Last Inconclusive' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,\"\") = \"Last Inconclusive\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5195,15 +5195,15 @@ app.get('/report_q_last_hiv_test_lin', function (req, res) {
 
 })
 
-app.get('/report_q_outcome_summary_n', function (req, res) {
+app.get("/report_q_outcome_summary_n", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Single Negative' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,\"\") = \"Single Negative\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5217,15 +5217,15 @@ app.get('/report_q_outcome_summary_n', function (req, res) {
 
 })
 
-app.get('/report_q_outcome_summary_p', function (req, res) {
+app.get("/report_q_outcome_summary_p", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Single Positive' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,\"\") = \"Single Positive\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5239,15 +5239,15 @@ app.get('/report_q_outcome_summary_p', function (req, res) {
 
 })
 
-app.get('/report_q_outcome_summary_t12n', function (req, res) {
+app.get("/report_q_outcome_summary_t12n", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & 2 Negative' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,\"\") = \"Test 1 & 2 Negative\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5261,15 +5261,15 @@ app.get('/report_q_outcome_summary_t12n', function (req, res) {
 
 })
 
-app.get('/report_q_outcome_summary_t12p', function (req, res) {
+app.get("/report_q_outcome_summary_t12p", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & 2 Positive' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,\"\") = \"Test 1 & 2 Positive\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5283,15 +5283,15 @@ app.get('/report_q_outcome_summary_t12p', function (req, res) {
 
 })
 
-app.get('/report_q_outcome_summary_t12d', function (req, res) {
+app.get("/report_q_outcome_summary_t12d", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & 2 Discordant' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,\"\") = \"Test 1 & 2 Discordant\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5305,15 +5305,15 @@ app.get('/report_q_outcome_summary_t12d', function (req, res) {
 
 })
 
-app.get('/report_q_age_group_0_11m', function (req, res) {
+app.get("/report_q_age_group_0_11m", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,'') = '0-11 months' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,\"\") = \"0-11 months\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5327,15 +5327,15 @@ app.get('/report_q_age_group_0_11m', function (req, res) {
 
 })
 
-app.get('/report_q_age_group_1_14y', function (req, res) {
+app.get("/report_q_age_group_1_14y", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,'') = '1-14 years' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,\"\") = \"1-14 years\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5349,15 +5349,15 @@ app.get('/report_q_age_group_1_14y', function (req, res) {
 
 })
 
-app.get('/report_q_age_group_15_24y', function (req, res) {
+app.get("/report_q_age_group_15_24y", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,'') = '15-24 years' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,\"\") = \"15-24 years\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5371,15 +5371,15 @@ app.get('/report_q_age_group_15_24y', function (req, res) {
 
 })
 
-app.get('/report_q_age_group_25p', function (req, res) {
+app.get("/report_q_age_group_25p", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,'') = '25+ years' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,\"\") = \"25+ years\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5393,15 +5393,15 @@ app.get('/report_q_age_group_25p', function (req, res) {
 
 })
 
-app.get('/report_q_partner_present_yes', function (req, res) {
+app.get("/report_q_partner_present_yes", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(partner_present) AS total FROM htc_report WHERE COALESCE(partner_present,'') = 'Yes' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(partner_present) AS total FROM htc_report WHERE COALESCE(partner_present,\"\") = \"Yes\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5415,15 +5415,15 @@ app.get('/report_q_partner_present_yes', function (req, res) {
 
 })
 
-app.get('/report_q_partner_present_no', function (req, res) {
+app.get("/report_q_partner_present_no", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(partner_present) AS total FROM htc_report WHERE COALESCE(partner_present,'') = 'No' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(partner_present) AS total FROM htc_report WHERE COALESCE(partner_present,\"\") = \"No\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5437,15 +5437,15 @@ app.get('/report_q_partner_present_no', function (req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_nn', function (req, res) {
+app.get("/report_q_result_given_to_client_nn", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'New Negative' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,\"\") = \"New Negative\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5459,15 +5459,15 @@ app.get('/report_q_result_given_to_client_nn', function (req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_np', function (req, res) {
+app.get("/report_q_result_given_to_client_np", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'New Positive' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,\"\") = \"New Positive\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5481,15 +5481,15 @@ app.get('/report_q_result_given_to_client_np', function (req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_nex', function (req, res) {
+app.get("/report_q_result_given_to_client_nex", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'New Exposed Infant' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,\"\") = \"New Exposed Infant\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5503,15 +5503,15 @@ app.get('/report_q_result_given_to_client_nex', function (req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_ni', function (req, res) {
+app.get("/report_q_result_given_to_client_ni", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'New Inconclusive' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,\"\") = \"New Inconclusive\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5525,15 +5525,15 @@ app.get('/report_q_result_given_to_client_ni', function (req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_cp', function (req, res) {
+app.get("/report_q_result_given_to_client_cp", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'Confirmed Positive' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,\"\") = \"Confirmed Positive\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5547,15 +5547,15 @@ app.get('/report_q_result_given_to_client_cp', function (req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_in', function (req, res) {
+app.get("/report_q_result_given_to_client_in", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'Inconclusive' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,\"\") = \"Inconclusive\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5569,15 +5569,15 @@ app.get('/report_q_result_given_to_client_in', function (req, res) {
 
 })
 
-app.get('/report_q_partner_htc_slips_given_slips', function (req, res) {
+app.get("/report_q_partner_htc_slips_given_slips", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT SUM(partner_htc_slips_given) AS total FROM htc_report WHERE COALESCE(partner_htc_slips_given,'') != '' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT SUM(partner_htc_slips_given) AS total FROM htc_report WHERE COALESCE(partner_htc_slips_given,\"\") != \"\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5591,15 +5591,15 @@ app.get('/report_q_partner_htc_slips_given_slips', function (req, res) {
 
 })
 
-app.get('/report_q_htc_access_type_pitc', function (req, res) {
+app.get("/report_q_htc_access_type_pitc", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Routine HTS within Health Service' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,\"\") = \"Routine HTS within Health Service\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5613,15 +5613,15 @@ app.get('/report_q_htc_access_type_pitc', function (req, res) {
 
 })
 
-app.get('/report_q_htc_access_type_frs', function (req, res) {
+app.get("/report_q_htc_access_type_frs", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Comes with HTS Family Reference Slip' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,\"\") = \"Comes with HTS Family Reference Slip\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5635,15 +5635,15 @@ app.get('/report_q_htc_access_type_frs', function (req, res) {
 
 })
 
-app.get('/report_q_htc_access_type_vct', function (req, res) {
+app.get("/report_q_htc_access_type_vct", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Other (VCT, etc.)' " +
-        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
+    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,\"\") = \"Other (VCT, etc.)\" " +
+        (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" + query.start_date + "\")" : "") +
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" + query.end_date + "\")" : "");
 
     console.log(sql);
 
@@ -5659,15 +5659,15 @@ app.get('/report_q_htc_access_type_vct', function (req, res) {
 
 })
 
-app.get('/relationship_types', function (req, res) {
+app.get("/relationship_types", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT relationship_type_id, CONCAT(a_is_to_b, ' - ', b_is_to_a) AS relation FROM relationship_type " +
-        "WHERE CONCAT(a_is_to_b, ' -> ', b_is_to_a) LIKE '" + query.type + "%' AND a_is_to_b IN ('Sibling', 'Parent', " +
-        "'Aunt/Uncle', 'Child', 'Spouse/Partner', 'Other', 'Patient')";
+    var sql = "SELECT relationship_type_id, CONCAT(a_is_to_b, \" - \", b_is_to_a) AS relation FROM relationship_type " +
+        "WHERE CONCAT(a_is_to_b, \" -> \", b_is_to_a) LIKE \"" + query.type + "%\" AND a_is_to_b IN (\"Sibling\", \"Parent\", " +
+        "\"Aunt/Uncle\", \"Child\", \"Spouse/Partner\", \"Other\", \"Patient\")";
 
     console.log(sql);
 
@@ -5694,10 +5694,10 @@ app.get("/user_stats", function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT user_id, " + query.field + ", COUNT(obs_id) AS total FROM htc_report WHERE COALESCE(" +
-        query.field + ", '') != '' AND " + query.field + " = '" + query.value + "' AND user_id = (SELECT user_id " +
-        "FROM users WHERE username = '" + query.username + "') " + (query.start_date ? " AND DATE(obs_datetime) >= DATE('" +
-        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) >= DATE('" +
-        query.end_date + "')" : "") + " GROUP BY " + query.field + ", user_id";
+        query.field + ", \"\") != \"\" AND " + query.field + " = \"" + query.value + "\" AND user_id = (SELECT user_id " +
+        "FROM users WHERE username = \"" + query.username + "\") " + (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" +
+        query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) >= DATE(\"" +
+        query.end_date + "\")" : "") + " GROUP BY " + query.field + ", user_id";
 
 
     console.log(sql);
@@ -5755,10 +5755,10 @@ app.get("/used_stock_stats", function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT item_name, username, SUM(COALESCE(consumption_quantity,0)) " +
-        "AS used FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
-        "' AND username = '" + query.username + "'" + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
-        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE('" +
-        query.end_date + "')" : "") + " GROUP BY item_name, username ";
+        "AS used FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
+        "\" AND username = \"" + query.username + "\"" + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
+        query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" +
+        query.end_date + "\")" : "") + " GROUP BY item_name, username ";
 
     console.log(sql);
 
@@ -5785,10 +5785,10 @@ app.get("/available_stock_stats", function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT item_name, username, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
-        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
-        "' AND username = '" + query.username + "'" + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
-        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE('" +
-        query.end_date + "')" : "") + " GROUP BY item_name, username " +
+        "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
+        "\" AND username = \"" + query.username + "\"" + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
+        query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" +
+        query.end_date + "\")" : "") + " GROUP BY item_name, username " +
         "HAVING available > 0";
 
     console.log(sql);
@@ -5809,16 +5809,16 @@ app.get("/available_stock_stats", function (req, res) {
 
 })
 
-app.get('/test_1_kit_name', function (req, res) {
+app.get("/test_1_kit_name", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
     var sql = "SELECT DISTINCT value_text FROM htc1_7.obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
-        "WHERE name = 'First Pass Test Kit 1 Name'" + (query.start_date ? " AND DATE(obs_datetime) >= DATE('" +
-        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE('" +
-        query.end_date + "')" : "") + " LIMIT 1) LIMIT 1";
+        "WHERE name = \"First Pass Test Kit 1 Name\"" + (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" +
+        query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" +
+        query.end_date + "\")" : "") + " LIMIT 1) LIMIT 1";
 
     console.log(sql);
 
@@ -5838,16 +5838,16 @@ app.get('/test_1_kit_name', function (req, res) {
 
 })
 
-app.get('/test_2_kit_name', function (req, res) {
+app.get("/test_2_kit_name", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
     var sql = "SELECT DISTINCT value_text FROM htc1_7.obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
-        "WHERE name = 'First Pass Test Kit 2 Name'" + (query.start_date ? " AND DATE(obs_datetime) >= DATE('" +
-        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE('" +
-        query.end_date + "')" : "") + " LIMIT 1) LIMIT 1";
+        "WHERE name = \"First Pass Test Kit 2 Name\"" + (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" +
+        query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" +
+        query.end_date + "\")" : "") + " LIMIT 1) LIMIT 1";
 
     console.log(sql);
 
@@ -5874,8 +5874,8 @@ app.get("/total_in_rooms_at_month_start", function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT item_name, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
-        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
-        "' " + (query.end_date ? " AND DATE(transaction_date) <= DATE('" + query.end_date + "')" : "") +
+        "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
+        "\" " + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") +
         " GROUP BY item_name HAVING available > 0";
 
     console.log(sql);
@@ -5903,9 +5903,9 @@ app.get("/total_tests_received_during_month", function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT item_name, SUM(receipt_quantity) AS received_quantity FROM report WHERE COALESCE(receipt_quantity,0) " +
-        "> 0 AND item_name = '" + query.item_name + "' " + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
-        query.start_date + "')" : "") + (query.end_date ? " AND DATE(transaction_date) <= DATE('" + query.end_date +
-        "')" : "") + " GROUP BY item_name";
+        "> 0 AND item_name = \"" + query.item_name + "\" " + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
+        query.start_date + "\")" : "") + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" + query.end_date +
+        "\")" : "") + " GROUP BY item_name";
 
     console.log(sql);
 
@@ -5931,10 +5931,10 @@ app.get("/total_tests_used_for_testing_clients", function (req, res) {
 
     var query = url_parts.query;
 
-    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,'') = " +
-        "'Normal use' AND item_name = '" + query.item_name + "' " + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
-        query.start_date + "')" : "") + (query.end_date ? " AND DATE(transaction_date) <= " +
-        "DATE('" + query.end_date + "')" : "") + " GROUP BY item_name";
+    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,\"\") = " +
+        "\"Normal use\" AND item_name = \"" + query.item_name + "\" " + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
+        query.start_date + "\")" : "") + (query.end_date ? " AND DATE(transaction_date) <= " +
+        "DATE(\"" + query.end_date + "\")" : "") + " GROUP BY item_name";
 
     console.log(sql);
 
@@ -5960,10 +5960,10 @@ app.get("/total_other_tests", function (req, res) {
 
     var query = url_parts.query;
 
-    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,'') " +
-        "NOT IN ('Normal use', 'Disposal') AND item_name = '" + query.item_name + "' " + (query.start_date ?
-        " AND DATE(transaction_date) >= DATE('" + query.start_date + "')" : "") + (query.end_date ?
-        " AND DATE(transaction_date) <= DATE('" + query.end_date + "')" : "") + " GROUP BY item_name";
+    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,\"\") " +
+        "NOT IN (\"Normal use\", \"Disposal\") AND item_name = \"" + query.item_name + "\" " + (query.start_date ?
+        " AND DATE(transaction_date) >= DATE(\"" + query.start_date + "\")" : "") + (query.end_date ?
+        " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") + " GROUP BY item_name";
 
     console.log(sql);
 
@@ -5989,10 +5989,10 @@ app.get("/total_disposals", function (req, res) {
 
     var query = url_parts.query;
 
-    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,'') " +
-        "IN ('Disposal', 'Expired') AND item_name = '" + query.item_name + "' " + (query.start_date ?
-        " AND DATE(transaction_date) >= DATE('" + query.start_date + "')" : "") + (query.end_date ?
-        " AND DATE(transaction_date) <= DATE('" + query.end_date + "')" : "") + " GROUP BY item_name";
+    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,\"\") " +
+        "IN (\"Disposal\", \"Expired\") AND item_name = \"" + query.item_name + "\" " + (query.start_date ?
+        " AND DATE(transaction_date) >= DATE(\"" + query.start_date + "\")" : "") + (query.end_date ?
+        " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") + " GROUP BY item_name";
 
     console.log(sql);
 
@@ -6019,8 +6019,8 @@ app.get("/total_in_rooms_at_month_end", function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT item_name, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
-        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
-        "' " + (query.end_date ? " AND DATE(transaction_date) <= DATE('" + query.end_date + "')" : "") +
+        "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
+        "\" " + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") +
         " GROUP BY item_name HAVING available > 0";
 
     console.log(sql);
@@ -6041,19 +6041,19 @@ app.get("/total_in_rooms_at_month_end", function (req, res) {
 
 })
 
-app.get('/facility', function (req, res) {
+app.get("/facility", function (req, res) {
 
     res.status(200).json({facility: site.facility});
 
 })
 
-app.get('/location', function (req, res) {
+app.get("/location", function (req, res) {
 
     res.status(200).json({location: site.location});
 
 })
 
-app.get('/patient_barcode_data', function (req, res) {
+app.get("/patient_barcode_data", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -6071,11 +6071,11 @@ app.get('/patient_barcode_data', function (req, res) {
 
         var sql = "SELECT DISTINCT o.patient_id, COALESCE((SELECT identifier FROM patient_identifier WHERE patient_id = " +
             "o.patient_id AND identifier_type = (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE " +
-            "name = 'National id' LIMIT 1) LIMIT 1), (SELECT identifier FROM patient_identifier WHERE patient_id = " +
+            "name = \"National id\" LIMIT 1) LIMIT 1), (SELECT identifier FROM patient_identifier WHERE patient_id = " +
             "o.patient_id LIMIT 1)) AS npid, given_name, family_name, birthdate, birthdate_estimated, gender, city_village " +
             "FROM patient_identifier o LEFT OUTER JOIN person_name ON person_name.person_id = o.patient_id LEFT OUTER " +
             "JOIN person ON person.person_id = o.patient_id LEFT OUTER JOIN person_address ON person_address.person_id " +
-            "= o.patient_id WHERE identifier = '" + data.npid + "' LIMIT 1";
+            "= o.patient_id WHERE identifier = \"" + data.npid + "\" LIMIT 1";
 
         console.log(sql);
 
@@ -6107,7 +6107,7 @@ app.get('/patient_barcode_data', function (req, res) {
 
 })
 
-app.get('/static_locations', function (req, res) {
+app.get("/static_locations", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -6141,12 +6141,12 @@ app.get('/static_locations', function (req, res) {
 
 })
 
-app.get('/patient/:id', function (req, res) {
-    res.sendFile(__dirname + '/public/views/patient.html');
+app.get("/patient/:id", function (req, res) {
+    res.sendFile(__dirname + "/public/views/patient.html");
 });
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/public/views/index.html');
+app.get("/", function (req, res) {
+    res.sendFile(__dirname + "/public/views/index.html");
 });
 
 portfinder.basePort = 3015;
@@ -6154,7 +6154,7 @@ portfinder.basePort = 3015;
 portfinder.getPort(function (err, port) {
 
     server.listen(port, function () {
-        console.log("✔ Server running on port %d in %s mode", port, app.get('env'));
+        console.log("✔ Server running on port %d in %s mode", port, app.get("env"));
     });
 
 });
