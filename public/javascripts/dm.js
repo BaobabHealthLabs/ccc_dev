@@ -4,6 +4,26 @@
 
 "use strict"
 
+if (Object.getOwnPropertyNames(HTMLCollection.prototype).indexOf("map") < 0) {
+
+    Object.defineProperty(HTMLCollection.prototype, "map", {
+        value: function () {
+            var array = this;
+
+            var newArray = [];
+
+            for(var i = 0; i < array.length; i++) {
+
+                newArray.push(array[i].innerHTML);
+
+            }
+
+            return newArray;
+        }
+    });
+
+}
+
 function loadYears(id){
 
     if(__$(id)) {
@@ -74,5 +94,23 @@ function existingDiabetesPatient() {
     }
 
     return existing;
+
+}
+
+function loadMultipleYears(years) {
+
+    var collection = years.split(";");
+
+    for(var i = 0; i < collection.length; i++) {
+
+        var id = collection[i].trim().toLowerCase().replace(/\s/g, "_");
+
+        if(__$(id)) {
+
+            loadYears(id);
+
+        }
+
+    }
 
 }
