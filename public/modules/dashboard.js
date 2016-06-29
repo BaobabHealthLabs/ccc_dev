@@ -66,7 +66,7 @@ Object.defineProperty(Array.prototype, "shuffle", {
 
 var dashboard = ({
 
-    version: "0.1.0",
+    version: "0.1.1",
 
     gender: null,
 
@@ -79,6 +79,10 @@ var dashboard = ({
     patients: [],
 
     page: 1,
+
+    subscription: null,
+
+    activeTask: "",
 
     __$: function (id) {
         return document.getElementById(id);
@@ -286,6 +290,51 @@ var dashboard = ({
                                 break;
 
                             }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return result;
+
+    },
+
+    getAnyExistingEncounters: function (program, encounter) {
+
+        if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
+            Object.keys(this.data.data.programs).length > 0) {
+
+            var patientPrograms = this.data.data.programs[program].patient_programs;
+
+            var result = [];
+
+            var pKeys = Object.keys(patientPrograms);
+
+            for (var i = 0; i < pKeys.length; i++) {
+
+                var key = pKeys[i];
+
+                if (!patientPrograms[key].date_completed) {
+
+                    var vKeys = Object.keys(patientPrograms[key].visits);
+
+                    for (var j = 0; j < vKeys.length; j++) {
+
+                        var visit = vKeys[j];
+
+                        if (patientPrograms[key].visits[visit][encounter]) {
+
+                            result = patientPrograms[key].visits[visit][encounter];
+
+                            return result;
+
+                            break;
 
                         }
 
@@ -2212,7 +2261,9 @@ var dashboard = ({
 
         if (dashboard.selectedVisit && dashboard.$(dashboard.selectedVisit)) {
 
-            dashboard.$(dashboard.selectedVisit).click();
+            // dashboard.$(dashboard.selectedVisit).click();
+
+            dashboard.loadVisit(dashboard.$(dashboard.selectedVisit), dashboard.data);
 
         }
 
@@ -2223,6 +2274,8 @@ var dashboard = ({
         }
 
         dashboard.checkActiveTabs(done);
+
+        dashboard.subscription.sendUpdateEvent();
 
     },
 
@@ -2433,6 +2486,8 @@ var dashboard = ({
                     if (this.className && this.className.match(/disabled/))
                         return;
 
+                    dashboard.activeTask = this.innerHTML;
+
                     window.location = this.getAttribute("path");
 
                 }
@@ -2578,6 +2633,8 @@ var dashboard = ({
                                 }
 
                             }
+
+                            dashboard.activeTask = this.innerHTML;
 
                             this.setAttribute("selected", true);
 
@@ -2921,7 +2978,7 @@ var dashboard = ({
 
     },
 
-    showConfirmMsg: function (msg, topic, nextURL) {
+    showConfirmMsg: function (msg, topic, nextURL, callback) {
 
         if (!topic) {
 
@@ -3047,6 +3104,12 @@ var dashboard = ({
 
                 if (this.getAttribute("nextURL"))
                     window.location = this.getAttribute("nextURL");
+
+            }
+
+            if (callback) {
+
+                alert("In");
 
             }
 
@@ -3239,8 +3302,8 @@ var dashboard = ({
 
             var html = "<html><head><title></title><base href='" + base + "' /><link rel='stylesheet' type='text/css' " +
                 "href='/stylesheets/style.css' /> <script type='text/javascript' language='javascript' " +
-                "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><meta http-equiv='content-type' " +
-                "content='text/html;charset=UTF-8'/><script src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
+                "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><script " +
+                "src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
                 "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
                 "\"javascript:window.parent.document.body.removeChild(window.parent.document.getElementById('dashboard.navPanel'))\";tt_cancel_show = " +
                 "\"javascript:window.parent.document.body.removeChild(window.parent.document.getElementById('dashboard.navPanel'))\";" +
@@ -3290,8 +3353,6 @@ var dashboard = ({
                 socket.emit('relationship', data);
 
             } else {
-
-                console.log(data);
 
                 socket.emit('update', data);
 
@@ -3607,7 +3668,54 @@ var dashboard = ({
 
     },
 
+    Dispatcher: function () {
+        this.events = [];
+    },
+
+    Subscriber: function() {
+        dashboard.Dispatcher(this);
+    },
+
     init: function (dataPath, modulesPath, settingsPath) {
+
+        this.Dispatcher.prototype.addEventlistener=function(event,callback){
+            this.events[event] = this.events[event] || [];
+            if ( this.events[event] ) {
+                this.events[event].push(callback);
+            }
+        }
+
+        this.Dispatcher.prototype.removeEventlistener=function(event,callback){
+            if ( this.events[event] ) {
+                var listeners = this.events[event];
+                for ( var i = listeners.length-1; i>=0; --i ){
+                    if ( listeners[i] === callback ) {
+                        listeners.splice( i, 1 );
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        this.Dispatcher.prototype.dispatch=function(event){
+            if ( this.events[event] ) {
+                var listeners = this.events[event], len = listeners.length;
+                while ( len-- ) {
+                    listeners[len](this);	//callback with self
+                }
+            }
+        }
+
+        this.Subscriber.prototype = new this.Dispatcher();
+
+        this.Subscriber.prototype.sendUpdateEvent = function() {
+
+            this.dispatch("done");
+
+        }
+
+        this.subscription = new this.Subscriber();
 
         this['selectedProgram'] = null;
 
