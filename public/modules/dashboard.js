@@ -88,6 +88,10 @@ var dashboard = ({
 
     allergies: [],
 
+    height: null,
+
+    age: null,
+
     __$: function (id) {
         return document.getElementById(id);
     },
@@ -354,7 +358,7 @@ var dashboard = ({
 
     },
 
-    queryExistingObsArray: function (concept) {
+    queryExistingObsArray: function (concept, callback) {
 
         var result = {};
 
@@ -413,7 +417,15 @@ var dashboard = ({
 
         }
 
-        return result;
+        if(callback) {
+
+            callback(result);
+
+        } else {
+
+            return result;
+
+        }
 
     },
 
@@ -541,6 +553,8 @@ var dashboard = ({
             age = [num, num, num];
 
         }
+
+        dashboard.age = age[0];
 
         age[0] = (estimated != undefined && parseInt(estimated) == 1 ? "~" + age[0] : age[0]);
 
@@ -1362,6 +1376,26 @@ var dashboard = ({
 
         tr3.appendChild(td3_2);
 
+        var btnEditDemographics = document.createElement("button");
+        btnEditDemographics.className = (typeof(patient) !== typeof(undefined) ? "blue" : "gray");
+        btnEditDemographics.innerHTML = "Edit Demographics";
+        btnEditDemographics.id = "btnEditDemographics";
+
+        btnEditDemographics.onmousedown = function () {
+
+            if (this.className.match(/gray/))
+                return;
+
+            if(typeof(patient) !== typeof(undefined)) {
+
+                patient.buildEditPage(dashboard.getCookie("patient_id"));
+
+            }
+
+        }
+
+        td3_2.appendChild(btnEditDemographics);
+
         var btnContinue = document.createElement("button");
         btnContinue.className = "gray";
         btnContinue.innerHTML = "Continue";
@@ -2141,6 +2175,8 @@ var dashboard = ({
             var age = (dashboard.data["data"]["birthdate"].trim().length > 0 ? Math.round((((new Date()) -
                 (new Date(dashboard.data["data"]["birthdate"]))) / (365 * 24 * 60 * 60 * 1000)), 0) : "");
 
+            dashboard.age = age;
+
             dashboard.__$("age").innerHTML = (dashboard.data["data"]["birthdate_estimated"] == 1 ? "~ " : "") + age;
 
         }
@@ -2509,13 +2545,99 @@ var dashboard = ({
 
         if (dashboard.__$("weight")) {
 
-            dashboard.weightsArray = dashboard.queryExistingObsArray("Weight (kg)");
+            dashboard.queryExistingObsArray("Weight (kg)", function(data) {
 
-            var arr = Object.keys(dashboard.weightsArray).sort();
+                dashboard.weightsArray = data;
 
-            var latestWeight = (arr.length > 0 ? arr[arr.length - 1] : "?");
+                var arr = Object.keys(dashboard.weightsArray).sort();
 
-            dashboard.__$("weight").innerHTML = latestWeight;
+                var latestWeight = (arr.length > 0 ? dashboard.weightsArray[arr[arr.length - 1]] : "?");
+
+                dashboard.__$("weight").innerHTML = latestWeight;
+
+            });
+
+        }
+
+        if (dashboard.__$("bp")) {
+
+            dashboard.queryExistingObsArray("Systolic blood pressure", function(data) {
+
+                var systolic = data;
+
+                dashboard.queryExistingObsArray("Diastolic blood pressure", function(data) {
+
+                    var diastolic = data;
+
+                    var today = (new Date()).format("YYYY-mm-dd");
+
+                    var bp = (systolic[today] ? systolic[today] : "?") + "/" + (diastolic[today] ? diastolic[today] : "?");
+
+                    setTimeout(function() {
+
+                        dashboard.__$("bp").innerHTML = bp;
+
+                    }, 100);
+
+                })
+
+            });
+
+        }
+
+        if (dashboard.__$("bmi")) {
+
+            dashboard.queryExistingObsArray("Height (cm)", function(data) {
+
+                var heightArray = data;
+
+                var keys = Object.keys(heightArray).sort();
+
+                var height = (keys.length > 0 ? heightArray[keys[keys.length - 1]] : 0);
+
+                console.log(height);
+
+                dashboard.queryExistingObsArray("Weight (kg)", function(data) {
+
+                    var weightArray = data;
+
+                    var keys = Object.keys(weightArray).sort();
+
+                    var weight = (keys.length > 0 ? weightArray[keys[keys.length - 1]] : 0);
+
+                    console.log(weight);
+
+                    var bmi = (weight > 0 && height > 0 ? (weight / (height * height)).toFixed(1) : "?");
+
+                    setTimeout(function() {
+
+                        dashboard.__$("bmi").innerHTML = bmi;
+
+                    }, 100);
+
+                })
+
+            });
+
+        }
+
+        if (dashboard.__$("temperature")) {
+
+                dashboard.queryExistingObsArray("Temperature (c)", function(data) {
+
+                    var temperature = data;
+
+                    var today = (new Date()).format("YYYY-mm-dd");
+
+                    var reading = (temperature[today] ? temperature[today] : "?") + " <sup>o</sup>C";
+
+                    setTimeout(function() {
+
+                        dashboard.__$("temperature").innerHTML = reading;
+
+                    }, 100);
+
+                })
 
         }
 
@@ -2538,11 +2660,15 @@ var dashboard = ({
 
             }
 
-            var allergiesString = dashboard.allergies.join(";");
+            if(dashboard.allergies[0] && dashboard.allergies[1] && dashboard.allergies[2]) {
 
-            dashboard.__$("allergies").innerHTML = allergiesString.substring(0, (dashboard.allergies[0].length + 1)) +
-                " <i style='font-size: 12px; color: #3c60b1;'><a href='javascript:dashboard.showMsg(\"" + allergiesString +
-                "\",\"Allergies\")'>" + "..more..." + "</a></i>";
+                var allergiesString = dashboard.allergies.join(";");
+
+                dashboard.__$("allergies").innerHTML = allergiesString.substring(0, (dashboard.allergies[0].length + 1)) +
+                    " <i style='font-size: 12px; color: #3c60b1;'><a href='javascript:dashboard.showMsg(\"" + allergiesString +
+                    "\",\"Allergies\")'>" + "..more..." + "</a></i>";
+
+            }
 
         }
 

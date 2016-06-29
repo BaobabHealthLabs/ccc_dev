@@ -40,7 +40,8 @@
         "EPILEPSY PROGRAM",
         "ASTHMA PROGRAM",
         "HYPERTENSION PROGRAM",
-        "DIABETES PROGRAM"
+        "DIABETES PROGRAM",
+        "CROSS-CUTTING PROGRAM"
     ],
     "concepts": [
         "Other Drug Allergies",
