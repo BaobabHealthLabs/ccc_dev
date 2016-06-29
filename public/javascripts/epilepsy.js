@@ -1,5 +1,39 @@
 "use strict"
+function __$(id) {
 
+    return document.getElementById(id);
+
+}
+function ajaxRequest(url, callback) {
+
+    var httpRequest = new XMLHttpRequest();
+
+    httpRequest.onreadystatechange = function () {
+
+        if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+            httpRequest.status == 304)) {
+
+            if (httpRequest.responseText.trim().length > 0) {
+                var result = JSON.parse(httpRequest.responseText);
+
+                callback(result);
+
+            } else {
+
+                callback(undefined);
+
+            }
+
+        }
+
+    };
+    try {
+        httpRequest.open("GET", url, true);
+        httpRequest.send(null);
+    } catch (e) {
+    }
+
+}
 function loadCheckConditions(){
 
 	var opts = __$("touchscreenInput" + tstCurrentPage).value.split(";");
@@ -56,4 +90,35 @@ function loadCheckConditions(){
 			}
 		}
 	}
+}
+
+function loadCardData(){
+	ajaxRequest("/card_p_demographics/24",function(json){
+		if (__$("patient_name")) {
+
+            __$("patient_name").innerHTML = json.name;
+
+        }
+        if(json.gender == "M"){
+        	if(__$("male")){
+        		__$("male").style.border ="1px solid red";
+        	}
+        }
+        else if(json.gender == "F"){
+        	if(__$("female")){
+        		__$("female").style.border ="1px solid red";
+        	}
+        }
+        if(json.dob !="null"){
+        	if(__$("dob")){
+        		__$("dob").innerHTML=json.dob;
+        	}
+        }
+	});
+	ajaxRequest("/card_seizure_type/24",function(json){
+		var type = ["Tonic Clonic","Absence","Myclonic","Clonic","Tonic","Atonic","Simplex","Complex","Unclassified"]
+		for(var i = 0; i <type.length;i++ ){
+
+		}
+	});
 }

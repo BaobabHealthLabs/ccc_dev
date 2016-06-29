@@ -77,13 +77,15 @@ function queryRaw(sql, callback) {
 app.get("/patient/:id/card",function(req,res){
     var pid = 24;
     var sql = "SELECT encounter.encounter_id,encounter.patient_id,encounter.encounter_datetime,"+
-    "encounter.patient_program_id,obs.obs_id,obs.encounter_id,"+
-    "obs.obs_datetime,obs.value_text,obs.concept_id,concept.concept_id,concept.name"+
-    "FROM  encounter INNER JOIN obs ON encounter.encounter_id = obs.encounter_id"+
-    "AND encounter.patient_id = obs.person_id"+
-    "INNER JOIN (SELECT concept_name.name as name , concept.concept_id as concept_id FROM concept"+
-    "INNER JOIN concept_name ON concept.concept_id = concept_name.concept_id ) concept ON obs.concept_id = concept.concept_id"+
-    "WHERE encounter.patient_id ="+pid+" ORDER BY obs.obs_id";
+    " encounter.patient_program_id,obs.obs_id,obs.encounter_id,"+
+    " obs.obs_datetime,obs.value_text,obs.concept_id,concept.concept_id,concept.name "+
+    " FROM  encounter INNER JOIN obs ON encounter.encounter_id = obs.encounter_id "+
+    " AND encounter.patient_id = obs.person_id "+
+    " INNER JOIN (SELECT concept_name.name as name , concept.concept_id as concept_id FROM concept "+
+    " INNER JOIN concept_name ON concept.concept_id = concept_name.concept_id ) concept ON obs.concept_id = concept.concept_id "+
+    " WHERE encounter.patient_id ="+pid+" ORDER BY obs.obs_id";
+
+    //console.log("Query : "+sql);
     queryRaw(sql, function (data) {
 
         var result = "";
@@ -94,17 +96,51 @@ app.get("/patient/:id/card",function(req,res){
 
         }
 
-        res.status(200).json({name: result});
+        res.send(data[0]);
 
     });
     //res.send(req.params['id']);
+});
+app.get("/card_p_demographics/:id",function(req,res){
+
+    var pid = req.params['id'];
+    var sql = "SELECT person.person_id, CONCAT(given_name,\" \",middle_name,\" \", family_name)as name, "+
+            " STR_TO_DATE(person.birthdate,'%d %b ,%Y') as dob,gender,state_province as current_district, township_division as current_ta, "+
+            "city_village as current_village,address1 as closest_land_mark, address2 as home_district "+
+            ",county_district as home_ta,neighborhood_cell as home_village FROM person_name INNER JOIN "+
+            "person INNER JOIN person_address ON person_name.person_id = person.person_id =person_address.person_id "+
+            "WHERE person.person_id ="+pid;
+
+    queryRaw(sql, function (data) {
+
+        res.send(data[0][0]);
+
+    });
+
+  
+
+});
+app.get("/card_seizure_type/:id",function(req,res){
+    var pid = req.params['id'];
+    var sql ="SELECT concept.name , obs.person_id, obs.value_text FROM obs INNER JOIN "+
+            " (SELECT name , concept.concept_id FROM concept_name INNER JOIN concept ON concept_name.concept_id = concept.concept_id)"+
+            " as concept ON concept.concept_id = obs.concept_id INNER JOIN (SELECT encounter_id FROM encounter_type INNER JOIN encounter "+
+            " ON encounter_type.encounter_type_id = encounter.encounter_type WHERE name = 'SEIZURE TYPE') encounter "+
+            " ON encounter.encounter_id = obs.encounter_id WHERE concept.name !='Epilepsy Category' AND person_id ="+pid;
+    queryRaw(sql, function (data) {
+
+        res.send(data[0]);
+
+    });
 });
 portfinder.basePort = 3016;
 
 portfinder.getPort(function (err, port) {
 
     server.listen(port, function () {
+
         console.log("✔ Server running on port %d in %s mode", port, app.get('env'));
+
     });
 
 });
