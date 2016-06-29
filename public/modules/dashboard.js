@@ -82,6 +82,8 @@ var dashboard = ({
 
     subscription: null,
 
+    activeTask: "",
+
     __$: function (id) {
         return document.getElementById(id);
     },
@@ -2259,7 +2261,9 @@ var dashboard = ({
 
         if (dashboard.selectedVisit && dashboard.$(dashboard.selectedVisit)) {
 
-            dashboard.$(dashboard.selectedVisit).click();
+            // dashboard.$(dashboard.selectedVisit).click();
+
+            dashboard.loadVisit(dashboard.$(dashboard.selectedVisit), dashboard.data);
 
         }
 
@@ -2482,6 +2486,8 @@ var dashboard = ({
                     if (this.className && this.className.match(/disabled/))
                         return;
 
+                    dashboard.activeTask = this.innerHTML;
+
                     window.location = this.getAttribute("path");
 
                 }
@@ -2627,6 +2633,8 @@ var dashboard = ({
                                 }
 
                             }
+
+                            dashboard.activeTask = this.innerHTML;
 
                             this.setAttribute("selected", true);
 
