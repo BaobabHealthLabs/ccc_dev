@@ -26,13 +26,30 @@
         text-align: left;
         
     }
+    td.rotate {
+      /* Something you can count on */
+      height: 140px;
+      white-space: nowrap;
+    }
+
+    td.rotate > div {
+      transform: 
+        /* Magic Numbers */
+        translate(0px, 51px)
+        /* 45 is really 360 - 90 */
+        rotate(270deg);
+      width: 30px;
+    }
+    td.rotate > div > span {
+      padding: 5px 10px;
+    }
     
 </style>
 <body style="text-align: center; margin: 20px;" oncontextmenu="return false;">
 
 <table width="100%" id="head_table">
     <tr >
-        <td>NCD Patient Card<br/><span style="font-size:0.8em;background:lightgrey">Green Card</span></td>
+        <td>NCD Patient Card<br/><span style="font-size:0.8em;background:lightgreen">Green Card</span></td>
         <td>Epilepsy</td>
         <td>Version 1</td>
         <td>Transfer-In Date</td>
@@ -289,6 +306,118 @@
         <td></td>
         <td>Other</td>
         <td>Date:</td>
+    </tr>
+</table>
+<table width="100%" class="card">
+    <tr>
+        <td rowspan="2">Visit date</td>
+        <td rowspan="2">WT (Kg)</td>
+        <td rowspan="2">BMI</td>
+        <td colspan="3">Seizure Activity</td>
+        <td colspan="7">Seizure Trigger</td>
+        <td colspan="2">Silent Markers</td>
+        <td rowspan="2" class="rotate"><div><span>Hospital</span></div></td>
+        <td rowspan="2" class="rotate"><div><span>Pregnant</span></div></td>
+        <td rowspan="2" class="rotate"><div><span>On family Planing</span></div></td>
+        <td colspan="5">Treatment Details</td>
+        <td rowspan="2">Next Appointment</td>
+        <td rowspan="2">Comments</td>
+    </tr>
+    <tr>
+        <td class="rotate"><div><span>Seizure since last visit </span></div></td>
+        <td class="rotate"><div><span>Number of Seizure</span></div></td>
+        <td class="rotate"><div><span>Any Triggers</span></div></td>
+        <td class="rotate"><div><span>Alcohol </span></div></td>
+        <td class="rotate"><div><span>Sleep deprivation </span></div></td>
+        <td class="rotate"><div><span>Missed medication </span></div></td>
+        <td class="rotate"><div><span>Sound/ Light / Touch</span></div></td>
+        <td class="rotate"><div><span>Fever</span></div></td>
+        <td class="rotate"><div><span>Stress</span></div></td>
+        <td class="rotate"><div><span>Menstruation </span></div></td>
+        <td class="rotate"><div><span>Tongue Biting</span></div></td>
+        <td class="rotate"><div><span>Incontinence</span></div></td>
+        <td class="rotate"><div><span>Carbamazepine</span></div></td>
+        <td class="rotate"><div><span>Phenobarbitone</span></div></td>
+        <td class="rotate"><div><span>Phenytoin</span></div></td>
+        <td class="rotate"><div><span>Sodium valproate</span></div></td>
+        <td class="rotate"><div><span>Other</span></div></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+<table width="100%" style="margin-bottom:2%;margin-top:2%">
+    <tr>
+        <th>Outcome:</th>
+        <td>Discharge / Default / Stop Tx / Transfer Out</td>
+        <td>Date:</td>
+    </tr>
+    <tr>
+        <td>Notes</td>
+        <td colspan="2"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+    </tr>
+    <tr >
+        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
     </tr>
 </table>
 </body>

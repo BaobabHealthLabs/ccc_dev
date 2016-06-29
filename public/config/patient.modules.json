@@ -114,7 +114,8 @@
             "Triggers": "javascript:dashboard.navPanel('/spec/epilepsy/triggers.spec')",
             "Patient Overview": "javascript:dashboard.navPanel('/spec/epilepsy/patient_overview.spec')",
             "Epilepsy visit": "javascript:dashboard.navPanel('/spec/epilepsy/visit.spec')",
-            "Next Appointment": "javascript:dashboard.navPanel('/spec/asthma/appointment.spec')"
+            "Outcome": "javascript:dashboard.navPanel('/spec/epilepsy/outcome.spec')",
+            "Next Appointment": "javascript:dashboard.navPanel('/spec/epilepsy/appointment.spec')"
 
  
         },
