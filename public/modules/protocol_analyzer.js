@@ -76,7 +76,7 @@ var protocol = ({
 
     expand: function (obj, original) {
 
-        var keys = Object.keys(obj).sort();
+        var keys = Object.keys(obj);    // .sort();
 
         for (var i = 0; i < keys.length; i++) {
 
@@ -161,9 +161,9 @@ var protocol = ({
                         if (obj["attributes"])
                             this.questions[parent][obj["root"]]["attributes"] = obj["attributes"];
 
-                        if (!this.questions[parent][obj["root"][obj["root"].substring(0, (obj["root"].trim().length - 2))]]) {
+                        if (!this.questions[parent][obj["root"][obj["root"].substring(0, (obj["root"].trim().length - (obj["root"].trim().match(/\.\d+$/)[0].length)))]]) {
 
-                            var pos = obj["root"].substring(0, (obj["root"].trim().length - 2)).split(".");
+                            var pos = obj["root"].substring(0, (obj["root"].trim().length - (obj["root"].trim().match(/\.\d+$/)[0].length))).split(".");
 
                             var position = {};
 
@@ -259,13 +259,13 @@ var protocol = ({
                         if (!this.questions[parent])
                             this.questions[parent] = {};
 
-                        if (!this.questions[parent][obj["root"].substring(0, (obj["root"].trim().length - 2))])
-                            this.questions[parent][obj["root"].substring(0, (obj["root"].trim().length - 2))] = {};
+                        if (!this.questions[parent][obj["root"].substring(0, (obj["root"].trim().length - (obj["root"].trim().match(/\.\d+$/)[0].length)))])
+                            this.questions[parent][obj["root"].substring(0, (obj["root"].trim().length - (obj["root"].trim().match(/\.\d+$/)[0].length)))] = {};
 
-                        if (!this.questions[parent][obj["root"].substring(0, (obj["root"].trim().length - 2))]["options"])
-                            this.questions[parent][obj["root"].substring(0, (obj["root"].trim().length - 2))]["options"] = {};
+                        if (!this.questions[parent][obj["root"].substring(0, (obj["root"].trim().length - (obj["root"].trim().match(/\.\d+$/)[0].length)))]["options"])
+                            this.questions[parent][obj["root"].substring(0, (obj["root"].trim().length - (obj["root"].trim().match(/\.\d+$/)[0].length)))]["options"] = {};
 
-                        this.questions[parent][obj["root"].substring(0, (obj["root"].trim().length - 2))]["options"][obj["root"]] = obj["text"];
+                        this.questions[parent][obj["root"].substring(0, (obj["root"].trim().length - (obj["root"].trim().match(/\.\d+$/)[0].length)))]["options"][obj["root"]] = obj["text"];
 
                     }
 
