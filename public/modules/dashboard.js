@@ -84,6 +84,10 @@ var dashboard = ({
 
     activeTask: "",
 
+    weightsArray: [],
+
+    allergies: [],
+
     __$: function (id) {
         return document.getElementById(id);
     },
@@ -335,6 +339,69 @@ var dashboard = ({
                             return result;
 
                             break;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return result;
+
+    },
+
+    queryExistingObsArray: function (concept) {
+
+        var result = {};
+
+        var programs = Object.keys(dashboard.data.data.programs);
+
+        for(var p = 0; p < programs.length; p++) {
+
+            var program = programs[p];
+
+            if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
+                Object.keys(this.data.data.programs).length > 0) {
+
+                var patientPrograms = this.data.data.programs[program].patient_programs;
+
+                var pKeys = Object.keys(patientPrograms);
+
+                for (var i = 0; i < pKeys.length; i++) {
+
+                    var key = pKeys[i];
+
+                    if (!patientPrograms[key].date_completed) {
+
+                        var vKeys = Object.keys(patientPrograms[key].visits);
+
+                        for (var j = 0; j < vKeys.length; j++) {
+
+                            var visit = vKeys[j];
+
+                            var eKeys = Object.keys(patientPrograms[key].visits[visit]);
+
+                            for (var k = 0; k < eKeys.length; k++) {
+
+                                var encounter = eKeys[k];
+
+                                var oKeys = Object.keys(patientPrograms[key].visits[visit][encounter]);
+
+                                for(var l = 0; l < oKeys.length; l++) {
+
+                                    if (patientPrograms[key].visits[visit][encounter][l][concept]) {
+
+                                        result[visit] = patientPrograms[key].visits[visit][encounter][l][concept].response.value;
+
+                                    }
+
+                                }
+
+                            }
 
                         }
 
@@ -1003,6 +1070,58 @@ var dashboard = ({
         tdDiv3_3_3.innerHTML = "25";
 
         trDiv3_3.appendChild(tdDiv3_3_3);
+
+        var trDiv3_4 = document.createElement("tr");
+
+        tableDiv3.appendChild(trDiv3_4);
+
+        var tdDiv3_4_1 = document.createElement("td");
+        tdDiv3_4_1.style.textAlign = "right";
+        tdDiv3_4_1.style.fontWeight = "bold";
+        tdDiv3_4_1.className = "blueText";
+        tdDiv3_4_1.innerHTML = "Weight (kg)";
+
+        trDiv3_4.appendChild(tdDiv3_4_1);
+
+        var tdDiv3_4_2 = document.createElement("td");
+        tdDiv3_4_2.style.textAlign = "center";
+        tdDiv3_4_2.style.width = "3px";
+        tdDiv3_4_2.innerHTML = ":";
+
+        trDiv3_4.appendChild(tdDiv3_4_2);
+
+        var tdDiv3_4_3 = document.createElement("td");
+        tdDiv3_4_3.id = "weight";
+        tdDiv3_4_3.innerHTML = "&nbsp;";
+
+        trDiv3_4.appendChild(tdDiv3_4_3);
+
+        var trDiv3_5 = document.createElement("tr");
+
+        tableDiv3.appendChild(trDiv3_5);
+
+        var tdDiv3_5_1 = document.createElement("td");
+        tdDiv3_5_1.style.textAlign = "right";
+        tdDiv3_5_1.style.fontWeight = "bold";
+        tdDiv3_5_1.style.verticalAlign = "top";
+        tdDiv3_5_1.className = "blueText";
+        tdDiv3_5_1.innerHTML = "Allergies";
+
+        trDiv3_5.appendChild(tdDiv3_5_1);
+
+        var tdDiv3_5_2 = document.createElement("td");
+        tdDiv3_5_2.style.textAlign = "center";
+        tdDiv3_5_2.style.width = "3px";
+        tdDiv3_5_2.innerHTML = ":";
+
+        trDiv3_5.appendChild(tdDiv3_5_2);
+
+        var tdDiv3_5_3 = document.createElement("td");
+        tdDiv3_5_3.id = "allergies";
+        tdDiv3_5_3.innerHTML = "&nbsp;";
+
+        trDiv3_5.appendChild(tdDiv3_5_3);
+
 
         var td1_4 = document.createElement("td");
         td1_4.style.width = "25%";
@@ -2261,8 +2380,6 @@ var dashboard = ({
 
         if (dashboard.selectedVisit && dashboard.$(dashboard.selectedVisit)) {
 
-            // dashboard.$(dashboard.selectedVisit).click();
-
             dashboard.loadVisit(dashboard.$(dashboard.selectedVisit), dashboard.data);
 
         }
@@ -2387,6 +2504,45 @@ var dashboard = ({
                 dashboard.$("btnContinue").className = "gray";
 
             }
+
+        }
+
+        if (dashboard.__$("weight")) {
+
+            dashboard.weightsArray = dashboard.queryExistingObsArray("Weight (kg)");
+
+            var arr = Object.keys(dashboard.weightsArray).sort();
+
+            var latestWeight = (arr.length > 0 ? arr[arr.length - 1] : "?");
+
+            dashboard.__$("weight").innerHTML = latestWeight;
+
+        }
+
+        if (dashboard.__$("allergies")) {
+
+            dashboard.allergies = [];
+
+            var set = [dashboard.queryExistingObsArray("Allergic"), dashboard.queryExistingObsArray("Drug Allergy"),
+                dashboard.queryExistingObsArray("Other Drug Allergies")];
+
+            var keys = [Object.keys(set[0]), Object.keys(set[1]), Object.keys(set[2])];
+
+            for(var i = 0; i < keys.length; i++) {
+
+                for(var j = 0; j < keys[i].length; j++) {
+
+                    dashboard.allergies.push(set[i][keys[j]]);
+
+                }
+
+            }
+
+            var allergiesString = dashboard.allergies.join(";");
+
+            dashboard.__$("allergies").innerHTML = allergiesString.substring(0, (dashboard.allergies[0].length + 1)) +
+                " <i style='font-size: 12px; color: #3c60b1;'><a href='javascript:dashboard.showMsg(\"" + allergiesString +
+                "\",\"Allergies\")'>" + "..more..." + "</a></i>";
 
         }
 
