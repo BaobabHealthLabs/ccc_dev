@@ -393,7 +393,11 @@
 
     dashboard.subscription.addEventlistener("done", function(){
 
-        loadPage();
+        if(dashboard.activeTask == "Medical History") {
+
+            loadPage();
+
+        }
 
     })
 
