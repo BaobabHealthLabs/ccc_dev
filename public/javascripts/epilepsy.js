@@ -116,9 +116,248 @@ function loadCardData(){
         }
 	});
 	ajaxRequest("/card_seizure_type/24",function(json){
+
+		var response_id_hash ={}
+
 		var type = ["Tonic Clonic","Absence","Myclonic","Clonic","Tonic","Atonic","Simplex","Complex","Unclassified"]
+		
 		for(var i = 0; i <type.length;i++ ){
 
+			var element_id = type[i].trim().toLowerCase().replace("/","_").replace(/\s+/g,"_")+"_no";
+			
+			if(__$(element_id)){
+
+				__$(element_id).style.border ="1px solid red";
+
+			}
+
+			response_id_hash[type[i]] = type[i].trim().toLowerCase().replace("/","_").replace(/\s+/g,"_");
+		}
+
+		for(var i = 0; i < json.length; i++){
+
+			var element_id = json[i].value_text.trim().toLowerCase().replace("/","_").replace(/\s+/g,"_")+"_yes";
+			
+			if(__$(element_id)){
+
+				__$(element_id).style.border ="1px solid red";
+
+				__$(element_id.replace("_yes","_no")).style.border ="1px solid #ffffff";
+
+			}
 		}
 	});
+
+	ajaxRequest("/card_epilepsy_family_history/24",function(json){
+
+		for(var i = 0; i < json.length ; i++){
+
+			var element_id_prefix = json[i].name.replace("Family History of"," ").replace("?","").trim().toLowerCase().replace("/","_").replace(/\s+/g,"_");
+
+			if (json[i].value_text =="Yes"){
+
+				__$(element_id_prefix+"_yes").style.border ="1px solid red";
+			}
+			if (json[i].value_text =="No"){
+
+				__$(element_id_prefix+"_no").style.border ="1px solid red";
+			}
+			if (json[i].value_text =="Unknown"){
+
+				__$(element_id_prefix+"_unk").style.border ="1px solid red";
+			}
+		}
+
+	});
+
+	ajaxRequest("/card_epilepsy_hiv_status/24",function(json){
+		var status = json.value_text.toLowerCase();
+
+		if(status=="r"){
+
+			__$(status).style.border ="1px solid red";
+
+		}
+		if(status=="nr"){
+
+			__$(status).style.border ="1px solid red";
+			
+		}
+		if(status=="u"){
+
+			__$(status).style.border ="1px solid red";
+			
+		}
+		if(status=="vdrl"){
+
+			__$(status).style.border ="1px solid red";
+			
+		}
+
+
+	});
+
+	ajaxRequest("/card_epilepsy_patient_history/24",function(json){
+
+		for (var i = json.length - 1; i >= 0; i--) {
+	
+			var element_id = json[i].name.trim().toLowerCase().replace("/","_").replace(/\s+/g,"_");
+			if(__$(element_id)){
+
+				__$(element_id).innerHTML = json[i].value_text;
+
+			}
+		}
+
+	});
+
+	ajaxRequest("/card_epilepsy_medical_surgical_history/24",function(json){
+
+		for(var i = 0; i < json.length ; i++){
+
+			var element_id_prefix = json[i].name.replace("History of"," ");
+
+			element_id_prefix = element_id_prefix.replace("?","").trim().toLowerCase();
+
+			element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+			
+			if (json[i].value_text =="Yes"){
+
+				__$(element_id_prefix+"_yes").style.border ="1px solid red";
+			}
+			if (json[i].value_text =="No"){
+
+				__$(element_id_prefix+"_no").style.border ="1px solid red";
+			}
+			if (json[i].value_text =="Unknown"){
+
+				__$(element_id_prefix+"_unk").style.border ="1px solid red";
+			}
+		}
+
+	});
+
+	ajaxRequest("/card_epilepsy_triggers/24",function(json){
+
+		for(var i = 0; i < json.length ; i++){
+
+			var element_id_prefix = json[i].name.replace("a trigger"," ");
+
+			element_id_prefix = element_id_prefix.replace("?","").trim().toLowerCase();
+
+			element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+			
+			if (json[i].value_text =="Yes"){
+
+				__$(element_id_prefix+"_yes").style.border ="1px solid red";
+			}
+			if (json[i].value_text =="No"){
+
+				__$(element_id_prefix+"_no").style.border ="1px solid red";
+			}
+			if (json[i].value_text =="Unknown"){
+
+				__$(element_id_prefix+"_unk").style.border ="1px solid red";
+			}
+		}
+
+	});
+
+	ajaxRequest("/card_epilepsy_post_ictal_features/24",function(json){
+
+		for(var i = 0; i < json.length ; i++){
+
+			var element_id_prefix = json[i].name.replace("a post-ictal feature?"," ");
+
+			element_id_prefix = element_id_prefix.replace("?","").trim().toLowerCase();
+
+			element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+			
+			if (json[i].value_text =="Yes"){
+
+				__$(element_id_prefix+"_yes").style.border ="1px solid red";
+			}
+			if (json[i].value_text =="No"){
+
+				__$(element_id_prefix+"_no").style.border ="1px solid red";
+			}
+			if (json[i].value_text =="Unknown"){
+
+				__$(element_id_prefix+"_unk").style.border ="1px solid red";
+			}
+		}
+
+	});
+
+	ajaxRequest("/card_epilepsy_patient_overvew/24",function(json){
+
+		for(var i = 0; i < json.length ; i++){
+
+			
+			var concept = json[i].name;
+
+			if(concept =="Complications" || concept =="Exposures"){
+
+				var options = json[i].value_text.split(",");
+
+				for (var i = options.length - 1; i >= 0; i--) {
+
+					var element_id_prefix = options[i];
+
+					element_id_prefix = element_id_prefix.replace("?","").trim().toLowerCase();
+
+					element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+					element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+					element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+
+					if(concept =="Exposures"){
+
+						element_id_prefix = element_id_prefix+"_exposures";
+						__$(element_id_prefix).style.border ="1px solid red";
+					}
+					if(concept =="Complications"){
+
+						element_id_prefix = element_id_prefix+"_complications";
+						__$(element_id_prefix).style.border ="1px solid red";
+					}
+
+				}
+
+			}
+			else{
+
+				/*var element_id_prefix = json[i].name;
+
+					element_id_prefix = element_id_prefix.replace("?","").trim().toLowerCase();
+
+					element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+					element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+					element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+
+				__$(element_id_prefix).innerHTML = json[i].value_text;*/
+
+			}
+
+			
+		}
+
+	});
 }
+

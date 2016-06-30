@@ -1,4 +1,4 @@
-P.1. EPILEPSY PATIENT OVERVIEW [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
+P.1. EPILEPSY PATIENT OVERVIEW [program:: EPILEPSY PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;epilepsy]
 Q.1.1. Exposures [pos:: 0$$id:: exposures$$ multiple:: multiple$$ tt_beforeUnLoad:: loadCheckConditions()]
 O.1.1.1. Smoking
 O.1.1.2. Alcohol
@@ -10,7 +10,7 @@ Q.1.2. Smoking Date [pos:: 1$$field_type::date$$ id:: smoking_date]
 
 Q.1.3. Alcohol Date [pos:: 2$$field_type::date$$ id:: alcohol_date]
 
-Q.1.4. Pigs Date [pos:: 3$$field_type::date$$ id:: pigs_pork_date]
+Q.1.4. Pigs/pork Date [pos:: 3$$field_type::date$$ id:: pigs_pork_date]
 
 Q.1.5. Traditional medicine Date [pos:: 4$$field_type::date$$ id:: traditional_medicine_date]
 
