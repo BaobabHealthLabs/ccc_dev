@@ -49,7 +49,7 @@
         width: 23px;
         height: 23px;
         padding: 2%;
-        //border: 1px solid red;
+        
         text-align: center;
         border-radius: 50%;
     }
@@ -57,7 +57,7 @@
         display: block;
         width: 13px;
         height: 13px;
-        border: 1px solid black;
+        border: 2px solid black;
         padding: 2%;
         text-align: center;
     }
@@ -184,7 +184,7 @@
         <td><span class="circle" id="head_injury_trauma_head_surgery_no">N</span></td>
         <td><span class="circle" id="head_injury_trauma_head_surgery_unk">Unk</span></td>
         <td colspan="5">Head Injury/Trauma/Head surgery</td>
-        <td><span class="square" id="smoking_exposure"></span></td>
+        <td><span class="square" id="smoking_exposures"></span></td>
         <td>Smoking</td>
         <td>Date: <span id="smoking_date"></span></td>
     </tr>
@@ -195,7 +195,7 @@
         <td><span class="circle" id="seizure_no">N</span></td>
         <td><span class="circle" id="seizure_unk">Unk</span></td>
         <td colspan="5">History of Seizure</td>
-        <td><span class="square" id="alcohol_exposure"></span></td>
+        <td><span class="square" id="alcohol_exposures"></span></td>
         <td>Alcohol</td>
         <td>Date: <span id="alcohol_date"></span></td>
     </tr>
@@ -217,9 +217,9 @@
         <td><span class="circle" id="neonatal_infection_cerebral_malaria_meningitis_no">N</span></td>
         <td><span class="circle" id="neonatal_infection_cerebral_malaria_meningitis_unk">Unk</span></td>
         <td colspan="5">Neonatal Infection/Cerebral Malaria/Meningitis</td>
-        <td><span class="square" id="tradtional_medicine_exposure"></span></td>
+        <td><span class="square" id="traditional_medicine_exposures"></span></td>
         <td>Traditional Medicine</td>
-        <td>Date: <span id="tradtional_medicine_date"></span></td>
+        <td>Date: <span id="traditional_medicine_date"></span></td>
     </tr>
     <tr>
         <td colspan="6" rowspan="2">Medication History:(including traditional medicine): <span id="medication_history"></span></td>
@@ -326,7 +326,8 @@
         <td>Date: <span id="other_complications_date"></span></td>
     </tr>
 </table>
-<table width="100%" class="card">
+<table width="100%" class="card" id="visits">
+ <thead>
     <tr>
         <td rowspan="2">Visit date</td>
         <td rowspan="2">WT (Kg)</td>
@@ -360,6 +361,8 @@
         <td class="rotate"><div><span>Sodium valproate</span></div></td>
         <td class="rotate"><div><span>Other</span></div></td>
     </tr>
+    </thead>
+    <tbody>
     <tr>
         <td></td>
         <td></td>
@@ -414,6 +417,7 @@
         <td></td>
         <td></td>
     </tr>
+    </tbody>
 </table>
 <table width="100%" style="margin-bottom:2%;margin-top:2%">
     <tr>

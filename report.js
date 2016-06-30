@@ -263,13 +263,41 @@ app.get("/card_epilepsy_post_ictal_features/:id",function(req,res){
 
 });
 
+app.get("/card_epilepsy_patient_overvew/:id/:concept",function(req,res){
+
+    var pid = req.params["id"];
+
+    var concept = req.params["concept"];
+
+    var sql = " SELECT distinct concept.name , obs.person_id, obs.value_text,obs.encounter_id FROM obs "+
+              " INNER JOIN  (SELECT name , concept.concept_id FROM concept_name "+
+              " INNER JOIN concept ON concept_name.concept_id = concept.concept_id WHERE "+
+              " name ='"+concept+"') as concept "+
+              " ON concept.concept_id = obs.concept_id INNER JOIN "+
+              " (SELECT encounter_id,encounter_datetime FROM encounter_type "+
+              " INNER JOIN encounter  ON encounter_type.encounter_type_id = encounter.encounter_type "+
+              " WHERE name = 'EPILEPSY PATIENT OVERVIEW') encounter ON encounter.encounter_id = obs.encounter_id "+
+              " WHERE  person_id =24 AND obs.encounter_id =(SELECT MAX(encounter_id) FROM encounter) "+
+              " ORDER BY encounter.encounter_id DESC";
+
+    queryRaw(sql, function (data) {
+
+        res.send(data[0][0]);
+
+    });
+
+});
+
 app.get("/card_epilepsy_patient_overvew/:id",function(req,res){
 
     var pid = req.params["id"];
 
+    var concept = req.params["concept"];
+
     var sql = " SELECT distinct concept.name , obs.person_id, obs.value_text,obs.encounter_id FROM obs "+
               " INNER JOIN  (SELECT name , concept.concept_id FROM concept_name "+
-              " INNER JOIN concept ON concept_name.concept_id = concept.concept_id) as concept "+
+              " INNER JOIN concept ON concept_name.concept_id = concept.concept_id WHERE "+
+              " name !='Complications' AND name != 'Exposures') as concept "+
               " ON concept.concept_id = obs.concept_id INNER JOIN "+
               " (SELECT encounter_id,encounter_datetime FROM encounter_type "+
               " INNER JOIN encounter  ON encounter_type.encounter_type_id = encounter.encounter_type "+
@@ -285,6 +313,26 @@ app.get("/card_epilepsy_patient_overvew/:id",function(req,res){
 
 });
 
+app.get("/card_epilepsy_visits/:id", function(req, res){
+
+    var pid = req.params["id"];
+
+    var sql =" SELECT concept.name , obs.person_id, obs.value_text FROM obs INNER JOIN  "+
+             " (SELECT name , concept.concept_id FROM concept_name INNER JOIN concept "+
+             " ON concept_name.concept_id = concept.concept_id) as concept "+
+             " ON concept.concept_id = obs.concept_id INNER JOIN "+
+             " (SELECT encounter_id FROM encounter_type INNER JOIN encounter  "+
+             " ON encounter_type.encounter_type_id = encounter.encounter_type "+
+             " WHERE name = 'EPILEPSY VISIT') encounter  ON encounter.encounter_id = obs.encounter_id "+
+             " WHERE  person_id ="+pid+" ORDER BY encounter.encounter_id DESC";
+
+    queryRaw(sql, function (data) {
+
+        res.send(data[0]);
+
+    });
+
+});
 portfinder.basePort = 3016;
 
 portfinder.getPort(function (err, port) {

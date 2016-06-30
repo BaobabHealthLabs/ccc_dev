@@ -101,12 +101,12 @@ function loadCardData(){
         }
         if(json.gender == "M"){
         	if(__$("male")){
-        		__$("male").style.border ="1px solid red";
+        		__$("male").style.border ="2px solid red";
         	}
         }
         else if(json.gender == "F"){
         	if(__$("female")){
-        		__$("female").style.border ="1px solid red";
+        		__$("female").style.border ="2px solid red";
         	}
         }
         if(json.dob !="null"){
@@ -127,7 +127,7 @@ function loadCardData(){
 			
 			if(__$(element_id)){
 
-				__$(element_id).style.border ="1px solid red";
+				__$(element_id).style.border ="2px solid red";
 
 			}
 
@@ -140,7 +140,7 @@ function loadCardData(){
 			
 			if(__$(element_id)){
 
-				__$(element_id).style.border ="1px solid red";
+				__$(element_id).style.border ="2px solid red";
 
 				__$(element_id.replace("_yes","_no")).style.border ="1px solid #ffffff";
 
@@ -156,15 +156,15 @@ function loadCardData(){
 
 			if (json[i].value_text =="Yes"){
 
-				__$(element_id_prefix+"_yes").style.border ="1px solid red";
+				__$(element_id_prefix+"_yes").style.border ="2px solid red";
 			}
 			if (json[i].value_text =="No"){
 
-				__$(element_id_prefix+"_no").style.border ="1px solid red";
+				__$(element_id_prefix+"_no").style.border ="2px solid red";
 			}
 			if (json[i].value_text =="Unknown"){
 
-				__$(element_id_prefix+"_unk").style.border ="1px solid red";
+				__$(element_id_prefix+"_unk").style.border ="2px solid red";
 			}
 		}
 
@@ -175,22 +175,22 @@ function loadCardData(){
 
 		if(status=="r"){
 
-			__$(status).style.border ="1px solid red";
+			__$(status).style.border ="2px solid red";
 
 		}
 		if(status=="nr"){
 
-			__$(status).style.border ="1px solid red";
+			__$(status).style.border ="2px solid red";
 			
 		}
 		if(status=="u"){
 
-			__$(status).style.border ="1px solid red";
+			__$(status).style.border ="2px solid red";
 			
 		}
 		if(status=="vdrl"){
 
-			__$(status).style.border ="1px solid red";
+			__$(status).style.border ="2px solid red";
 			
 		}
 
@@ -225,15 +225,15 @@ function loadCardData(){
 			
 			if (json[i].value_text =="Yes"){
 
-				__$(element_id_prefix+"_yes").style.border ="1px solid red";
+				__$(element_id_prefix+"_yes").style.border ="2px solid red";
 			}
 			if (json[i].value_text =="No"){
 
-				__$(element_id_prefix+"_no").style.border ="1px solid red";
+				__$(element_id_prefix+"_no").style.border ="2px solid red";
 			}
 			if (json[i].value_text =="Unknown"){
 
-				__$(element_id_prefix+"_unk").style.border ="1px solid red";
+				__$(element_id_prefix+"_unk").style.border ="2px solid red";
 			}
 		}
 
@@ -255,15 +255,15 @@ function loadCardData(){
 			
 			if (json[i].value_text =="Yes"){
 
-				__$(element_id_prefix+"_yes").style.border ="1px solid red";
+				__$(element_id_prefix+"_yes").style.border ="2px solid red";
 			}
 			if (json[i].value_text =="No"){
 
-				__$(element_id_prefix+"_no").style.border ="1px solid red";
+				__$(element_id_prefix+"_no").style.border ="2px solid red";
 			}
 			if (json[i].value_text =="Unknown"){
 
-				__$(element_id_prefix+"_unk").style.border ="1px solid red";
+				__$(element_id_prefix+"_unk").style.border ="2px solid red";
 			}
 		}
 
@@ -286,32 +286,31 @@ function loadCardData(){
 			
 			if (json[i].value_text =="Yes"){
 
-				__$(element_id_prefix+"_yes").style.border ="1px solid red";
+				__$(element_id_prefix+"_yes").style.border ="2px solid red";
 			}
 			if (json[i].value_text =="No"){
 
-				__$(element_id_prefix+"_no").style.border ="1px solid red";
+				__$(element_id_prefix+"_no").style.border ="2px solid red";
 			}
 			if (json[i].value_text =="Unknown"){
 
-				__$(element_id_prefix+"_unk").style.border ="1px solid red";
+				__$(element_id_prefix+"_unk").style.border ="2px solid red";
 			}
 		}
 
 	});
 
-	ajaxRequest("/card_epilepsy_patient_overvew/24",function(json){
+	
 
-		for(var i = 0; i < json.length ; i++){
+	ajaxRequest("/card_epilepsy_patient_overvew/24/Exposures",function(json){
 
 			
-			var concept = json[i].name;
+			var concept = json.name;
 
-			if(concept =="Complications" || concept =="Exposures"){
 
-				var options = json[i].value_text.split(",");
+			var options = json.value_text.split(",");
 
-				for (var i = options.length - 1; i >= 0; i--) {
+			for (var i = options.length - 1; i >= 0; i--) {
 
 					var element_id_prefix = options[i];
 
@@ -323,24 +322,32 @@ function loadCardData(){
 
 					element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
 
-
 					if(concept =="Exposures"){
 
 						element_id_prefix = element_id_prefix+"_exposures";
-						__$(element_id_prefix).style.border ="1px solid red";
+						__$(element_id_prefix).style.border ="2px solid red";
 					}
 					if(concept =="Complications"){
 
 						element_id_prefix = element_id_prefix+"_complications";
-						__$(element_id_prefix).style.border ="1px solid red";
+						__$(element_id_prefix).style.border ="2px solid red";
 					}
 
-				}
-
 			}
-			else{
 
-				/*var element_id_prefix = json[i].name;
+	});
+
+	ajaxRequest("/card_epilepsy_patient_overvew/24/Complications",function(json){
+
+			
+			var concept = json.name;
+
+
+			var options = json.value_text.split(",");
+
+			for (var i = options.length - 1; i >= 0; i--) {
+
+					var element_id_prefix = options[i];
 
 					element_id_prefix = element_id_prefix.replace("?","").trim().toLowerCase();
 
@@ -350,13 +357,45 @@ function loadCardData(){
 
 					element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
 
+					if(concept =="Exposures"){
 
-				__$(element_id_prefix).innerHTML = json[i].value_text;*/
+						element_id_prefix = element_id_prefix+"_exposures";
+						__$(element_id_prefix).style.border ="2px solid red";
+					}
+					if(concept =="Complications"){
+
+						element_id_prefix = element_id_prefix+"_complications";
+						__$(element_id_prefix).style.border ="2px solid red";
+					}
 
 			}
 
+	});
+
+	ajaxRequest("/card_epilepsy_patient_overvew/24",function(json){
+
+		for (var i = json.length - 1; i >= 0; i--) {
+
+			var element_id_prefix = json[i].name;
+
+			element_id_prefix = element_id_prefix.replace("?","").trim().toLowerCase();
+
+			element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
 			
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+			__$(element_id_prefix).innerHTML = json[i].value_text;
+			
+
 		}
+
+	});
+
+	ajaxRequest("/card_epilepsy_visits/24",function(json){
+
+		console.log(__$("visits").getElementTagName("thead"));
 
 	});
 }
