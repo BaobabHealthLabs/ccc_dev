@@ -4125,7 +4125,69 @@ var dashboard = ({
 
                     } else if (json.programs) {
 
-                        dashboard.data.data.programs = json.programs;
+                        var programs = json.programs;
+
+                        var keys = Object.keys(programs);
+
+                        if (keys.indexOf("CROSS-CUTTING PROGRAM") >= 0) {
+
+                            keys.splice(keys.indexOf("CROSS-CUTTING PROGRAM"), 1);
+
+                            var roots = Object.keys(programs["CROSS-CUTTING PROGRAM"].patient_programs);
+
+                            for (var i = 0; i < roots.length; i++) {
+
+                                var root = roots[i];
+
+                                var visits = Object.keys(programs["CROSS-CUTTING PROGRAM"].patient_programs[root].visits);
+
+                                for (var j = 0; j < visits.length; j++) {
+
+                                    var visit = visits[j];
+
+                                    for (var k = 0; k < keys.length; k++) {
+
+                                        var program = keys[k];
+
+                                        var eRoots = Object.keys(programs[program].patient_programs);
+
+                                        for (var l = 0; l < eRoots.length; l++) {
+
+                                            var eRoot = eRoots[l];
+
+                                            console.log(eRoot);
+
+                                            if (!programs[program].patient_programs[eRoot].visits[visit]) {
+
+                                                programs[program].patient_programs[eRoot].visits[visit] =
+                                                    programs["CROSS-CUTTING PROGRAM"].patient_programs[root].visits[visit];
+
+                                            } else {
+
+                                                var encounters = Object.keys(programs["CROSS-CUTTING PROGRAM"].patient_programs[root].visits[visit]);
+
+                                                for (var m = 0; m < encounters.length; m++) {
+
+                                                    var encounter = encounters[m];
+
+                                                    programs[program].patient_programs[eRoot].visits[visit][encounter] =
+                                                        programs["CROSS-CUTTING PROGRAM"].patient_programs[root].visits[visit][encounter];
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                        dashboard.data.data.programs = programs;
 
                     } else if (json.relationships) {
 
