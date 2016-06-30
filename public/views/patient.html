@@ -2,6 +2,7 @@
 <head></head>
 <body oncontextmenu="return false;">
 <script src="/modules/usermanagement.js"></script>
+<!--script src="/modules/patient_registration.js"></script-->
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
@@ -110,6 +111,8 @@
 <script src="/modules/dashboard.js"></script>
 
 <script>
+
+    // patient.init("/config/patient.settings.json", user.getCookie("username"), "/config/patient.modules.json");
 
     dashboard.init("/data/person.json", "/config/patient.modules.json", "/config/dashboard.settings.json");
 

@@ -114,3 +114,14 @@ function loadMultipleYears(years) {
     }
 
 }
+
+function showBloodPressureGraphs() {
+
+    var displayTextBP;
+
+    displayTextBP = 'Blood Pressure Graph';
+    displayTextBP += '<div id="weightHistory"></div>';
+    displayTextBP += '<div id="graphholder" style="width: 950px; position: relative; height: 550px;"> </div>';
+    __$('tt_page_blood_pressure_graph').innerHTML = '<div id="summary">' + displayTextBP + '</div>';
+
+}

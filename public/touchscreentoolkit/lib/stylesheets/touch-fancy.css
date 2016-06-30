@@ -228,7 +228,7 @@ form{
     border-radius: 10px;
     padding: 5px;
     height: calc(100% - 300px);
-    min-height: 45px;
+    min-height: 60px;
 }
 
 .progressAreaSearchPage {

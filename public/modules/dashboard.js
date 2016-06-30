@@ -84,6 +84,14 @@ var dashboard = ({
 
     activeTask: "",
 
+    weightsArray: [],
+
+    allergies: [],
+
+    height: null,
+
+    age: null,
+
     __$: function (id) {
         return document.getElementById(id);
     },
@@ -350,6 +358,77 @@ var dashboard = ({
 
     },
 
+    queryExistingObsArray: function (concept, callback) {
+
+        var result = {};
+
+        var programs = Object.keys(dashboard.data.data.programs);
+
+        for(var p = 0; p < programs.length; p++) {
+
+            var program = programs[p];
+
+            if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
+                Object.keys(this.data.data.programs).length > 0) {
+
+                var patientPrograms = this.data.data.programs[program].patient_programs;
+
+                var pKeys = Object.keys(patientPrograms);
+
+                for (var i = 0; i < pKeys.length; i++) {
+
+                    var key = pKeys[i];
+
+                    if (!patientPrograms[key].date_completed) {
+
+                        var vKeys = Object.keys(patientPrograms[key].visits);
+
+                        for (var j = 0; j < vKeys.length; j++) {
+
+                            var visit = vKeys[j];
+
+                            var eKeys = Object.keys(patientPrograms[key].visits[visit]);
+
+                            for (var k = 0; k < eKeys.length; k++) {
+
+                                var encounter = eKeys[k];
+
+                                var oKeys = Object.keys(patientPrograms[key].visits[visit][encounter]);
+
+                                for(var l = 0; l < oKeys.length; l++) {
+
+                                    if (patientPrograms[key].visits[visit][encounter][l][concept]) {
+
+                                        result[visit] = patientPrograms[key].visits[visit][encounter][l][concept].response.value;
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        if(callback) {
+
+            callback(result);
+
+        } else {
+
+            return result;
+
+        }
+
+    },
+
     setCookie: function (cname, cvalue, exdays) {
 
         var d = new Date();
@@ -474,6 +553,8 @@ var dashboard = ({
             age = [num, num, num];
 
         }
+
+        dashboard.age = age[0];
 
         age[0] = (estimated != undefined && parseInt(estimated) == 1 ? "~" + age[0] : age[0]);
 
@@ -1004,6 +1085,58 @@ var dashboard = ({
 
         trDiv3_3.appendChild(tdDiv3_3_3);
 
+        var trDiv3_4 = document.createElement("tr");
+
+        tableDiv3.appendChild(trDiv3_4);
+
+        var tdDiv3_4_1 = document.createElement("td");
+        tdDiv3_4_1.style.textAlign = "right";
+        tdDiv3_4_1.style.fontWeight = "bold";
+        tdDiv3_4_1.className = "blueText";
+        tdDiv3_4_1.innerHTML = "Weight (kg)";
+
+        trDiv3_4.appendChild(tdDiv3_4_1);
+
+        var tdDiv3_4_2 = document.createElement("td");
+        tdDiv3_4_2.style.textAlign = "center";
+        tdDiv3_4_2.style.width = "3px";
+        tdDiv3_4_2.innerHTML = ":";
+
+        trDiv3_4.appendChild(tdDiv3_4_2);
+
+        var tdDiv3_4_3 = document.createElement("td");
+        tdDiv3_4_3.id = "weight";
+        tdDiv3_4_3.innerHTML = "&nbsp;";
+
+        trDiv3_4.appendChild(tdDiv3_4_3);
+
+        var trDiv3_5 = document.createElement("tr");
+
+        tableDiv3.appendChild(trDiv3_5);
+
+        var tdDiv3_5_1 = document.createElement("td");
+        tdDiv3_5_1.style.textAlign = "right";
+        tdDiv3_5_1.style.fontWeight = "bold";
+        tdDiv3_5_1.style.verticalAlign = "top";
+        tdDiv3_5_1.className = "blueText";
+        tdDiv3_5_1.innerHTML = "Allergies";
+
+        trDiv3_5.appendChild(tdDiv3_5_1);
+
+        var tdDiv3_5_2 = document.createElement("td");
+        tdDiv3_5_2.style.textAlign = "center";
+        tdDiv3_5_2.style.width = "3px";
+        tdDiv3_5_2.innerHTML = ":";
+
+        trDiv3_5.appendChild(tdDiv3_5_2);
+
+        var tdDiv3_5_3 = document.createElement("td");
+        tdDiv3_5_3.id = "allergies";
+        tdDiv3_5_3.innerHTML = "&nbsp;";
+
+        trDiv3_5.appendChild(tdDiv3_5_3);
+
+
         var td1_4 = document.createElement("td");
         td1_4.style.width = "25%";
         td1_4.style.padding = "5px";
@@ -1242,6 +1375,26 @@ var dashboard = ({
         td3_2.id = "navBtns";
 
         tr3.appendChild(td3_2);
+
+        var btnEditDemographics = document.createElement("button");
+        btnEditDemographics.className = (typeof(patient) !== typeof(undefined) ? "blue" : "gray");
+        btnEditDemographics.innerHTML = "Edit Demographics";
+        btnEditDemographics.id = "btnEditDemographics";
+
+        btnEditDemographics.onmousedown = function () {
+
+            if (this.className.match(/gray/))
+                return;
+
+            if(typeof(patient) !== typeof(undefined)) {
+
+                patient.buildEditPage(dashboard.getCookie("patient_id"));
+
+            }
+
+        }
+
+        td3_2.appendChild(btnEditDemographics);
 
         var btnContinue = document.createElement("button");
         btnContinue.className = "gray";
@@ -2022,6 +2175,8 @@ var dashboard = ({
             var age = (dashboard.data["data"]["birthdate"].trim().length > 0 ? Math.round((((new Date()) -
                 (new Date(dashboard.data["data"]["birthdate"]))) / (365 * 24 * 60 * 60 * 1000)), 0) : "");
 
+            dashboard.age = age;
+
             dashboard.__$("age").innerHTML = (dashboard.data["data"]["birthdate_estimated"] == 1 ? "~ " : "") + age;
 
         }
@@ -2261,8 +2416,6 @@ var dashboard = ({
 
         if (dashboard.selectedVisit && dashboard.$(dashboard.selectedVisit)) {
 
-            // dashboard.$(dashboard.selectedVisit).click();
-
             dashboard.loadVisit(dashboard.$(dashboard.selectedVisit), dashboard.data);
 
         }
@@ -2385,6 +2538,135 @@ var dashboard = ({
                 dashboard.autoContinue = false;
 
                 dashboard.$("btnContinue").className = "gray";
+
+            }
+
+        }
+
+        if (dashboard.__$("weight")) {
+
+            dashboard.queryExistingObsArray("Weight (kg)", function(data) {
+
+                dashboard.weightsArray = data;
+
+                var arr = Object.keys(dashboard.weightsArray).sort();
+
+                var latestWeight = (arr.length > 0 ? dashboard.weightsArray[arr[arr.length - 1]] : "?");
+
+                dashboard.__$("weight").innerHTML = latestWeight;
+
+            });
+
+        }
+
+        if (dashboard.__$("bp")) {
+
+            dashboard.queryExistingObsArray("Systolic blood pressure", function(data) {
+
+                var systolic = data;
+
+                dashboard.queryExistingObsArray("Diastolic blood pressure", function(data) {
+
+                    var diastolic = data;
+
+                    var today = (new Date()).format("YYYY-mm-dd");
+
+                    var bp = (systolic[today] ? systolic[today] : "?") + "/" + (diastolic[today] ? diastolic[today] : "?");
+
+                    setTimeout(function() {
+
+                        dashboard.__$("bp").innerHTML = bp;
+
+                    }, 100);
+
+                })
+
+            });
+
+        }
+
+        if (dashboard.__$("bmi")) {
+
+            dashboard.queryExistingObsArray("Height (cm)", function(data) {
+
+                var heightArray = data;
+
+                var keys = Object.keys(heightArray).sort();
+
+                var height = (keys.length > 0 ? heightArray[keys[keys.length - 1]] : 0);
+
+                console.log(height);
+
+                dashboard.queryExistingObsArray("Weight (kg)", function(data) {
+
+                    var weightArray = data;
+
+                    var keys = Object.keys(weightArray).sort();
+
+                    var weight = (keys.length > 0 ? weightArray[keys[keys.length - 1]] : 0);
+
+                    console.log(weight);
+
+                    var bmi = (weight > 0 && height > 0 ? (weight / (height * height)).toFixed(1) : "?");
+
+                    setTimeout(function() {
+
+                        dashboard.__$("bmi").innerHTML = bmi;
+
+                    }, 100);
+
+                })
+
+            });
+
+        }
+
+        if (dashboard.__$("temperature")) {
+
+                dashboard.queryExistingObsArray("Temperature (c)", function(data) {
+
+                    var temperature = data;
+
+                    var today = (new Date()).format("YYYY-mm-dd");
+
+                    var reading = (temperature[today] ? temperature[today] : "?") + " <sup>o</sup>C";
+
+                    setTimeout(function() {
+
+                        dashboard.__$("temperature").innerHTML = reading;
+
+                    }, 100);
+
+                })
+
+        }
+
+        if (dashboard.__$("allergies")) {
+
+            dashboard.allergies = [];
+
+            var set = [dashboard.queryExistingObsArray("Allergic"), dashboard.queryExistingObsArray("Drug Allergy"),
+                dashboard.queryExistingObsArray("Other Drug Allergies")];
+
+            var keys = [Object.keys(set[0]), Object.keys(set[1]), Object.keys(set[2])];
+
+            for(var i = 0; i < keys.length; i++) {
+
+                for(var j = 0; j < keys[i].length; j++) {
+
+                    dashboard.allergies.push(set[i][keys[j]]);
+
+                }
+
+            }
+
+            if(dashboard.allergies[0] && dashboard.allergies[1] && dashboard.allergies[2]) {
+
+                var allergiesString = dashboard.allergies.join(";");
+
+                dashboard.__$("allergies").innerHTML = allergiesString.substring(0, (dashboard.allergies[0].length + 1)) +
+                    " <i style='font-size: 12px; color: #3c60b1;'><a href='javascript:dashboard.showMsg(\"" + allergiesString +
+                    "\",\"Allergies\")'>" + "..more..." + "</a></i>";
 
             }
 
