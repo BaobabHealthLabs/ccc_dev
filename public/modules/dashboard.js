@@ -262,7 +262,7 @@ var dashboard = ({
 
     },
 
-    queryAnyExistingObs: function (program, concept) {
+    queryAnyExistingProgramObs: function (program, concept) {
 
         if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
             Object.keys(this.data.data.programs).length > 0) {
@@ -308,6 +308,80 @@ var dashboard = ({
                 }
 
             }
+
+        }
+
+        return result;
+
+    },
+
+    queryAnyExistingObs: function (concept) {
+
+        var result = false;
+
+        var programs = Object.keys(dashboard.data.data.programs);
+
+        for (var p = 0; p < programs.length; p++) {
+
+            var program = programs[p];
+
+            if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
+                Object.keys(this.data.data.programs).length > 0) {
+
+                var patientPrograms = this.data.data.programs[program].patient_programs;
+
+                var pKeys = Object.keys(patientPrograms);
+
+                for (var i = 0; i < pKeys.length; i++) {
+
+                    var key = pKeys[i];
+
+                    if (!patientPrograms[key].date_completed) {
+
+                        var vKeys = Object.keys(patientPrograms[key].visits);
+
+                        for (var j = 0; j < vKeys.length; j++) {
+
+                            var visit = vKeys[j];
+
+                            var eKeys = Object.keys(patientPrograms[key].visits[visit]);
+
+                            for (var k = 0; k < eKeys.length; k++) {
+
+                                var encounter = eKeys[k];
+
+                                var oKeys = Object.keys(patientPrograms[key].visits[visit][encounter]);
+
+                                for (var l = 0; l < oKeys.length; l++) {
+
+                                    if (patientPrograms[key].visits[visit][encounter][l][concept]) {
+
+                                        result = true;
+
+                                        break;
+
+                                    }
+
+                                }
+
+                            }
+
+                            if (result)
+                                break;
+
+                        }
+
+                    }
+
+                    if (result)
+                        break;
+
+                }
+
+            }
+
+            if (result)
+                break;
 
         }
 
@@ -555,8 +629,6 @@ var dashboard = ({
             age = [num, num, num];
 
         }
-
-        dashboard.age = age[0];
 
         age[0] = (estimated != undefined && parseInt(estimated) == 1 ? "~" + age[0] : age[0]);
 
@@ -925,6 +997,7 @@ var dashboard = ({
         var tdDiv2_3_1 = document.createElement("td");
         tdDiv2_3_1.style.textAlign = "right";
         tdDiv2_3_1.style.fontWeight = "bold";
+        tdDiv2_3_1.style.verticalAlign = "top";
         tdDiv2_3_1.className = "blueText";
         tdDiv2_3_1.innerHTML = "Address";
 
@@ -933,6 +1006,7 @@ var dashboard = ({
         var tdDiv2_3_2 = document.createElement("td");
         tdDiv2_3_2.style.textAlign = "center";
         tdDiv2_3_2.style.width = "3px";
+        tdDiv2_3_2.style.verticalAlign = "top";
         tdDiv2_3_2.innerHTML = ":";
 
         trDiv2_3.appendChild(tdDiv2_3_2);
@@ -2217,7 +2291,7 @@ var dashboard = ({
 
         if (dashboard.__$("bmi")) {
 
-            dashboard.__$("bmi").innerHTML = (dashboard.data["data"]["vitals"] ? dashboard.data["data"]["vitals"]["BMI"] : "&nbsp;");
+            // dashboard.__$("bmi").innerHTML = (dashboard.data["data"]["vitals"] ? dashboard.data["data"]["vitals"]["BMI"] : "&nbsp;");
 
         }
 
@@ -2378,6 +2452,8 @@ var dashboard = ({
             var age = (dashboard.data["data"]["birthdate"].trim().length > 0 ? Math.round((((new Date()) -
                 (new Date(dashboard.data["data"]["birthdate"]))) / (365 * 24 * 60 * 60 * 1000)), 0) : "");
 
+            dashboard.age = age;
+
             dashboard.__$("age").innerHTML = (dashboard.data["data"]["birthdate_estimated"] == 1 ? "~ " : "") + age;
 
         }
@@ -2414,7 +2490,7 @@ var dashboard = ({
 
         if (dashboard.__$("bmi")) {
 
-            dashboard.__$("bmi").innerHTML = (dashboard.data["data"]["vitals"] ? dashboard.data["data"]["vitals"]["BMI"] : "&nbsp;");
+            // dashboard.__$("bmi").innerHTML = (dashboard.data["data"]["vitals"] ? dashboard.data["data"]["vitals"]["BMI"] : "&nbsp;");
 
         }
 
@@ -2607,7 +2683,7 @@ var dashboard = ({
 
                     var weight = (keys.length > 0 ? weightArray[keys[keys.length - 1]] : 0);
 
-                    var bmi = (weight > 0 && height > 0 ? (weight / (height * height)).toFixed(1) : "?");
+                    var bmi = (weight > 0 && height > 0 ? (weight / ((height / 100) * (height / 100))).toFixed(1) : "?");
 
                     setTimeout(function () {
 
@@ -2660,13 +2736,17 @@ var dashboard = ({
 
             }
 
-            if (dashboard.allergies[0] && dashboard.allergies[1] && dashboard.allergies[2]) {
+            if (dashboard.allergies.length > 0) {
 
                 var allergiesString = dashboard.allergies.join(";");
 
                 dashboard.__$("allergies").innerHTML = allergiesString.substring(0, (dashboard.allergies[0].length + 1)) +
                     " <i style='font-size: 12px; color: #3c60b1;'><a href='javascript:dashboard.showMsg(\"" + allergiesString +
                     "\",\"Allergies\")'>" + "..more..." + "</a></i>";
+
+            } else {
+
+                dashboard.__$("allergies").innerHTML = "";
 
             }
 
