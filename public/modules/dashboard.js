@@ -92,6 +92,8 @@ var dashboard = ({
 
     age: null,
 
+    socket: null,
+
     __$: function (id) {
         return document.getElementById(id);
     },
@@ -3617,7 +3619,7 @@ var dashboard = ({
 
         }
 
-        if (socket && data) {
+        if (dashboard.socket && data) {
 
             var patient_id = dashboard.getCookie("patient_id");
 
@@ -3633,11 +3635,11 @@ var dashboard = ({
 
             if (data.data.datatype == "relationship") {
 
-                socket.emit('relationship', data);
+                dashboard.socket.emit('relationship', data);
 
             } else {
 
-                socket.emit('update', data);
+                dashboard.socket.emit('update', data);
 
             }
 
@@ -3647,7 +3649,7 @@ var dashboard = ({
 
     voidConcept: function (uuid) {
 
-        if (socket && uuid) {
+        if (dashboard.socket && uuid) {
             var patient_id = dashboard.getCookie("patient_id");
 
             var data = {
@@ -3657,7 +3659,7 @@ var dashboard = ({
                 token: dashboard.getCookie("token")
             }
 
-            socket.emit('void', data);
+            dashboard.socket.emit('void', data);
 
         }
 
@@ -3970,20 +3972,20 @@ var dashboard = ({
 
             var id = window.location.href.match(/\/([^\/]+)$/)[1];
 
-            var socket = io.connect('/');
-            socket.on('stats', function (data) {
+            dashboard.socket = io.connect('/');
+            dashboard.socket.on('stats', function (data) {
                 // console.log('Connected clients on ' + data.id + ':', data.numClients);
             });
 
-            socket.emit("init", {id: id});
+            dashboard.socket.emit("init", {id: id});
 
-            socket.on('reject', function (json) {
+            dashboard.socket.on('reject', function (json) {
 
                 user.showMsg(json.message, "Oops!", "/");
 
             });
 
-            socket.on('newConnection', function (data) {
+            dashboard.socket.on('newConnection', function (data) {
 
                 var nsp = io('/' + id);
 
@@ -3997,7 +3999,7 @@ var dashboard = ({
 
                 });
 
-                socket.emit('demographics', {id: id});
+                dashboard.socket.emit('demographics', {id: id});
 
                 nsp.on('demographics', function (data) {
 
