@@ -41,6 +41,18 @@
 
         nsp.on('demographics', function(data){
 
+            if(!dashboard.data) {
+
+                setTimeout(function(){
+
+                    window.location = window.location.href;
+
+                }, 100);
+
+                return;
+
+            }
+
             var json = JSON.parse(data);
 
             var done = false;
