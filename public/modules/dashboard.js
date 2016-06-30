@@ -364,7 +364,7 @@ var dashboard = ({
 
         var programs = Object.keys(dashboard.data.data.programs);
 
-        for(var p = 0; p < programs.length; p++) {
+        for (var p = 0; p < programs.length; p++) {
 
             var program = programs[p];
 
@@ -395,7 +395,7 @@ var dashboard = ({
 
                                 var oKeys = Object.keys(patientPrograms[key].visits[visit][encounter]);
 
-                                for(var l = 0; l < oKeys.length; l++) {
+                                for (var l = 0; l < oKeys.length; l++) {
 
                                     if (patientPrograms[key].visits[visit][encounter][l][concept]) {
 
@@ -417,7 +417,7 @@ var dashboard = ({
 
         }
 
-        if(callback) {
+        if (callback) {
 
             callback(result);
 
@@ -1386,7 +1386,7 @@ var dashboard = ({
             if (this.className.match(/gray/))
                 return;
 
-            if(typeof(patient) !== typeof(undefined)) {
+            if (typeof(patient) !== typeof(undefined)) {
 
                 patient.buildEditPage(dashboard.getCookie("patient_id"));
 
@@ -1428,6 +1428,8 @@ var dashboard = ({
         td3_2.appendChild(btnFinish);
 
         dashboard.loadPrograms(dashboard.modules, dashboard.__$("programs"));
+
+        dashboard.createWebSocket();
 
     },
 
@@ -2545,7 +2547,7 @@ var dashboard = ({
 
         if (dashboard.__$("weight")) {
 
-            dashboard.queryExistingObsArray("Weight (kg)", function(data) {
+            dashboard.queryExistingObsArray("Weight (kg)", function (data) {
 
                 dashboard.weightsArray = data;
 
@@ -2561,11 +2563,11 @@ var dashboard = ({
 
         if (dashboard.__$("bp")) {
 
-            dashboard.queryExistingObsArray("Systolic blood pressure", function(data) {
+            dashboard.queryExistingObsArray("Systolic blood pressure", function (data) {
 
                 var systolic = data;
 
-                dashboard.queryExistingObsArray("Diastolic blood pressure", function(data) {
+                dashboard.queryExistingObsArray("Diastolic blood pressure", function (data) {
 
                     var diastolic = data;
 
@@ -2573,7 +2575,7 @@ var dashboard = ({
 
                     var bp = (systolic[today] ? systolic[today] : "?") + "/" + (diastolic[today] ? diastolic[today] : "?");
 
-                    setTimeout(function() {
+                    setTimeout(function () {
 
                         dashboard.__$("bp").innerHTML = bp;
 
@@ -2587,7 +2589,7 @@ var dashboard = ({
 
         if (dashboard.__$("bmi")) {
 
-            dashboard.queryExistingObsArray("Height (cm)", function(data) {
+            dashboard.queryExistingObsArray("Height (cm)", function (data) {
 
                 var heightArray = data;
 
@@ -2595,7 +2597,7 @@ var dashboard = ({
 
                 var height = (keys.length > 0 ? heightArray[keys[keys.length - 1]] : 0);
 
-                dashboard.queryExistingObsArray("Weight (kg)", function(data) {
+                dashboard.queryExistingObsArray("Weight (kg)", function (data) {
 
                     var weightArray = data;
 
@@ -2605,7 +2607,7 @@ var dashboard = ({
 
                     var bmi = (weight > 0 && height > 0 ? (weight / (height * height)).toFixed(1) : "?");
 
-                    setTimeout(function() {
+                    setTimeout(function () {
 
                         dashboard.__$("bmi").innerHTML = bmi;
 
@@ -2619,21 +2621,21 @@ var dashboard = ({
 
         if (dashboard.__$("temperature")) {
 
-                dashboard.queryExistingObsArray("Temperature (c)", function(data) {
+            dashboard.queryExistingObsArray("Temperature (c)", function (data) {
 
-                    var temperature = data;
+                var temperature = data;
 
-                    var today = (new Date()).format("YYYY-mm-dd");
+                var today = (new Date()).format("YYYY-mm-dd");
 
-                    var reading = (temperature[today] ? temperature[today] : "?") + " <sup>o</sup>C";
+                var reading = (temperature[today] ? temperature[today] : "?") + " <sup>o</sup>C";
 
-                    setTimeout(function() {
+                setTimeout(function () {
 
-                        dashboard.__$("temperature").innerHTML = reading;
+                    dashboard.__$("temperature").innerHTML = reading;
 
-                    }, 100);
+                }, 100);
 
-                })
+            })
 
         }
 
@@ -2646,9 +2648,9 @@ var dashboard = ({
 
             var keys = [Object.keys(set[0]), Object.keys(set[1]), Object.keys(set[2])];
 
-            for(var i = 0; i < keys.length; i++) {
+            for (var i = 0; i < keys.length; i++) {
 
-                for(var j = 0; j < keys[i].length; j++) {
+                for (var j = 0; j < keys[i].length; j++) {
 
                     dashboard.allergies.push(set[i][keys[j]]);
 
@@ -2656,7 +2658,7 @@ var dashboard = ({
 
             }
 
-            if(dashboard.allergies[0] && dashboard.allergies[1] && dashboard.allergies[2]) {
+            if (dashboard.allergies[0] && dashboard.allergies[1] && dashboard.allergies[2]) {
 
                 var allergiesString = dashboard.allergies.join(";");
 
@@ -3953,25 +3955,149 @@ var dashboard = ({
         this.events = [];
     },
 
-    Subscriber: function() {
+    Subscriber: function () {
         dashboard.Dispatcher(this);
+    },
+
+    createWebSocket: function () {
+
+        var script = document.createElement("script");
+        script.src = "/socket.io/socket.io.js";
+
+        document.head.appendChild(script);
+
+        setTimeout(function () {
+
+            var id = window.location.href.match(/\/([^\/]+)$/)[1];
+
+            var socket = io.connect('/');
+            socket.on('stats', function (data) {
+                // console.log('Connected clients on ' + data.id + ':', data.numClients);
+            });
+
+            socket.emit("init", {id: id});
+
+            socket.on('reject', function (json) {
+
+                user.showMsg(json.message, "Oops!", "/");
+
+            });
+
+            socket.on('newConnection', function (data) {
+
+                var nsp = io('/' + id);
+
+                nsp.on('hi ' + id, function (data) {
+                    // console.log(data);
+                });
+
+                nsp.on('kickout ' + id, function (data) {
+
+                    user.logout();
+
+                });
+
+                socket.emit('demographics', {id: id});
+
+                nsp.on('demographics', function (data) {
+
+                    if (!dashboard.data) {
+
+                        setTimeout(function () {
+
+                            window.location = window.location.href;
+
+                        }, 100);
+
+                        return;
+
+                    }
+
+                    var json = JSON.parse(data);
+
+                    var done = false;
+
+                    if (json.names) {
+
+                        dashboard.data.data.names = json.names;
+
+                    } else if (json.addresses) {
+
+                        dashboard.data.data.addresses = json.addresses;
+
+                    } else if (json.gender) {
+
+                        dashboard.data.data.gender = json.gender;
+
+                    } else if (json.birthdate) {
+
+                        dashboard.data.data.birthdate = json.birthdate;
+
+                    } else if (json.birthdate_estimated) {
+
+                        dashboard.data.data.birthdate_estimated = json.birthdate_estimated;
+
+                    } else if (json.identifiers) {
+
+                        dashboard.data.data.identifiers = json.identifiers;
+
+                    } else if (json.programs) {
+
+                        dashboard.data.data.programs = json.programs;
+
+                    } else if (json.relationships) {
+
+                        dashboard.data.data.relationships = json.relationships;
+
+                    } else if (json.done) {
+
+                        done = true;
+
+                    }
+
+                    var lastHIVTest = encodeURIComponent(dashboard.queryActiveObs("HTS PROGRAM",
+                        (new Date()).format("YYYY-mm-dd"), "HTS VISIT", "Last HIV test"));
+
+                    if (lastHIVTest) {
+
+                        dashboard.setCookie("LastHIVTest", lastHIVTest, 0.3333);
+
+                    }
+
+                    var ageGroup = encodeURIComponent(dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+                        "HTS CLIENT REGISTRATION", "Age Group"));
+
+                    if (ageGroup) {
+
+                        dashboard.setCookie("AgeGroup", ageGroup, 0.3333);
+
+                    }
+
+                    dashboard.refreshDemographics(done);
+
+                })
+
+            });
+
+        }, 100);
+
     },
 
     init: function (dataPath, modulesPath, settingsPath) {
 
-        this.Dispatcher.prototype.addEventlistener=function(event,callback){
+        this.Dispatcher.prototype.addEventlistener = function (event, callback) {
             this.events[event] = this.events[event] || [];
-            if ( this.events[event] ) {
+            if (this.events[event]) {
                 this.events[event].push(callback);
             }
         }
 
-        this.Dispatcher.prototype.removeEventlistener=function(event,callback){
-            if ( this.events[event] ) {
+        this.Dispatcher.prototype.removeEventlistener = function (event, callback) {
+            if (this.events[event]) {
                 var listeners = this.events[event];
-                for ( var i = listeners.length-1; i>=0; --i ){
-                    if ( listeners[i] === callback ) {
-                        listeners.splice( i, 1 );
+                for (var i = listeners.length - 1; i >= 0; --i) {
+                    if (listeners[i] === callback) {
+                        listeners.splice(i, 1);
                         return true;
                     }
                 }
@@ -3979,10 +4105,10 @@ var dashboard = ({
             return false;
         }
 
-        this.Dispatcher.prototype.dispatch=function(event){
-            if ( this.events[event] ) {
+        this.Dispatcher.prototype.dispatch = function (event) {
+            if (this.events[event]) {
                 var listeners = this.events[event], len = listeners.length;
-                while ( len-- ) {
+                while (len--) {
                     listeners[len](this);	//callback with self
                 }
             }
@@ -3990,7 +4116,7 @@ var dashboard = ({
 
         this.Subscriber.prototype = new this.Dispatcher();
 
-        this.Subscriber.prototype.sendUpdateEvent = function() {
+        this.Subscriber.prototype.sendUpdateEvent = function () {
 
             this.dispatch("done");
 
