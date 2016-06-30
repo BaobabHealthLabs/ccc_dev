@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Statistics</title>
+    <title>Epilepsy Card</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
     <script type="text/javascript" src="/javascripts/epilepsy.js"></script>
 </head>
@@ -46,11 +46,20 @@
     }
     .circle{
         display: block;
-        width: 20px;
-        height: 20px;
+        width: 23px;
+        height: 23px;
+        padding: 2%;
         //border: 1px solid red;
         text-align: center;
         border-radius: 50%;
+    }
+    .square{
+        display: block;
+        width: 13px;
+        height: 13px;
+        border: 1px solid black;
+        padding: 2%;
+        text-align: center;
     }
     
 </style>
@@ -78,14 +87,14 @@
     <tr >
         <td>Patient Name</td>
         <td colspan="3" id="patient_name"></td>
-        <td>Y</td>
-        <td>N</td>
+        <td> <span class="circle" id="tonic_clonic_yes">Y</span></td>
+        <td><span class="circle" id="tonic_clonic_no">N</span></td>
         <td>Tonic Clonic</td>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="clonic_yes">Y</span></td>
+        <td><span class="circle" id="clonic_no">N</span></td>
         <td>Clonic</td>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="simple_yes">Y</span></td>
+        <td><span class="circle" id="simple_no">N</span></td>
         <td>Simple</td>
     </tr>
     <tr >
@@ -93,27 +102,27 @@
         <td><span class="circle" id="male">M</span></td>
         <td><span class="circle" id="female">F</span></td>
         <td>DOB/Age: <span id="dob"></span></td>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="absence_yes">Y</span></td>
+        <td><span class="circle" id="absence_no">N</span></td>
         <td>Absence</td>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="tonic_yes">Y</span></td>
+        <td><span class="circle" id="tonic_no">N</span></td>
         <td>Tonic</td>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="complex_yes">Y</span></td>
+        <td><span class="circle" id="complex_no">N</span></td>
         <td>Complex</td>
     </tr>
     <tr >
         <td rowspan="2">Physical Address</td>
         <td colspan="3"></td>
-        <td>Y</td>
-        <td>N</td>
+        <td ><span class="circle" id="myclonic_yes">Y</span></td>
+        <td ><span class="circle" id="myclonic_no">N</td>
         <td>Myclonic</td>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="atonic_yes">Y</td>
+        <td><span class="circle" id="atonic_no">N</td>
         <td>Atonic</td>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="unclassified_yes">Y</td>
+        <td><span class="circle" id="unclassified_no">N</td>
         <td>Unclassified</td>
     </tr>
     <tr >
@@ -125,14 +134,14 @@
     <tr >
         <td>Patient Phone</td>
         <td colspan="3"></td>
-        <td rowspan="2">Y</td>
-        <td rowspan="2">N</td>
-        <td rowspan="2">Unk</td>
+        <td rowspan="2"><span class="circle" id="epilepsy_yes">Y</span></td>
+        <td rowspan="2"><span class="circle" id="epilepsy_no">N</span></td>
+        <td rowspan="2"><span class="circle" id="epilepsy_unk">Unk</span></td>
         <td rowspan="2">Epilepsy</td>
-        <td rowspan="2">R</td>
-        <td rowspan="2">NR</td>
-        <td rowspan="2">U</td>
-        <td colspan="2" rowspan="2">VDRL</td>
+        <td rowspan="2"><span class="circle" id="r">R</span></td>
+        <td rowspan="2"><span class="circle" id="nr">NR</span></td>
+        <td rowspan="2"><span class="circle" id="u">U</span></td>
+        <td colspan="2" rowspan="2"><span class="circle" id="vdrl">VDRL</span></td>
     </tr>
     <tr >
         <td>Guardian Name</td>
@@ -142,18 +151,18 @@
         <td>Guardian Phone</td>
         <td></td>
         <td colspan="2">Relation to Patient</td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td><span class="circle" id="mental_illness_yes">Y</span></td>
+        <td><span class="circle" id="mental_illness_no">N</span></td>
+        <td><span class="circle" id="mental_illness_unk">Unk</span></td>
         <td>Mental Illness</td>
     </tr>
     <tr >
         <td>Agree to FUP</td>
         <td>N Y</td>
         <td colspan="2"></td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td><span class="circle" id="behaviour_problems_yes">Y</span></td>
+        <td><span class ="circle" id="behaviour_problems_no">N</span></td>
+        <td><span class="circle" id="behaviour_problems_unk"> Unk</span></td>
         <td>Behaviour Problem</td>
     </tr>
 </table>
@@ -164,63 +173,63 @@
     </tr>
     <tr>
         <td colspan="3">Date of onset (MM/YYY)</td>
-        <td colspan="3"></td>
+        <td colspan="3" id="date_on_set"></td>
         <th colspan="8">Medical and Surgical Histrory</th>
         <th colspan="3">Exposures</th>
     </tr>
     <tr>
         <td colspan="3">Age at onset (in years)</td>
-        <td colspan="3"></td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td colspan="3" id="age_at_onset"></td>
+        <td><span class="circle" id="head_injury_trauma_head_surgery_yes">Y</span></td>
+        <td><span class="circle" id="head_injury_trauma_head_surgery_no">N</span></td>
+        <td><span class="circle" id="head_injury_trauma_head_surgery_unk">Unk</span></td>
         <td colspan="5">Head Injury/Trauma/Head surgery</td>
-        <td></td>
+        <td><span class="square" id="smoking_exposure"></span></td>
         <td>Smoking</td>
-        <td>Date:</td>
+        <td>Date: <span id="smoking_date"></span></td>
     </tr>
     <tr>
         <td colspan="3">Marital Status</td>
-        <td colspan="3"></td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td colspan="3" id="marital_status"></td>
+        <td><span class="circle" id="seizure_yes">Y</span></td>
+        <td><span class="circle" id="seizure_no">N</span></td>
+        <td><span class="circle" id="seizure_unk">Unk</span></td>
         <td colspan="5">History of Seizure</td>
-        <td></td>
+        <td><span class="square" id="alcohol_exposure"></span></td>
         <td>Alcohol</td>
-        <td>Date:</td>
+        <td>Date: <span id="alcohol_date"></span></td>
     </tr>
     <tr>
-        <td colspan="3">Occupationd</td>
-        <td colspan="3"></td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td colspan="3">Occupation</td>
+        <td colspan="3" id="occupation"></td>
+        <td><span class="circle" id="complications_at_birth_yes">Y</span></td>
+        <td><span class="circle" id="complications_at_birth_no">N</span></td>
+        <td><span class="circle" id="complications_at_birth_unk">Unk</span></td>
         <td colspan="5">Complications at Birth</td>
-        <td></td>
+        <td><span class="square" id="pig_pork_exposure"></span></td>
         <td>Pigs/Pork</td>
-        <td>Date:</td>
+        <td>Date: <span id="pig_pork_date" ></span></td>
     </tr>
     <tr>
         <td colspan="3">Education Level</td>
-        <td colspan="3"></td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
-        <td colspan="5">Neonatal Infection/Cerenral Malaria/Meningitis</td>
-        <td></td>
+        <td colspan="3" id="education_level"></td>
+        <td><span class="circle" id="neonatal_infection_cerebral_malaria_meningitis_yes">Y</span></td>
+        <td><span class="circle" id="neonatal_infection_cerebral_malaria_meningitis_no">N</span></td>
+        <td><span class="circle" id="neonatal_infection_cerebral_malaria_meningitis_unk">Unk</span></td>
+        <td colspan="5">Neonatal Infection/Cerebral Malaria/Meningitis</td>
+        <td><span class="square" id="tradtional_medicine_exposure"></span></td>
         <td>Traditional Medicine</td>
-        <td>Date:</td>
+        <td>Date: <span id="tradtional_medicine_date"></span></td>
     </tr>
     <tr>
-        <td colspan="6" rowspan="2">Medcation History:(including traditional medicine)</td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td colspan="6" rowspan="2">Medication History:(including traditional medicine): <span id="medication_history"></span></td>
+        <td><span class="circle" id="delayed_milestones_in_early_childhood_yes">Y</span></td>
+        <td><span class="circle" id="delayed_milestones_in_early_childhood_no">N</span></td>
+        <td><span class="circle" id="delayed_milestones_in_early_childhood_unk">Unk</span></td>
         <td colspan="5">Delayed milestones in early childhood</td>
-        <td></td>
+        <td><span class="square" id="other_exposures"></span></td>
         <td>Other</td>
-        <td>Date:</td>
+        <td>Date: <span id="other_exposures_date"></span></td>
     </tr>
     <tr>
         <th colspan="8">Triggers</th>
@@ -231,90 +240,90 @@
         <td>N</td>
         <td>Unk</td>
         <th colspan="3">Pre-ictal Warning</th>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td><span class="circle" id="alcohol_yes">Y</span></td>
+        <td><span class="circle" id="alcohol_no">N</span></td>
+        <td><span class="circle" id="alcohol_unk">Unk</span></td>
         <td>Alcohol</td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td><span class="circle" id="fever_yes">Y</span></td>
+        <td><span class="circle" id="fever_no">N</span></td>
+        <td><span class="circle" id="fever_unk">Unk</span></td>
         <td>Fever</td>
-        <td></td>
+        <td><span class="square" id="injuries_complications"></span></td>
         <td>Injuries</td>
-        <td>Date:</td>
+        <td>Date: <span id="injuries_date"></span></td>
     </tr>
     <tr>
         <th colspan="3">Post-ictal features</th>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="paralysis_yes">Y</span></td>
+        <td><span class="circle" id="paralysis_no">N</span></td>
         <td>Paralysis</td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td><span class="circle" id="sound_light_touch_yes">Y</span></td>
+        <td><span class="circle" id="sound_light_touch_no">N</span></td>
+        <td><span class="circle" id="sound_light_touch_unk">Unk</span></td>
         <td colspan="5">Sounds/ Light /Touch</td>
-        <td></td>
+        <td><span class="square" id="burns_complications"></td>
         <td>Burns</td>
-        <td>Date:</td>
+        <td>Date: <span id="burns_date"></span></td>
     </tr>
     <tr>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="headache_yes">Y</span></td>
+        <td><span class="circle" id="headache_no">N</span></td>
         <td>Headache</td>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="disorientation_yes">Y</span></td>
+        <td><span class="circle" id="disorientation_no">N</span></td>
         <td>Disorientation</td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td><span class="circle" id="emotional_stress_anger_boredom_yes">Y</span></td>
+        <td><span class="circle" id="emotional_stress_anger_boredom_no">N</span></td>
+        <td><span class="circle" id="emotional_stress_anger_boredom_unk">Unk</span></td>
         <td colspan="5">Emotional Stress/ Anger/ Boredom</td>
-        <td></td>
+        <td><span class="square" id="emotional_stress_anger_boredom_complications"></td>
         <td>Status Epilepticus</td>
         <td>Date:</td>
     </tr>
     <tr>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="drowsiness_yes">Y</span></td>
+        <td><span class="circle" id="drowsiness_no">N</span></td>
         <td>Drowsiness</td>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="nausea_yes">Y</span></td>
+        <td><span class="circle" id="nausea">N</span></td>
         <td>Nausea</td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td><span class="circle" id="sleep_deprivation_overtiredness_yes">Y</span></td>
+        <td><span class="circle" id="sleep_deprivation_overtiredness_no">N</span></td>
+        <td><span class="circle" id="sleep_deprivation_overtiredness_unk">Unk</span></td>
         <td colspan="5">Sleep deprivation/Overtiredness</td>
-        <td></td>
+        <td><span class="square" id="psychosis_complications"></td>
         <td>Psychosis</td>
-        <td>Date:</td>
+        <td>Date: <span id="psychosis_date"></span></td>
     </tr>
     <tr>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="poor_concentration_yes">Y</span></td>
+        <td><span class="circle" id="poor_concentration_no">N</span></td>
         <td>Poor concentration</td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Memory</td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td><span class="circle" id="memory_loss_yes">Y</span></td>
+        <td><span class="circle" id="memory_loss_no">N</span></td>
+        <td>Memory Loss</td>
+        <td><span class="circle" id="missed_medication_yes">Y</span></td>
+        <td><span class="circle" id="missed_medication_no">N</span></td>
+        <td><span class="circle" id="missed_medication_unk">Unk</span></td>
         <td colspan="5">Missed medication</td>
-        <td></td>
+        <td><span class="square" id="drug_related_complications"></td>
         <td>Drug Related</td>
-        <td>Date:</td>
+        <td>Date: <span id="drug_related_date"></span></td>
     </tr>
     <tr>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="poor_verbal_or_cognitive_skills_yes">Y</span></td>
+        <td><span class="circle" id="poor_verbal_or_cognitive_skills_no">N</span></td>
         <td>Poor verbal or cognitive skills </td>
-        <td>Y</td>
-        <td>N</td>
+        <td><span class="circle" id="hyperactivity_yes">Y</span></td>
+        <td><span class="circle" id="hyperactivity_no">N</span></td>
         <td>Hyperativity</td>
-        <td>Y</td>
-        <td>N</td>
-        <td>Unk</td>
+        <td><span class="circle" id="menstruation_yes">Y</span></td>
+        <td><span class="circle" id="menstruation_no">N</span></td>
+        <td><span class="circle" id="menstruation_unk">Unk</span></td>
         <td colspan="5">Menstruation(For women of reproductive age)</td>
-        <td></td>
+        <td><span class="square" id="other_complications"></td>
         <td>Other</td>
-        <td>Date:</td>
+        <td>Date: <span id="other_complications_date"></span></td>
     </tr>
 </table>
 <table width="100%" class="card">

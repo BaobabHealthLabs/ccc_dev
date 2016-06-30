@@ -14,7 +14,7 @@ O.1.4.2. No
 Q.1.5. Paralysis a post-ictal feature? [pos:: 4$$tt_requirenextclick::false]
 O.1.5.1. Yes
 O.1.5.2. No
-Q.1.6. Disoreintation a post-ictal feature? [pos:: 5$$tt_requirenextclick::false]
+Q.1.6. Disorientation a post-ictal feature? [pos:: 5$$tt_requirenextclick::false]
 O.1.6.1. Yes
 O.1.6.2. No
 Q.1.7. Nausea a post-ictal feature? [pos:: 6$$tt_requirenextclick::false]
@@ -23,6 +23,6 @@ O.1.7.2. No
 Q.1.8. Memory loss a post-ictal feature? [pos:: 7$$tt_requirenextclick::false]
 O.1.8.1. Yes
 O.1.8.2. No
-Q.1.9. Hyperactivity a post-ictal feature? [pos:: 6]
+Q.1.9. Hyperactivity a post-ictal feature? [pos:: 8]
 O.1.9.1. Yes
 O.1.9.2. No
