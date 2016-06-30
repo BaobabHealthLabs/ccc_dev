@@ -2595,8 +2595,6 @@ var dashboard = ({
 
                 var height = (keys.length > 0 ? heightArray[keys[keys.length - 1]] : 0);
 
-                console.log(height);
-
                 dashboard.queryExistingObsArray("Weight (kg)", function(data) {
 
                     var weightArray = data;
@@ -2604,8 +2602,6 @@ var dashboard = ({
                     var keys = Object.keys(weightArray).sort();
 
                     var weight = (keys.length > 0 ? weightArray[keys[keys.length - 1]] : 0);
-
-                    console.log(weight);
 
                     var bmi = (weight > 0 && height > 0 ? (weight / (height * height)).toFixed(1) : "?");
 
@@ -3527,7 +3523,7 @@ var dashboard = ({
                 "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
                 "\"javascript:window.parent.document.exitNavPanel()\";tt_cancel_show = " +
                 "\"javascript:window.parent.document.exitNavPanel()\";function submitData(){" +
-                "var data = form2js(document.getElementById('data'), undefined, true); console.log(data);" +
+                "var data = form2js(document.getElementById('data'), undefined, true);" +
                 "if(window.parent) window.parent.dashboard.submitData(data);" +
                 "}</script></head><body>";
 
