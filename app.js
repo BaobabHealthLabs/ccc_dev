@@ -6166,12 +6166,22 @@ portfinder.getPort(function (err, port) {
 
     server.listen(port, function () {
 
-        var files = [
+        var settingFiles = [
                 __dirname + "/public/modules/dashboard.settings.json",
                 __dirname + "/public/modules/landing.settings.json",
                 __dirname + "/public/modules/patient.settings.json",
                 __dirname + "/public/modules/stock.settings.json",
                 __dirname + "/public/modules/user.settings.json"
+        ];
+
+        var files = [
+                __dirname + "/public/modules/dashboard.settings.json",
+                __dirname + "/public/modules/landing.settings.json",
+                __dirname + "/public/modules/patient.settings.json",
+                __dirname + "/public/modules/stock.settings.json",
+                __dirname + "/public/modules/user.settings.json",
+                __dirname + "/public/modules/landing.modules.json",
+                __dirname + "/public/modules/patient.modules.json"
         ]
 
         var address = "http://" + ip.address() + ":" + port;
@@ -6186,13 +6196,17 @@ portfinder.getPort(function (err, port) {
 
             }
 
-            var settings = require(filename);
+            if(settingFiles.indexOf(filename) >= 0) {
+                
+                var settings = require(filename);
 
-            settings.basePath = address;
+                settings.basePath = address;
 
-            var data = JSON.stringify(settings);
+                var data = JSON.stringify(settings);
 
-            fs.writeFileSync(filename, data);
+                fs.writeFileSync(filename, data);
+
+            }
 
         }
 
