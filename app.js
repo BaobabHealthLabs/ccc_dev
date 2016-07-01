@@ -832,7 +832,7 @@ function saveData(data, callback) {
                             "Unknown") + "\"), \"" + data.data.obs[group][concept] + "\", (SELECT user_id FROM users WHERE username = \"" +
                             data.data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
-                        if(data.data.obs[group][concept] && data.data.obs[group][concept].length > 0) {
+                        if (data.data.obs[group][concept] && data.data.obs[group][concept].length > 0) {
 
                             queryRaw(sql, function (res) {
 
@@ -1196,237 +1196,244 @@ function updateUserView(data) {
 
         function (callback) {
 
-            if (!people[data.id] || isDirty[data.id]) {
+            // if (!people[data.id] || isDirty[data.id]) {
 
-                queryData("patient_identifier", ["patient_id"], {identifier: data.id}, function (identifier) {
+            queryData("patient_identifier", ["patient_id"], {identifier: data.id}, function (identifier) {
 
-                    if (identifier.length > 0) {
+                if (identifier.length > 0) {
 
-                        patient_id = identifier[0].patient_id;
+                    patient_id = identifier[0].patient_id;
 
-                        queryData("person_name", ["given_name", "middle_name", "family_name", "family_name2", "uuid"],
-                            {person_id: patient_id}, function (names) {
+                    queryData("person_name", ["given_name", "middle_name", "family_name", "family_name2", "uuid"],
+                        {person_id: patient_id}, function (names) {
 
-                                // console.log(names);
+                            // console.log(names);
 
-                                var collection = [];
+                            var collection = [];
 
-                                for (var i = 0; i < names.length; i++) {
+                            for (var i = 0; i < names.length; i++) {
 
-                                    var demographics = {};
+                                var demographics = {};
 
-                                    demographics["First Name"] = names[i].given_name;
+                                demographics["First Name"] = names[i].given_name;
 
-                                    demographics["Family Name"] = names[i].family_name;
+                                demographics["Family Name"] = names[i].family_name;
 
-                                    demographics["Middle Name"] =
-                                        (String(names[i].middle_name).trim().toLowerCase() != "unknown" ?
-                                            names[i].middle_name : "");
+                                demographics["Middle Name"] =
+                                    (String(names[i].middle_name).trim().toLowerCase() != "unknown" ?
+                                        names[i].middle_name : "");
 
-                                    demographics["Maiden Name"] = names[i].maiden_name;
+                                demographics["Maiden Name"] = names[i].maiden_name;
 
-                                    demographics["UUID"] = names[i].uuid;
+                                demographics["UUID"] = names[i].uuid;
 
-                                    collection.push(demographics);
+                                collection.push(demographics);
 
-                                }
+                            }
 
-                                if (!people[data.id]) {
+                            if (!people[data.id]) {
 
-                                    people[data.id] = {
-                                        data: {
-                                            names: [],
-                                            addresses: [],
-                                            identifiers: {},
-                                            programs: {},
-                                            gender: null,
-                                            birthdate: null,
-                                            birthdate_estimated: null,
-                                            UUID: null,
-                                            relationships: []
-                                        }
-                                    };
+                                people[data.id] = {
+                                    data: {
+                                        patient_id: patient_id,
+                                        names: [],
+                                        addresses: [],
+                                        identifiers: {},
+                                        programs: {},
+                                        gender: null,
+                                        birthdate: null,
+                                        birthdate_estimated: null,
+                                        UUID: null,
+                                        relationships: []
+                                    }
+                                };
 
-                                }
+                            }
 
-                                console.log("First time query.");
+                            console.log("First time query.");
 
-                                people[data.id].data.names = collection;
+                            people[data.id].data.names = collection;
 
-                                nsp[data.id].emit("demographics",
-                                    JSON.stringify({names: people[data.id].data.names }));
+                            nsp[data.id].emit("demographics",
+                                JSON.stringify({names: people[data.id].data.names }));
 
-                                callback();
+                            nsp[data.id].emit("demographics",
+                                JSON.stringify({patient_id: people[data.id].data.patient_id }));
 
-                            });
+                            callback();
+
+                        });
+
+                }
+
+            });
+
+            /*} else {
+
+             queryData("patient_identifier", ["patient_id"], {identifier: data.id}, function (identifier) {
+
+             if (identifier.length > 0) {
+
+             patient_id = identifier[0].patient_id;
+
+             }
+
+             console.log("Sent existing names data");
+
+             nsp[data.id].emit("demographics",
+             JSON.stringify({names: people[data.id].data.names }));
+
+             nsp[data.id].emit("demographics",
+             JSON.stringify({patient_id: people[data.id].data.patient_id }));
+
+             callback();
+
+             });
+
+             }*/
+
+        },
+
+        function (callback) {
+
+            // if (people[data.id].data.addresses.length <= 0 || isDirty[data.id]) {
+
+            queryData("person_address", ["address1", "address2", "city_village", "state_province",
+                    "county_district", "neighborhood_cell", "township_division", "uuid"],
+                {person_id: patient_id}, function (addresses) {
+
+                    var collection = [];
+
+                    for (var i = 0; i < addresses.length; i++) {
+
+                        var address = {};
+
+                        address["Current District"] = addresses[i].state_province;
+
+                        address["Current T/A"] = addresses[i].township_division;
+
+                        address["Current Village"] = addresses[i].city_village;
+
+                        address["Closest Landmark"] = addresses[i].address1;
+
+                        address["Home District"] = addresses[i].address2;
+
+                        address["Home T/A"] = addresses[i].county_district;
+
+                        address["Home Village"] = addresses[i].neigborhood_cell;
+
+                        address["UUID"] = addresses[i].uuid;
+
+                        collection.push(address);
 
                     }
 
-                });
+                    if (!people[data.id]) {
 
-            } else {
-
-                queryData("patient_identifier", ["patient_id"], {identifier: data.id}, function (identifier) {
-
-                    if (identifier.length > 0) {
-
-                        patient_id = identifier[0].patient_id;
+                        people[data.id] = {
+                            data: {
+                                patient_id: patient_id,
+                                names: [],
+                                addresses: [],
+                                identifiers: {},
+                                programs: {},
+                                gender: null,
+                                birthdate: null,
+                                birthdate_estimated: null,
+                                UUID: null,
+                                relationships: []
+                            }
+                        };
 
                     }
 
-                    console.log("Sent existing names data");
+                    console.log("First time address query.");
+
+                    people[data.id].data.addresses = collection;
 
                     nsp[data.id].emit("demographics",
-                        JSON.stringify({names: people[data.id].data.names }));
+                        JSON.stringify({addresses: people[data.id].data.addresses }));
 
                     callback();
 
                 });
 
-            }
+            /*} else {
+
+             console.log("Sent existing address data");
+
+             nsp[data.id].emit("demographics",
+             JSON.stringify({addresses: people[data.id].data.addresses }));
+
+             callback();
+
+             }*/
 
         },
 
         function (callback) {
 
-            if (people[data.id].data.addresses.length <= 0 || isDirty[data.id]) {
+            // if (!people[data.id].data.gender || isDirty[data.id]) {
 
-                queryData("person_address", ["address1", "address2", "city_village", "state_province",
-                        "county_district", "neighborhood_cell", "township_division", "uuid"],
-                    {person_id: patient_id}, function (addresses) {
+            queryData("person", ["gender", "birthdate", "birthdate_estimated", "uuid"],
+                {person_id: patient_id}, function (person) {
 
-                        var collection = [];
+                    if (!people[data.id]) {
 
-                        for (var i = 0; i < addresses.length; i++) {
+                        people[data.id] = {
+                            data: {
+                                patient_id: patient_id,
+                                names: [],
+                                addresses: [],
+                                identifiers: {},
+                                programs: {},
+                                gender: null,
+                                birthdate: null,
+                                birthdate_estimated: null,
+                                UUID: null,
+                                relationships: []
+                            }
+                        };
 
-                            var address = {};
+                    }
 
-                            address["Current District"] = addresses[i].state_province;
+                    people[data.id].data.gender = person[0].gender;
 
-                            address["Current T/A"] = addresses[i].township_division;
+                    people[data.id].data.birthdate = person[0].birthdate;
 
-                            address["Current Village"] = addresses[i].city_village;
+                    people[data.id].data.birthdate_estimated = person[0].birthdate_estimated;
 
-                            address["Closest Landmark"] = addresses[i].address1;
+                    nsp[data.id].emit("demographics",
+                        JSON.stringify({ gender: people[data.id].data.gender }));
 
-                            address["Home District"] = addresses[i].address2;
+                    nsp[data.id].emit("demographics",
+                        JSON.stringify({ birthdate: people[data.id].data.birthdate }));
 
-                            address["Home T/A"] = addresses[i].county_district;
+                    nsp[data.id].emit("demographics",
+                        JSON.stringify({ birthdate_estimated: people[data.id].data.birthdate_estimated }));
 
-                            address["Home Village"] = addresses[i].neigborhood_cell;
+                    console.log("Sent first basic data");
 
-                            address["UUID"] = addresses[i].uuid;
+                    callback();
 
-                            collection.push(address);
+                });
 
-                        }
+            /*} else {
 
-                        if (!people[data.id]) {
+             console.log("Sent existing basic data");
 
-                            people[data.id] = {
-                                data: {
-                                    names: [],
-                                    addresses: [],
-                                    identifiers: {},
-                                    programs: {},
-                                    gender: null,
-                                    birthdate: null,
-                                    birthdate_estimated: null,
-                                    UUID: null,
-                                    relationships: []
-                                }
-                            };
+             nsp[data.id].emit("demographics",
+             JSON.stringify({ gender: people[data.id].data.gender }));
 
-                        }
+             nsp[data.id].emit("demographics",
+             JSON.stringify({ birthdate: people[data.id].data.birthdate }));
 
-                        console.log("First time address query.");
+             nsp[data.id].emit("demographics",
+             JSON.stringify({ birthdate_estimated: people[data.id].data.birthdate_estimated }));
 
-                        people[data.id].data.addresses = collection;
+             callback();
 
-                        nsp[data.id].emit("demographics",
-                            JSON.stringify({addresses: people[data.id].data.addresses }));
-
-                        callback();
-
-                    });
-
-            }
-            else {
-
-                console.log("Sent existing address data");
-
-                nsp[data.id].emit("demographics",
-                    JSON.stringify({addresses: people[data.id].data.addresses }));
-
-                callback();
-
-            }
-
-        },
-
-        function (callback) {
-
-            if (!people[data.id].data.gender || isDirty[data.id]) {
-
-                queryData("person", ["gender", "birthdate", "birthdate_estimated", "uuid"],
-                    {person_id: patient_id}, function (person) {
-
-                        if (!people[data.id]) {
-
-                            people[data.id] = {
-                                data: {
-                                    names: [],
-                                    addresses: [],
-                                    identifiers: {},
-                                    programs: {},
-                                    gender: null,
-                                    birthdate: null,
-                                    birthdate_estimated: null,
-                                    UUID: null,
-                                    relationships: []
-                                }
-                            };
-
-                        }
-
-                        people[data.id].data.gender = person[0].gender;
-
-                        people[data.id].data.birthdate = person[0].birthdate;
-
-                        people[data.id].data.birthdate_estimated = person[0].birthdate_estimated;
-
-                        nsp[data.id].emit("demographics",
-                            JSON.stringify({ gender: people[data.id].data.gender }));
-
-                        nsp[data.id].emit("demographics",
-                            JSON.stringify({ birthdate: people[data.id].data.birthdate }));
-
-                        nsp[data.id].emit("demographics",
-                            JSON.stringify({ birthdate_estimated: people[data.id].data.birthdate_estimated }));
-
-                        console.log("Sent first basic data");
-
-                        callback();
-
-                    });
-
-            }
-            else {
-
-                console.log("Sent existing basic data");
-
-                nsp[data.id].emit("demographics",
-                    JSON.stringify({ gender: people[data.id].data.gender }));
-
-                nsp[data.id].emit("demographics",
-                    JSON.stringify({ birthdate: people[data.id].data.birthdate }));
-
-                nsp[data.id].emit("demographics",
-                    JSON.stringify({ birthdate_estimated: people[data.id].data.birthdate_estimated }));
-
-                callback();
-
-            }
+             }*/
 
         },
 
@@ -1454,6 +1461,7 @@ function updateUserView(data) {
 
                             people[data.id] = {
                                 data: {
+                                    patient_id: patient_id,
                                     names: [],
                                     addresses: [],
                                     identifiers: {},
@@ -1599,6 +1607,7 @@ function updateUserView(data) {
 
                                 people[data.id] = {
                                     data: {
+                                        patient_id: patient_id,
                                         names: [],
                                         addresses: [],
                                         identifiers: {},
@@ -1673,6 +1682,7 @@ function updateUserView(data) {
 
                         people[data.id] = {
                             data: {
+                                patient_id: patient_id,
                                 names: [],
                                 addresses: [],
                                 identifiers: {},
@@ -3758,6 +3768,328 @@ app.get("/search_by_username", function (req, res) {
         res.status(200).json(results);
 
     });
+
+})
+
+app.get("/demographics_by_id_and_field", function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    if (query.field) {
+
+        switch (String(query.field).trim().toLowerCase()) {
+
+            case "first_name":
+
+                var sql = "SELECT person_name_id, given_name FROM person_name WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({first_name: data[0][0].given_name, person_name_id: data[0][0].person_name_id,
+                            field: "first_name", field_id: "person_name_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "last_name":
+
+                var sql = "SELECT person_name_id, family_name FROM person_name WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({last_name: data[0][0].family_name, person_name_id: data[0][0].person_name_id,
+                            field: "last_name", field_id: "person_name_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "middle_name":
+
+                var sql = "SELECT person_name_id, middle_name FROM person_name WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({middle_name: data[0][0].middle_name, person_name_id: data[0][0].person_name_id,
+                            field: "middle_name", field_id: "person_name_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "gender":
+
+                var sql = "SELECT person_id, gender FROM person WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({gender: data[0][0].gender, person_id: data[0][0].person_id,
+                            field: "gender", field_id: "person_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "date_of_birth":
+
+                var sql = "SELECT person_id, birthdate, birthdate_estimated FROM person WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({date_of_birth: data[0][0].birthdate, date_of_birth_estimated: data[0][0].birthdate_estimated, person_id: data[0][0].person_id,
+                            field: "date_of_birth", field_id: "person_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "current_village":
+
+                var sql = "SELECT person_address_id, city_village FROM person_address WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({current_village: data[0][0].city_village, person_address_id: data[0][0].person_address_id, field: "current_village", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "current_ta":
+
+                var sql = "SELECT person_address_id, township_division FROM person_address WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({current_ta: data[0][0].township_division, person_address_id: data[0][0].person_address_id, field: "current_ta", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "current_district":
+
+                var sql = "SELECT person_address_id, state_province FROM person_address WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({current_district: data[0][0].state_province, person_address_id: data[0][0].person_address_id, field: "current_district", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "home_district":
+
+                var sql = "SELECT person_address_id, address2 FROM person_address WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({home_district: data[0][0].address2, person_address_id: data[0][0].person_address_id, field: "home_district", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "home_ta":
+
+                var sql = "SELECT person_address_id, county_district FROM person_address WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({home_ta: data[0][0].county_district, person_address_id: data[0][0].person_address_id, field: "home_ta", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "home_village":
+
+                var sql = "SELECT person_address_id, neighborhood_cell FROM person_address WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({home_village: data[0][0].neighborhood_cell, person_address_id: data[0][0].person_address_id, field: "home_village", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "closest_landmark":
+
+                var sql = "SELECT person_address_id, address1 FROM person_address WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({closest_landmark: data[0][0].address1, person_address_id: data[0][0].person_address_id, field: "closest_landmark", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "cell_phone_number":
+
+            case "cell_phone_number":
+
+            case "nationality":
+
+            case "home_phone_number":
+
+            case "office_phone_number":
+
+            case "occupation":
+
+                var attributeMapping = {
+                    cell_phone_number: "Cell Phone Number",
+                    nationality: "Citizenship",
+                    home_phone_number: "Home Phone Number",
+                    office_phone_number: "Office Phone Number",
+                    occupation: "Occupation"
+                };
+
+                var sql = "SELECT person_attribute_id, value FROM person_attribute WHERE person_id = (SELECT patient_id FROM " +
+                    "patient_identifier WHERE identifier = \"" + query.identifier + "\" LIMIT 1) AND " +
+                    "person_attribute_type_id = (SELECT person_attribute_type_id FROM " +
+                    "person_attribute_type WHERE name = \"" + attributeMapping[query.field] + "\" LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        var result = {};
+
+                        result[query.field] = data[0][0].value;
+
+                        result.person_attribute_id = data[0][0].person_attribute_id;
+
+                        result.field = query.field;
+
+                        result.field_id = "person_attribute_id";
+
+                        res.status(200).json(result);
+
+                    } else {
+
+                        var result = {};
+
+                        result[query.field] = "";
+
+                        result.person_attribute_id = "";
+
+                        result.field = query.field;
+
+                        result.field_id = "person_attribute_id";
+
+                        res.status(200).json(result);
+
+                    }
+
+                })
+
+                break;
+
+            default:
+
+                res.status(200).json({message: "Unsupported parameter received!"});
+
+                break;
+
+        }
+
+    } else {
+
+        res.status(200).json({message: "Unsupported parameter received!"});
+
+    }
 
 })
 
@@ -6186,18 +6518,18 @@ portfinder.getPort(function (err, port) {
 
         var address = "http://" + ip.address() + ":" + port;
 
-        for(var i = 0; i < files.length; i++) {
+        for (var i = 0; i < files.length; i++) {
 
             var filename = files[i];
 
-            if(!fs.existsSync(filename)) {
+            if (!fs.existsSync(filename)) {
 
                 fs.writeFileSync(filename, fs.readFileSync(filename + ".example"));
 
             }
 
-            if(settingFiles.indexOf(filename) >= 0) {
-                
+            if (settingFiles.indexOf(filename) >= 0) {
+
                 var settings = require(filename);
 
                 settings.basePath = address;

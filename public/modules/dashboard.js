@@ -1464,7 +1464,7 @@ var dashboard = ({
 
             if (typeof(patient) !== typeof(undefined)) {
 
-                patient.buildEditPage(dashboard.getCookie("patient_id"));
+                patient.buildEditPage(dashboard.data.data.patient_id);
 
             }
 
@@ -4129,7 +4129,7 @@ var dashboard = ({
 
                             window.location = window.location.href;
 
-                        }, 100);
+                        }, 120);
 
                         return;
 
@@ -4150,6 +4150,16 @@ var dashboard = ({
                     } else if (json.gender) {
 
                         dashboard.data.data.gender = json.gender;
+
+                    } else if (json.patient_id) {
+
+                        dashboard.data.data.patient_id = json.patient_id;
+
+                        if(patient) {
+
+                            patient.patientId = json.patient_id;
+
+                        }
 
                     } else if (json.birthdate) {
 
