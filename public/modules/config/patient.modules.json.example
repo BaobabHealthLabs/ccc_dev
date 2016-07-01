@@ -11,13 +11,19 @@
         "identifiers": ["National id", "DTM Number"],
         "tabs": {
             "Diabetes Initial Questions": {
-                "encounter": "DIABETES INITIAL QUESTIONS"
+                "encounter": "DIABETES INITIAL QUESTIONS",
+                "scope": "TODAY",
+                "program": "DIABETES PROGRAM"
             },
             "Outcome": {
-                "encounter": "UPDATE OUTCOME"
+                "encounter": "UPDATE OUTCOME",
+                "scope": "TODAY",
+                "program": "DIABETES PROGRAM"
             },
             "Vitals": {
-                "encounter": "VITALS"
+                "encounter": "VITALS",
+                "scope": "TODAY",
+                "program": "CROSS-CUTTING PROGRAM"
             }
         },
         "workflow": [

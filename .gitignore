@@ -2,4 +2,6 @@
 .nvmrc
 db/*.json
 config/*.json
+public/config/*.json
+public/modules/config/*.json
 node_modules/

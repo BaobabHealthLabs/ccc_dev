@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="/touchscreentoolkit/lib/stylesheets/touch-fancy.css" type="text/css">
+</head>
+<body oncontextmenu="return false;" style="margin: 0px;">
+<div id="divMain" style="background-color: rgb(255, 255, 255); overflow: auto; height: calc(100vh - 75px);">
+    <table width="100%" style="border-collapse: collapse;" border="1" cellspacing="0">
+        <tr>
+            <th rowspan="3">
+                Visit Date
+            </th>
+            <th rowspan="3">
+                Ht (cm)
+            </th>
+            <th rowspan="3">
+                Wt (kg)
+            </th>
+            <th colspan="3">
+                BMI
+            </th>
+            <th colspan="3">
+                BP
+            </th>
+        </tr>
+        <tr>
+            <th>
+                < 19
+            </th>
+            <th>
+                19-24.9
+            </th>
+            <th>
+                >25
+            </th>
+        </tr>
+        <tr>
+            <th colspan="3">
+                CIRCLE
+            </th>
+        </tr>
+        <tbody id="tbody"></tbody>
+    </table>
+</div>
+<div style="background-color: rgb(51, 51, 51); height: 80px; overflow: hidden; padding: 0px;">&nbsp;
+    <button class="green" style="float: right; margin: 10px 15px 15px; min-width: 140px;" id="nextButton"
+            onclick="window.parent.dashboard.exitNavPanel();">
+        Finish
+    </button>
+</div>
+</body>
+<script src="/javascripts/script.js"></script>
+</html>

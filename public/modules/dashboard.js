@@ -92,6 +92,8 @@ var dashboard = ({
 
     age: null,
 
+    socket: null,
+
     __$: function (id) {
         return document.getElementById(id);
     },
@@ -260,7 +262,7 @@ var dashboard = ({
 
     },
 
-    queryAnyExistingObs: function (program, concept) {
+    queryAnyExistingProgramObs: function (program, concept) {
 
         if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
             Object.keys(this.data.data.programs).length > 0) {
@@ -306,6 +308,80 @@ var dashboard = ({
                 }
 
             }
+
+        }
+
+        return result;
+
+    },
+
+    queryAnyExistingObs: function (concept) {
+
+        var result = false;
+
+        var programs = Object.keys(dashboard.data.data.programs);
+
+        for (var p = 0; p < programs.length; p++) {
+
+            var program = programs[p];
+
+            if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
+                Object.keys(this.data.data.programs).length > 0) {
+
+                var patientPrograms = this.data.data.programs[program].patient_programs;
+
+                var pKeys = Object.keys(patientPrograms);
+
+                for (var i = 0; i < pKeys.length; i++) {
+
+                    var key = pKeys[i];
+
+                    if (!patientPrograms[key].date_completed) {
+
+                        var vKeys = Object.keys(patientPrograms[key].visits);
+
+                        for (var j = 0; j < vKeys.length; j++) {
+
+                            var visit = vKeys[j];
+
+                            var eKeys = Object.keys(patientPrograms[key].visits[visit]);
+
+                            for (var k = 0; k < eKeys.length; k++) {
+
+                                var encounter = eKeys[k];
+
+                                var oKeys = Object.keys(patientPrograms[key].visits[visit][encounter]);
+
+                                for (var l = 0; l < oKeys.length; l++) {
+
+                                    if (patientPrograms[key].visits[visit][encounter][l][concept]) {
+
+                                        result = true;
+
+                                        break;
+
+                                    }
+
+                                }
+
+                            }
+
+                            if (result)
+                                break;
+
+                        }
+
+                    }
+
+                    if (result)
+                        break;
+
+                }
+
+            }
+
+            if (result)
+                break;
 
         }
 
@@ -364,7 +440,7 @@ var dashboard = ({
 
         var programs = Object.keys(dashboard.data.data.programs);
 
-        for(var p = 0; p < programs.length; p++) {
+        for (var p = 0; p < programs.length; p++) {
 
             var program = programs[p];
 
@@ -395,7 +471,7 @@ var dashboard = ({
 
                                 var oKeys = Object.keys(patientPrograms[key].visits[visit][encounter]);
 
-                                for(var l = 0; l < oKeys.length; l++) {
+                                for (var l = 0; l < oKeys.length; l++) {
 
                                     if (patientPrograms[key].visits[visit][encounter][l][concept]) {
 
@@ -417,7 +493,7 @@ var dashboard = ({
 
         }
 
-        if(callback) {
+        if (callback) {
 
             callback(result);
 
@@ -553,8 +629,6 @@ var dashboard = ({
             age = [num, num, num];
 
         }
-
-        dashboard.age = age[0];
 
         age[0] = (estimated != undefined && parseInt(estimated) == 1 ? "~" + age[0] : age[0]);
 
@@ -923,6 +997,7 @@ var dashboard = ({
         var tdDiv2_3_1 = document.createElement("td");
         tdDiv2_3_1.style.textAlign = "right";
         tdDiv2_3_1.style.fontWeight = "bold";
+        tdDiv2_3_1.style.verticalAlign = "top";
         tdDiv2_3_1.className = "blueText";
         tdDiv2_3_1.innerHTML = "Address";
 
@@ -931,6 +1006,7 @@ var dashboard = ({
         var tdDiv2_3_2 = document.createElement("td");
         tdDiv2_3_2.style.textAlign = "center";
         tdDiv2_3_2.style.width = "3px";
+        tdDiv2_3_2.style.verticalAlign = "top";
         tdDiv2_3_2.innerHTML = ":";
 
         trDiv2_3.appendChild(tdDiv2_3_2);
@@ -1386,7 +1462,7 @@ var dashboard = ({
             if (this.className.match(/gray/))
                 return;
 
-            if(typeof(patient) !== typeof(undefined)) {
+            if (typeof(patient) !== typeof(undefined)) {
 
                 patient.buildEditPage(dashboard.getCookie("patient_id"));
 
@@ -1428,6 +1504,8 @@ var dashboard = ({
         td3_2.appendChild(btnFinish);
 
         dashboard.loadPrograms(dashboard.modules, dashboard.__$("programs"));
+
+        dashboard.createWebSocket();
 
     },
 
@@ -2213,7 +2291,7 @@ var dashboard = ({
 
         if (dashboard.__$("bmi")) {
 
-            dashboard.__$("bmi").innerHTML = (dashboard.data["data"]["vitals"] ? dashboard.data["data"]["vitals"]["BMI"] : "&nbsp;");
+            // dashboard.__$("bmi").innerHTML = (dashboard.data["data"]["vitals"] ? dashboard.data["data"]["vitals"]["BMI"] : "&nbsp;");
 
         }
 
@@ -2374,6 +2452,8 @@ var dashboard = ({
             var age = (dashboard.data["data"]["birthdate"].trim().length > 0 ? Math.round((((new Date()) -
                 (new Date(dashboard.data["data"]["birthdate"]))) / (365 * 24 * 60 * 60 * 1000)), 0) : "");
 
+            dashboard.age = age;
+
             dashboard.__$("age").innerHTML = (dashboard.data["data"]["birthdate_estimated"] == 1 ? "~ " : "") + age;
 
         }
@@ -2410,7 +2490,7 @@ var dashboard = ({
 
         if (dashboard.__$("bmi")) {
 
-            dashboard.__$("bmi").innerHTML = (dashboard.data["data"]["vitals"] ? dashboard.data["data"]["vitals"]["BMI"] : "&nbsp;");
+            // dashboard.__$("bmi").innerHTML = (dashboard.data["data"]["vitals"] ? dashboard.data["data"]["vitals"]["BMI"] : "&nbsp;");
 
         }
 
@@ -2545,7 +2625,7 @@ var dashboard = ({
 
         if (dashboard.__$("weight")) {
 
-            dashboard.queryExistingObsArray("Weight (kg)", function(data) {
+            dashboard.queryExistingObsArray("Weight (kg)", function (data) {
 
                 dashboard.weightsArray = data;
 
@@ -2561,11 +2641,11 @@ var dashboard = ({
 
         if (dashboard.__$("bp")) {
 
-            dashboard.queryExistingObsArray("Systolic blood pressure", function(data) {
+            dashboard.queryExistingObsArray("Systolic blood pressure", function (data) {
 
                 var systolic = data;
 
-                dashboard.queryExistingObsArray("Diastolic blood pressure", function(data) {
+                dashboard.queryExistingObsArray("Diastolic blood pressure", function (data) {
 
                     var diastolic = data;
 
@@ -2573,7 +2653,7 @@ var dashboard = ({
 
                     var bp = (systolic[today] ? systolic[today] : "?") + "/" + (diastolic[today] ? diastolic[today] : "?");
 
-                    setTimeout(function() {
+                    setTimeout(function () {
 
                         dashboard.__$("bp").innerHTML = bp;
 
@@ -2587,7 +2667,7 @@ var dashboard = ({
 
         if (dashboard.__$("bmi")) {
 
-            dashboard.queryExistingObsArray("Height (cm)", function(data) {
+            dashboard.queryExistingObsArray("Height (cm)", function (data) {
 
                 var heightArray = data;
 
@@ -2595,9 +2675,7 @@ var dashboard = ({
 
                 var height = (keys.length > 0 ? heightArray[keys[keys.length - 1]] : 0);
 
-                console.log(height);
-
-                dashboard.queryExistingObsArray("Weight (kg)", function(data) {
+                dashboard.queryExistingObsArray("Weight (kg)", function (data) {
 
                     var weightArray = data;
 
@@ -2605,11 +2683,9 @@ var dashboard = ({
 
                     var weight = (keys.length > 0 ? weightArray[keys[keys.length - 1]] : 0);
 
-                    console.log(weight);
+                    var bmi = (weight > 0 && height > 0 ? (weight / ((height / 100) * (height / 100))).toFixed(1) : "?");
 
-                    var bmi = (weight > 0 && height > 0 ? (weight / (height * height)).toFixed(1) : "?");
-
-                    setTimeout(function() {
+                    setTimeout(function () {
 
                         dashboard.__$("bmi").innerHTML = bmi;
 
@@ -2623,21 +2699,21 @@ var dashboard = ({
 
         if (dashboard.__$("temperature")) {
 
-                dashboard.queryExistingObsArray("Temperature (c)", function(data) {
+            dashboard.queryExistingObsArray("Temperature (c)", function (data) {
 
-                    var temperature = data;
+                var temperature = data;
 
-                    var today = (new Date()).format("YYYY-mm-dd");
+                var today = (new Date()).format("YYYY-mm-dd");
 
-                    var reading = (temperature[today] ? temperature[today] : "?") + " <sup>o</sup>C";
+                var reading = (temperature[today] ? temperature[today] : "?") + " <sup>o</sup>C";
 
-                    setTimeout(function() {
+                setTimeout(function () {
 
-                        dashboard.__$("temperature").innerHTML = reading;
+                    dashboard.__$("temperature").innerHTML = reading;
 
-                    }, 100);
+                }, 100);
 
-                })
+            })
 
         }
 
@@ -2650,9 +2726,9 @@ var dashboard = ({
 
             var keys = [Object.keys(set[0]), Object.keys(set[1]), Object.keys(set[2])];
 
-            for(var i = 0; i < keys.length; i++) {
+            for (var i = 0; i < keys.length; i++) {
 
-                for(var j = 0; j < keys[i].length; j++) {
+                for (var j = 0; j < keys[i].length; j++) {
 
                     dashboard.allergies.push(set[i][keys[j]]);
 
@@ -2660,13 +2736,17 @@ var dashboard = ({
 
             }
 
-            if(dashboard.allergies[0] && dashboard.allergies[1] && dashboard.allergies[2]) {
+            if (dashboard.allergies.length > 0) {
 
                 var allergiesString = dashboard.allergies.join(";");
 
                 dashboard.__$("allergies").innerHTML = allergiesString.substring(0, (dashboard.allergies[0].length + 1)) +
                     " <i style='font-size: 12px; color: #3c60b1;'><a href='javascript:dashboard.showMsg(\"" + allergiesString +
                     "\",\"Allergies\")'>" + "..more..." + "</a></i>";
+
+            } else {
+
+                dashboard.__$("allergies").innerHTML = "";
 
             }
 
@@ -3526,7 +3606,10 @@ var dashboard = ({
                 "content='text/html;charset=UTF-8'/><script language='javascript'>tstUsername = '';" +
                 "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
                 "\"javascript:window.parent.document.exitNavPanel()\";tt_cancel_show = " +
-                "\"javascript:window.parent.document.exitNavPanel()\";</script></head><body>";
+                "\"javascript:window.parent.document.exitNavPanel()\";function submitData(){" +
+                "var data = form2js(document.getElementById('data'), undefined, true);" +
+                "if(window.parent) window.parent.dashboard.submitData(data);" +
+                "}</script></head><body>";
 
             html += "<div id='content'></div></body>";
 
@@ -3608,6 +3691,46 @@ var dashboard = ({
 
     },
 
+    navURLPanel: function (url) {
+
+        if (dashboard.$("dashboard.navPanel")) {
+
+            return;
+
+        } else {
+
+            var divPanel = document.createElement("div");
+            divPanel.style.position = "absolute";
+            divPanel.style.left = "0px";
+            divPanel.style.top = "130px";
+            divPanel.style.width = "100%";
+            divPanel.style.height = (window.innerHeight - 130) + "px";
+            divPanel.style.backgroundColor = "#fff";
+            divPanel.style.borderTop = "1px solid #000";
+            divPanel.id = "dashboard.navPanel";
+            divPanel.style.zIndex = 800;
+            divPanel.style.overflow = "hidden";
+
+            document.body.appendChild(divPanel);
+
+            var iframe = document.createElement("iframe");
+            iframe.id = "ifrMain";
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+            iframe.style.border = "1px solid #000";
+
+            iframe.setAttribute("src", url);
+
+            divPanel.appendChild(iframe);
+
+            iframe.onload = function () {
+
+            }
+
+        }
+
+    },
+
     submitData: function (data) {
 
         if (dashboard.__$("dashboard.navPanel")) {
@@ -3616,7 +3739,7 @@ var dashboard = ({
 
         }
 
-        if (socket && data) {
+        if (dashboard.socket && data) {
 
             var patient_id = dashboard.getCookie("patient_id");
 
@@ -3632,11 +3755,11 @@ var dashboard = ({
 
             if (data.data.datatype == "relationship") {
 
-                socket.emit('relationship', data);
+                dashboard.socket.emit('relationship', data);
 
             } else {
 
-                socket.emit('update', data);
+                dashboard.socket.emit('update', data);
 
             }
 
@@ -3646,7 +3769,7 @@ var dashboard = ({
 
     voidConcept: function (uuid) {
 
-        if (socket && uuid) {
+        if (dashboard.socket && uuid) {
             var patient_id = dashboard.getCookie("patient_id");
 
             var data = {
@@ -3656,7 +3779,7 @@ var dashboard = ({
                 token: dashboard.getCookie("token")
             }
 
-            socket.emit('void', data);
+            dashboard.socket.emit('void', data);
 
         }
 
@@ -3954,25 +4077,209 @@ var dashboard = ({
         this.events = [];
     },
 
-    Subscriber: function() {
+    Subscriber: function () {
         dashboard.Dispatcher(this);
+    },
+
+    createWebSocket: function () {
+
+        var script = document.createElement("script");
+        script.src = "/socket.io/socket.io.js";
+
+        document.head.appendChild(script);
+
+        setTimeout(function () {
+
+            var id = window.location.href.match(/\/([^\/]+)$/)[1];
+
+            dashboard.socket = io.connect('/');
+            dashboard.socket.on('stats', function (data) {
+                // console.log('Connected clients on ' + data.id + ':', data.numClients);
+            });
+
+            dashboard.socket.emit("init", {id: id});
+
+            dashboard.socket.on('reject', function (json) {
+
+                user.showMsg(json.message, "Oops!", "/");
+
+            });
+
+            dashboard.socket.on('newConnection', function (data) {
+
+                var nsp = io('/' + id);
+
+                nsp.on('hi ' + id, function (data) {
+                    // console.log(data);
+                });
+
+                nsp.on('kickout ' + id, function (data) {
+
+                    user.logout();
+
+                });
+
+                dashboard.socket.emit('demographics', {id: id});
+
+                nsp.on('demographics', function (data) {
+
+                    if (!dashboard.data) {
+
+                        setTimeout(function () {
+
+                            window.location = window.location.href;
+
+                        }, 100);
+
+                        return;
+
+                    }
+
+                    var json = JSON.parse(data);
+
+                    var done = false;
+
+                    if (json.names) {
+
+                        dashboard.data.data.names = json.names;
+
+                    } else if (json.addresses) {
+
+                        dashboard.data.data.addresses = json.addresses;
+
+                    } else if (json.gender) {
+
+                        dashboard.data.data.gender = json.gender;
+
+                    } else if (json.birthdate) {
+
+                        dashboard.data.data.birthdate = json.birthdate;
+
+                    } else if (json.birthdate_estimated) {
+
+                        dashboard.data.data.birthdate_estimated = json.birthdate_estimated;
+
+                    } else if (json.identifiers) {
+
+                        dashboard.data.data.identifiers = json.identifiers;
+
+                    } else if (json.programs) {
+
+                        var programs = json.programs;
+
+                        var keys = Object.keys(programs);
+
+                        if (keys.indexOf("CROSS-CUTTING PROGRAM") >= 0) {
+
+                            keys.splice(keys.indexOf("CROSS-CUTTING PROGRAM"), 1);
+
+                            var roots = Object.keys(programs["CROSS-CUTTING PROGRAM"].patient_programs);
+
+                            for (var i = 0; i < roots.length; i++) {
+
+                                var root = roots[i];
+
+                                var visits = Object.keys(programs["CROSS-CUTTING PROGRAM"].patient_programs[root].visits);
+
+                                for (var j = 0; j < visits.length; j++) {
+
+                                    var visit = visits[j];
+
+                                    for (var k = 0; k < keys.length; k++) {
+
+                                        var program = keys[k];
+
+                                        var eRoots = Object.keys(programs[program].patient_programs);
+
+                                        for (var l = 0; l < eRoots.length; l++) {
+
+                                            var eRoot = eRoots[l];
+
+                                            if (!programs[program].patient_programs[eRoot].visits[visit]) {
+
+                                                programs[program].patient_programs[eRoot].visits[visit] =
+                                                    programs["CROSS-CUTTING PROGRAM"].patient_programs[root].visits[visit];
+
+                                            } else {
+
+                                                var encounters = Object.keys(programs["CROSS-CUTTING PROGRAM"].patient_programs[root].visits[visit]);
+
+                                                for (var m = 0; m < encounters.length; m++) {
+
+                                                    var encounter = encounters[m];
+
+                                                    programs[program].patient_programs[eRoot].visits[visit][encounter] =
+                                                        programs["CROSS-CUTTING PROGRAM"].patient_programs[root].visits[visit][encounter];
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                        dashboard.data.data.programs = programs;
+
+                    } else if (json.relationships) {
+
+                        dashboard.data.data.relationships = json.relationships;
+
+                    } else if (json.done) {
+
+                        done = true;
+
+                    }
+
+                    var lastHIVTest = encodeURIComponent(dashboard.queryActiveObs("HTS PROGRAM",
+                        (new Date()).format("YYYY-mm-dd"), "HTS VISIT", "Last HIV test"));
+
+                    if (lastHIVTest) {
+
+                        dashboard.setCookie("LastHIVTest", lastHIVTest, 0.3333);
+
+                    }
+
+                    var ageGroup = encodeURIComponent(dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+                        "HTS CLIENT REGISTRATION", "Age Group"));
+
+                    if (ageGroup) {
+
+                        dashboard.setCookie("AgeGroup", ageGroup, 0.3333);
+
+                    }
+
+                    dashboard.refreshDemographics(done);
+
+                })
+
+            });
+
+        }, 100);
+
     },
 
     init: function (dataPath, modulesPath, settingsPath) {
 
-        this.Dispatcher.prototype.addEventlistener=function(event,callback){
+        this.Dispatcher.prototype.addEventlistener = function (event, callback) {
             this.events[event] = this.events[event] || [];
-            if ( this.events[event] ) {
+            if (this.events[event]) {
                 this.events[event].push(callback);
             }
         }
 
-        this.Dispatcher.prototype.removeEventlistener=function(event,callback){
-            if ( this.events[event] ) {
+        this.Dispatcher.prototype.removeEventlistener = function (event, callback) {
+            if (this.events[event]) {
                 var listeners = this.events[event];
-                for ( var i = listeners.length-1; i>=0; --i ){
-                    if ( listeners[i] === callback ) {
-                        listeners.splice( i, 1 );
+                for (var i = listeners.length - 1; i >= 0; --i) {
+                    if (listeners[i] === callback) {
+                        listeners.splice(i, 1);
                         return true;
                     }
                 }
@@ -3980,10 +4287,10 @@ var dashboard = ({
             return false;
         }
 
-        this.Dispatcher.prototype.dispatch=function(event){
-            if ( this.events[event] ) {
+        this.Dispatcher.prototype.dispatch = function (event) {
+            if (this.events[event]) {
                 var listeners = this.events[event], len = listeners.length;
-                while ( len-- ) {
+                while (len--) {
                     listeners[len](this);	//callback with self
                 }
             }
@@ -3991,7 +4298,7 @@ var dashboard = ({
 
         this.Subscriber.prototype = new this.Dispatcher();
 
-        this.Subscriber.prototype.sendUpdateEvent = function() {
+        this.Subscriber.prototype.sendUpdateEvent = function () {
 
             this.dispatch("done");
 

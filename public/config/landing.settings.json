@@ -1,9 +1,0 @@
-{
-    "basePath": "http://localhost:3015",
-    "modulesPath": "/config/landing.modules.json",
-    "barcodePath": "/patient/",
-    "savePath": "/save_other",
-    "dummyPatientCreatePath": "/save_dummy_patient",
-    "facilityPath": "/facility",
-    "useStartSessionButton": false
-}

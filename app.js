@@ -12,6 +12,9 @@ var Mutex = require("Mutex");
 var md5 = require("md5");
 var randomstring = require("randomstring");
 
+var ip = require("ip");
+var fs = require("fs");
+
 var mutex = new Mutex("htc_lock");
 
 var url = require("url");
@@ -6164,6 +6167,51 @@ portfinder.basePort = 3015;
 portfinder.getPort(function (err, port) {
 
     server.listen(port, function () {
+
+        var settingFiles = [
+                __dirname + "/public/modules/config/dashboard.settings.json",
+                __dirname + "/public/modules/config/landing.settings.json",
+                __dirname + "/public/modules/config/patient.settings.json",
+                __dirname + "/public/modules/config/stock.settings.json",
+                __dirname + "/public/modules/config/user.settings.json"
+        ];
+
+        var files = [
+                __dirname + "/public/modules/config/dashboard.settings.json",
+                __dirname + "/public/modules/config/landing.settings.json",
+                __dirname + "/public/modules/config/patient.settings.json",
+                __dirname + "/public/modules/config/stock.settings.json",
+                __dirname + "/public/modules/config/user.settings.json",
+                __dirname + "/public/modules/config/landing.modules.json",
+                __dirname + "/public/modules/config/patient.modules.json"
+        ]
+
+        var address = "http://" + ip.address() + ":" + port;
+
+        for(var i = 0; i < files.length; i++) {
+
+            var filename = files[i];
+
+            if(!fs.existsSync(filename)) {
+
+                fs.writeFileSync(filename, fs.readFileSync(filename + ".example"));
+
+            }
+
+            if(settingFiles.indexOf(filename) >= 0) {
+                
+                var settings = require(filename);
+
+                settings.basePath = address;
+
+                var data = JSON.stringify(settings);
+
+                fs.writeFileSync(filename, data);
+
+            }
+
+        }
+
         console.log("✔ Server running on port %d in %s mode", port, app.get("env"));
     });
 

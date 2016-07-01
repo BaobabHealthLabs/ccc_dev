@@ -10,6 +10,6 @@ C.1.4. Blood Pressure Graph [pos:: 3$$ optional:: true$$ tt_pageStyleClass:: NoC
 
 Q.1.5. Weight (kg) [pos:: 4$$ field_type:: number$$ absoluteMin:: 0$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter a decimal between 0 and 9 (for example: 54<b>.6</b>)$$ tt_pageStyleClass:: Numeric NumbersOnlyWithDecimal]
 
-Q.1.6. Height (cm) [pos:: 5$$ field_type:: number$$ absoluteMin:: 10$$ absoluteMax:: 228$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter numbers only (for example 157)$$ tt_pageStyleClass:: Numeric NumbersOnly ]
+Q.1.6. Height (cm) [pos:: 5$$ field_type:: number$$ absoluteMin:: 10$$ absoluteMax:: 228$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter numbers only (for example 157)$$ tt_pageStyleClass:: Numeric NumbersOnly$$ condition:: !window.parent.dashboard.queryAnyExistingObs("Height (cm)") || (window.parent.dashboard.queryAnyExistingObs("Height (cm)") && window.parent.dashboard.age <= 14)]
 
 C.1.7. Summary [pos:: 6$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
