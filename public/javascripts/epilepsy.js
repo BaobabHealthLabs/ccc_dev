@@ -34,6 +34,79 @@ function ajaxRequest(url, callback) {
     }
 
 }
+if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+
+    Object.defineProperty(Date.prototype, "format", {
+        value: function (format) {
+            var date = this;
+
+            var result = "";
+
+            if (!format) {
+
+                format = ""
+
+            }
+
+            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"];
+
+            if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+
+                result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
+                    window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
+
+            } else if (format.match(/YYYY\-mm\-dd/)) {
+
+                result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    window.parent.dashboard.padZeros(date.getDate(), 2);
+
+            } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+            } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+            } else {
+
+                result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            }
+
+            return result;
+        }
+    });
+
+}
+
+function verticalText(text, parent) {
+
+    if (!parent)
+        return;
+
+    var div = document.createElement("div");
+    div.style.height = "120px";
+    div.style.fontSize = "12px";
+    div.style.width = "30px";
+
+    parent.appendChild(div);
+
+    var child = document.createElement("div");
+    child.style.transform = "rotate(-90deg)";
+    child.style.transformOrigin = "right bottom 0";
+    child.style.marginLeft = "-65px";
+
+    child.innerHTML = text;
+
+    div.appendChild(child);
+
+}
+
 function loadCheckConditions(){
 
 	var opts = __$("touchscreenInput" + tstCurrentPage).value.split(";");
@@ -406,3 +479,10 @@ function loadCardData(){
 	});
 }
 
+function loadCardDashboard(){
+
+	var patient_programs = window.parent.dashboard.data.data.programs["EPILEPSY PROGRAM"].patient_programs;
+
+	var patient_program_keys = Object.keys(patient_programs);
+
+}

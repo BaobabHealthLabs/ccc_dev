@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html
 <head lang="en">
     <meta charset="UTF-8">
     <title>Epilepsy Card</title>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
-
+    <link rel="stylesheet" href="/touchscreentoolkit/lib/stylesheets/touch-fancy.css" type="text/css">
     <script type="text/javascript" src="/javascripts/epilepsy.js"></script>
 </head>
 
@@ -65,8 +64,8 @@
     }
     
 </style>
-<body style="text-align: center; margin: 20px;" oncontextmenu="return false;">
-
+<body oncontextmenu="return false;" style="margin: 0px;">
+<div id="divMain" style="background-color: rgb(255, 255, 255); overflow: auto; height: calc(100vh - 75px); padding-left:1%; padding-right:1%">
 <table width="100%" id="head_table">
     <tr >
         <td>NCD Patient Card<br/><span style="font-size:0.8em;background:lightgreen">Green Card</span></td>
@@ -118,13 +117,13 @@
         <td rowspan="2">Physical Address</td>
         <td colspan="3"></td>
         <td ><span class="circle" id="myclonic_yes">Y</span></td>
-        <td ><span class="circle" id="myclonic_no">N</td>
+        <td ><span class="circle" id="myclonic_no">N</span></td>
         <td>Myclonic</td>
-        <td><span class="circle" id="atonic_yes">Y</td>
-        <td><span class="circle" id="atonic_no">N</td>
+        <td><span class="circle" id="atonic_yes">Y</span></td>
+        <td><span class="circle" id="atonic_no">N</span></td>
         <td>Atonic</td>
-        <td><span class="circle" id="unclassified_yes">Y</td>
-        <td><span class="circle" id="unclassified_no">N</td>
+        <td><span class="circle" id="unclassified_yes">Y</span></td>
+        <td><span class="circle" id="unclassified_no">N</span></td>
         <td>Unclassified</td>
     </tr>
     <tr >
@@ -308,7 +307,7 @@
         <td><span class="circle" id="missed_medication_no">N</span></td>
         <td><span class="circle" id="missed_medication_unk">Unk</span></td>
         <td colspan="5">Missed medication</td>
-        <td><span class="square" id="drug_related_complications"></td>
+        <td><span class="square" id="drug_related_complications"></span></td>
         <td>Drug Related</td>
         <td>Date: <span id="drug_related_date"></span></td>
     </tr>
@@ -323,7 +322,7 @@
         <td><span class="circle" id="menstruation_no">N</span></td>
         <td><span class="circle" id="menstruation_unk">Unk</span></td>
         <td colspan="5">Menstruation(For women of reproductive age)</td>
-        <td><span class="square" id="other_complications"></td>
+        <td><span class="square" id="other_complications"></span></td>
         <td>Other</td>
         <td>Date: <span id="other_complications_date"></span></td>
     </tr>
@@ -391,8 +390,17 @@
         <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
     </tr>
 </table>
-</body>
+</div>
 <script type="text/javascript">
-        loadCardData();
+    console.log( window.parent.dashboard.data.data)
+        //loadCardData();
 </script>
+<div style="background-color: rgb(51, 51, 51); height: 80px; overflow: hidden; padding: 0px;">&nbsp;
+    <button class="green" style="float: right; margin: 10px 15px 15px; min-width: 140px;" id="nextButton"
+            onclick="window.parent.dashboard.exitNavPanel();">
+        Finish
+    </button>
+</div>
+</body>
+
 </html>
