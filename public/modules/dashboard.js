@@ -3691,6 +3691,46 @@ var dashboard = ({
 
     },
 
+    navURLPanel: function (url) {
+
+        if (dashboard.$("dashboard.navPanel")) {
+
+            return;
+
+        } else {
+
+            var divPanel = document.createElement("div");
+            divPanel.style.position = "absolute";
+            divPanel.style.left = "0px";
+            divPanel.style.top = "130px";
+            divPanel.style.width = "100%";
+            divPanel.style.height = (window.innerHeight - 130) + "px";
+            divPanel.style.backgroundColor = "#fff";
+            divPanel.style.borderTop = "1px solid #000";
+            divPanel.id = "dashboard.navPanel";
+            divPanel.style.zIndex = 800;
+            divPanel.style.overflow = "hidden";
+
+            document.body.appendChild(divPanel);
+
+            var iframe = document.createElement("iframe");
+            iframe.id = "ifrMain";
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+            iframe.style.border = "1px solid #000";
+
+            iframe.setAttribute("src", url);
+
+            divPanel.appendChild(iframe);
+
+            iframe.onload = function () {
+
+            }
+
+        }
+
+    },
+
     submitData: function (data) {
 
         if (dashboard.__$("dashboard.navPanel")) {
