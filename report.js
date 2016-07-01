@@ -75,6 +75,24 @@ function queryRaw(sql, callback) {
 
 }
 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function getID(identifier){
+
+    var sql = " SELECT patient_id FROM patient_identifier WHERE identifier='"+identifier+"'";
+
+    var patient_id;
+
+    queryRaw(sql, function (data) {
+
+       patient_id = adata[0];
+
+    });
+}
+
 app.get("/patient/:id/card",function(req,res){
     var pid = 24;
     var sql =" SELECT encounter.encounter_id,encounter.patient_id,encounter.encounter_datetime,"+
@@ -105,6 +123,7 @@ app.get("/patient/:id/card",function(req,res){
 app.get("/card_p_demographics/:id",function(req,res){
 
     var pid = req.params['id'];
+    
     var sql =" SELECT person.person_id, CONCAT(given_name,\" \",middle_name,\" \", family_name)as name, "+
              " STR_TO_DATE(person.birthdate,'%d %b ,%Y') as dob,gender,state_province as current_district, township_division as current_ta, "+
              " city_village as current_village,address1 as closest_land_mark, address2 as home_district "+
@@ -331,6 +350,12 @@ app.get("/card_epilepsy_visits/:id", function(req, res){
         res.send(data[0]);
 
     });
+
+});
+
+app.get("/card/:id/:program",function(req,res){
+    
+    res.sendFile(__dirname + "/public/views/"+req.params["program"]+"/card.html");
 
 });
 portfinder.basePort = 3016;

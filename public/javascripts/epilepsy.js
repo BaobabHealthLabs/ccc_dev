@@ -93,7 +93,9 @@ function loadCheckConditions(){
 }
 
 function loadCardData(){
-	ajaxRequest("/card_p_demographics/24",function(json){
+	var id = window.location.href.match(/\/([^\/]+)$/)[1];
+
+	ajaxRequest("/card_p_demographics/"+id,function(json){
 		if (__$("patient_name")) {
 
             __$("patient_name").innerHTML = json.name;
@@ -115,7 +117,7 @@ function loadCardData(){
         	}
         }
 	});
-	ajaxRequest("/card_seizure_type/24",function(json){
+	ajaxRequest("/card_seizure_type/"+id,function(json){
 
 		var response_id_hash ={}
 
@@ -148,7 +150,7 @@ function loadCardData(){
 		}
 	});
 
-	ajaxRequest("/card_epilepsy_family_history/24",function(json){
+	ajaxRequest("/card_epilepsy_family_history/"+id,function(json){
 
 		for(var i = 0; i < json.length ; i++){
 
@@ -170,7 +172,7 @@ function loadCardData(){
 
 	});
 
-	ajaxRequest("/card_epilepsy_hiv_status/24",function(json){
+	ajaxRequest("/card_epilepsy_hiv_status/"+id,function(json){
 		var status = json.value_text.toLowerCase();
 
 		if(status=="r"){
@@ -197,7 +199,7 @@ function loadCardData(){
 
 	});
 
-	ajaxRequest("/card_epilepsy_patient_history/24",function(json){
+	ajaxRequest("/card_epilepsy_patient_history/"+id,function(json){
 
 		for (var i = json.length - 1; i >= 0; i--) {
 	
@@ -211,7 +213,7 @@ function loadCardData(){
 
 	});
 
-	ajaxRequest("/card_epilepsy_medical_surgical_history/24",function(json){
+	ajaxRequest("/card_epilepsy_medical_surgical_history/"+id,function(json){
 
 		for(var i = 0; i < json.length ; i++){
 
@@ -239,7 +241,7 @@ function loadCardData(){
 
 	});
 
-	ajaxRequest("/card_epilepsy_triggers/24",function(json){
+	ajaxRequest("/card_epilepsy_triggers/"+id,function(json){
 
 		for(var i = 0; i < json.length ; i++){
 
@@ -269,7 +271,7 @@ function loadCardData(){
 
 	});
 
-	ajaxRequest("/card_epilepsy_post_ictal_features/24",function(json){
+	ajaxRequest("/card_epilepsy_post_ictal_features/"+id,function(json){
 
 		for(var i = 0; i < json.length ; i++){
 
@@ -302,7 +304,7 @@ function loadCardData(){
 
 	
 
-	ajaxRequest("/card_epilepsy_patient_overvew/24/Exposures",function(json){
+	ajaxRequest("/card_epilepsy_patient_overvew/"+id+"/Exposures",function(json){
 
 			
 			var concept = json.name;
@@ -337,7 +339,7 @@ function loadCardData(){
 
 	});
 
-	ajaxRequest("/card_epilepsy_patient_overvew/24/Complications",function(json){
+	ajaxRequest("/card_epilepsy_patient_overvew/"+id+"/Complications",function(json){
 
 			
 			var concept = json.name;
@@ -372,7 +374,7 @@ function loadCardData(){
 
 	});
 
-	ajaxRequest("/card_epilepsy_patient_overvew/24",function(json){
+	ajaxRequest("/card_epilepsy_patient_overvew/"+id,function(json){
 
 		for (var i = json.length - 1; i >= 0; i--) {
 
@@ -393,9 +395,13 @@ function loadCardData(){
 
 	});
 
-	ajaxRequest("/card_epilepsy_visits/24",function(json){
+	var visits = ["Visit Date","Weight (Kg)","BMI","Seizure since last visit",""]
 
-		console.log(__$("visits").getElementTagName("thead"));
+	ajaxRequest("/card_epilepsy_visits/"+id,function(json){
+
+		var tbody = __$("visits").getElementsByTagName("tbody");
+
+
 
 	});
 }
