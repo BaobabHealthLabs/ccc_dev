@@ -3,5 +3,5 @@
 db/*.json
 config/*.json
 public/config/*.json
-public/modules/*.json
+public/modules/config/*.json
 node_modules/

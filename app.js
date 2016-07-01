@@ -6167,21 +6167,21 @@ portfinder.getPort(function (err, port) {
     server.listen(port, function () {
 
         var settingFiles = [
-                __dirname + "/public/modules/dashboard.settings.json",
-                __dirname + "/public/modules/landing.settings.json",
-                __dirname + "/public/modules/patient.settings.json",
-                __dirname + "/public/modules/stock.settings.json",
-                __dirname + "/public/modules/user.settings.json"
+                __dirname + "/public/modules/config/dashboard.settings.json",
+                __dirname + "/public/modules/config/landing.settings.json",
+                __dirname + "/public/modules/config/patient.settings.json",
+                __dirname + "/public/modules/config/stock.settings.json",
+                __dirname + "/public/modules/config/user.settings.json"
         ];
 
         var files = [
-                __dirname + "/public/modules/dashboard.settings.json",
-                __dirname + "/public/modules/landing.settings.json",
-                __dirname + "/public/modules/patient.settings.json",
-                __dirname + "/public/modules/stock.settings.json",
-                __dirname + "/public/modules/user.settings.json",
-                __dirname + "/public/modules/landing.modules.json",
-                __dirname + "/public/modules/patient.modules.json"
+                __dirname + "/public/modules/config/dashboard.settings.json",
+                __dirname + "/public/modules/config/landing.settings.json",
+                __dirname + "/public/modules/config/patient.settings.json",
+                __dirname + "/public/modules/config/stock.settings.json",
+                __dirname + "/public/modules/config/user.settings.json",
+                __dirname + "/public/modules/config/landing.modules.json",
+                __dirname + "/public/modules/config/patient.modules.json"
         ]
 
         var address = "http://" + ip.address() + ":" + port;

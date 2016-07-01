@@ -4155,8 +4155,6 @@ var dashboard = ({
 
                                             var eRoot = eRoots[l];
 
-                                            console.log(eRoot);
-
                                             if (!programs[program].patient_programs[eRoot].visits[visit]) {
 
                                                 programs[program].patient_programs[eRoot].visits[visit] =
