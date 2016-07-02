@@ -4111,6 +4111,18 @@ var dashboard = ({
 
             });
 
+            dashboard.socket.on('disconnect', function() {
+                // user.showMsg("Connection lost! Will reload when reconnected!");
+            });
+
+            dashboard.socket.on('reconnect', function(){
+                setTimeout(function(){
+
+                    window.location = window.location.href;
+
+                }, 5000);
+            });
+
             dashboard.socket.on('newConnection', function (data) {
 
                 var nsp = io('/' + id);
