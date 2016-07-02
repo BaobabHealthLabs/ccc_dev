@@ -1,6 +1,6 @@
 P.1. DIABETES TEST [program:: DIABETES PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 
-Q.1.1. Diabetes Test Type [pos:: 0$$ concept:: Creatinine$$ condition:: false]
+Q.1.1. Diabetes Test Type [pos:: 0$$ value:: Creatinine$$ condition:: false]
 
 Q.1.2. Unit for Creatinine Value [pos:: 1$$ tt_requireNextClick:: false]
 O.1.2.1. mg/dl

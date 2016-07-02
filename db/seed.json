@@ -45,6 +45,16 @@
         "CROSS-CUTTING PROGRAM"
     ],
     "concepts": [
+        "Left Eye Visual Acuity",
+        "Right Eye Visual Acuity",
+        "Visual Acuity Result Test Date",
+        "Macrovascular Result Test Date",
+        "Macrovascular Result",
+        "Urine Protein Result Test Date",
+        "Urine Protein Result",
+        "Urea Result",
+        "Urea Result Test Date",
+        "Diabetes Test Type",
         "Creatinine Test Date",
         "Creatinine Result",
         "Unit for Creatinine Value",
