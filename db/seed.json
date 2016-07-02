@@ -24,7 +24,8 @@
         ["VITALS", "Patient vitals encounter"],
         ["COMPLICATIONS", "Patient complications encounter"],
         ["TREATMENTS", "Patient treatments encounter"],
-        ["HIV/ART STATUS", "Patient HIV/ART status encounter"]
+        ["HIV/ART STATUS", "Patient HIV/ART status encounter"],
+        ["DIABETES TEST", "Diabetes tests encounter"]
     ],
     "patient_identifier_types": [
         ["DTM Number", "Diabetes clinic number"],
@@ -44,6 +45,10 @@
         "CROSS-CUTTING PROGRAM"
     ],
     "concepts": [
+        "Creatinine Test Date",
+        "Creatinine Result",
+        "Unit for Creatinine Value",
+        "Creatinine",
         "Cholesterol Not Fasting Units",
         "Cholesterol Not Fasting Value",
         "Cholesterol Fasting Units",

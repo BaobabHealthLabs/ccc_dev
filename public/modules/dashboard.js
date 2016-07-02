@@ -3561,11 +3561,17 @@ var dashboard = ({
 
     },
 
-    exitNavPanel: function () {
+    exitNavPanel: function (nextPath) {
 
         dashboard.autoContinue = false;
 
         document.body.removeChild(dashboard.$('dashboard.navPanel'));
+
+        if(nextPath) {
+
+            dashboard.navPanel(nextPath);
+
+        }
 
     },
 

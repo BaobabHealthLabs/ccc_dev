@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Complications</title>
+    <link rel="stylesheet" href="/touchscreentoolkit/lib/stylesheets/touch-fancy.css" type="text/css">
+    <style>
+        td {
+            border-color: #eee;
+        }
+
+        .link {
+            text-decoration: underline;
+            color: #333;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .link:hover {
+            color: #fb9d23;
+            text-decoration: overline;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" style="margin: 0px;">
+<div id="divMain" style="background-color: rgb(255, 255, 255); overflow: auto; height: calc(100vh - 75px);">
+    <table width="100%" border="1" style="border-collapse: collapse; border-color: #eee;" cellpadding="10">
+        <tr>
+            <td colspan="2" align="center" style="font-size: 24px; background-color: #6281a7; color: #eee;">
+                Diabetes Clinic
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 150px;" align="right">
+                &nbsp;
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 150px;" align="right" class="link"
+                onclick="window.parent.dashboard.exitNavPanel('/spec/dm/creatinine.spec');">
+                Creatinine
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 150px;" align="right" class="link">
+                Urine Protein
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 150px;" align="right" class="link">
+                Visual Acuity
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 150px;" align="right" class="link">
+                Fundoscopy
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 150px;" align="right" class="link">
+                Foot Check
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 150px;" align="right" class="link">
+                Urea
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 150px;" align="right" class="link">
+                Macrovascular
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 150px;" align="right">
+                &nbsp;
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="background-color: rgb(51, 51, 51); height: 80px; overflow: hidden; padding: 0px;">
+    <button class="green" style="float: right; margin: 10px 15px 15px; min-width: 140px;" id="nextButton"
+            onclick="window.parent.dashboard.activeTask = null; window.parent.dashboard.exitNavPanel();">
+        Finish
+    </button>
+    <button class="blue" style="float: right; margin: 10px 0px 15px; min-width: 140px;" id="printButton"
+            onclick="">
+        Print Complications Label
+    </button>
+</div>
+<script src="/javascripts/complications.js"></script>
+</body>
+</html>

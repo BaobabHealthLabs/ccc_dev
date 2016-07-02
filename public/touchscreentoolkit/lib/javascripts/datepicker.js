@@ -1594,6 +1594,8 @@ var datePicker = ({
 
     targetValue: "",
 
+    tmrInterval: null,
+
     init: function (target, seedDate, estimate, maxDate, minDate) {
 
         this.target = target;
@@ -1616,7 +1618,7 @@ var datePicker = ({
 
             datePicker.$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
 
-            setInterval(function () {
+            datePicker.tmrInterval = setInterval(function () {
 
                 if (datePicker.$("text1-0") && datePicker.$("text1-1") && datePicker.$("text1-2") && datePicker.$("text1-3") &&
                     datePicker.$("text1-5") && datePicker.$("text1-7") && datePicker.$("text1-8")) {
@@ -1633,6 +1635,16 @@ var datePicker = ({
                         }
 
                     }
+
+                } else {
+
+                    clearInterval(datePicker.tmrInterval);
+
+                    var currentClass = datePicker.$("nextButton").className;
+
+                    datePicker.$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                    return;
 
                 }
 
