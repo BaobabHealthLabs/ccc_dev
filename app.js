@@ -549,53 +549,37 @@ function saveRelationship(params, callback) {
 
             function (iCallback) {
 
-                var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
-                    "\"" + person_id + "\", \"" + relationship_type_id + "\", \"" + relation_id + "\", " +
-                    "(SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
+                if (relation_id != person_id) {
 
-                console.log(sql);
+                    var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
+                        "\"" + person_id + "\", \"" + relationship_type_id + "\", \"" + relation_id + "\", " +
+                        "(SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
-                queryRaw(sql, function (relationship) {
+                    console.log(sql);
 
-                    console.log(relationship[0].insertId);
+                    queryRaw(sql, function (relationship) {
 
-                    if (reverse_relationship_type_id) {
+                        console.log(relationship[0].insertId);
 
-                        var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
-                            "\"" + relation_id + "\", \"" + reverse_relationship_type_id + "\", \"" + person_id + "\", " +
-                            "(SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
+                        if (reverse_relationship_type_id) {
 
-                        console.log(sql);
+                            var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
+                                "\"" + relation_id + "\", \"" + reverse_relationship_type_id + "\", \"" + person_id + "\", " +
+                                "(SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
-                        queryRaw(sql, function (relationship) {
+                            console.log(sql);
+
+                            queryRaw(sql, function (relationship) {
+
+                                iCallback();
+
+                            });
+
+                        } else {
 
                             iCallback();
 
-                        });
-
-                    } else {
-
-                        iCallback();
-
-                    }
-
-                });
-
-            },
-
-            function (iCallback) {
-
-                if (data["Phone Number"]) {
-
-                    var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
-                        "creator, date_created, uuid) VALUES (\"" + relation_id + "\", \"" + data["Phone Number"] +
-                        "\", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
-                        "\"Cell Phone Number\" LIMIT 1), \"" + user_id + "\", NOW(), \"" +
-                        uuid.v1() + "\")";
-
-                    queryRaw(sql, function (res) {
-
-                        iCallback();
+                        }
 
                     });
 
@@ -609,16 +593,56 @@ function saveRelationship(params, callback) {
 
             function (iCallback) {
 
-                generateId(relation_id, username, (data.location != undefined ? data.location : "Unknown"),
-                    "GDN", undefined, function (response) {
+                if (relation_id != person_id) {
 
-                        var npid = response;
+                    if (data["Phone Number"]) {
 
-                        console.log(npid);
+                        var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
+                            "creator, date_created, uuid) VALUES (\"" + relation_id + "\", \"" + data["Phone Number"] +
+                            "\", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
+                            "\"Cell Phone Number\" LIMIT 1), \"" + user_id + "\", NOW(), \"" +
+                            uuid.v1() + "\")";
+
+                        queryRaw(sql, function (res) {
+
+                            iCallback();
+
+                        });
+
+                    } else {
 
                         iCallback();
 
-                    });
+                    }
+
+                } else {
+
+                    iCallback();
+
+                }
+
+            },
+
+            function (iCallback) {
+
+                if (relation_id != person_id) {
+
+                    generateId(relation_id, username, (data.location != undefined ? data.location : "Unknown"),
+                        "GDN", undefined, function (response) {
+
+                            var npid = response;
+
+                            console.log(npid);
+
+                            iCallback();
+
+                        });
+
+                } else {
+
+                    iCallback();
+
+                }
 
             }
 
@@ -6491,7 +6515,6 @@ app.get("/patient/:id", function (req, res) {
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/public/views/index.html");
 });
-
 
 
 portfinder.basePort = 3015;
