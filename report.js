@@ -75,6 +75,24 @@ function queryRaw(sql, callback) {
 
 }
 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function getID(identifier){
+
+    var sql = " SELECT patient_id FROM patient_identifier WHERE identifier='"+identifier+"'";
+
+    var patient_id;
+
+    queryRaw(sql, function (data) {
+
+       patient_id = adata[0];
+
+    });
+}
+
 app.get("/patient/:id/card",function(req,res){
     var pid = 24;
     var sql =" SELECT encounter.encounter_id,encounter.patient_id,encounter.encounter_datetime,"+
@@ -105,6 +123,7 @@ app.get("/patient/:id/card",function(req,res){
 app.get("/card_p_demographics/:id",function(req,res){
 
     var pid = req.params['id'];
+    
     var sql =" SELECT person.person_id, CONCAT(given_name,\" \",middle_name,\" \", family_name)as name, "+
              " STR_TO_DATE(person.birthdate,'%d %b ,%Y') as dob,gender,state_province as current_district, township_division as current_ta, "+
              " city_village as current_village,address1 as closest_land_mark, address2 as home_district "+
@@ -263,13 +282,41 @@ app.get("/card_epilepsy_post_ictal_features/:id",function(req,res){
 
 });
 
+app.get("/card_epilepsy_patient_overvew/:id/:concept",function(req,res){
+
+    var pid = req.params["id"];
+
+    var concept = req.params["concept"];
+
+    var sql = " SELECT distinct concept.name , obs.person_id, obs.value_text,obs.encounter_id FROM obs "+
+              " INNER JOIN  (SELECT name , concept.concept_id FROM concept_name "+
+              " INNER JOIN concept ON concept_name.concept_id = concept.concept_id WHERE "+
+              " name ='"+concept+"') as concept "+
+              " ON concept.concept_id = obs.concept_id INNER JOIN "+
+              " (SELECT encounter_id,encounter_datetime FROM encounter_type "+
+              " INNER JOIN encounter  ON encounter_type.encounter_type_id = encounter.encounter_type "+
+              " WHERE name = 'EPILEPSY PATIENT OVERVIEW') encounter ON encounter.encounter_id = obs.encounter_id "+
+              " WHERE  person_id =24 AND obs.encounter_id =(SELECT MAX(encounter_id) FROM encounter) "+
+              " ORDER BY encounter.encounter_id DESC";
+
+    queryRaw(sql, function (data) {
+
+        res.send(data[0][0]);
+
+    });
+
+});
+
 app.get("/card_epilepsy_patient_overvew/:id",function(req,res){
 
     var pid = req.params["id"];
 
+    var concept = req.params["concept"];
+
     var sql = " SELECT distinct concept.name , obs.person_id, obs.value_text,obs.encounter_id FROM obs "+
               " INNER JOIN  (SELECT name , concept.concept_id FROM concept_name "+
-              " INNER JOIN concept ON concept_name.concept_id = concept.concept_id) as concept "+
+              " INNER JOIN concept ON concept_name.concept_id = concept.concept_id WHERE "+
+              " name !='Complications' AND name != 'Exposures') as concept "+
               " ON concept.concept_id = obs.concept_id INNER JOIN "+
               " (SELECT encounter_id,encounter_datetime FROM encounter_type "+
               " INNER JOIN encounter  ON encounter_type.encounter_type_id = encounter.encounter_type "+
@@ -285,6 +332,32 @@ app.get("/card_epilepsy_patient_overvew/:id",function(req,res){
 
 });
 
+app.get("/card_epilepsy_visits/:id", function(req, res){
+
+    var pid = req.params["id"];
+
+    var sql =" SELECT concept.name , obs.person_id, obs.value_text FROM obs INNER JOIN  "+
+             " (SELECT name , concept.concept_id FROM concept_name INNER JOIN concept "+
+             " ON concept_name.concept_id = concept.concept_id) as concept "+
+             " ON concept.concept_id = obs.concept_id INNER JOIN "+
+             " (SELECT encounter_id FROM encounter_type INNER JOIN encounter  "+
+             " ON encounter_type.encounter_type_id = encounter.encounter_type "+
+             " WHERE name = 'EPILEPSY VISIT') encounter  ON encounter.encounter_id = obs.encounter_id "+
+             " WHERE  person_id ="+pid+" ORDER BY encounter.encounter_id DESC";
+
+    queryRaw(sql, function (data) {
+
+        res.send(data[0]);
+
+    });
+
+});
+
+app.get("/card/:id/:program",function(req,res){
+    
+    res.sendFile(__dirname + "/public/views/"+req.params["program"]+"/card.html");
+
+});
 portfinder.basePort = 3016;
 
 portfinder.getPort(function (err, port) {

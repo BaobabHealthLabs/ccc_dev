@@ -1,4 +1,4 @@
-P.1. POST-ICTAL FEATURES [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
+P.1. POST-ICTAL FEATURES [program:: EPILEPSY PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;epilepsy]
 Q.1.1. Headache a post-ictal feature? [pos:: 0$$tt_requirenextclick::false]
 O.1.1.1. Yes
 O.1.1.2. No
