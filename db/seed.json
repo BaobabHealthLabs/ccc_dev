@@ -44,6 +44,14 @@
         "CROSS-CUTTING PROGRAM"
     ],
     "concepts": [
+        "Cholesterol Not Fasting Units",
+        "Cholesterol Not Fasting Value",
+        "Cholesterol Fasting Units",
+        "Cholesterol Fasting Value",
+        "Random Blood Sugar Units",
+        "Random Blood Sugar Value",
+        "Fasting Blood Sugar Units",
+        "Fasting Blood Sugar Value",
         "Other Drug Allergies",
         "Specify other drugs allergic to",
         "None",

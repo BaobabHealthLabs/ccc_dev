@@ -490,25 +490,31 @@ function loadSeedData(eCallback) {
 
 }
 
-var commands = [
-    {
+var commands = [];
+
+if (process.argv.indexOf("-c") < 0) {
+
+    commands.push({
         message: "Dropping '" + connection.database + "' database...",
         cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
             " -e 'DROP SCHEMA IF EXISTS " + connection.database + "'"
-    },
-    {
+    });
+
+    commands.push({
         message: "Creating '" + connection.database + "' database...",
         cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
             " -e 'CREATE SCHEMA " + connection.database + "'"
-    },
-    {
+    });
+
+    commands.push({
         message: "Loading '" + connection.database + "' Metadata...",
         cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
             " " + connection.database + " < openmrs_1_7_2_concept_server_full_db.sql"
-    }
-];
+    });
 
-if (process.argv.indexOf("-o") < 0) {
+}
+
+if (process.argv.indexOf("-o") < 0 && process.argv.indexOf("-c") < 0) {
 
     commands.push({
         message: "Dropping '" + connection.stockDatabase + "' database...",
@@ -572,7 +578,7 @@ async.each(commands, function (cmd, callback) {
 
         function (callback) {
 
-            if (process.argv.indexOf("-o") < 0) {
+            if (process.argv.indexOf("-o") < 0 && process.argv.indexOf("-c") < 0) {
 
                 console.log("Loading '" + connection.stockDatabase + "' Triggers...");
 
@@ -609,18 +615,23 @@ async.each(commands, function (cmd, callback) {
 
         function (iCallback) {
 
-            var commands = [
-                {
+            var commands = [];
+
+            if (process.argv.indexOf("-c") < 0) {
+
+                commands.push({
                     message: "Loading 'HTS Roles' seed data...",
                     cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
                         " " + connection.database + " < htc.roles.sql"
-                },
-                {
+                });
+
+                commands.push({
                     message: "Loading 'HTS Locations' seed data...",
                     cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
                         " " + connection.database + " < locations.sql"
-                },
-                {
+                });
+
+                commands.push({
                     message: "Initializing user admin...",
                     cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
                         " " + connection.database + " -e 'DELETE FROM person_attribute WHERE person_id = 1; " +
@@ -628,13 +639,15 @@ async.each(commands, function (cmd, callback) {
                         "VALUES((SELECT person_id FROM person LIMIT 1), \"HTS-0001\", (SELECT person_attribute_type_id FROM " +
                         "person_attribute_type WHERE name = \"HTS Provider ID\"), (SELECT user_id FROM users LIMIT 1), " +
                         "NOW(), \"" + uuid.v1() + "\")'"
-                },
-                {
+                });
+
+                commands.push({
                     message: "Creating 'HTS Reporting Table' ...",
                     cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
                         " " + connection.database + " < htc_triggers.sql"
-                }
-            ];
+                });
+
+            }
 
             async.each(commands, function (cmd, callback) {
 
