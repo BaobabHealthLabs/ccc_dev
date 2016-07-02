@@ -5,7 +5,8 @@
             "Diabetes Initial Questions": "javascript:dashboard.navPanel('/spec/dm/diabetes_first_questions.spec')",
             "Outcome": "javascript:dashboard.navPanel('/spec/dm/outcome.spec')",
             "Medical History": "javascript:dashboard.loadCustomScript('/javascripts/medical_history.js', 'details')",
-            "Vitals": "javascript:dashboard.navPanel('/spec/dm/vitals.spec')",
+            "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
+            "Lab Results": "javascript:dashboard.navPanel('/spec/lab_results.spec')",
             "Mastercard": "javascript:dashboard.navURLPanel('/views/card_shell.html')"
         },
         "program": "DIABETES PROGRAM",
@@ -23,6 +24,11 @@
             },
             "Vitals": {
                 "encounter": "VITALS",
+                "scope": "TODAY",
+                "program": "CROSS-CUTTING PROGRAM"
+            },
+            "Lab Results": {
+                "encounter": "LAB RESULTS",
                 "scope": "TODAY",
                 "program": "CROSS-CUTTING PROGRAM"
             }
@@ -132,7 +138,7 @@
             "Outcome": "javascript:dashboard.navPanel('/spec/epilepsy/outcome.spec')",
             "Next Appointment": "javascript:dashboard.navPanel('/spec/epilepsy/appointment.spec')"
 
- 
+
         },
         "program": "EPILEPSY PROGRAM",
         "identifiers": ["National id", "EPL Number"],
