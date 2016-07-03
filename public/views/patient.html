@@ -12,6 +12,16 @@
 
     dashboard.init("/data/person.json", "/modules/config/patient.modules.json", "/modules/config/dashboard.settings.json");
 
+    dashboard.subscription.addEventlistener("done", function(){
+
+        if(dashboard.activeTask == "Complications") {
+
+            dashboard.navURLPanel('/spec/dm/complications.html');
+
+        }
+
+    });
+
 </script>
 
 </body>

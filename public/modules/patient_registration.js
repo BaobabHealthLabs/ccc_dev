@@ -722,7 +722,7 @@ var patient = ({
         this.addCSSRule(style, ".tt_controls_occupation .keyboard", "display:none !important");
         this.addCSSRule(style, "#tt_page_occupation .options", "height:500px");
         this.addCSSRule(style, "#tt_page_occupation .options li", "font-size:30px");
-        this.addCSSRule(style, "body", "font-family: 'Nimbus Sans L", "Arial Narrow', sans-serif");
+        this.addCSSRule(style, "body", "font-family: 'Nimbus Sans L', 'Arial Narrow', sans-serif");
 
         var div = document.createElement("div");
         div.style.fontSize = "2.3em";
@@ -731,6 +731,7 @@ var patient = ({
         div.style.padding = "15px";
         div.align = "center";
         div.innerHTML = "Edit Demographics";
+        // div.style.fontFamily = "";
 
         document.body.appendChild(div);
 
@@ -763,7 +764,15 @@ var patient = ({
 
         nextButton.onclick = function () {
 
-            window.location = "/";
+            if(window.parent) {
+
+                window.parent.location = window.parent.location.href;
+
+            } else {
+
+                window.location = window.location.href;
+
+            }
 
         }
 
