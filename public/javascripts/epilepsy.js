@@ -1,4 +1,57 @@
 "use strict"
+
+var visitRows = [];
+
+if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+
+    Object.defineProperty(Date.prototype, "format", {
+        value: function (format) {
+            var date = this;
+
+            var result = "";
+
+            if (!format) {
+
+                format = ""
+
+            }
+
+            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"];
+
+            if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+
+                result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
+                    window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
+
+            } else if (format.match(/YYYY\-mm\-dd/)) {
+
+                result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    window.parent.dashboard.padZeros(date.getDate(), 2);
+
+            } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+            } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+            } else {
+
+                result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            }
+
+            return result;
+        }
+    });
+
+}
+
 function __$(id) {
 
     return document.getElementById(id);
@@ -712,10 +765,152 @@ function postIctaFeatures(encounter_data){
 				__$(element_id_prefix+"_no").style.border ="2px solid red";
 			}
 			
-		}
+	}
 
 }
-function drawResponse(encounter,encounter_data){
+
+function triggers(encounter_data){
+
+	var concept_names = Object.keys(encounter_data);
+
+	for(var i = 0; i < concept_names.length ; i++){
+
+			var element_id_prefix = concept_names[i].replace("a trigger?"," ");
+
+			element_id_prefix = element_id_prefix.replace("?","").trim().toLowerCase();
+
+			element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+			
+			if (encounter_data[concept_names[i]].response.value=="Yes"){
+
+
+				__$(element_id_prefix+"_no").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid red";
+			}
+			if (encounter_data[concept_names[i]].response.value =="No"){
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid red";
+			}
+			
+	}
+
+}
+
+function epilepsyPatientOverview(encounter_data){
+
+	var concept_names = Object.keys(encounter_data);
+
+	for(var i = 0; i < concept_names.length; i++){
+
+		var element_id_prefix = concept_names[i].trim().toLowerCase();
+
+		element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+		element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+		element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+		if(concept_names[i] =="Exposures"){
+
+			var exposures = encounter_data[concept_names[i]].response.value.split(",");
+
+			for(var j = 0; j < exposures.length ; j++){
+
+				
+				var element_id_prefix = exposures[j].trim().toLowerCase()
+				element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+				element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+				element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+				element_id_prefix = element_id_prefix+"_exposures";
+				
+				__$(element_id_prefix).style.border ="2px solid red"				
+
+			}
+
+			continue;
+
+		}
+		if(concept_names[i] =="Complications"){
+
+			var complications = encounter_data[concept_names[i]].response.value.split(",");
+
+			for(var j = 0; j < complications.length ; j++){
+
+				var element_id_prefix = complications[j].trim().toLowerCase()
+				element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+				element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+				element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+				element_id_prefix = element_id_prefix+"_complications";
+				
+				__$(element_id_prefix).style.border ="2px solid red"				
+
+			}
+
+			continue;
+
+		}
+		__$(element_id_prefix).innerHTML= encounter_data[concept_names[i]].response.value;
+
+	}
+
+}
+
+function epilepsyVisits(encounter_data,visitDate){
+
+	var concept_names = Object.keys(encounter_data);
+
+	var visitRow = {
+		"Visit Date": (new Date(visitDate)).format(),
+        "Height (cm)": "",
+        "Weight (Kg)": "",
+        "Seizure since last visit": "",
+        "Number of Seizure": "",
+        "Any Triggers":"",
+        "Alcohol a trigger?":"",
+        "Sleep deprivation a trigger?":"",
+        "Missed medication a trigger?":"",
+        "Sound /Light /Touch a trigger?":"",
+        "Fever a trigger?":"",
+        "Stress a trigger?":"",
+        "Menstruation a trigger?":"",
+        "Toungue bitting a silent marker?":"",
+        "Incontinence bitting a silent marker?":"",
+        "Hospitalized since a last visit?":"",
+        "Is patient pregnant?":"",
+        "On family planing?":"",
+        "Carbamazepine" :"",
+        "Phenobarbitone" :"",
+        "Phenytoin" : "",
+        "Sodium valproate" : "",
+        "Other":"",
+        "Next Appointment Date" :"",
+        "Comments" :""
+
+	}	
+
+	for(var i = 0 ; i < concept_names.length ; i++){
+
+		visitRow[concept_names[i]] = encounter_data[concept_names[i]].response.value;
+
+	}
+	
+	visitRows.push(visitRow);
+}
+
+function drawResponse(encounter,encounter_data,visit){
 
 	for(var i = 0 ; i < encounter_data.length ; i++){
 			
@@ -744,14 +939,17 @@ function drawResponse(encounter,encounter_data){
 					hivStatus(encounter_data[i]);
 
 					break;
+
 				case "PATIENT HISTORY AT ENROLMENT":
 
 					break;
+
 				case "MEDICAL AND SURGICAL HISTORY":
 
 					medicalSurgicalHistory(encounter_data[i]);
 
 					break;
+
 				case "PRE-ICTAL WARNING":
 
 					preIctalWarning(encounter_data[i]);
@@ -759,9 +957,26 @@ function drawResponse(encounter,encounter_data){
 					break;
 
 				case "POST-ICTAL FEATURES":
-					//Continue for Here start with testing
 
 					postIctaFeatures(encounter_data[i]);
+
+					break;
+
+				case "TRIGGERS":
+
+					triggers(encounter_data[i]);
+
+					break;
+
+				case "EPILEPSY PATIENT OVERVIEW":
+
+					epilepsyPatientOverview(encounter_data[i]);
+
+					break;
+
+				case "EPILEPSY VISIT":
+
+					epilepsyVisits(encounter_data[i],visit);
 
 					break;
 				
@@ -772,6 +987,32 @@ function drawResponse(encounter,encounter_data){
 }
 
 function loadCardDashboard(){
+	var data = window.parent.dashboard.data.data;
+
+	//Setting Demographics
+	var name_keys = Object.keys(data["names"][0]);
+	
+	var patient_name = data["names"][0][name_keys[0]] + "\t" + data["names"][0][name_keys[2]] +"\t" +data["names"][0][name_keys[1]];
+
+	__$("patient_name").innerHTML = patient_name;
+
+
+	__$("dob").innerHTML = new Date(data.birthdate).format();
+
+	var gender = data.gender;
+
+	if(gender == "M"){
+        	if(__$("male")){
+        		__$("male").style.border ="2px solid red";
+        	}
+     }
+     else if(gender == "F"){
+        	if(__$("female")){
+        		__$("female").style.border ="2px solid red";
+        	}
+    }
+
+    //Address
 
 	var patient_programs = window.parent.dashboard.data.data.programs["EPILEPSY PROGRAM"].patient_programs;
 
@@ -792,7 +1033,7 @@ function loadCardDashboard(){
 
 			for (var k = encounters.length - 1; k >= 0; k--) {
 
-				drawResponse(encounters[k],patient_programs[patient_program_keys[i]]["visits"][visits[j]][encounters[k]]);
+				drawResponse(encounters[k],patient_programs[patient_program_keys[i]]["visits"][visits[j]][encounters[k]],visits[j]);
 
 
 			}
@@ -804,7 +1045,7 @@ function loadCardDashboard(){
 
 	}
 
-	
+	//Visit
 
 }
 
