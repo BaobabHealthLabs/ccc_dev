@@ -28,7 +28,7 @@ function loadPage() {
                 input.type = "hidden";
                 input.id = "Footcheck_root_0_parent_" + i + "_child_" + j + "_grandchild_" + k;
                 input.name = "data.obs.text." + categories[i] + " FOOT CHECK[]";
-                input.value = children[j][k];
+                input.value = parents[j] + ": " + children[j][k];
                 input.setAttribute("disabled", true);
 
                 document.forms[0].appendChild(input);
@@ -39,7 +39,7 @@ function loadPage() {
                     input.type = "hidden";
                     input.id = "Footcheck_root_0_parent_" + i + "_child_" + j + "_grandchild_" + k + "_greatgrandchild_" + l;
                     input.name = "data.obs.text." + categories[i] + " FOOT CHECK[]";
-                    input.value = grandChildren[k][l];
+                    input.value = parents[j] + ": " + children[j][k] + ": " + grandChildren[k][l];
                     input.setAttribute("disabled", true);
 
                     document.forms[0].appendChild(input);
