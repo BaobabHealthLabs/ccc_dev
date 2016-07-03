@@ -870,17 +870,17 @@ function epilepsyPatientOverview(encounter_data){
 
 function epilepsyVisits(encounter_data,visitDate){
 
-	var concept_names = Object.keys(encounter_data);
+	
 
 	var visitRow = {
 		"Visit Date": (new Date(visitDate)).format(),
-        "Height (cm)": "",
-        "Weight (Kg)": "",
+        "Weight (kg)": "",
+        "BMI":"",
         "Seizure since last visit": "",
-        "Number of Seizure": "",
+        "NUMBER OF SEIZURES": "",
         "Any Triggers":"",
         "Alcohol a trigger?":"",
-        "Sleep deprivation a trigger?":"",
+        "Sleep deprivation / Overtiredness a trigger?":"",
         "Missed medication a trigger?":"",
         "Sound /Light /Touch a trigger?":"",
         "Fever a trigger?":"",
@@ -900,23 +900,59 @@ function epilepsyVisits(encounter_data,visitDate){
         "Comments" :""
 
 	}	
+	var weight,height;
 
-	for(var i = 0 ; i < concept_names.length ; i++){
+	for(var i = 0 ; i < encounter_data.length ; i++){
 
-		visitRow[concept_names[i]] = encounter_data[concept_names[i]].response.value;
+		var concept = Object.keys(encounter_data[i]);
+		
+
+		if(concept[0]=="Weight (kg)"){
+
+			weight = encounter_data[i][concept[0]].response.value;
+
+		}
+		if(concept[0]=="Height (cm)"){
+
+
+
+			height = encounter_data[i][concept[0]].response.value;
+
+			continue;
+
+		}
+
+		visitRow[concept[0]] = encounter_data[i][concept[0]].response.value;
 
 	}
+
 	
+
+	if(weight && height) {
+
+                var bmi = (weight / ((height / 100) * (height / 100))).toFixed(1);
+
+                visitRow["BMI"] = bmi;
+
+     }
+
 	visitRows.push(visitRow);
 }
 
 function drawResponse(encounter,encounter_data,visit){
 
+	if(encounter=="EPILEPSY VISIT"){
+		console.log(encounter_data);
+		epilepsyVisits(encounter_data,visit);
+
+		return;
+
+	}
+
 	for(var i = 0 ; i < encounter_data.length ; i++){
 			
 			var concepts = Object.keys(encounter_data[i]);
 
-			console.log(encounter);
 
 			switch (encounter) {
 
@@ -976,7 +1012,7 @@ function drawResponse(encounter,encounter_data,visit){
 
 				case "EPILEPSY VISIT":
 
-					epilepsyVisits(encounter_data[i],visit);
+					//epilepsyVisits(encounter_data[i],visit);
 
 					break;
 				
@@ -1032,7 +1068,7 @@ function loadCardDashboard(){
 			var encounters = Object.keys(patient_programs[patient_program_keys[i]]["visits"][visits[j]]);
 
 			for (var k = encounters.length - 1; k >= 0; k--) {
-
+			
 				drawResponse(encounters[k],patient_programs[patient_program_keys[i]]["visits"][visits[j]][encounters[k]],visits[j]);
 
 
@@ -1046,6 +1082,26 @@ function loadCardDashboard(){
 	}
 
 	//Visit
+	for(var i = 0 ; i < visitRows.length; i++){
+
+		var concept_keys = Object.keys(visitRows[i]);
+
+		var tr = document.createElement("tr");
+
+		var height, weight;
+
+
+		for(var j = 0 ; j < concept_keys.length ; j++){
+			var td = document.createElement("td");
+			td.innerHTML = visitRows[i][concept_keys[j]];
+			tr.appendChild(td);
+
+		}
+
+		__$("visit_body").appendChild(tr);
+
+
+	}
 
 }
 

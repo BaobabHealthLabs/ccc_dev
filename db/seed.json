@@ -197,6 +197,7 @@
         "Incontinence bitting a silent marker?",
         "Hospitalized since a last visit?",
         "Is patient pregnant?",
-        "On family planing?"
+        "On family planing?",
+        "Seizure since last visit?"
     ]
 }

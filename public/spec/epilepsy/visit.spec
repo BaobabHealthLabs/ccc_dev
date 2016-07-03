@@ -5,7 +5,7 @@ Q.1.2. Weight (Kg) [pos::1$$field_type::number]
 
 Q.1.3. Height (cm) [pos::2$$field_type::number]
 
-Q.1.4. Seizure since last visit [pos::3$$tt_requirenextclick::false]
+Q.1.4. Seizure since last visit? [pos::3$$tt_requirenextclick::false]
 O.1.4.1. Yes
 O.1.4.2. No
 
