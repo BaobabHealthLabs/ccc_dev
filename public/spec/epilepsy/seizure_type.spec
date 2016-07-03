@@ -1,4 +1,4 @@
-P.1. SEIZURE TYPE [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
+P.1. SEIZURE TYPE [program:: EPILEPSY PROGRAM$$ scope:: EXISTSY$$ includejs:: touchScreenToolkit;epilepsy]
 Q.1.1. Epilepsy Category [pos:: 0$$id::epilepsy_category$$tt_requirenextclick::false]
 O.1.1.1. Generalized Epilepsy
 O.1.1.2. Partial Epilepsy

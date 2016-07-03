@@ -479,10 +479,332 @@ function loadCardData(){
 	});
 }
 
+function seizureType(response){
+
+	if(response == "Generalized Epilepsy"){
+		return ;
+	}
+	else{
+
+		var type = ["Tonic clonic","Absence","Myclonic","Clonic","Tonic","Atonic","Simple","Complex","Unclassified"];
+
+		for(var i = 0 ; i < type.length ; i++){
+
+			var element_id  ="" ;
+
+			element_id = type[i].trim().toLowerCase().replace("/","_").replace(/\s+/g,"_")+"_no";
+
+			if(response.trim()==type[i].trim()){
+
+				__$(element_id).style.border ="2px solid #ffffff";
+				element_id = type[i].trim().toLowerCase().replace("/","_").replace(/\s+/g,"_")+"_yes";
+
+			}
+			
+		
+			if(__$(element_id)){
+
+				__$(element_id).style.border ="2px solid red";
+
+			}
+
+		}
+	}
+
+}
+
+function familyHistory(concept_data){
+
+	var concept_names = Object.keys(concept_data);
+
+	for(var i = 0; i < concept_names.length ; i++){
+
+			var element_id_prefix = concept_names[i].replace("Family History of"," ").replace("?","").trim().toLowerCase().replace("/","_").replace(/\s+/g,"_");
+
+			if (concept_data[concept_names[i]].response.value =="Yes"){
+				__$(element_id_prefix+"_unk").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid red";
+			}
+			if (concept_data[concept_names[i]].response.value =="No"){
+
+				__$(element_id_prefix+"_unk").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid red";
+			}
+			if (concept_data[concept_names[i]].response.value =="Unknown"){
+
+				__$(element_id_prefix+"_unk").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_unk").style.border ="2px solid red";
+			}
+	}
+
+}
+function hivStatus(encounter_data){
+
+	var concept_names = Object.keys(encounter_data);
+
+	for(var i = 0 ; i < concept_names.length ; i++){
+
+		var status = encounter_data[concept_names[i]].response.value.toLowerCase();
+
+		if(status=="r"){
+
+			__$(status).style.border ="2px solid red";
+
+		}
+		if(status=="nr"){
+
+			__$(status).style.border ="2px solid red";
+			
+		}
+		if(status=="u"){
+
+			__$(status).style.border ="2px solid red";
+			
+		}
+		if(status=="vdrl"){
+
+			__$(status).style.border ="2px solid red";
+			
+		}
+
+	}
+
+}
+
+function medicalSurgicalHistory(encounter_data){
+
+	var concept_names = Object.keys(encounter_data);
+
+	for(var i = 0; i < concept_names.length ; i++){
+
+			var element_id_prefix = concept_names[i].replace("History of"," ");
+
+			element_id_prefix = element_id_prefix.replace("?","").trim().toLowerCase();
+
+			element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+			
+			if (encounter_data[concept_names[i]].response.value=="Yes"){
+
+				__$(element_id_prefix+"_unk").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid red";
+			}
+			if (encounter_data[concept_names[i]].response.value =="No"){
+				__$(element_id_prefix+"_unk").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid red";
+			}
+			if (encounter_data[concept_names[i]].response.value =="Unknown"){
+
+				__$(element_id_prefix+"_unk").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_unk").style.border ="2px solid red";
+			}
+			
+		}
+
+}
+
+function preIctalWarning(encounter_data){
+
+	var concept_names = Object.keys(encounter_data);
+
+	for(var i = 0; i < concept_names.length ; i++){
+
+		var element_id_prefix = concept_names[i].replace("-","_");
+
+		element_id_prefix = element_id_prefix.replace("?","").trim().toLowerCase();
+
+		element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+
+		element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+			if (encounter_data[concept_names[i]].response.value=="Yes"){
+
+
+				__$(element_id_prefix+"_unk").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid red";
+			}
+			if (encounter_data[concept_names[i]].response.value =="No"){
+
+				__$(element_id_prefix+"_unk").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid red";
+			}
+			if (encounter_data[concept_names[i]].response.value =="Unknown"){
+
+				__$(element_id_prefix+"_unk").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_unk").style.border ="2px solid red";
+			}	
+			
+
+	}
+}
+
+function postIctaFeatures(encounter_data){
+
+	var concept_names = Object.keys(encounter_data);
+
+	for(var i = 0; i < concept_names.length ; i++){
+
+			var element_id_prefix = concept_names[i].replace("a post-ictal feature?"," ");
+
+			element_id_prefix = element_id_prefix.replace("?","").trim().toLowerCase();
+
+			element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+			
+			if (encounter_data[concept_names[i]].response.value=="Yes"){
+
+
+				__$(element_id_prefix+"_no").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid red";
+			}
+			if (encounter_data[concept_names[i]].response.value =="No"){
+
+				__$(element_id_prefix+"_yes").style.border ="2px solid #ffffff";
+
+				__$(element_id_prefix+"_no").style.border ="2px solid red";
+			}
+			
+		}
+
+}
+function drawResponse(encounter,encounter_data){
+
+	for(var i = 0 ; i < encounter_data.length ; i++){
+			
+			var concepts = Object.keys(encounter_data[i]);
+
+			console.log(encounter);
+
+			switch (encounter) {
+
+				case "SEIZURE TYPE":
+					for( var j = 0; j < concepts.length ; j++ ){
+
+						seizureType(encounter_data[i][concepts[j]].response.value);
+
+					}
+
+					break;
+				case "FAMILY HISTORY":
+
+					familyHistory(encounter_data[i]);
+
+					break;
+
+				case "HIV/ART STATUS":
+
+					hivStatus(encounter_data[i]);
+
+					break;
+				case "PATIENT HISTORY AT ENROLMENT":
+
+					break;
+				case "MEDICAL AND SURGICAL HISTORY":
+
+					medicalSurgicalHistory(encounter_data[i]);
+
+					break;
+				case "PRE-ICTAL WARNING":
+
+					preIctalWarning(encounter_data[i]);
+
+					break;
+
+				case "POST-ICTAL FEATURES":
+					//Continue for Here start with testing
+
+					postIctaFeatures(encounter_data[i]);
+
+					break;
+				
+			}
+		
+	}
+
+}
+
 function loadCardDashboard(){
 
 	var patient_programs = window.parent.dashboard.data.data.programs["EPILEPSY PROGRAM"].patient_programs;
 
 	var patient_program_keys = Object.keys(patient_programs);
 
+	var visits;
+
+	for(var i = 0 ; i < patient_program_keys.length; i++){
+
+		visits = Object.keys(patient_programs[patient_program_keys[i]]["visits"]).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+
+		
+		for (var j = visits.length - 1; j >= 0; j--) {
+
+			var encounters = Object.keys(patient_programs[patient_program_keys[i]]["visits"][visits[j]]);
+
+			for (var k = encounters.length - 1; k >= 0; k--) {
+
+				drawResponse(encounters[k],patient_programs[patient_program_keys[i]]["visits"][visits[j]][encounters[k]]);
+
+
+			}
+
+		}
+
+		
+		
+
+	}
+
+	
+
 }
+

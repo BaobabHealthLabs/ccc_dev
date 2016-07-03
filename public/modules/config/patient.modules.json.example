@@ -130,7 +130,8 @@
             "Patient Overview": "javascript:dashboard.navPanel('/spec/epilepsy/patient_overview.spec')",
             "Epilepsy visit": "javascript:dashboard.navPanel('/spec/epilepsy/visit.spec')",
             "Outcome": "javascript:dashboard.navPanel('/spec/epilepsy/outcome.spec')",
-            "Next Appointment": "javascript:dashboard.navPanel('/spec/epilepsy/appointment.spec')"
+            "Next Appointment": "javascript:dashboard.navPanel('/spec/epilepsy/appointment.spec')",
+            "Mastercard": "javascript:dashboard.navURLPanel('/views/card_shell.html')"
 
  
         },

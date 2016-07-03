@@ -1,4 +1,4 @@
-P.1. UPDATE OUTCOME [program:: EPILEPSY PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;dm]
+P.1. UPDATE OUTCOME [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 
 Q.1.1. Outcome [pos:: 0$$ concept:: OUTCOME]
 O.1.1.1. Discharge
