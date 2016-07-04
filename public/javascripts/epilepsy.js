@@ -854,6 +854,8 @@ function epilepsyPatientOverview(encounter_data){
 				element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
 
 				element_id_prefix = element_id_prefix+"_complications";
+
+
 				
 				__$(element_id_prefix).style.background ="red"				
 
@@ -862,6 +864,12 @@ function epilepsyPatientOverview(encounter_data){
 			continue;
 
 		}
+		if(concept_names[i] =="Other Exposures Specify" || concept_names[i] =="Other Complications Specify"){
+
+			continue;
+
+		}
+	
 		__$(element_id_prefix).innerHTML= encounter_data[concept_names[i]].response.value;
 
 	}
@@ -1094,11 +1102,16 @@ function loadCardDashboard(){
 
 
 		for(var j = 0 ; j < concept_keys.length ; j++){
+
 			var td = document.createElement("td");
+
 			td.innerHTML = visitRows[i][concept_keys[j]];
+			
 			tr.appendChild(td);
 
 		}
+
+
 
 		__$("visit_body").appendChild(tr);
 
