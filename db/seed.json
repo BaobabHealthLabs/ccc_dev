@@ -27,7 +27,9 @@
         ["HIV/ART STATUS", "Patient HIV/ART status encounter"],
         ["DIABETES TEST", "Diabetes tests encounter"],
         ["ASTHMA PATIENT OVERVIEW","Asthma Patient Overview"],
-        ["ASTHMA VISIT", "Asthma Visit"]
+        ["ASTHMA VISIT", "Asthma Visit"],
+        ["EPILEPSY INITIAL QUESTIONS","Epilepsy Initial Questions"],
+        ["ASTHMA INITIAL QUESTIONS","Asthma Initial Questions"]
 
     ],
     "patient_identifier_types": [
@@ -202,6 +204,8 @@
         "Hospitalized since a last visit?",
         "Is patient pregnant?",
         "On family planing?",
-        "Seizure since last visit?"
+        "Seizure since last visit?",
+        "Epilepsy Diagnosis Date",
+        "Asthma Diagnosis Date"
     ]
 }

@@ -359,6 +359,16 @@ function drawResponse(encounter,encounter_data,visit){
 
 	}
 
+	if(encounter == "ASTHMA INITIAL QUESTIONS"){
+
+		  var date = new Date(visit).format();
+
+		__$("transfer_in_date").innerHTML = date;
+
+		return;
+
+	}
+
 	for(var i = 0 ; i < encounter_data.length ; i++){
 			
 			var concepts = Object.keys(encounter_data[i]);
@@ -380,6 +390,10 @@ function drawResponse(encounter,encounter_data,visit){
 
 function loadCardDashboard(){
 	var data = window.parent.dashboard.data.data;
+
+	var id_keys = Object.keys(data.identifiers)
+
+	__$("ncd_reg_no").innerHTML = data.identifiers[id_keys[0]].identifier;
 
 	//Setting Demographics
 	var name_keys = Object.keys(data["names"][0]);
