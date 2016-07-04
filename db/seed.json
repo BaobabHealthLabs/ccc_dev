@@ -177,6 +177,7 @@
         "Visit Date",
         "Planned Visit?",
         "Weight (Kg)",
+        "Height (cm)",
         "Day sx",
         "Night sx",
         "Beta-agonist inhaler use: frequency",
@@ -191,6 +192,13 @@
         "Other Treatment Specify",
         "Comment",
         "Next appointment Date",
-        "Fever a trigger?"
+        "Fever a trigger?",
+        "Stress a trigger?",
+        "Toungue bitting a silent marker?",
+        "Incontinence bitting a silent marker?",
+        "Hospitalized since a last visit?",
+        "Is patient pregnant?",
+        "On family planing?",
+        "Seizure since last visit?"
     ]
 }
