@@ -6,7 +6,8 @@ function loadPage() {
 
     var parents = ['Normal', 'Abnormal'];
     var children = [[], ['Cataracts', 'Diabetic Retinopathy', 'Hypertensive Retinopathy']];
-    var grandChildren = [[], ['Background Retinopathy', 'Ploriferative Retinopathy', 'End Stage Eye Disease', 'Maculopathy'], ['1', '2', '3', '4']];
+    var grandChildren = [[], ['Background Retinopathy', 'Ploriferative Retinopathy', 'End Stage Eye Disease',
+        'Maculopathy'], ['1', '2', '3', '4']];
 
     var categories = {0: 'LEFT EYE', 1: 'RIGHT EYE'};
 
@@ -29,7 +30,7 @@ function loadPage() {
                 input.type = "hidden";
                 input.id = "Fundoscopy_root_0_parent_" + i + "_child_" + j + "_grandchild_" + k;
                 input.name = "data.obs.text." + categories[i] + " FUNDOSCOPY[]";
-                input.value = children[j][k];
+                input.value = parents[j] + ": " + children[j][k];
                 input.setAttribute("disabled", true);
 
                 document.forms[0].appendChild(input);
@@ -40,7 +41,7 @@ function loadPage() {
                     input.type = "hidden";
                     input.id = "Fundoscopy_root_0_parent_" + i + "_child_" + j + "_grandchild_" + k + "_greatgrandchild_" + l;
                     input.name = "data.obs.text." + categories[i] + " FUNDOSCOPY[]";
-                    input.value = grandChildren[k][l];
+                    input.value = parents[j] + ": " + children[j][k] + ": " + grandChildren[k][l];
                     input.setAttribute("disabled", true);
 
                     document.forms[0].appendChild(input);
