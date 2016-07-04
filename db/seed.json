@@ -25,7 +25,10 @@
         ["COMPLICATIONS", "Patient complications encounter"],
         ["TREATMENTS", "Patient treatments encounter"],
         ["HIV/ART STATUS", "Patient HIV/ART status encounter"],
-        ["DIABETES TEST", "Diabetes tests encounter"]
+        ["DIABETES TEST", "Diabetes tests encounter"],
+        ["ASTHMA PATIENT OVERVIEW","Asthma Patient Overview"],
+        ["ASTHMA VISIT", "Asthma Visit"]
+
     ],
     "patient_identifier_types": [
         ["DTM Number", "Diabetes clinic number"],

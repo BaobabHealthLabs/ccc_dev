@@ -833,7 +833,7 @@ function epilepsyPatientOverview(encounter_data){
 
 				element_id_prefix = element_id_prefix+"_exposures";
 				
-				__$(element_id_prefix).style.border ="2px solid red"				
+				__$(element_id_prefix).style.background ="red"				
 
 			}
 
@@ -855,7 +855,7 @@ function epilepsyPatientOverview(encounter_data){
 
 				element_id_prefix = element_id_prefix+"_complications";
 				
-				__$(element_id_prefix).style.border ="2px solid red"				
+				__$(element_id_prefix).style.background ="red"				
 
 			}
 
@@ -942,7 +942,7 @@ function epilepsyVisits(encounter_data,visitDate){
 function drawResponse(encounter,encounter_data,visit){
 
 	if(encounter=="EPILEPSY VISIT"){
-		console.log(encounter_data);
+		
 		epilepsyVisits(encounter_data,visit);
 
 		return;
@@ -1049,6 +1049,10 @@ function loadCardDashboard(){
     }
 
     //Address
+    var address = data.addresses[0]["Current District"] +"\tDistrict, TA\t"
+    			+data.addresses[0]["Current T/A"]+",\t"+data.addresses[0]["Current Village"]+"\tvillage";
+
+    __$("address").innerHTML = address;			
 
 	var patient_programs = window.parent.dashboard.data.data.programs["EPILEPSY PROGRAM"].patient_programs;
 
@@ -1075,8 +1079,6 @@ function loadCardDashboard(){
 			}
 
 		}
-
-		
 		
 
 	}

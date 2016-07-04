@@ -7,7 +7,7 @@
             "Medical History": "javascript:dashboard.loadCustomScript('/javascripts/medical_history.js', 'details')",
             "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
             "Lab Results": "javascript:dashboard.navPanel('/spec/lab_results.spec')",
-            "Mastercard": "javascript:dashboard.navURLPanel('/views/card_shell.html')"
+            "Mastercard" :"javascript:dashboard.navURLPanel('/views/dm/card.html')"
         },
         "program": "DIABETES PROGRAM",
         "identifiers": ["National id", "DTM Number"],
@@ -93,7 +93,8 @@
             "Client Registration": "javascript:dashboard.navPanel('/spec/patient_registration.spec')",
             "Patient Overview": "javascript:dashboard.navPanel('/spec/asthma/patient_overview.spec')",
             "Asthma Visit": "javascript:dashboard.navPanel('/spec/asthma/visit.spec')",
-            "Next Appointment": "javascript:dashboard.navPanel('/spec/asthma/appointment.spec')"
+            "Next Appointment": "javascript:dashboard.navPanel('/spec/asthma/appointment.spec')",
+            "Mastercard" :"javascript:dashboard.navURLPanel('/views/asthma/card.html')"
 
         },
         "program": "ASTHMA PROGRAM",
@@ -137,7 +138,7 @@
             "Epilepsy visit": "javascript:dashboard.navPanel('/spec/epilepsy/visit.spec')",
             "Outcome": "javascript:dashboard.navPanel('/spec/epilepsy/outcome.spec')",
             "Next Appointment": "javascript:dashboard.navPanel('/spec/epilepsy/appointment.spec')",
-            "Mastercard": "javascript:dashboard.navURLPanel('/views/card_shell.html')"
+            "Mastercard" :"javascript:dashboard.navURLPanel('/views/epilepsy/card.html')"
 
 
         },
