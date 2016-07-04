@@ -833,7 +833,7 @@ function epilepsyPatientOverview(encounter_data){
 
 				element_id_prefix = element_id_prefix+"_exposures";
 				
-				__$(element_id_prefix).style.border ="2px solid red"				
+				__$(element_id_prefix).style.background ="red"				
 
 			}
 
@@ -854,14 +854,22 @@ function epilepsyPatientOverview(encounter_data){
 				element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
 
 				element_id_prefix = element_id_prefix+"_complications";
+
+
 				
-				__$(element_id_prefix).style.border ="2px solid red"				
+				__$(element_id_prefix).style.background ="red"				
 
 			}
 
 			continue;
 
 		}
+		if(concept_names[i] =="Other Exposures Specify" || concept_names[i] =="Other Complications Specify"){
+
+			continue;
+
+		}
+	
 		__$(element_id_prefix).innerHTML= encounter_data[concept_names[i]].response.value;
 
 	}
@@ -942,8 +950,18 @@ function epilepsyVisits(encounter_data,visitDate){
 function drawResponse(encounter,encounter_data,visit){
 
 	if(encounter=="EPILEPSY VISIT"){
-		console.log(encounter_data);
+		
 		epilepsyVisits(encounter_data,visit);
+
+		return;
+
+	}
+
+	if(encounter == "EPILEPSY INITIAL QUESTIONS"){
+
+		  var date = new Date(visit).format();
+
+		__$("transfer_in_date").innerHTML = date;
 
 		return;
 
@@ -955,6 +973,8 @@ function drawResponse(encounter,encounter_data,visit){
 
 
 			switch (encounter) {
+
+
 
 				case "SEIZURE TYPE":
 					for( var j = 0; j < concepts.length ; j++ ){
@@ -1025,6 +1045,10 @@ function drawResponse(encounter,encounter_data,visit){
 function loadCardDashboard(){
 	var data = window.parent.dashboard.data.data;
 
+	var id_keys = Object.keys(data.identifiers)
+
+	__$("ncd_reg_no").innerHTML = data.identifiers[id_keys[0]].identifier;
+
 	//Setting Demographics
 	var name_keys = Object.keys(data["names"][0]);
 	
@@ -1049,6 +1073,10 @@ function loadCardDashboard(){
     }
 
     //Address
+    var address = data.addresses[0]["Current District"] +"\tDistrict, TA\t"
+    			+data.addresses[0]["Current T/A"]+",\t"+data.addresses[0]["Current Village"]+"\tvillage";
+
+    __$("address").innerHTML = address;			
 
 	var patient_programs = window.parent.dashboard.data.data.programs["EPILEPSY PROGRAM"].patient_programs;
 
@@ -1075,13 +1103,11 @@ function loadCardDashboard(){
 			}
 
 		}
-
-		
 		
 
 	}
 
-	//Visit
+	//Visits Table
 	for(var i = 0 ; i < visitRows.length; i++){
 
 		var concept_keys = Object.keys(visitRows[i]);
@@ -1092,11 +1118,16 @@ function loadCardDashboard(){
 
 
 		for(var j = 0 ; j < concept_keys.length ; j++){
+
 			var td = document.createElement("td");
+
 			td.innerHTML = visitRows[i][concept_keys[j]];
+			
 			tr.appendChild(td);
 
 		}
+
+
 
 		__$("visit_body").appendChild(tr);
 

@@ -18,8 +18,6 @@ O.1.5.2. No
 Q.1.6. HIV Status [pos::5$$id::hiv_status$$tt_requirenextclick::false]
 O.1.6.1. R
 O.1.6.2. NR
-O.1.6.3. U
-O.1.6.4. VDRL
 
 Q.1.7. ART start Date [pos::6$$field_type::date$$condition::__$("hiv_status").value=="R"]
 
@@ -32,18 +30,18 @@ O.1.8.4. TB Contact
 O.1.8.5. Smoking
 O.1.8.6. Secondhand smoking
 
-Q.1.9. Chronic dry cough duration [pos:: 8$$id::chronic_dry_cough0]
+Q.1.9. Indoor cooking date [pos:: 8$$field_type::date$$id::indoor_cooking_date]
 
-Q.1.10. Chronic dry cough Age onset   [pos:: 9$$field_type::number$$ id::chronic_dry_cough1]
+Q.1.10. Occupation [pos:: 9$$ id:: occupation$$optional::true$$id::occupational_exposure0]
 
-Q.1.11. Indoor cooking date [pos:: 10$$field_type::date$$id::indoor_cooking_date]
+Q.1.11. Occupation Exposure Date[pos:: 10$$field_type::date$$id::occupational_exposure1]
 
-Q.1.12. Occupation [pos:: 11$$ id:: occupation$$optional::true$$id::occupational_exposure0]
+Q.1.12. TB Contact Date [pos:: 11$$field_type::date$$ id::tb_contact_date]
 
-Q.1.13. Occupation Exposure Date[pos:: 12$$id::occupational_exposure1]
+Q.1.13. Smocking Date [pos:: 12$$field_type::date$$ id:: smoking_date]
 
-Q.1.15. TB Contact Date [pos:: 14$$field_type::date$$ id::tb_contact_date]
+Q.1.14. Secondhand smocking Date [pos:: 13$$field_type::date$$ id::secondhand_smoking_date]
 
-Q.1.16. Smocking Date [pos:: 15$$field_type::date$$ id:: smoking_date]
+Q.1.15. Chronic dry cough duration [pos:: 14$$id::chronic_dry_cough0]
 
-Q.1.17. Secondhand smocking Date [pos:: 15$$field_type::date$$ id::secondhand_smoking_date]
+Q.1.16. Chronic dry cough Age onset   [pos:: 15$$field_type::number$$ id::chronic_dry_cough1]

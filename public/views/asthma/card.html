@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Epilepsy Card</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
+    <script type="text/javascript" src="/javascripts/asthma.js"></script>
 </head>
+
 <style type="text/css">
     body{
         font-size: 0.9em;
@@ -28,34 +30,56 @@
     }
     td.rotate {
       /* Something you can count on */
-      height: 110px;
+      height: 140px;
       white-space: nowrap;
     }
 
     td.rotate > div {
       transform: 
+        /* Magic Numbers */
         translate(0px, 51px)
+        /* 45 is really 360 - 90 */
         rotate(270deg);
       width: 30px;
     }
     td.rotate > div > span {
       padding: 5px 10px;
     }
+    .circle{
+        display: block;
+        width: 23px;
+        height: 23px;
+        padding: 2%;
+        
+        text-align: center;
+        border-radius: 50%;
+    }
+    .square{
+        display: block;
+        width: 13px;
+        height: 13px;
+        border: 2px solid black;
+        padding: 2%;
+        text-align: center;
+        float: right;
+
+    }
     
 </style>
-<body style="text-align: center; margin: 20px;" oncontextmenu="return false;">
 
+<body style="text-align: center; margin: 20px;" oncontextmenu="return false;">
+<div id="divMain" style="background-color: rgb(255, 255, 255); overflow: auto; height: calc(100vh - 120px); padding-left:1%; padding-right:1%">
 <table width="100%" id="head_table">
     <tr >
         <td>NCD Patient Card</td>
         <td>Chronic Lung Disease</td>
         <td>Version 1</td>
         <td>Transfer-In Date</td>
-        <td style="border:1px solid black;width:12%" id="transfer_in_date"></td>
+        <td style="border:1px solid black;width:12%;padding:1%" id="transfer_in_date"></td>
         <td>NCD Reg no</td>
-        <td style="border:1px solid black;width:12%" id="ncd_reg_no"></td>
+        <td style="border:1px solid black;width:12%;padding:1%" id="ncd_reg_no"></td>
         <td>Year</td>
-        <td style="border:1px solid black;width:12%" id="year"></td>
+        <td style="border:1px solid black;width:12%;padding:1%" id="year"></td>
     </tr>
 
 </table>
@@ -67,25 +91,23 @@
     <tr>
         <td>Patient Name</td>
         <td colspan="3" id="patient_name"></td>
-        <td>Diagnosis</td>
+        <td rowspan="2">Diagnosis</td>
+        <td>Asthma<span class="square" id="asthma"></span></td>
+        <td>Date: <span id="asthma_diagnosis_date"></span></td>
+        <td rowspan="2">Family History</td>
         <td>Asthma</td>
-        <td></td>
-        <td>Date:</td>
-        <td>Family History</td>
-        <td>Asthma</td>
-        <td></td>
+        <td id = "family_history_of_asthma"></td>
     </tr>
     <tr>
         <td>Sex, DOB</td>
-        <th>M</th>
-        <th>F</th>
-        <td>DOB/Age</td>
-        <td>COPD</td>
-        <td></td>
-        <td>Date:</td>
+        <th><span class="circle" id="male">M</span></th>
+        <th><span class="circle" id="female">F</span></th>
+        <td>DOB/Age : <span id="dob"></span></td>
+        <td>COPD<span class="square" id="copd"></span></td>
+        <td>Date: <span id="copd_diagnosis_date"></span></td>
         
         <td>COPD</td>
-        <td></td>
+        <td id = "family_history_of_copd"></td>
     </tr>
     <tr>
         <td rowspan="2">Physical Adress</td>
@@ -93,116 +115,93 @@
        <td colspan="7"></td>
     </tr>
     <tr>
-        <td colspan="3">Near:</td>
+        <td colspan="3">Near: <span id="address"></span></td>
         <td rowspan="5">Patient History & Exposure</td>
-        <td>HIV R NR</td>
-        <td>ART Start Date:</td>
+        <td>HIV : <span class="circle" id="r" style="float:right">R</span> <span class="circle" id="nr" style="float:right; margin-right:20%;">NR</span></td>
+        <td>ART Start Date: <span id="date_antiretrovirals_started"></span></td>
         <td colspan="4">TB Smear pos Smear neg EPTB Year:</td>
     </tr>
     <tr>
         <td>Patient Phone</td>
         <td colspan="3"></td>
-        <td>Chronic dry Cough</td>
-        <td>Duration:<br/>Age at onset:</td>
-        <td>TB Contact</td>
-        <td colspan="3">Date:</td>
+        <td>Chronic dry Cough<span class="square" id="chronic_dry_cough"></td>
+        <td>Duration: <span id="chronic_dry_cough_duration"></span><br/>Age at onset: <span id="chronic_dry_cough_age_onset"></span></td>
+        <td>TB Contact<span class="square" id="tb_contact"></td>
+        <td colspan="3">Date: <span id="tb_contact_date"></span></td>
     </tr>
     <tr>
         <td>Guardian Name</td>
         <td colspan="3"></td>
-        <td>Indoor cooking</td>
-        <td>Date</td>
-        <td>Smoking</td>
-        <td colspan="3">Date:</td>
+        <td>Indoor cooking<span class="square" id="indoor_cooking"></td>
+        <td>Date <span id="indoor_cooking_date"></span></td>
+        <td>Smoking<span class="square" id="smoking"></td>
+        <td colspan="3">Date: <span id="smoking_date"></span></td>
     </tr>
     <tr>
         <td>Guardian Phone</td>
         <td colspan="2"></td>
         <td>Relation to patient</td>
         <td colspan="2">Occupation</td>
-        <td>Secondhand smoking</td>
-        <td colspan="3">Date:</td>
+        <td>Secondhand smoking<span class="square" id="secondhand_smoking"></td>
+        <td colspan="3">Date: <span id="secondhand_smoking_date"></span></td>
     </tr>
     <tr>
         <td>Agrees to FUP</td>
         <td>N Y</td>
         <td colspan="2"></td>
-        <td>Ocuupation</td>
-        <td>Date:</td>
+        <td>Occupation Exposure<span class="square" id="occupational_exposure"></td>
+        <td>Date: <span id="occupation_exposure_date"></span></td>
         <td colspan="4"></td>
     </tr>
 </table>
 <table width="100%" class="card">
-    <tr>
-        <td rowspan="2">Visit Date</td>
-        <td>Planed visit?</td>
-        <td>WT</td>
-        <td>Day sx</td>
-        <td>Night sx</td>
-        <td colspan="4">Beta-agonist inhaler use: frequesncy</td>
-        <td>Steroid inhaler daily?</td>
-        <td>Smoking</td>
-        <td>Passive</td>
-        <td>Indoor cooking</td>
-        <td>Exacerbation today?</td>
-        <td colspan="6">Asthma severity</td>
-        <td colspan="4">Treatment</td>
-        <td rowspan="2">Comments</td>
-        <td rowspan="2">Next Appointment</td>
-    </tr>
-     <tr>
-        <td>Y/N</td>
-        <td>kg</td>
-        <td>#/week</td>
-        <td>#/week</td>
-        <td class="rotate"><div><span>day</span></div></td>
-        <td class="rotate"><div><span>wk</span></div></td>
-        <td class="rotate"><div><span>mo</span></td>
-        <td class="rotate"><div><span>yr</span></div></td>
-        <td>Y/N</td>
-        <td>#cig/day</td>
-        <td>Y/N</td>
-        <td>Y/N</td>
-        <td>Y/N</td>
-        <td class="rotate"><div><span>Not Asthma</span></div></td>
-        <td class="rotate"><div><span>Intermittent</span></div></td>
-        <td class="rotate"><div><span>Mild persistent</span></div></td>
-        <td class="rotate"><div><span>Mod persistent</span></div></td>
-        <td class="rotate"><div><span>Severe persistent</span></div></td>
-        <td class="rotate"><div><span>Uncontrolled</span></div></td>
-        <td class="rotate"><div><span>Inhaler B-agonist</span></div></td>
-        <td class="rotate"><div><span>Inhaled steroid</span></div></td>
-        <td class="rotate"><div><span>Oral steroid</span></div></td>
-        <td class="rotate"><div><span>Other</span></div></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+    <thead>
+        <tr>
+            <td rowspan="2">Visit Date</td>
+            <td>Planed visit?</td>
+            <td>WT</td>
+            <td>Day sx</td>
+            <td>Night sx</td>
+            <td colspan="4">Beta-agonist inhaler use: frequesncy</td>
+            <td>Steroid inhaler daily?</td>
+            <td>Smoking</td>
+            <td>Passive</td>
+            <td>Indoor cooking</td>
+            <td>Exacerbation today?</td>
+            <td colspan="6">Asthma severity</td>
+            <td colspan="4">Treatment</td>
+            <td rowspan="2">Comments</td>
+            <td rowspan="2">Next Appointment</td>
+        </tr>
+        <tr>
+            <td>Y/N</td>
+            <td>kg</td>
+            <td>#/week</td>
+            <td>#/week</td>
+            <td class="rotate"><div><span>day</span></div></td>
+            <td class="rotate"><div><span>wk</span></div></td>
+            <td class="rotate"><div><span>mo</span></td>
+            <td class="rotate"><div><span>yr</span></div></td>
+            <td>Y/N</td>
+            <td>#cig/day</td>
+            <td>Y/N</td>
+            <td>Y/N</td>
+            <td>Y/N</td>
+            <td class="rotate"><div><span>Not Asthma</span></div></td>
+            <td class="rotate"><div><span>Intermittent</span></div></td>
+            <td class="rotate"><div><span>Mild persistent</span></div></td>
+            <td class="rotate"><div><span>Mod persistent</span></div></td>
+            <td class="rotate"><div><span>Severe persistent</span></div></td>
+            <td class="rotate"><div><span>Uncontrolled</span></div></td>
+            <td class="rotate"><div><span>Inhaler B-agonist</span></div></td>
+            <td class="rotate"><div><span>Inhaled steroid</span></div></td>
+            <td class="rotate"><div><span>Oral steroid</span></div></td>
+            <td class="rotate"><div><span>Other</span></div></td>
+        </tr>
+    </thead>
+    <tbody id="visit_body">
+        
+    </tbody>
 </table>
 <table width="100%" style="margin-bottom:2%;margin-top:2%">
     <tr>
@@ -289,6 +288,17 @@
         <td></td>
     </tr>
 </table>
+</div>
+</div>
+<script type="text/javascript">
+    loadCardDashboard();
+        //loadCardData();
+</script>
+<div style="background-color: rgb(51, 51, 51); height: 80px; overflow: hidden; padding: 0px;">&nbsp;
+    <button class="green" style="float: right; margin: 10px 15px 15px; min-width: 140px;" id="nextButton"
+            onclick="window.parent.dashboard.exitNavPanel();">
+        Finish
+    </button>
 </div>
 </body>
 </html>

@@ -1,11 +1,12 @@
-P.1.  ASTHMA VISIT [program:: ASTHMA PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;asthma]
+P.1. ASTHMA VISIT [program:: ASTHMA PROGRAM$$ scope:: EXISTS$$includejs:: touchScreenToolkit;asthma]
+
 Q.1.1. Visit Date [pos::0$$field_type::date]
 
 Q.1.2. Planned Visit? [pos::1$$tt_requirenextclick::false]
 O.1.2.1. Yes
 O.1.2.2. No
 
-Q.1.3. Weight (Kg) [pos::2$$field_type::number$$min::1$$max::200]
+Q.1.3. Weight (kg) [pos::2$$field_type::number$$min::1$$max::200]
 
 Q.1.4. Day sx [pos::3$$field_type::number]
 
@@ -46,7 +47,7 @@ O.1.13.2. Intemittent
 O.1.13.3. Mild persistent
 O.1.13.4. Mod persistent
 O.1.13.5. Severe persistent
-O.1.13.2. Uncontrolled
+O.1.13.6. Uncontrolled
 
 
 Q.1.14. Treatment [pos::13$$id::visit_treament$$tt_requirenextclick::false]

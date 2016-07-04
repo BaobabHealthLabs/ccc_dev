@@ -101,7 +101,7 @@ function loadSeedData(eCallback) {
                                     encounter_type[0] + "', '" + encounter_type[1] + "', 1, NOW(), 0, '" + uuid.v1() + "')")
                                     .then(function (record) {
 
-                                        if (!existingEncounterTypes.includes(encounter_type[0]))
+                                        /*if (!existingEncounterTypes.includes(encounter_type[0]))
                                             existingEncounterTypes.push(encounter_type[0]);
 
                                         fs.writeFile("./encounter_types.json", JSON.stringify(existingEncounterTypes), function (err) {
@@ -114,7 +114,7 @@ function loadSeedData(eCallback) {
 
                                             callback();
 
-                                        });
+                                        });*/
 
                                     })
                                     .catch(function (err) {
@@ -171,7 +171,7 @@ function loadSeedData(eCallback) {
                                     patient_identifier_type[0] + "', '" + patient_identifier_type[1] + "', 1, NOW(), 0, '" + uuid.v1() + "')")
                                     .then(function (record) {
 
-                                        if (!existingPatientIdentifierTypes.includes(patient_identifier_type[0]))
+                                        /*if (!existingPatientIdentifierTypes.includes(patient_identifier_type[0]))
                                             existingPatientIdentifierTypes.push(patient_identifier_type[0]);
 
                                         fs.writeFile("./patient_identifier_types.json", JSON.stringify(existingPatientIdentifierTypes), function (err) {
@@ -185,7 +185,7 @@ function loadSeedData(eCallback) {
 
                                             callback();
 
-                                        });
+                                        });*/
 
                                     })
                                     .catch(function (err) {
@@ -240,7 +240,7 @@ function loadSeedData(eCallback) {
                                     person_attribute_type[0] + "', '" + person_attribute_type[1] + "', 1, NOW(), 0, '" + uuid.v1() + "')")
                                     .then(function (record) {
 
-                                        if (!existingPersonAttributeTypes.includes(person_attribute_type[0]))
+                                        /*if (!existingPersonAttributeTypes.includes(person_attribute_type[0]))
                                             existingPersonAttributeTypes.push(person_attribute_type[0]);
 
                                         fs.writeFile("./person_attribute_types.json", JSON.stringify(existingPersonAttributeTypes), function (err) {
@@ -254,7 +254,7 @@ function loadSeedData(eCallback) {
 
                                             callback();
 
-                                        });
+                                        });*/
 
                                     })
                                     .catch(function (err) {
@@ -423,7 +423,7 @@ function loadSeedData(eCallback) {
                                             concept_id + ", '" + concept + "', 'en', 1, NOW(), 0, '" + uuid.v1() + "', 'FULLY_SPECIFIED')")
                                             .then(function (name) {
 
-                                                if (!existingConcepts.includes(concept))
+                                                /*if (!existingConcepts.includes(concept))
                                                     existingConcepts.push(concept);
 
                                                 fs.writeFile("./concepts.json", JSON.stringify(existingConcepts), function (err) {
@@ -437,7 +437,7 @@ function loadSeedData(eCallback) {
 
                                                     callback();
 
-                                                });
+                                                });*/
 
                                             })
                                             .catch(function (err) {

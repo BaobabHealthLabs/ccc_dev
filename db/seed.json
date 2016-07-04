@@ -25,7 +25,12 @@
         ["COMPLICATIONS", "Patient complications encounter"],
         ["TREATMENTS", "Patient treatments encounter"],
         ["HIV/ART STATUS", "Patient HIV/ART status encounter"],
-        ["DIABETES TEST", "Diabetes tests encounter"]
+        ["DIABETES TEST", "Diabetes tests encounter"],
+        ["ASTHMA PATIENT OVERVIEW","Asthma Patient Overview"],
+        ["ASTHMA VISIT", "Asthma Visit"],
+        ["EPILEPSY INITIAL QUESTIONS","Epilepsy Initial Questions"],
+        ["ASTHMA INITIAL QUESTIONS","Asthma Initial Questions"]
+
     ],
     "patient_identifier_types": [
         ["DTM Number", "Diabetes clinic number"],
@@ -177,7 +182,7 @@
         "Secondhand smoking Date",
         "Visit Date",
         "Planned Visit?",
-        "Weight (Kg)",
+        "Weight (kg)",
         "Height (cm)",
         "Day sx",
         "Night sx",
@@ -200,6 +205,8 @@
         "Hospitalized since a last visit?",
         "Is patient pregnant?",
         "On family planing?",
-        "Seizure since last visit?"
+        "Seizure since last visit?",
+        "Epilepsy Diagnosis Date",
+        "Asthma Diagnosis Date"
     ]
 }

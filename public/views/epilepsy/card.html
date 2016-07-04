@@ -61,7 +61,7 @@
         border: 2px solid black;
         padding: 2%;
         text-align: center;
-        
+
     }
     
 </style>
@@ -73,7 +73,7 @@
         <td>Epilepsy</td>
         <td>Version 1</td>
         <td>Transfer-In Date</td>
-        <td style="border:1px solid black;width:12%" id="trasnfer_in_date"></td>
+        <td style="border:1px solid black;width:12%" id="transfer_in_date"></td>
         <td>NCD Reg no</td>
         <td style="border:1px solid black;width:12%" id="ncd_reg_no"></td>
         <td>Year</td>
@@ -116,7 +116,7 @@
     </tr>
     <tr >
         <td rowspan="2">Physical Address</td>
-        <td colspan="3"></td>
+        <td colspan="3" id="address"></td>
         <td ><span class="circle" id="myclonic_yes">Y</span></td>
         <td ><span class="circle" id="myclonic_no">N</span></td>
         <td>Myclonic</td>
@@ -278,9 +278,9 @@
         <td><span class="circle" id="emotional_stress_anger_boredom_no">N</span></td>
         <td><span class="circle" id="emotional_stress_anger_boredom_unk">Unk</span></td>
         <td colspan="5">Emotional Stress/ Anger/ Boredom</td>
-        <td><span class="square" id="emotional_stress_anger_boredom_complications"></td>
+        <td><span class="square" id="status_epilepticus_complications"></td>
         <td>Status Epilepticus</td>
-        <td>Date:</td>
+        <td>Date:<span id="status_epilepticus_date"></span></td>
     </tr>
     <tr>
         <td><span class="circle" id="drowsiness_yes">Y</span></td>
@@ -325,7 +325,7 @@
         <td colspan="5">Menstruation(For women of reproductive age)</td>
         <td><span class="square" id="other_complications"></span></td>
         <td>Other</td>
-        <td>Date: <span id="other_complications_date"></span></td>
+        <td>Date: <span id="other_date"></span></td>
     </tr>
 </table>
 <table width="100%" class="card" id="visits">
