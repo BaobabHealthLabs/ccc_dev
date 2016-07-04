@@ -830,11 +830,15 @@ function saveData(data, callback) {
 
                 var keys = Object.keys(data.data.obs);
 
-                async.each(keys, function (group, oCallback) {
+                var obsMappings = {};
+
+                var obsOutstanding = {};
+
+                async.eachSeries(keys, function (group, oCallback) {
 
                     var cKeys = Object.keys(data.data.obs[group]);
 
-                    async.each(cKeys, function (concept, iOCallback) {
+                    async.eachSeries(cKeys, function (concept, iOCallback) {
 
                         var category = "value_text";
 
@@ -848,19 +852,101 @@ function saveData(data, callback) {
 
                         }
 
+                        var group_id;
+
+                        var parent;
+
+                        if (typeof(data.data.obs[group][concept]) == typeof(Object())) {
+
+                            var group_id = obsMappings[concept];
+
+                            console.log(obsMappings);
+
+                            console.log(group_id);
+
+                            var parent = String(concept);
+
+                            var obs = String(Object.keys(data.data.obs[group][concept])[0]);
+
+                            var value = String(data.data.obs[group][concept][obs]);
+
+                            concept = obs;
+
+                            data.data.obs[group][concept] = value;
+
+                        }
+
                         var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, obs_datetime, location_id, " +
-                            category + "," +
+                            (group_id ? "obs_group_id, " : "") + category + "," +
                             " creator, date_created, uuid) VALUES (\"" + patient_id + "\", (SELECT concept_id FROM concept_name " +
                             "WHERE name = \"" + concept + "\" AND voided = 0 LIMIT 1), \"" + encounter_id + "\", NOW(), " +
                             "(SELECT location_id FROM location WHERE name = \"" + (data.data.location ? data.data.location :
-                            "Unknown") + "\"), \"" + data.data.obs[group][concept] + "\", (SELECT user_id FROM users WHERE username = \"" +
-                            data.data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
+                            "Unknown") + "\"), \"" + (group_id ? group_id + "\", \"" : "") + data.data.obs[group][concept] +
+                            "\", (SELECT user_id FROM users WHERE username = \"" + data.data.userId + "\"), NOW(), \"" +
+                            uuid.v1() + "\")";
+
+                        console.log(sql);
 
                         if (data.data.obs[group][concept] && data.data.obs[group][concept].length > 0) {
 
                             queryRaw(sql, function (res) {
 
-                                console.log(concept.trim().toLowerCase());
+                                if (res[0].insertId) {
+
+                                    obsMappings[concept.trim()] = res[0].insertId;
+
+                                    if (parent && parent != concept && !group_id) {
+
+                                        if (!obsOutstanding[parent]) {
+
+                                            obsOutstanding[parent] = [];
+
+                                        }
+
+                                        obsOutstanding[parent].push(res[0].insertId)
+
+                                    }
+
+                                    console.log("obsOutstanding: ");
+
+                                    console.log(obsOutstanding);
+
+                                    if (obsOutstanding[concept] && obsOutstanding[concept].length > 0) {
+
+                                        var count = obsOutstanding[concept].length;
+
+                                        var counter = 0;
+
+                                        async.whilst(function () {
+
+                                            return counter < count;
+
+                                        }, function (next) {
+
+                                            var sql = "UPDATE obs SET obs_group_id = '" + res[0].insertId +
+                                                "' WHERE obs_id = '" + obsOutstanding[concept][counter] + "'";
+
+                                            console.log(sql);
+
+                                            queryRaw(sql, function (result) {
+
+                                                console.log(result[0].affectedRows);
+
+                                                obsOutstanding[concept].splice(String(obsOutstanding[concept][counter]), 1);
+
+                                                counter++;
+
+                                                next();
+
+                                            });
+
+                                        }, function (err) {
+
+                                        });
+
+                                    }
+
+                                }
 
                                 if (concept.trim().toLowerCase() == "age") {
 
@@ -6507,6 +6593,20 @@ app.get("/static_locations", function (req, res) {
     res.send(results);
 
 })
+
+app.post("/test", function (req, res) {
+
+    var json = req.body;
+
+    saveData(json, function (data) {
+
+        console.log(data);
+
+        res.status(200).json({result: ""});
+
+    })
+
+});
 
 app.get("/patient/:id", function (req, res) {
     res.sendFile(__dirname + "/public/views/patient.html");
