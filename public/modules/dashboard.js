@@ -3769,10 +3769,6 @@ var dashboard = ({
 
         if (dashboard.socket && data) {
 
-            console.log(data);
-
-            // return;
-
             var patient_id = dashboard.getCookie("patient_id");
 
             data.data.patient_id = patient_id.trim();

@@ -668,12 +668,13 @@ function voidConcept(data, callback) {
 
         console.log(Object.keys(data));
 
-        var sql = "SELECT encounter_id FROM obs WHERE voided = 0 AND uuid = \"" + data.uuid + "\"";
+        var sql = "SELECT obs_id, encounter_id FROM obs WHERE voided = 0 AND uuid = \"" + data.uuid + "\"";
 
         queryRaw(sql, function (encounter) {
 
             var sql = "UPDATE obs SET voided = 1, voided_by = (SELECT user_id FROM users WHERE username = \"" + data.username +
-                "\"), date_voided = NOW(), void_reason = \"Patient dashboard data void.\" WHERE uuid = \"" + data.uuid + "\"";
+                "\"), date_voided = NOW(), void_reason = \"Patient dashboard data void.\" WHERE uuid = \"" + data.uuid +
+                "\" OR obs_group_id = '" + encounter[0][0].obs_id + "'";
 
             queryRaw(sql, function (obs) {
 
@@ -866,7 +867,7 @@ function saveData(data, callback) {
 
                             var parent = String(concept);
 
-                            var obs = String(Object.keys(data.data.obs[group][concept])[0]);
+                            var obs = String(Object.keys(data.data.obs[group][concept])[0]).replace(/\_/g, " ");
 
                             var value = String(data.data.obs[group][concept][obs]);
 
