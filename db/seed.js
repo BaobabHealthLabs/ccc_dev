@@ -116,6 +116,8 @@ function loadSeedData(eCallback) {
 
                                         });*/
 
+                                        callback();
+
                                     })
                                     .catch(function (err) {
 
@@ -187,6 +189,8 @@ function loadSeedData(eCallback) {
 
                                         });*/
 
+                                        callback();
+
                                     })
                                     .catch(function (err) {
 
@@ -255,6 +259,8 @@ function loadSeedData(eCallback) {
                                             callback();
 
                                         });*/
+
+                                        callback();
 
                                     })
                                     .catch(function (err) {
@@ -438,6 +444,8 @@ function loadSeedData(eCallback) {
                                                     callback();
 
                                                 });*/
+
+                                                callback();
 
                                             })
                                             .catch(function (err) {
