@@ -152,7 +152,6 @@ function patientOverview(encounter_data){
 
 	for(var i = 0 ; i < concept_names.length ; i++){
 
-		
 
 		if(concept_names[i].includes("Date") || concept_names[i].includes("date")){
 
@@ -164,7 +163,7 @@ function patientOverview(encounter_data){
 
 			element_id_prefix = element_id_prefix.replace("/","").replace("__","_").replace("?","");
 
-						
+					
 			__$(element_id_prefix).innerHTML = new Date(encounter_data[concept_names[i]].response.value).format();
 
 
@@ -177,14 +176,14 @@ function patientOverview(encounter_data){
 
 				case "Diagnosis":
 
-					var response = encounter_data[concept_names[i]].response.value;
+					var response = encounter_data[concept_names[i]].response.value.split(",");
+		
 
-
-					if(response =="COPD"){
+					if(response.indexOf("COPD") >= 0){
 						__$("copd").style.background ="red";
 					}
 
-					if(response =="Asthma"){
+					if(response.indexOf("Asthma") >=0){
 						__$("asthma").style.background ="red";
 					}
 
@@ -211,7 +210,9 @@ function patientOverview(encounter_data){
 					break;
 
 				case "Family History of Asthma?":
-						var element_id_prefix = concept_names[i].trim().toLowerCase()
+
+						var element_id_prefix = concept_names[i].trim().toLowerCase();
+
 						element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
 			
 						element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
@@ -224,7 +225,9 @@ function patientOverview(encounter_data){
 					break;
 
 				case "Family History of COPD?":
-						var element_id_prefix = concept_names[i].trim().toLowerCase()
+
+						var element_id_prefix = concept_names[i].trim().toLowerCase();
+
 						element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
 			
 						element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
@@ -256,8 +259,6 @@ function patientOverview(encounter_data){
 					break;
 				case "Chronic dry cough duration":
 
-				console.log(concept_names[i]);
-
 						var element_id_prefix = concept_names[i].trim().toLowerCase()
 						element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
 			
@@ -271,7 +272,7 @@ function patientOverview(encounter_data){
 					break;
 
 				case "Chronic dry cough Age onset":
-						console.log(concept_names[i]);
+						
 
 						var element_id_prefix = concept_names[i].trim().toLowerCase()
 						element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
@@ -292,11 +293,67 @@ function patientOverview(encounter_data){
 
 }
 
+function asthmaVisits(encounter_data,visitDate){
+
+	var visitRow = {
+		"Visit Date": (new Date(visitDate)).format(),
+		"Planned Visit?":"",
+        "Weight (kg)": "",
+        "Day sx":"",
+        "Night sx": "",
+        "Beta-agonist inhaler use: frequency": "",
+        "Steroid inhaler daily?":"",
+        "Number of cigarette per day?":"",
+        "Passive smoking?":"",
+        "Indoor cooking?":"",
+        "Exacerbation today?":"",
+        "Asthma severity":"",
+        "Treatment":"",
+        "Other Treatment Specify":"",
+        "Comment":""
+
+	}	
+	var weight,height;
+
+	for(var i = 0 ; i < encounter_data.length ; i++){
+
+		var concept = Object.keys(encounter_data[i]);
+		
+
+		if(concept[0]=="Weight (kg)"){
+
+			weight = encounter_data[i][concept[0]].response.value;
+
+		}
+		if(concept[0]=="Height (cm)"){
+
+
+
+			height = encounter_data[i][concept[0]].response.value;
+
+			continue;
+
+		}
+		if(concept[0]=="Smoke?"){
+
+			continue;
+
+		}
+
+		visitRow[concept[0]] = encounter_data[i][concept[0]].response.value;
+
+	}
+
+	
+	visitRows.push(visitRow);
+
+}
+
 function drawResponse(encounter,encounter_data,visit){
 
-	if(encounter=="EPILEPSY VISIT"){
+	if(encounter=="ASTHMA VISIT"){
 		
-		epilepsyVisits(encounter_data,visit);
+		asthmaVisits(encounter_data,visit);
 
 		return;
 
@@ -379,6 +436,289 @@ function loadCardDashboard(){
 
 		}
 		
+
+	}
+
+
+	//Visits Table
+	for(var i = 0 ; i < visitRows.length; i++){
+
+		var concept_keys = Object.keys(visitRows[i]);
+
+		var tr = document.createElement("tr");
+
+		var height, weight;
+
+
+		for(var j = 0 ; j < concept_keys.length ; j++){
+			
+			var response = visitRows[i][concept_keys[j]];
+			
+			if(concept_keys[j]=="Beta-agonist inhaler use: frequency"){
+
+				
+
+				var td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="day"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="wk"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="mo"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="day"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				continue;
+
+			}
+
+			if(concept_keys[j]=="Asthma severity"){
+
+				var td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="Not Asthma"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="Intemittent"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="Mild persistent"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="Mod persistent"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="Severe persistent"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="Uncontrolled"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				
+
+				continue;
+
+			}
+
+			if(concept_keys[j]=="Treatment"){
+
+				var td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="Inhaled B-agonist"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="Inhaled steroid"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="Oral steroid"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+
+				var span  = document.createElement("span");
+
+				span.setAttribute("class", "square");
+
+				if(response =="Other"){
+
+					span.style.background ="red";
+
+				}
+
+				td.appendChild(span);
+
+				tr.appendChild(td);
+
+				continue;
+
+			}
+
+			if(concept_keys[j]=="Other Treatment Specify"){
+
+				continue;
+
+			}
+			if(concept_keys[j]=="Comment"){
+
+				continue;
+
+			}
+			var td = document.createElement("td");
+			td.innerHTML = visitRows[i][concept_keys[j]];
+			tr.appendChild(td);
+
+		}
+
+		__$("visit_body").appendChild(tr);
+
 
 	}
 

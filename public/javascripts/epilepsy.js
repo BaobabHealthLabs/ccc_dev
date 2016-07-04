@@ -1083,7 +1083,7 @@ function loadCardDashboard(){
 
 	}
 
-	//Visit
+	//Visits Table
 	for(var i = 0 ; i < visitRows.length; i++){
 
 		var concept_keys = Object.keys(visitRows[i]);

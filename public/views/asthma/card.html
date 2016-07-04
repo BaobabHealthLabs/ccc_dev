@@ -93,7 +93,7 @@
         <td colspan="3" id="patient_name"></td>
         <td rowspan="2">Diagnosis</td>
         <td>Asthma<span class="square" id="asthma"></span></td>
-        <td>Date:</td>
+        <td>Date: <span id="asthma_diagnosis_date"></span></td>
         <td rowspan="2">Family History</td>
         <td>Asthma</td>
         <td id = "family_history_of_asthma"></td>
@@ -118,7 +118,7 @@
         <td colspan="3">Near: <span id="address"></span></td>
         <td rowspan="5">Patient History & Exposure</td>
         <td>HIV : <span class="circle" id="r" style="float:right">R</span> <span class="circle" id="nr" style="float:right; margin-right:20%;">NR</span></td>
-        <td>ART Start Date: <span id="art_start_date"></span></td>
+        <td>ART Start Date: <span id="date_antiretrovirals_started"></span></td>
         <td colspan="4">TB Smear pos Smear neg EPTB Year:</td>
     </tr>
     <tr>
@@ -149,82 +149,59 @@
         <td>Agrees to FUP</td>
         <td>N Y</td>
         <td colspan="2"></td>
-        <td>Occupation Exposure<span class="square" id="occupation_exposure"></td>
+        <td>Occupation Exposure<span class="square" id="occupational_exposure"></td>
         <td>Date: <span id="occupation_exposure_date"></span></td>
         <td colspan="4"></td>
     </tr>
 </table>
 <table width="100%" class="card">
-    <tr>
-        <td rowspan="2">Visit Date</td>
-        <td>Planed visit?</td>
-        <td>WT</td>
-        <td>Day sx</td>
-        <td>Night sx</td>
-        <td colspan="4">Beta-agonist inhaler use: frequesncy</td>
-        <td>Steroid inhaler daily?</td>
-        <td>Smoking</td>
-        <td>Passive</td>
-        <td>Indoor cooking</td>
-        <td>Exacerbation today?</td>
-        <td colspan="6">Asthma severity</td>
-        <td colspan="4">Treatment</td>
-        <td rowspan="2">Comments</td>
-        <td rowspan="2">Next Appointment</td>
-    </tr>
-     <tr>
-        <td>Y/N</td>
-        <td>kg</td>
-        <td>#/week</td>
-        <td>#/week</td>
-        <td class="rotate"><div><span>day</span></div></td>
-        <td class="rotate"><div><span>wk</span></div></td>
-        <td class="rotate"><div><span>mo</span></td>
-        <td class="rotate"><div><span>yr</span></div></td>
-        <td>Y/N</td>
-        <td>#cig/day</td>
-        <td>Y/N</td>
-        <td>Y/N</td>
-        <td>Y/N</td>
-        <td class="rotate"><div><span>Not Asthma</span></div></td>
-        <td class="rotate"><div><span>Intermittent</span></div></td>
-        <td class="rotate"><div><span>Mild persistent</span></div></td>
-        <td class="rotate"><div><span>Mod persistent</span></div></td>
-        <td class="rotate"><div><span>Severe persistent</span></div></td>
-        <td class="rotate"><div><span>Uncontrolled</span></div></td>
-        <td class="rotate"><div><span>Inhaler B-agonist</span></div></td>
-        <td class="rotate"><div><span>Inhaled steroid</span></div></td>
-        <td class="rotate"><div><span>Oral steroid</span></div></td>
-        <td class="rotate"><div><span>Other</span></div></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+    <thead>
+        <tr>
+            <td rowspan="2">Visit Date</td>
+            <td>Planed visit?</td>
+            <td>WT</td>
+            <td>Day sx</td>
+            <td>Night sx</td>
+            <td colspan="4">Beta-agonist inhaler use: frequesncy</td>
+            <td>Steroid inhaler daily?</td>
+            <td>Smoking</td>
+            <td>Passive</td>
+            <td>Indoor cooking</td>
+            <td>Exacerbation today?</td>
+            <td colspan="6">Asthma severity</td>
+            <td colspan="4">Treatment</td>
+            <td rowspan="2">Comments</td>
+            <td rowspan="2">Next Appointment</td>
+        </tr>
+        <tr>
+            <td>Y/N</td>
+            <td>kg</td>
+            <td>#/week</td>
+            <td>#/week</td>
+            <td class="rotate"><div><span>day</span></div></td>
+            <td class="rotate"><div><span>wk</span></div></td>
+            <td class="rotate"><div><span>mo</span></td>
+            <td class="rotate"><div><span>yr</span></div></td>
+            <td>Y/N</td>
+            <td>#cig/day</td>
+            <td>Y/N</td>
+            <td>Y/N</td>
+            <td>Y/N</td>
+            <td class="rotate"><div><span>Not Asthma</span></div></td>
+            <td class="rotate"><div><span>Intermittent</span></div></td>
+            <td class="rotate"><div><span>Mild persistent</span></div></td>
+            <td class="rotate"><div><span>Mod persistent</span></div></td>
+            <td class="rotate"><div><span>Severe persistent</span></div></td>
+            <td class="rotate"><div><span>Uncontrolled</span></div></td>
+            <td class="rotate"><div><span>Inhaler B-agonist</span></div></td>
+            <td class="rotate"><div><span>Inhaled steroid</span></div></td>
+            <td class="rotate"><div><span>Oral steroid</span></div></td>
+            <td class="rotate"><div><span>Other</span></div></td>
+        </tr>
+    </thead>
+    <tbody id="visit_body">
+        
+    </tbody>
 </table>
 <table width="100%" style="margin-bottom:2%;margin-top:2%">
     <tr>
