@@ -892,7 +892,7 @@ function saveData(data, callback) {
 
                             queryRaw(sql, function (res) {
 
-                                if (res[0].insertId) {
+                                if (res[0] && res[0].insertId) {
 
                                     obsMappings[concept.trim()] = res[0].insertId;
 
