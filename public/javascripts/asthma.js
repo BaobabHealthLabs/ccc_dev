@@ -424,6 +424,20 @@ function loadCardDashboard(){
 
     __$("address").innerHTML = address;	
 
+
+    //Gardian Data
+
+    var guardain = data.relationships;
+    
+    if(guardain.length > 0){
+
+   		__$("guardian_name").innerHTML = guardain[0].relative_name;	
+
+   		__$("relation_to_patient").innerHTML =  guardain[0].relative_type;
+   	}
+
+    //Program Data
+
     var patient_programs = window.parent.dashboard.data.data.programs["ASTHMA PROGRAM"].patient_programs;
 
 	var patient_program_keys = Object.keys(patient_programs);

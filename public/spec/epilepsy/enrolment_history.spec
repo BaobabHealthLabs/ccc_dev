@@ -1,7 +1,6 @@
 P.1. PATIENT HISTORY AT ENROLMENT [program:: EPILEPSY PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;epilepsy]
-Q.1.1. Date of onset [pos:: 0$$field_type:: date]
 
-Q.1.2. Age at onset [pos:: 1$$field_type::number]
+Q.1.1. Date of onset [id::date_on_field$$pos:: 0$$field_type::birthdate]
 
 Q.1.3. Marital Status [pos:: 2]
 O.1.3.1. Single
