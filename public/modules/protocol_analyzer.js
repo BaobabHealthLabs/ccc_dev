@@ -46,7 +46,7 @@ Object.defineProperty(Date.prototype, "format", {
 
 var protocol = ({
 
-    version: "0.1.0",
+    version: "0.1.1",
 
     setCookie: function (cname, cvalue, exdays) {
 
@@ -410,7 +410,8 @@ var protocol = ({
                     td2.appendChild(select);
 
                     // TODO: Need to create a way to assign data type to name to associate to the right data storage type
-                    select.name = "data.obs." + fieldType + "." + (value["attributes"] ? (value["attributes"]["concept"] ?
+                    select.name = "data.obs." + fieldType + "." + (value["attributes"] ? (value["attributes"]["parent"] ?
+                        value["attributes"]["parent"].replace(/\s/g, "_") + "." : "") : "") + (value["attributes"] ? (value["attributes"]["concept"] ?
                         value["attributes"]["concept"] : value["question"].trim()) : value["question"].trim()) + "" +
                         (value["attributes"] ? (value["attributes"]["multiple"] ? "[]" : "") : "");
 
@@ -483,7 +484,8 @@ var protocol = ({
                     td2.appendChild(input);
 
                     // TODO: Need to create a way to assign data type to name to associate to the right data storage type
-                    input.name = "data.obs." + fieldType + "." + (value["attributes"] ? (value["attributes"]["concept"] ?
+                    input.name = "data.obs." + fieldType + "." + (value["attributes"] ? (value["attributes"]["parent"] ?
+                        value["attributes"]["parent"].replace(/\s/g, "_") + "." : "") : "") + (value["attributes"] ? (value["attributes"]["concept"] ?
                         value["attributes"]["concept"] : value["question"].trim()) : value["question"].trim()) + "" +
                         (value["attributes"] ? (value["attributes"]["multiple"] ? "[]" : "") : "");
 
