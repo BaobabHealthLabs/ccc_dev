@@ -657,20 +657,18 @@ function hivStatus(encounter_data){
 
 		if(status=="r"){
 
+			__$("r").style.border ="2px solid #ffffff";
+
+			__$("nr").style.border ="2px solid #ffffff";
+
 			__$(status).style.border ="2px solid red";
 
 		}
 		if(status=="nr"){
 
-			__$(status).style.border ="2px solid red";
-			
-		}
-		if(status=="u"){
+			__$("r").style.border ="2px solid #ffffff";
 
-			__$(status).style.border ="2px solid red";
-			
-		}
-		if(status=="vdrl"){
+			__$("nr").style.border ="2px solid #ffffff";
 
 			__$(status).style.border ="2px solid red";
 			
@@ -678,6 +676,26 @@ function hivStatus(encounter_data){
 
 	}
 
+}
+
+function vdrlStatus(encounter_data){
+
+	var concept_names = Object.keys(encounter_data);
+
+	for(var i = 0 ; i < concept_names.length ; i++){
+
+		var status = encounter_data[concept_names[i]].response.value.toLowerCase();
+
+		__$("vdrlr").style.border ="2px solid #ffffff";
+
+		__$("vdrlnr").style.border ="2px solid #ffffff";
+
+		__$("vdrlu").style.border ="2px solid #ffffff";
+
+		__$("vdrl"+status).style.border ="2px solid red";
+	
+
+	}
 }
 
 function medicalSurgicalHistory(encounter_data){
@@ -1178,6 +1196,11 @@ function drawResponse(encounter,encounter_data,visit){
 				case "HIV/ART STATUS":
 
 					hivStatus(encounter_data[i]);
+
+					break;
+				case "VDRL STATUS":
+
+					vdrlStatus(encounter_data[i]);
 
 					break;
 

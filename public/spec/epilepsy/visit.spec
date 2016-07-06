@@ -55,7 +55,7 @@ Q.1.16. Hospitalized since a last visit? [pos::15$$tt_requirenextclick::false]
 O.1.16.1. Yes
 O.1.16.2. No
 
-Q.1.17. Is patient pregnant? [pos::16$$tt_requirenextclick::false]
+Q.1.17. Is patient pregnant? [pos::16$$tt_requirenextclick::false$$condition::patientIsANC()]
 O.1.17.1. Yes
 O.1.17.2. No
 

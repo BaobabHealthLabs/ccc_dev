@@ -25,6 +25,7 @@
         ["COMPLICATIONS", "Patient complications encounter"],
         ["TREATMENTS", "Patient treatments encounter"],
         ["HIV/ART STATUS", "Patient HIV/ART status encounter"],
+        ["VDRL STATUS","Patient VDRL status encounter"],
         ["DIABETES TEST", "Diabetes tests encounter"],
         ["ASTHMA PATIENT OVERVIEW","Asthma Patient Overview"],
         ["ASTHMA VISIT", "Asthma Visit"],
@@ -208,6 +209,7 @@
         "Seizure since last visit?",
         "Epilepsy Diagnosis Date",
         "Asthma Diagnosis Date",
-        "Outcome Date"
+        "Outcome Date",
+        "VDRL Status"
     ]
 }
