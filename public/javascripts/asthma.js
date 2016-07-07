@@ -146,6 +146,44 @@ function loadCheckConditions(){
 	}
 }
 
+function existingPatient() {
+
+    var existing = false;
+
+    if(window.parent.dashboard && window.parent.dashboard.data && window.parent.dashboard.data.data) {
+
+        if(window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA INITIAL QUESTIONS")) {
+
+            existing = true;
+
+        } else {
+
+            existing = false;
+
+            if(!__$("data.create_clinic_number")) {
+
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "data.create_clinic_number";
+                input.id = "data.create_clinic_number";
+                input.value = window.parent.dashboard.modules[getCookie("currentProgram")].clinicPrefix;
+
+                if (__$("data")) {
+
+                    __$("data").appendChild(input);
+
+                }
+
+            }
+
+        }
+
+    }
+
+    return existing;
+
+}
+
 function patientOverview(encounter_data){
 
 	var concept_names = Object.keys(encounter_data);
@@ -423,6 +461,20 @@ function loadCardDashboard(){
     			+data.addresses[0]["Current T/A"]+",\t"+data.addresses[0]["Current Village"]+"\tvillage";
 
     __$("address").innerHTML = address;	
+
+
+    //Gardian Data
+
+    var guardain = data.relationships;
+    
+    if(guardain.length > 0){
+
+   		__$("guardian_name").innerHTML = guardain[0].relative_name;	
+
+   		__$("relation_to_patient").innerHTML =  guardain[0].relative_type;
+   	}
+
+    //Program Data
 
     var patient_programs = window.parent.dashboard.data.data.programs["ASTHMA PROGRAM"].patient_programs;
 

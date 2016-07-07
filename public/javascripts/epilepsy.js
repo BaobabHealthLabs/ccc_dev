@@ -218,6 +218,8 @@ function loadCheckConditions(){
 	}
 }
 
+
+
 function loadCardData(){
 	var id = window.location.href.match(/\/([^\/]+)$/)[1];
 
@@ -532,6 +534,45 @@ function loadCardData(){
 	});
 }
 
+function existingPatient() {
+
+    var existing = false;
+
+    if(window.parent.dashboard && window.parent.dashboard.data && window.parent.dashboard.data.data) {
+
+        if(window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "EPILEPSY INITIAL QUESTIONS")) {
+
+            existing = true;
+
+        } else {
+
+            existing = false;
+
+            if(!__$("data.create_clinic_number")) {
+
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "data.create_clinic_number";
+                input.id = "data.create_clinic_number";
+                input.value = window.parent.dashboard.modules[getCookie("currentProgram")].clinicPrefix;
+
+                if (__$("data")) {
+
+                    __$("data").appendChild(input);
+
+                }
+
+            }
+
+        }
+
+    }
+
+    return existing;
+
+}
+
+
 function seizureType(response){
 
 	if(response == "Generalized Epilepsy"){
@@ -616,20 +657,18 @@ function hivStatus(encounter_data){
 
 		if(status=="r"){
 
+			__$("r").style.border ="2px solid #ffffff";
+
+			__$("nr").style.border ="2px solid #ffffff";
+
 			__$(status).style.border ="2px solid red";
 
 		}
 		if(status=="nr"){
 
-			__$(status).style.border ="2px solid red";
-			
-		}
-		if(status=="u"){
+			__$("r").style.border ="2px solid #ffffff";
 
-			__$(status).style.border ="2px solid red";
-			
-		}
-		if(status=="vdrl"){
+			__$("nr").style.border ="2px solid #ffffff";
 
 			__$(status).style.border ="2px solid red";
 			
@@ -637,6 +676,26 @@ function hivStatus(encounter_data){
 
 	}
 
+}
+
+function vdrlStatus(encounter_data){
+
+	var concept_names = Object.keys(encounter_data);
+
+	for(var i = 0 ; i < concept_names.length ; i++){
+
+		var status = encounter_data[concept_names[i]].response.value.toLowerCase();
+
+		__$("vdrlr").style.border ="2px solid #ffffff";
+
+		__$("vdrlnr").style.border ="2px solid #ffffff";
+
+		__$("vdrlu").style.border ="2px solid #ffffff";
+
+		__$("vdrl"+status).style.border ="2px solid red";
+	
+
+	}
 }
 
 function medicalSurgicalHistory(encounter_data){
@@ -876,6 +935,144 @@ function epilepsyPatientOverview(encounter_data){
 
 }
 
+function getAge(birthDate,dateOnset) {
+  var now = dateOnset;
+
+  function isLeap(year) {
+
+    return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+
+  }
+   
+  var days = Math.floor((now.getTime() - birthDate.getTime())/1000/60/60/24);
+
+  var age = 0;
+
+  for (var y = birthDate.getFullYear(); y <= now.getFullYear(); y++){
+
+    var daysInYear = isLeap(y) ? 366 : 365;
+
+    if (days >= daysInYear){
+
+      days -= daysInYear;
+
+      age++;
+      
+    }
+
+  }
+
+  return age;
+
+}
+
+
+function setAgeOnSet(date){
+
+	var data = window.parent.dashboard.data.data;
+
+	var birthDate = new Date(data.birthdate);
+	
+	var dateOnset = new Date(date);
+
+	__$("age_at_onset").innerHTML = getAge(birthDate,dateOnset);
+
+}
+
+function patientIsANC(){
+
+	var patient_is_female = false;
+
+	if(window.parent.dashboard && window.parent.dashboard.data && window.parent.dashboard.data.data) {
+
+        if(window.parent.dashboard.data.data.gender == "F") {
+        	
+        	var now = new Date();
+
+        	var birthdate = new Date(window.parent.dashboard.data.data.birthdate);
+
+        	var age = getAge(birthdate,now);
+
+        	if(age >=13 && age <= 50){
+
+        		patient_is_female = true;
+
+        	}
+
+        }
+
+    }
+
+    return patient_is_female;
+
+}
+
+
+function patientHistoryAtEnrollment(encounter_data){
+
+	var concept_names = Object.keys(encounter_data);
+
+	for(var i = 0 ; i < concept_names.length; i++){
+		
+		var element_id_prefix = concept_names[i].trim().toLowerCase();
+
+		element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+		element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+		element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+		__$(element_id_prefix).innerHTML = encounter_data[concept_names[i]].response.value;
+
+		if(element_id_prefix =="date_of_onset"){
+
+			setAgeOnSet(encounter_data[concept_names[i]].response.value)
+		}
+
+	}
+
+}
+
+function epilepsyOutCome(encounter_data){
+
+	var concept_names = Object.keys(encounter_data);
+
+	for(var i = 0 ; i < concept_names.length; i++){
+		
+		var element_id_prefix = concept_names[i].trim().toLowerCase();
+
+		element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+		element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+		element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+		if(element_id_prefix =="outcome_date" || element_id_prefix =="notes"){
+
+			__$(element_id_prefix).innerHTML = encounter_data[concept_names[i]].response.value;
+
+		}
+		else{
+
+			element_id_prefix =  encounter_data[concept_names[i]].response.value.trim().toLowerCase();
+
+			element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
+			
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
+			__$(element_id_prefix).style.border = "1px dotted red";
+
+			__$(element_id_prefix).style.background = "#96d384";
+
+		}
+
+	}
+
+
+
+}
 function epilepsyVisits(encounter_data,visitDate){
 
 	
@@ -884,7 +1081,7 @@ function epilepsyVisits(encounter_data,visitDate){
 		"Visit Date": (new Date(visitDate)).format(),
         "Weight (kg)": "",
         "BMI":"",
-        "Seizure since last visit": "",
+        "Seizure since last visit?": "",
         "NUMBER OF SEIZURES": "",
         "Any Triggers":"",
         "Alcohol a trigger?":"",
@@ -984,6 +1181,12 @@ function drawResponse(encounter,encounter_data,visit){
 					}
 
 					break;
+
+				case "PATIENT HISTORY AT ENROLMENT":
+
+					patientHistoryAtEnrollment(encounter_data[i]);
+
+					break;
 				case "FAMILY HISTORY":
 
 					familyHistory(encounter_data[i]);
@@ -993,6 +1196,11 @@ function drawResponse(encounter,encounter_data,visit){
 				case "HIV/ART STATUS":
 
 					hivStatus(encounter_data[i]);
+
+					break;
+				case "VDRL STATUS":
+
+					vdrlStatus(encounter_data[i]);
 
 					break;
 
@@ -1033,6 +1241,12 @@ function drawResponse(encounter,encounter_data,visit){
 				case "EPILEPSY VISIT":
 
 					//epilepsyVisits(encounter_data[i],visit);
+
+					break;
+
+				case "UPDATE OUTCOME":
+
+					epilepsyOutCome(encounter_data[i],visit);
 
 					break;
 				
@@ -1076,7 +1290,22 @@ function loadCardDashboard(){
     var address = data.addresses[0]["Current District"] +"\tDistrict, TA\t"
     			+data.addresses[0]["Current T/A"]+",\t"+data.addresses[0]["Current Village"]+"\tvillage";
 
-    __$("address").innerHTML = address;			
+    __$("address").innerHTML = address;		
+
+
+    //Gardian Data
+
+    var guardain = data.relationships;
+    
+    if(guardain.length > 0){
+
+   		__$("guardian_name").innerHTML = guardain[0].relative_name;	
+
+   		__$("relation_to_patient").innerHTML =  guardain[0].relative_type;
+   	}
+
+
+   //Program data
 
 	var patient_programs = window.parent.dashboard.data.data.programs["EPILEPSY PROGRAM"].patient_programs;
 

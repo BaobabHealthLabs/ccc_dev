@@ -5,11 +5,11 @@ Q.1.2. Weight (Kg) [pos::1$$field_type::number]
 
 Q.1.3. Height (cm) [pos::2$$field_type::number]
 
-Q.1.4. Seizure since last visit? [pos::3$$tt_requirenextclick::false]
+Q.1.4. Seizure since last visit? [pos::3$$tt_requirenextclick::false$$id::seizure_since_last_visit]
 O.1.4.1. Yes
 O.1.4.2. No
 
-Q.1.5. Number of seizures [pos::4$$field_type::number]
+Q.1.5. Number of seizures [pos::4$$field_type::number$$condition::__$('seizure_since_last_visit').value=="Yes"]
 
 Q.1.6. Any triggers [pos::5$$tt_requirenextclick::false$$id::triggers]
 O.1.6.1. Yes
@@ -39,7 +39,7 @@ Q.1.12. Stress a trigger? [pos::11$$tt_requirenextclick::false$$condition::__$('
 O.1.12.1. Yes
 O.1.12.2. No
 
-Q.1.13. Menstruation a trigger? [pos::12$$tt_requirenextclick::false$$condition::__$('triggers').value=="Yes"]
+Q.1.13. Menstruation a trigger? [pos::12$$tt_requirenextclick::false$$condition::__$('triggers').value=="Yes" && patientIsANC()]
 O.1.13.1. Yes
 O.1.13.2. No
 
@@ -55,7 +55,7 @@ Q.1.16. Hospitalized since a last visit? [pos::15$$tt_requirenextclick::false]
 O.1.16.1. Yes
 O.1.16.2. No
 
-Q.1.17. Is patient pregnant? [pos::16$$tt_requirenextclick::false]
+Q.1.17. Is patient pregnant? [pos::16$$tt_requirenextclick::false$$condition::patientIsANC()]
 O.1.17.1. Yes
 O.1.17.2. No
 

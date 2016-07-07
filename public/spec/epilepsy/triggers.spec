@@ -19,7 +19,7 @@ Q.1.5. Missed medication a trigger? [pos:: 4$$tt_requirenextclick::false]
 O.1.5.1. Yes
 O.1.5.2. No
 O.1.5.3. Unknown
-Q.1.6. Menstruation a trigger? [pos:: 5]
+Q.1.6. Menstruation a trigger? [pos:: 5$$tt_requirenextclick::false$$condition::patientIsANC()]
 O.1.6.1. Yes
 O.1.6.2. No
 O.1.6.3. Unknown

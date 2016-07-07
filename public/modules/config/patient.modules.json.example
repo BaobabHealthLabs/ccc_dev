@@ -129,6 +129,7 @@
             "Seizure Type": "javascript:dashboard.navPanel('/spec/epilepsy/seizure_type.spec')",
             "Family Histroy": "javascript:dashboard.navPanel('/spec/epilepsy/family_history.spec')",
             "HIV Status" :"javascript:dashboard.navPanel('/spec/epilepsy/hiv_status.spec')",
+            "VDRL Status" :"javascript:dashboard.navPanel('/spec/epilepsy/vdrl_status.spec')",
             "Patient Histroy at Enrolment": "javascript:dashboard.navPanel('/spec/epilepsy/enrolment_history.spec')",
             "Medical and Surgical Histroy": "javascript:dashboard.navPanel('/spec/epilepsy/medical_history.spec')",
             "Pre-ictal Warning": "javascript:dashboard.navPanel('/spec/epilepsy/pre_ictal_warning.spec')",
@@ -145,9 +146,8 @@
         "program": "EPILEPSY PROGRAM",
         "identifiers": ["National id", "EPL Number"],
         "tabs": {
-            "Client Registration": {
-                "encounter": "HTS CLIENT REGISTRATION",
-                "concept": "Age Group"
+            "Epilepsy Initial Questions": {
+                "encounter": "EPILEPSY INITIAL QUESTIONS"
             },
             "Seizure Type": {
                 "encounter": "SEIZURE TYPE"
@@ -158,8 +158,10 @@
             ,
             "HIV Status" :{
             	"encounter": "HIV STATUS"
-            }
-            ,
+            },
+            "VDRL Status":{
+            	"encounter": "VDRL STATUS"
+            },
             "Patient Histroy at Enrolment": {
                 "encounter": "PATIENT HISTORY AT ENROLMENT"
             },
@@ -190,13 +192,15 @@
             "Seizure Type",
             "Family Histroy",
             "HIV Status",
+            "VDRL Status",
             "Patient Histroy at Enrolment",
             "Medical and Surgical Histroy",
             "Pre-ictal Warning",
             "Post-ictal Features",
             "Triggers",
             "Patient Overview",
-            "Epilepsy visit"
+            "Epilepsy visit",
+            "Next Appointment"
         ],
         "clinicPrefix": "EPL"
     }

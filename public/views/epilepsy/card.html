@@ -67,17 +67,17 @@
 </style>
 <body oncontextmenu="return false;" style="margin: 0px;">
 <div id="divMain" style="background-color: rgb(255, 255, 255); overflow: auto; height: calc(100vh - 75px); padding-left:1%; padding-right:1%">
-<table width="100%" id="head_table">
+<table width="100%" id="head_table" style="margin-top:1%">
     <tr >
-        <td>NCD Patient Card<br/><span style="font-size:0.8em;background:lightgreen">Green Card</span></td>
-        <td>Epilepsy</td>
+        <th style="text-align:left">NCD Patient Card<br/><span style="font-size:0.8em;background:lightgreen">Green Card</span></th>
+        <th style="text-align:left">Epilepsy</th>
         <td>Version 1</td>
         <td>Transfer-In Date</td>
-        <td style="border:1px solid black;width:12%" id="transfer_in_date"></td>
+        <td style="border:1px solid black;width:12%;text-align:center" id="transfer_in_date"></td>
         <td>NCD Reg no</td>
-        <td style="border:1px solid black;width:12%" id="ncd_reg_no"></td>
+        <td style="border:1px solid black;width:12%;text-align:center" id="ncd_reg_no"></td>
         <td>Year</td>
-        <td style="border:1px solid black;width:12%" id="year"></td>
+        <td style="border:1px solid black;width:12%;text-align:center" id="year"></td>
     </tr>
 
 </table>
@@ -130,7 +130,7 @@
     <tr >
         <td colspan="3"></td>
         <th colspan="4">Family History</th>
-        <th colspan="3">R NR HIV Status</th>
+        <th><span class="circle" id="r">R</span></th><th><span class="circle" id="nr">NR</span></th><th> HIV Status</th>
         <th colspan="2">ART Start Date:</th>
     </tr>
     <tr >
@@ -140,19 +140,19 @@
         <td rowspan="2"><span class="circle" id="epilepsy_no">N</span></td>
         <td rowspan="2"><span class="circle" id="epilepsy_unk">Unk</span></td>
         <td rowspan="2">Epilepsy</td>
-        <td rowspan="2"><span class="circle" id="r">R</span></td>
-        <td rowspan="2"><span class="circle" id="nr">NR</span></td>
-        <td rowspan="2"><span class="circle" id="u">U</span></td>
-        <td colspan="2" rowspan="2"><span class="circle" id="vdrl">VDRL</span></td>
+        <th rowspan="2"><span class="circle" id="vdrlr">R</span></th>
+        <th rowspan="2"><span class="circle" id="vdrlnr">NR</span></th>
+        <th rowspan="2"><span class="circle" id="vdrlu">U</span></th>
+        <th colspan="2" rowspan="2">VDRL</th>
     </tr>
     <tr >
         <td>Guardian Name</td>
-        <td colspan="3"></td>
+        <td colspan="3" id="guardian_name"></td>
     </tr>
     <tr >
         <td>Guardian Phone</td>
-        <td></td>
-        <td colspan="2">Relation to Patient</td>
+        <td id="guardian_phone"></td>
+        <td colspan="2"><b>Relation to Patient: </b><span id="relation_to_patient"></span></td>
         <td><span class="circle" id="mental_illness_yes">Y</span></td>
         <td><span class="circle" id="mental_illness_no">N</span></td>
         <td><span class="circle" id="mental_illness_unk">Unk</span></td>
@@ -175,7 +175,7 @@
     </tr>
     <tr>
         <td colspan="3">Date of onset (MM/YYY)</td>
-        <td colspan="3" id="date_on_set"></td>
+        <td colspan="3" id="date_of_onset"></td>
         <th colspan="8">Medical and Surgical Histrory</th>
         <th colspan="3">Exposures</th>
     </tr>
@@ -203,7 +203,7 @@
     </tr>
     <tr>
         <td colspan="3">Occupation</td>
-        <td colspan="3" id="occupation"></td>
+        <td colspan="3" id="main_activity"></td>
         <td><span class="circle" id="complications_at_birth_yes">Y</span></td>
         <td><span class="circle" id="complications_at_birth_no">N</span></td>
         <td><span class="circle" id="complications_at_birth_unk">Unk</span></td>
@@ -214,7 +214,7 @@
     </tr>
     <tr>
         <td colspan="3">Education Level</td>
-        <td colspan="3" id="education_level"></td>
+        <td colspan="3" id="highest_level_of_school_completed"></td>
         <td><span class="circle" id="neonatal_infection_cerebral_malaria_meningitis_yes">Y</span></td>
         <td><span class="circle" id="neonatal_infection_cerebral_malaria_meningitis_no">N</span></td>
         <td><span class="circle" id="neonatal_infection_cerebral_malaria_meningitis_unk">Unk</span></td>
@@ -368,27 +368,20 @@
         
     </tbody>
 </table>
-<table width="100%" style="margin-bottom:2%;margin-top:2%">
+<table width="40%" style="margin-top:2%">
     <tr>
-        <th>Outcome:</th>
-        <td>Discharge / Default / Stop Tx / Transfer Out</td>
-        <td>Date:</td>
+        <th style="text-align:left">Outcome:</th>
+        <td id="discharge" style="text-align:center">Discharge </td> <td id="default" style="text-align:center"> Default </td> <td id="treatment_stopped" style="text-align:center"> Stop Tx </td><td id="transfer_out" style="text-align:center"> Transfer Out</td>
+        <td>Date: <span id="outcome_date"></span></td>
     </tr>
-    <tr>
-        <td>Notes</td>
-        <td colspan="2"></td>
-    </tr>
-    <tr >
-        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
-    </tr>
-    <tr >
-        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+</table>
+<table width="100%" style="margin-top:2%;margin-bottom:2%">
+     <tr>
+        <th style="text-align:left">Notes:</th>
+        <td colspan="9"></td>
     </tr>
     <tr >
-        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
-    </tr>
-    <tr >
-        <td colspan="3" style="border-bottom: 1px dotted;height:25px"></td>
+        <td id="notes" colspan="10" style="border-bottom: 1px dotted;height:25px"></td>
     </tr>
 </table>
 </div>

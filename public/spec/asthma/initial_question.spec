@@ -1,5 +1,5 @@
 P.1. ASTHMA INITIAL QUESTIONS [program:: ASTHMA PROGRAM$$ scope:: TODAY$$includejs:: touchScreenToolkit;epilepsy]
-Q.1.1. Is the patient a: [pos:: 0$$ concept:: TYPE OF PATIENT$$ id:: patient_type]
+Q.1.1. Is the patient a: [pos:: 0$$ concept:: TYPE OF PATIENT$$ id:: patient_type$$condition:: !existingPatient()]
 O.1.1.1. New Patient
 O.1.1.2. Transfer in
 O.1.1.3. Temporary Patient
