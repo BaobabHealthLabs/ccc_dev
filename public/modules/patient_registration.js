@@ -1426,7 +1426,7 @@ var patient = ({
 
             var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
                 "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><script " +
-                "src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
+                "src='/javascripts/bht-form2js.js'></script><script language='javascript'>tstUsername = '';" +
                 "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
                 "'javascript:window.parent.patient.unloadChild()'; tt_cancel_show = 'javascript:window.parent.patient.unloadChild()';" +
                 "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +
@@ -1668,7 +1668,7 @@ var patient = ({
         document.head.appendChild(script);
 
         var form2js = document.createElement("script");
-        form2js.setAttribute("src", "/javascripts/form2js.js");
+        form2js.setAttribute("src", "/javascripts/bht-form2js.js");
 
         document.head.appendChild(form2js);
 
@@ -2007,7 +2007,7 @@ var patient = ({
         document.head.appendChild(script);
 
         var form2js = document.createElement("script");
-        form2js.setAttribute("src", "/javascripts/form2js.js");
+        form2js.setAttribute("src", "/javascripts/bht-form2js.js");
 
         document.head.appendChild(form2js);
 

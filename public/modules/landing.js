@@ -1148,7 +1148,7 @@ var landing = ({
 
                 var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
                     "src='" + "/modules/protocol_analyzer.js' defer></script><meta http-equiv='content-type' " +
-                    "content='text/html;charset=UTF-8'/><script src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
+                    "content='text/html;charset=UTF-8'/><script src='/javascripts/bht-form2js.js'></script><script language='javascript'>tstUsername = '';" +
                     "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
                     "'/'; tt_cancel_show = '/';" +
                     "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +

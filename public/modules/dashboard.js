@@ -3690,7 +3690,7 @@ var dashboard = ({
             var html = "<html><head><title></title><base href='" + base + "' /><link rel='stylesheet' type='text/css' " +
                 "href='/stylesheets/style.css' /> <script type='text/javascript' language='javascript' " +
                 "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><script " +
-                "src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
+                "src='/javascripts/bht-form2js.js'></script><script language='javascript'>tstUsername = '';" +
                 "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
                 "\"javascript:window.parent.document.body.removeChild(window.parent.document.getElementById('dashboard.navPanel'))\";tt_cancel_show = " +
                 "\"javascript:window.parent.document.body.removeChild(window.parent.document.getElementById('dashboard.navPanel'))\";" +
