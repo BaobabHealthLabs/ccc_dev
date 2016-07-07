@@ -7,7 +7,7 @@ O.1.2.1. Type 1 Diabetes
 O.1.2.2. Type 2 Diabetes
 O.1.2.3. Unknown
 
-Q.1.3. Secondary diabetes? [pos:: 2$$ tt_requireNextClick:: false]
+Q.1.3. Secondary diabetes? [pos:: 2$$ tt_requireNextClick :: false]
 O.1.3.1. No
 O.1.3.2. Yes
 

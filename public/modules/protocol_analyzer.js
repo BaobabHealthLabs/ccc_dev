@@ -411,7 +411,7 @@ var protocol = ({
 
                     // TODO: Need to create a way to assign data type to name to associate to the right data storage type
                     select.name = "data.obs." + fieldType + "." + (value["attributes"] ? (value["attributes"]["parent"] ?
-                        value["attributes"]["parent"].replace(/\s/g, "_") + "[]." : "") : "") + (value["attributes"] ? (value["attributes"]["concept"] ?
+                        value["attributes"]["parent"] + "[]." : "") : "") + (value["attributes"] ? (value["attributes"]["concept"] ?
                         value["attributes"]["concept"] : value["question"].trim()) : value["question"].trim()) + "" +
                         (value["attributes"] ? (value["attributes"]["multiple"] || !value["attributes"]["parent"] ? "[]" : "") : "[]");
                         // (value["attributes"] ? (value["attributes"]["multiple"] ? "[]" : "") : "");
@@ -486,7 +486,7 @@ var protocol = ({
 
                     // TODO: Need to create a way to assign data type to name to associate to the right data storage type
                     input.name = "data.obs." + fieldType + "." + (value["attributes"] ? (value["attributes"]["parent"] ?
-                        value["attributes"]["parent"].replace(/\s/g, "_") + "[]." : "") : "") + (value["attributes"] ? (value["attributes"]["concept"] ?
+                        value["attributes"]["parent"] + "[]." : "") : "") + (value["attributes"] ? (value["attributes"]["concept"] ?
                         value["attributes"]["concept"] : value["question"].trim()) : value["question"].trim()) + "" +
                         (value["attributes"] ? (value["attributes"]["multiple"] || !value["attributes"]["parent"] ? "[]" : "") : "[]");
                         // (value["attributes"] ? (value["attributes"]["multiple"] || value["attributes"]["parent"] ? "[]" : "") : "");
