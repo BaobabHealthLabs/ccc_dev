@@ -1447,6 +1447,9 @@ function navigateToPage(destPage, validate, navback) {
         // skip destination page when a condition is false
         if (condition) {
             if (!eval(condition)) {
+
+                tstFormElements[tstPages[destPage]].setAttribute("disabled", true);
+
                 tstCurrentPage = destPage;
                 if (currentPage <= destPage) {
                     gotoPage(destPage + 1);
@@ -1454,6 +1457,10 @@ function navigateToPage(destPage, validate, navback) {
                     gotoPage(destPage - 1);		// reverse skipping
                 }
                 return;
+            } else {
+
+                tstFormElements[tstPages[destPage]].removeAttribute("disabled");
+
             }
         }
         /*

@@ -465,6 +465,10 @@ var user = ({
 
         }
 
+        // Clear all cookies
+        document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/,
+                "=;expires=" + new Date().toUTCString() + ";path=/"); });
+
         var form = document.createElement("form");
         form.id = "data";
         form.action = "javascript:submitData()";
