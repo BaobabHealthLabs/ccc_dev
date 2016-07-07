@@ -524,6 +524,12 @@ var protocol = ({
 
                             }
 
+                            if(f.toLowerCase().trim() == "field_type" && fv.trim().toLowerCase() == "hidden") {
+
+                                input.type = "hidden";
+
+                            }
+
                         }
 
                     }
