@@ -1032,7 +1032,15 @@ function processObs(obj, iICallback) {
 
             if (res[0] && res[0].insertId) {
 
+                /*
+                 * Handle cases where only concept is selected first
+                 */
                 obj.obsMappings[obj.concept.trim()] = res[0].insertId;
+
+                /*
+                 * Handle cases where both concept and concept value are used
+                 */
+                obj.obsMappings[obj.concept.trim() + ":" + obj.value] = res[0].insertId;
 
                 console.log("obsMappings: " + JSON.stringify(obj.obsMappings));
 
@@ -1390,8 +1398,6 @@ function updateUserView(data) {
 
         function (callback) {
 
-            // if (!people[data.id] || isDirty[data.id]) {
-
             queryData("patient_identifier", ["patient_id"], {identifier: data.id}, function (identifier) {
 
                 if (identifier.length > 0) {
@@ -1400,8 +1406,6 @@ function updateUserView(data) {
 
                     queryData("person_name", ["given_name", "middle_name", "family_name", "family_name2", "uuid"],
                         {person_id: patient_id}, function (names) {
-
-                            // console.log(names);
 
                             var collection = [];
 
@@ -1462,35 +1466,9 @@ function updateUserView(data) {
 
             });
 
-            /*} else {
-
-             queryData("patient_identifier", ["patient_id"], {identifier: data.id}, function (identifier) {
-
-             if (identifier.length > 0) {
-
-             patient_id = identifier[0].patient_id;
-
-             }
-
-             console.log("Sent existing names data");
-
-             nsp[data.id].emit("demographics",
-             JSON.stringify({names: people[data.id].data.names }));
-
-             nsp[data.id].emit("demographics",
-             JSON.stringify({patient_id: people[data.id].data.patient_id }));
-
-             callback();
-
-             });
-
-             }*/
-
         },
 
         function (callback) {
-
-            // if (people[data.id].data.addresses.length <= 0 || isDirty[data.id]) {
 
             queryData("person_address", ["address1", "address2", "city_village", "state_province",
                     "county_district", "neighborhood_cell", "township_division", "uuid"],
@@ -1552,22 +1530,9 @@ function updateUserView(data) {
 
                 });
 
-            /*} else {
-
-             console.log("Sent existing address data");
-
-             nsp[data.id].emit("demographics",
-             JSON.stringify({addresses: people[data.id].data.addresses }));
-
-             callback();
-
-             }*/
-
         },
 
         function (callback) {
-
-            // if (!people[data.id].data.gender || isDirty[data.id]) {
 
             queryData("person", ["gender", "birthdate", "birthdate_estimated", "uuid"],
                 {person_id: patient_id}, function (person) {
@@ -1611,23 +1576,6 @@ function updateUserView(data) {
                     callback();
 
                 });
-
-            /*} else {
-
-             console.log("Sent existing basic data");
-
-             nsp[data.id].emit("demographics",
-             JSON.stringify({ gender: people[data.id].data.gender }));
-
-             nsp[data.id].emit("demographics",
-             JSON.stringify({ birthdate: people[data.id].data.birthdate }));
-
-             nsp[data.id].emit("demographics",
-             JSON.stringify({ birthdate_estimated: people[data.id].data.birthdate_estimated }));
-
-             callback();
-
-             }*/
 
         },
 
@@ -1939,7 +1887,7 @@ function updateUserView(data) {
 
 function buildObs(encounter, oCallback) {
 
-    var sql = "SELECT (SELECT name FROM concept_name WHERE concept_name.concept_id = o.concept_id LIMIT 1) AS name, o.uuid, c.uuid AS cUuid, " +
+    var sql = "SELECT obs_id, obs_group_id, (SELECT name FROM concept_name WHERE concept_name.concept_id = o.concept_id LIMIT 1) AS name, o.uuid, c.uuid AS cUuid, " +
         "CASE WHEN COALESCE(value_coded_name_id,\"\") != \"\" THEN (SELECT name FROM concept_name WHERE concept_name_id = " +
         "value_coded_name_id LIMIT 1)" +
         " WHEN COALESCE(value_coded,\"\") != \"\" THEN (SELECT name FROM concept_name WHERE concept_id = value_coded LIMIT 1)" +
@@ -1975,7 +1923,9 @@ function buildObs(encounter, oCallback) {
                 response: {
                     value: leaf.value,
                     category: leaf.category
-                }
+                },
+                obs_id: leaf.obs_id,
+                obs_group_id: leaf.obs_group_id
             }
 
             collection.push(entry);

@@ -24,7 +24,7 @@ function loadPage() {
             var input = document.createElement("input");
             input.type = "hidden";
             input.id = "Visual_Acuity_root_0_parent_" + i + "_child_" + j;
-            input.name = "data.obs.text." + categories[i] + " VISUAL ACUITY[]";
+            input.name = "data.obs.text.Diabetes Test Type:Visual Acuity[]." + categories[i] + " VISUAL ACUITY[]";
             input.value = results[j];
             input.setAttribute("disabled", true);
 
