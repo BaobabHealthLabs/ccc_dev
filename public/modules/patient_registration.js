@@ -764,7 +764,7 @@ var patient = ({
 
         nextButton.onclick = function () {
 
-            if(window.parent) {
+            if (window.parent) {
 
                 window.parent.location = window.parent.location.href;
 
@@ -1747,8 +1747,8 @@ var patient = ({
 
                 tr.appendChild(td2);
 
-                var input = document.createElement((["Gender", "Current Region",
-                    "Region of Origin"].indexOf(fields[i]) >= 0 ? "select" : "input"));
+                var input = document.createElement((["Current Region",
+                    "Region of Origin"].indexOf(fields[i]) >= 0 || (fields[i] == "Gender" && !gender) ? "select" : "input"));
                 input.id = "data." + fields[i].toLowerCase().replace(/\s/g, "_").replace(/\//g, "_");
                 input.name = "data." + fields[i];
                 input.setAttribute("helpText", fields[i]);
@@ -1856,12 +1856,6 @@ var patient = ({
 
                         input.value = (first_name ? first_name : "");
 
-                        if (first_name) {
-
-                            input.setAttribute("condition", "patient.$('data.first_name').value.trim().length <= 0");
-
-                        }
-
                         var userId = document.createElement("input");
                         userId.type = "hidden";
                         userId.name = "data.User ID";
@@ -1878,12 +1872,6 @@ var patient = ({
                         input.setAttribute("tt_onLoad", "");
 
                         input.value = (last_name ? last_name : "");
-
-                        if (last_name) {
-
-                            input.setAttribute("condition", "patient.$('data.last_name').value.trim().length <= 0");
-
-                        }
 
                         break;
 
@@ -1936,33 +1924,37 @@ var patient = ({
 
                 if (fields[i] == "Gender") {
 
-                    var opts = ["Male", "Female"];
+                    if (gender) {
 
-                    for (var j = opts.length; j >= 0; j--) {
+                        input.type = "hidden";
 
-                        var opt = document.createElement("option");
+                        input.value = (gender ? gender : "");
 
-                        if (j < opts.length) {
+                    } else {
 
-                            opt.innerHTML = opts[j];
-                            opt.setAttribute("value", opts[j].substring(0, 1));
+                        var opts = ["Male", "Female"];
 
-                            if (gender && gender.trim().substring(0, 1).toUpperCase() ==
-                                opts[j].substring(0, 1).toUpperCase()) {
+                        for (var j = opts.length; j >= 0; j--) {
 
-                                opt.setAttribute("selected", true);
+                            var opt = document.createElement("option");
+
+                            if (j < opts.length) {
+
+                                opt.innerHTML = opts[j];
+                                opt.setAttribute("value", opts[j].substring(0, 1));
+
+                                if (gender && gender.trim().substring(0, 1).toUpperCase() ==
+                                    opts[j].substring(0, 1).toUpperCase()) {
+
+                                    opt.setAttribute("selected", true);
+
+                                }
 
                             }
 
+                            input.appendChild(opt);
+
                         }
-
-                        input.appendChild(opt);
-
-                    }
-
-                    if (last_name) {
-
-                        input.setAttribute("condition", "patient.$('data.gender').value.trim().length <= 0");
 
                     }
 
@@ -1983,6 +1975,10 @@ var patient = ({
                         input.appendChild(opt);
 
                     }
+
+                } else if ((fields[i] == "Last Name" && last_name) || (fields[i] == "First Name" && first_name)) {
+
+                    input.type = "hidden";
 
                 } else {
 
