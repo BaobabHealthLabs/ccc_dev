@@ -434,7 +434,7 @@ var dashboard = ({
 
     },
 
-    queryExistingObsArray: function (concept, callback) {
+    queryExistingObsArray: function (concept, callback, specificConcept) {
 
         var result = {};
 
@@ -473,7 +473,9 @@ var dashboard = ({
 
                                 for (var l = 0; l < oKeys.length; l++) {
 
-                                    if (patientPrograms[key].visits[visit][encounter][l][concept]) {
+                                    if (patientPrograms[key].visits[visit][encounter][l][concept] &&
+                                        (specificConcept ? (specificConcept == patientPrograms[key].visits[visit][
+                                            encounter][l][concept].response.value ? true : false) : true)) {
 
                                         if(!result[visit])
                                             result[visit] = [];
