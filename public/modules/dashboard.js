@@ -475,7 +475,18 @@ var dashboard = ({
 
                                     if (patientPrograms[key].visits[visit][encounter][l][concept]) {
 
-                                        result[visit] = patientPrograms[key].visits[visit][encounter][l][concept].response.value;
+                                        if(!result[visit])
+                                            result[visit] = [];
+
+                                        var entry = {};
+
+                                        entry[patientPrograms[key].visits[visit][encounter][l][concept].response.value] =
+                                            dashboard.queryObsGroupChildren(
+                                                patientPrograms[key].visits[visit][encounter][l][concept].obs_id,
+                                                visit, encounter, key, program
+                                            );
+
+                                        result[visit].push(entry);
 
                                     }
 
@@ -502,6 +513,33 @@ var dashboard = ({
             return result;
 
         }
+
+    },
+
+    queryObsGroupChildren: function(obs_id, visitDate, encounter, patientProgramUUID, program) {
+
+        if(!obs_id || !visitDate || !encounter || !patientProgramUUID || !program)
+            return [];
+
+        var obs = [];
+
+        var root = dashboard.data.data.programs[program].patient_programs[patientProgramUUID].visits[visitDate][encounter];
+
+        for(var i = 0; i < root.length; i++) {
+
+            var concept = Object.keys(root[i])[0];
+
+            var node = root[i];
+
+            if(node[concept] && node[concept].obs_group_id != null && node[concept].obs_group_id == obs_id) {
+
+                obs.push(node);
+
+            }
+
+        }
+
+        return obs;
 
     },
 
