@@ -1,6 +1,6 @@
-P.1. HYPERTENSION INITIAL QUESTIONS [program:: HYPERTENSION PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;htn]
+P.1. HYPERTENSION INITIAL QUESTIONS [program:: HYPERTENSION PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;htn]
 
-Q.1.1. Is the patient a: [pos:: 0$$ concept:: TYPE OF PATIENT$$ id:: patient_type$$ condition:: !existingPatient()]
+Q.1.1. Is the patient a: [pos:: 0$$ concept:: TYPE OF PATIENT$$ id:: patient_type$$ condition:: !existingPatient()$$tt_requirenextclick::false]
 O.1.1.1. New Patient
 O.1.1.2. Transfer in
 O.1.1.3. Temporary Patient

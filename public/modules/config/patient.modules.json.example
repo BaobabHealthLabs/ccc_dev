@@ -49,9 +49,11 @@
             "Hypertension Initial Questions": "javascript:dashboard.navPanel('/spec/htn/initial_questions.spec')",
             "Social History": "javascript:dashboard.navPanel('/spec/htn/social_history.spec')",
             "Family History": "javascript:dashboard.navPanel('/spec/htn/family_history.spec')",
+            "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
             "HIV Status": "javascript:dashboard.navPanel('/spec/htn/hiv_status.spec')",
             "HTN Visit": "javascript:dashboard.navPanel('/spec/htn/visit.spec')",
-            "Outcome": "javascript:dashboard.navPanel('/spec/htn/family_history.spec')"
+            "Outcome": "javascript:dashboard.navPanel('/spec/htn/outcome.spec')",
+            "Mastercard" :"javascript:dashboard.navURLPanel('/views/dm/card.html')"
         },
         "program": "HYPERTENSION PROGRAM",
         "identifiers": ["National id", "HTN Number"],
@@ -65,6 +67,11 @@
             ,
             "Family History": {
                 "encounter": "HYPERTENSION FAMILY HISTORY"
+            },
+            "Vitals": {
+                "encounter": "VITALS",
+                "scope": "TODAY",
+                "program": "CROSS-CUTTING PROGRAM"
             },
             "HIV Status":{
             	  "encounter": "HIV/ART STATUS"
@@ -80,6 +87,7 @@
             "Hypertension Initial Questions",
             "Social History",
             "Family History",
+            "Vitals",
             "HIV Status",
             "HTN Visit",
             "Outcome"
