@@ -30,7 +30,10 @@
         ["ASTHMA PATIENT OVERVIEW","Asthma Patient Overview"],
         ["ASTHMA VISIT", "Asthma Visit"],
         ["EPILEPSY INITIAL QUESTIONS","Epilepsy Initial Questions"],
-        ["ASTHMA INITIAL QUESTIONS","Asthma Initial Questions"]
+        ["ASTHMA INITIAL QUESTIONS","Asthma Initial Questions"],
+        ["HYPERTENSION INITIAL QUESTIONS","Hypertension Initial Questions"],
+        ["HYPERTENSION SOCIAL HISTORY","Hypertension Social History"],
+        ["HYPERTENSION FAMILY HISTORY","Hypertension Social History"]
 
     ],
     "patient_identifier_types": [
@@ -210,6 +213,9 @@
         "Epilepsy Diagnosis Date",
         "Asthma Diagnosis Date",
         "Outcome Date",
-        "VDRL Status"
+        "VDRL Status",
+        "Do you do Exercises?",
+        "Family History Of Premature CVD Death?",
+        "Family History Of Hypertension?"
     ]
 }
