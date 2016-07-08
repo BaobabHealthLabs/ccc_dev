@@ -477,16 +477,19 @@ var dashboard = ({
                                         (specificConcept ? (specificConcept == patientPrograms[key].visits[visit][
                                             encounter][l][concept].response.value ? true : false) : true)) {
 
-                                        if(!result[visit])
+                                        if (!result[visit])
                                             result[visit] = [];
 
                                         var entry = {};
 
                                         entry[patientPrograms[key].visits[visit][encounter][l][concept].response.value] =
-                                            dashboard.queryObsGroupChildren(
+                                        {
+                                            UUID: patientPrograms[key].visits[visit][encounter][l][concept].UUID,
+                                            data: dashboard.queryObsGroupChildren(
                                                 patientPrograms[key].visits[visit][encounter][l][concept].obs_id,
                                                 visit, encounter, key, program
-                                            );
+                                            )
+                                        };
 
                                         result[visit].push(entry);
 
@@ -518,22 +521,22 @@ var dashboard = ({
 
     },
 
-    queryObsGroupChildren: function(obs_id, visitDate, encounter, patientProgramUUID, program) {
+    queryObsGroupChildren: function (obs_id, visitDate, encounter, patientProgramUUID, program) {
 
-        if(!obs_id || !visitDate || !encounter || !patientProgramUUID || !program)
+        if (!obs_id || !visitDate || !encounter || !patientProgramUUID || !program)
             return [];
 
         var obs = [];
 
         var root = dashboard.data.data.programs[program].patient_programs[patientProgramUUID].visits[visitDate][encounter];
 
-        for(var i = 0; i < root.length; i++) {
+        for (var i = 0; i < root.length; i++) {
 
             var concept = Object.keys(root[i])[0];
 
             var node = root[i];
 
-            if(node[concept] && node[concept].obs_group_id != null && node[concept].obs_group_id == obs_id) {
+            if (node[concept] && node[concept].obs_group_id != null && node[concept].obs_group_id == obs_id) {
 
                 obs.push(node);
 
@@ -2560,7 +2563,7 @@ var dashboard = ({
 
         dashboard.subscription.sendUpdateEvent();
 
-        if(dashboard.__$("network")) {
+        if (dashboard.__$("network")) {
 
             dashboard.__$("network").setAttribute("src", dashboard.icoUp);
 
@@ -3623,7 +3626,7 @@ var dashboard = ({
 
         document.body.removeChild(dashboard.$('dashboard.navPanel'));
 
-        if(nextPath) {
+        if (nextPath) {
 
             dashboard.navPanel(nextPath);
 
@@ -3795,7 +3798,7 @@ var dashboard = ({
 
     submitData: function (data) {
 
-        if(dashboard.__$("network")) {
+        if (dashboard.__$("network")) {
 
             dashboard.__$("network").setAttribute("src", dashboard.icoSaving);
 
@@ -3837,7 +3840,7 @@ var dashboard = ({
 
     voidConcept: function (uuid) {
 
-        if(dashboard.__$("network")) {
+        if (dashboard.__$("network")) {
 
             dashboard.__$("network").setAttribute("src", dashboard.icoSaving);
 
@@ -4159,7 +4162,7 @@ var dashboard = ({
 
         var scripts = document.head.getElementsByClassName("script.io");
 
-        for(var i = 0; i < scripts.length; i++) {
+        for (var i = 0; i < scripts.length; i++) {
 
             document.head.removeChild(scripts[i]);
 
@@ -4173,7 +4176,7 @@ var dashboard = ({
 
         setTimeout(function () {
 
-            if(dashboard.__$("network")) {
+            if (dashboard.__$("network")) {
 
                 dashboard.__$("network").setAttribute("src", dashboard.icoUp);
 
@@ -4181,7 +4184,7 @@ var dashboard = ({
 
             var id = window.location.href.match(/\/([^\/]+)$/)[1];
 
-            if(!io)
+            if (!io)
                 window.location = window.location.href;
 
             dashboard.socket = io.connect('/');
@@ -4197,9 +4200,9 @@ var dashboard = ({
 
             });
 
-            dashboard.socket.on('disconnect', function() {
+            dashboard.socket.on('disconnect', function () {
 
-                if(dashboard.__$("network")) {
+                if (dashboard.__$("network")) {
 
                     dashboard.__$("network").setAttribute("src", dashboard.icoDown);
 
@@ -4207,8 +4210,8 @@ var dashboard = ({
 
             });
 
-            dashboard.socket.on('reconnect', function(){
-                setTimeout(function(){
+            dashboard.socket.on('reconnect', function () {
+                setTimeout(function () {
 
                     dashboard.createWebSocket();
 
@@ -4233,7 +4236,7 @@ var dashboard = ({
 
                 nsp.on('demographics', function (data) {
 
-                    if(dashboard.__$("network")) {
+                    if (dashboard.__$("network")) {
 
                         dashboard.__$("network").setAttribute("src", dashboard.icoSaving);
 
@@ -4271,7 +4274,7 @@ var dashboard = ({
 
                         dashboard.data.data.patient_id = json.patient_id;
 
-                        if(patient) {
+                        if (patient) {
 
                             patient.patientId = json.patient_id;
 

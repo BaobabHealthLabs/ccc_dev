@@ -12,11 +12,15 @@
 
     dashboard.init("/data/person.json", "/modules/config/patient.modules.json", "/modules/config/dashboard.settings.json");
 
-    dashboard.subscription.addEventlistener("done", function(){
+    dashboard.subscription.addEventlistener("done", function () {
 
-        if(dashboard.activeTask == "Complications") {
+        if (dashboard.activeTask == "Complications") {
 
             dashboard.navURLPanel('/spec/dm/complications.html');
+
+            setTimeout(function () {
+                dashboard.$("ifrMain").contentWindow.location = dashboard.$("ifrMain").contentWindow.location.href;
+            }, 200);
 
         }
 
