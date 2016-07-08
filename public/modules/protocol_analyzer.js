@@ -301,7 +301,7 @@ var protocol = ({
         var order = {};
 
         var script = document.createElement("script");
-        script.setAttribute("src", "/javascripts/form2js.js");
+        script.setAttribute("src", "/javascripts/bht-form2js.js");
 
         document.head.appendChild(script);
 
@@ -411,9 +411,10 @@ var protocol = ({
 
                     // TODO: Need to create a way to assign data type to name to associate to the right data storage type
                     select.name = "data.obs." + fieldType + "." + (value["attributes"] ? (value["attributes"]["parent"] ?
-                        value["attributes"]["parent"].replace(/\s/g, "_") + "." : "") : "") + (value["attributes"] ? (value["attributes"]["concept"] ?
+                        value["attributes"]["parent"] + "[]." : "") : "") + (value["attributes"] ? (value["attributes"]["concept"] ?
                         value["attributes"]["concept"] : value["question"].trim()) : value["question"].trim()) + "" +
-                        (value["attributes"] ? (value["attributes"]["multiple"] ? "[]" : "") : "");
+                        (value["attributes"] ? (value["attributes"]["multiple"] || !value["attributes"]["parent"] ? "[]" : "") : "[]");
+                        // (value["attributes"] ? (value["attributes"]["multiple"] ? "[]" : "") : "");
 
                     select.setAttribute("helpText", (value["attributes"] ? (value["attributes"]["helpText"] ?
                         value["attributes"]["helpText"] : value["question"] ) : value["question"]));
@@ -485,9 +486,10 @@ var protocol = ({
 
                     // TODO: Need to create a way to assign data type to name to associate to the right data storage type
                     input.name = "data.obs." + fieldType + "." + (value["attributes"] ? (value["attributes"]["parent"] ?
-                        value["attributes"]["parent"].replace(/\s/g, "_") + "." : "") : "") + (value["attributes"] ? (value["attributes"]["concept"] ?
+                        value["attributes"]["parent"] + "[]." : "") : "") + (value["attributes"] ? (value["attributes"]["concept"] ?
                         value["attributes"]["concept"] : value["question"].trim()) : value["question"].trim()) + "" +
-                        (value["attributes"] ? (value["attributes"]["multiple"] ? "[]" : "") : "");
+                        (value["attributes"] ? (value["attributes"]["multiple"] || !value["attributes"]["parent"] ? "[]" : "") : "[]");
+                        // (value["attributes"] ? (value["attributes"]["multiple"] || value["attributes"]["parent"] ? "[]" : "") : "");
 
                     input.setAttribute("helpText", (value["attributes"] ? (value["attributes"]["helpText"] ?
                         value["attributes"]["helpText"] : value["question"] ) : value["question"]));
@@ -519,6 +521,12 @@ var protocol = ({
 
                                 input.setAttribute(f, (f.toLowerCase() == "helptext" ?
                                     fv.trim().replace(/\|/g, ":") : fv.trim() ))
+
+                            }
+
+                            if(f.toLowerCase().trim() == "field_type" && fv.trim().toLowerCase() == "hidden") {
+
+                                input.type = "hidden";
 
                             }
 

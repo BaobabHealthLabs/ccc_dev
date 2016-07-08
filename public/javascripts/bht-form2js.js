@@ -24,6 +24,7 @@
  * Time: 19:02:33
  */
 
+var log = [];
 
 (function (root, factory)
 {
@@ -92,7 +93,9 @@
 	 */
 	function processNameValues(nameValues, skipEmpty, delimiter)
 	{
-		var result = {},
+        log = [];
+
+        var result = {},
 			arrays = {},
 			i, j, k, l,
 			value,
@@ -105,6 +108,9 @@
 			name,
 			_nameParts;
 
+        log.push({nameValues: nameValues, "nameValues.length": nameValues.length, value: value, name: name, nameParts: nameParts, result: result,
+            currResult: currResult, arrNameFull: arrNameFull});
+
 		for (i = 0; i < nameValues.length; i++)
 		{
 			value = nameValues[i].value;
@@ -116,6 +122,9 @@
 			nameParts = [];
 			currResult = result;
 			arrNameFull = '';
+
+            log.push({"nameValues.length": nameValues.length, value: value, name: name, nameParts: nameParts, result: result,
+                currResult: currResult, arrNameFull: arrNameFull, i: i});
 
 			for(j = 0; j < _nameParts.length; j++)
 			{
@@ -157,6 +166,9 @@
 			for (j = 0; j < nameParts.length; j++)
 			{
 				namePart = nameParts[j];
+
+                log.push({"nameValues.length": nameValues.length, value: value, name: name, nameParts: nameParts, result: result,
+                    currResult: currResult, arrNameFull: arrNameFull, i: i, j: j});
 
 				if (namePart.indexOf('[]') > -1 && j == nameParts.length - 1)
 				{
@@ -224,7 +236,11 @@
 						currResult[namePart] = value;
 					}
 				}
-			}
+
+                log.push({"nameValues.length": nameValues.length, value: value, name: name, nameParts: nameParts, result: result,
+                    currResult: currResult, arrNameFull: arrNameFull, i: i, j: j});
+
+            }
 		}
 
 		return result;
@@ -334,7 +350,7 @@
 			options,
 			i, l;
 
-		if (!multiple) return selectNode.value;
+		// if (!multiple) return selectNode.value;
 
 		for (options = selectNode.getElementsByTagName("option"), i = 0, l = options.length; i < l; i++)
 		{

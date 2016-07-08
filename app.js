@@ -1,3 +1,5 @@
+"use strict"
+
 // var app = require("express")();
 var express = require("express");
 var cookieParser = require("cookie-parser");
@@ -729,7 +731,11 @@ function saveData(data, callback) {
 
         }
 
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$");
+
         console.log(JSON.stringify(data));
+
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
         var patient_program_id;
 
@@ -815,7 +821,9 @@ function saveData(data, callback) {
                     " WHERE name = \"" + data.data.encounter_type + "\"), \"" + patient_id + "\", (SELECT user_id FROM users " +
                     "WHERE username = \"" + data.data.userId + "\"), (SELECT location_id FROM location WHERE name = \"" +
                     (data.data.location ? data.data.location : "Unknown") + "\"), NOW(), (SELECT user_id FROM users WHERE " +
-                    "username = \"" + data.data.userId + "\"), NOW(), \"" + uuid.v1() + "\", \"" + patient_program_id + "\")";
+                    "username = \"" + data.data.userId + "\"), NOW(), (SELECT UUID()), \"" + patient_program_id + "\")";
+
+                console.log(sql);
 
                 queryRaw(sql, function (res) {
 
@@ -831,15 +839,17 @@ function saveData(data, callback) {
 
                 var keys = Object.keys(data.data.obs);
 
-                var obsMappings = {};
+                var obj = {};
 
-                var obsOutstanding = {};
+                obj.obsMappings = {};
 
-                async.eachSeries(keys, function (group, oCallback) {
+                obj.obsOutstanding = {}
+
+                async.mapSeries(keys, function (group, oCallback) {
 
                     var cKeys = Object.keys(data.data.obs[group]);
 
-                    async.eachSeries(cKeys, function (concept, iOCallback) {
+                    async.mapSeries(cKeys, function (parentConcept, iOCallback) {
 
                         var category = "value_text";
 
@@ -853,401 +863,89 @@ function saveData(data, callback) {
 
                         }
 
-                        var group_id;
+                        async.mapSeries(data.data.obs[group][parentConcept], function (entry, iICallback) {
 
-                        var parent;
+                            obj.group_id = null;
 
-                        if (typeof(data.data.obs[group][concept]) == typeof(Object())) {
+                            obj.parent = null;
 
-                            var group_id = obsMappings[concept];
+                            obj.concept = null;
 
-                            console.log(obsMappings);
+                            obj.value = null;
 
-                            console.log(group_id);
+                            obj.data = data;
 
-                            var parent = String(concept);
+                            obj.group = group;
 
-                            var obs = String(Object.keys(data.data.obs[group][concept])[0]).replace(/\_/g, " ");
+                            obj.parentConcept = parentConcept;
 
-                            var value = String(data.data.obs[group][concept][obs]);
+                            obj.patient_id = patient_id;
 
-                            concept = obs;
+                            obj.encounter_id = encounter_id;
 
-                            data.data.obs[group][concept] = value;
+                            obj.patient_program_id = patient_program_id;
 
-                        }
+                            obj.category = category;
 
-                        var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, obs_datetime, location_id, " +
-                            (group_id ? "obs_group_id, " : "") + category + "," +
-                            " creator, date_created, uuid) VALUES (\"" + patient_id + "\", (SELECT concept_id FROM concept_name " +
-                            "WHERE name = \"" + concept + "\" AND voided = 0 LIMIT 1), \"" + encounter_id + "\", NOW(), " +
-                            "(SELECT location_id FROM location WHERE name = \"" + (data.data.location ? data.data.location :
-                            "Unknown") + "\"), \"" + (group_id ? group_id + "\", \"" : "") + data.data.obs[group][concept] +
-                            "\", (SELECT user_id FROM users WHERE username = \"" + data.data.userId + "\"), NOW(), \"" +
-                            uuid.v1() + "\")";
+                            if (typeof(entry) != typeof(Object())) {
 
-                        console.log(sql);
+                                obj.concept = parentConcept;
 
-                        if (data.data.obs[group][concept] && data.data.obs[group][concept].length > 0) {
+                                obj.value = entry;
 
-                            queryRaw(sql, function (res) {
+                                processObs(obj, function (rObj) {
 
-                                if (res[0] && res[0].insertId) {
+                                    obj.obsMappings = rObj.obsMappings;
 
-                                    obsMappings[concept.trim()] = res[0].insertId;
+                                    obj.obsOutstanding = rObj.obsOutstanding;
 
-                                    if (parent && parent != concept && !group_id) {
+                                    iICallback(undefined, rObj);
 
-                                        if (!obsOutstanding[parent]) {
+                                });
 
-                                            obsOutstanding[parent] = [];
+                            } else {
 
-                                        }
+                                var entryKeys = Object.keys(entry);
 
-                                        obsOutstanding[parent].push(res[0].insertId)
+                                async.mapSeries(entryKeys, function (entryKey, eCallback) {
 
-                                    }
+                                    obj.concept = entryKey;
 
-                                    console.log("obsOutstanding: ");
+                                    obj.value = entry[entryKey];
 
-                                    console.log(obsOutstanding);
+                                    processObs(obj, function (rObj) {
 
-                                    if (obsOutstanding[concept] && obsOutstanding[concept].length > 0) {
+                                        obj.obsMappings = rObj.obsMappings;
 
-                                        var count = obsOutstanding[concept].length;
+                                        obj.obsOutstanding = rObj.obsOutstanding;
 
-                                        var counter = 0;
-
-                                        async.whilst(function () {
-
-                                            return counter < count;
-
-                                        }, function (next) {
-
-                                            var sql = "UPDATE obs SET obs_group_id = '" + res[0].insertId +
-                                                "' WHERE obs_id = '" + obsOutstanding[concept][counter] + "'";
-
-                                            console.log(sql);
-
-                                            queryRaw(sql, function (result) {
-
-                                                console.log(result[0].affectedRows);
-
-                                                obsOutstanding[concept].splice(String(obsOutstanding[concept][counter]), 1);
-
-                                                counter++;
-
-                                                next();
-
-                                            });
-
-                                        }, function (err) {
-
-                                        });
-
-                                    }
-
-                                }
-
-                                if (concept.trim().toLowerCase() == "age") {
-
-                                    var age = String(data.data.obs[group][concept]).match(/^(\d+)([Y|M|W|D|H])/);
-
-                                    if (age) {
-
-                                        var number = parseInt(age[1]);
-
-                                        var type = age[2];
-
-                                        var dob;
-
-                                        switch (type) {
-
-                                            case "Y":
-
-                                                dob = (new Date((new Date()).setFullYear((new Date()).getFullYear() -
-                                                    number))).format("YYYY-mm-dd");
-
-                                                break;
-
-                                            case "M":
-
-                                                dob = (new Date((new Date()).setMonth((new Date()).getMonth() -
-                                                    number))).format("YYYY-mm-dd");
-
-                                                break;
-
-                                            case "W":
-
-                                                dob = (new Date((new Date()).setDate((new Date()).getDate() -
-                                                    (number * 7)))).format("YYYY-mm-dd");
-
-                                                break;
-
-                                            case "D":
-
-                                                dob = (new Date((new Date()).setDate((new Date()).getDate() - number))).format("YYYY-mm-dd");
-
-                                                break;
-
-                                            default:
-
-                                                dob = (new Date((new Date()).setHours((new Date()).getHours() - number))).format("YYYY-mm-dd");
-
-                                                break;
-
-                                        }
-
-                                        var sql = "UPDATE person SET birthdate = \"" + dob + "\", birthdate_estimated = 1 WHERE " +
-                                            "person_id = \"" + patient_id + "\"";
-
-                                        queryRaw(sql, function (res) {
-
-                                            iOCallback();
-
-                                        });
-
-                                    } else {
-
-                                        iOCallback();
-
-                                    }
-
-                                } else if (concept.trim().toLowerCase() == "sex/pregnancy") {
-
-                                    var gender = String(data.data.obs[group][concept]).trim().substring(0, 1).toUpperCase();
-
-
-                                    var sql = "UPDATE person SET gender = \"" + gender + "\" WHERE person_id = \"" + patient_id + "\"";
-
-                                    queryRaw(sql, function (res) {
-
-                                        iOCallback();
+                                        eCallback();
 
                                     });
 
-                                } else if (concept.trim().toLowerCase() == "first name") {
+                                }, function (err) {
 
-                                    var firstName = String(data.data.obs[group][concept]).trim();
+                                    iICallback(err);
 
+                                })
 
-                                    var sql = "UPDATE person_name SET given_name = \"" + firstName + "\" WHERE person_id = \"" + patient_id + "\"";
+                            }
 
-                                    queryRaw(sql, function (res) {
+                        }, function (err) {
 
-                                        iOCallback();
+                            iOCallback(err);
 
-                                    });
+                        })
 
-                                } else if (concept.trim().toLowerCase() == "family name") {
+                    }, function (err) {
 
-                                    var lastName = String(data.data.obs[group][concept]).trim();
-
-
-                                    var sql = "UPDATE person_name SET family_name = \"" + lastName + "\" WHERE person_id = \"" + patient_id + "\"";
-
-                                    queryRaw(sql, function (res) {
-
-                                        iOCallback();
-
-                                    });
-
-                                } else if (concept.trim().toLowerCase() == "current district") {
-
-                                    var currentDistrict = String(data.data.obs[group][concept]).trim();
-
-                                    var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
-
-                                    queryRaw(sql, function (address) {
-
-                                        var sql = "UPDATE person_address SET state_province = \"" + currentDistrict +
-                                            "\" WHERE person_id = \"" + patient_id + "\" AND person_address_id = \"" +
-                                            address[0][0].person_address_id + "\"";
-
-                                        queryRaw(sql, function (res) {
-
-                                            iOCallback();
-
-                                        });
-                                    });
-
-                                } else if (concept.trim().toLowerCase() == "current t/a") {
-
-                                    var currentTA = String(data.data.obs[group][concept]).trim();
-
-                                    var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
-
-                                    queryRaw(sql, function (address) {
-
-                                        var sql = "UPDATE person_address SET township_division = \"" + currentTA +
-                                            "\" WHERE person_id = \"" + patient_id + "\" AND person_address_id = \"" +
-                                            address[0][0].person_address_id + "\"";
-
-                                        queryRaw(sql, function (res) {
-
-                                            iOCallback();
-
-                                        });
-
-                                    });
-
-                                } else if (concept.trim().toLowerCase() == "current village") {
-
-                                    var currentVillage = String(data.data.obs[group][concept]).trim();
-
-                                    var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
-
-                                    queryRaw(sql, function (address) {
-
-                                        var sql = "UPDATE person_address SET city_village = \"" + currentVillage +
-                                            "\" WHERE person_id = \"" + patient_id + "\" AND person_address_id = \"" +
-                                            address[0][0].person_address_id + "\"";
-
-                                        queryRaw(sql, function (res) {
-
-                                            iOCallback();
-
-                                        });
-
-                                    });
-
-                                } else if (concept.trim().toLowerCase() == "closest landmark") {
-
-                                    var closestLandmark = String(data.data.obs[group][concept]).trim();
-
-                                    var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
-
-                                    queryRaw(sql, function (address) {
-
-                                        var sql = "UPDATE person_address SET address1 = \"" + closestLandmark +
-                                            "\" WHERE person_id = \"" + patient_id + "\" AND person_address_id = \"" +
-                                            address[0][0].person_address_id + "\"";
-
-                                        queryRaw(sql, function (res) {
-
-                                            iOCallback();
-
-                                        });
-
-                                    });
-
-                                } else if (concept.trim().toLowerCase().match(/dispatch\sid/i) && false) {  // TODO: Temporary Lock. May Have to remove the block later
-
-                                    var root = concept.trim().toLowerCase();
-                                    var consumption_type = "Normal use";
-                                    var dispatch_id = "";
-                                    var consumption_quantity = 1;
-                                    var who_consumed = data.data.patient_id;
-                                    var date_consumed = data.data.today;
-                                    var reason_for_consumption = "Normal use";
-                                    var location = data.data.location;
-                                    var userId = data.data.userId;
-
-                                    switch (root) {
-
-                                        case "first pass test kit 1 dispatch id":
-
-                                            dispatch_id = data.data.obs["text"]["First Pass Test Kit 1 Dispatch ID"];
-
-                                            break;
-
-                                        case "first pass test kit 2 dispatch id":
-
-                                            dispatch_id = data.data.obs["text"]["First Pass Test Kit 2 Dispatch ID"];
-
-                                            break;
-
-                                        case "immediate repeat test kit 1 dispatch id":
-
-                                            dispatch_id = data.data.obs["text"]["Immediate Repeat Test Kit 1 Dispatch ID"];
-                                            k;
-
-                                        case "immediate repeat test kit 2 dispatch id":
-
-                                            dispatch_id = data.data.obs["text"]["Immediate Repeat Test Kit 2 Dispatch ID"];
-
-                                            break;
-
-                                    }
-
-                                    var iData = {
-                                        consumption_type: consumption_type,
-                                        dispatch_id: dispatch_id,
-                                        consumption_quantity: consumption_quantity,
-                                        who_consumed: who_consumed,
-                                        date_consumed: date_consumed,
-                                        reason_for_consumption: reason_for_consumption,
-                                        location: location,
-                                        userId: userId
-                                    }
-
-                                    saveConsumption(iData, undefined, function () {
-
-                                        iOCallback();
-
-                                    })
-
-                                } else if (concept.trim().toLowerCase() == "client phone number") {
-
-                                    var phoneNumber = String(data.data.obs[group][concept]).trim();
-
-                                    var sql = "SELECT person_attribute_id FROM person_attribute WHERE person_id = \"" + patient_id + "\"";
-
-                                    queryRaw(sql, function (attr) {
-
-                                        if (attr[0].length <= 0) {
-
-                                            var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
-                                                "creator, date_created, uuid) VALUES (\"" + patient_id + "\", \"" + phoneNumber +
-                                                "\", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
-                                                "\"Cell Phone Number\" LIMIT 1), \"" + user_id + "\", NOW(), \"" +
-                                                uuid.v1() + "\")";
-
-                                            queryRaw(sql, function (res) {
-
-                                                iOCallback();
-
-                                            });
-
-                                        } else {
-
-                                            var sql = "UPDATE person_attribute SET value = \"" + phoneNumber +
-                                                "\" WHERE person_id = \"" + patient_id + "\" AND person_attribute_id = \"" +
-                                                attr[0][0].person_attribute_id + "\"";
-
-                                            queryRaw(sql, function (res) {
-
-                                                iOCallback();
-
-                                            });
-
-                                        }
-
-                                    });
-
-                                } else {
-
-                                    iOCallback();
-
-                                }
-
-                            });
-
-                        } else {
-
-                            iOCallback();
-
-                        }
-
-                    }, function () {
-
-                        oCallback();
+                        oCallback(err);
 
                     })
 
-                }, function () {
+                }, function (err) {
 
-                    icallback();
+                    icallback(err);
 
                 })
 
@@ -1294,6 +992,391 @@ function saveData(data, callback) {
 
 
     });
+
+}
+
+function processObs(obj, iICallback) {
+
+    console.log(obj.concept);
+
+    console.log(obj.value);
+
+    if (obj.parentConcept != obj.concept) {
+
+        console.log("parentConcept: " + obj.parentConcept);
+
+        var group_id = obj.obsMappings[obj.parentConcept];
+
+        console.log("obsMappings: " + JSON.stringify(obj.obsMappings));
+
+        console.log("group_id: " + group_id);
+
+        obj.parent = String(obj.parentConcept);
+
+    }
+
+    var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, obs_datetime, location_id, " +
+        (group_id ? "obs_group_id, " : "") + obj.category + "," +
+        " creator, date_created, uuid) VALUES (\"" + obj.patient_id + "\", (SELECT concept_id FROM concept_name " +
+        "WHERE name = \"" + obj.concept + "\" AND voided = 0 LIMIT 1), \"" + obj.encounter_id + "\", NOW(), " +
+        "(SELECT location_id FROM location WHERE name = \"" + (obj.data.data.location ? obj.data.data.location :
+        "Unknown") + "\"), \"" + (group_id ? group_id + "\", \"" : "") + obj.value +
+        "\", (SELECT user_id FROM users WHERE username = \"" + obj.data.data.userId + "\"), NOW(), \"" +
+        uuid.v1() + "\")";
+
+    console.log(sql);
+
+    if (obj.value && obj.value.length > 0) {
+
+        queryRaw(sql, function (res) {
+
+            if (res[0] && res[0].insertId) {
+
+                obj.obsMappings[obj.concept.trim()] = res[0].insertId;
+
+                console.log("obsMappings: " + JSON.stringify(obj.obsMappings));
+
+                if (obj.parent && obj.parent != obj.concept && !group_id) {
+
+                    if (!obj.obsOutstanding[obj.parent]) {
+
+                        obj.obsOutstanding[obj.parent] = [];
+
+                    }
+
+                    obj.obsOutstanding[obj.parent].push(res[0].insertId)
+
+                }
+
+                console.log("obsOutstanding: " + JSON.stringify(obj.obsOutstanding));
+
+                if (obj.obsOutstanding[obj.concept] && obj.obsOutstanding[obj.concept].length > 0) {
+
+                    var count = obj.obsOutstanding[obj.concept].length;
+
+                    var counter = 0;
+
+                    async.whilst(function () {
+
+                        return counter < count;
+
+                    }, function (next) {
+
+                        var sql = "UPDATE obs SET obs_group_id = '" + res[0].insertId +
+                            "' WHERE obs_id = '" + obj.obsOutstanding[obj.concept][counter] + "'";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (result) {
+
+                            console.log(result[0].affectedRows);
+
+                            obj.obsOutstanding[obj.concept].splice(String(obj.obsOutstanding[obj.concept][counter]), 1);
+
+                            counter++;
+
+                            next();
+
+                        });
+
+                    }, function (err) {
+
+                    });
+
+                }
+
+            }
+
+            if (obj.concept.trim().toLowerCase() == "age") {
+
+                var age = String(obj.value).match(/^(\d+)([Y|M|W|D|H])/);
+
+                if (age) {
+
+                    var number = parseInt(age[1]);
+
+                    var type = age[2];
+
+                    var dob;
+
+                    switch (type) {
+
+                        case "Y":
+
+                            dob = (new Date((new Date()).setFullYear((new Date()).getFullYear() -
+                                number))).format("YYYY-mm-dd");
+
+                            break;
+
+                        case "M":
+
+                            dob = (new Date((new Date()).setMonth((new Date()).getMonth() -
+                                number))).format("YYYY-mm-dd");
+
+                            break;
+
+                        case "W":
+
+                            dob = (new Date((new Date()).setDate((new Date()).getDate() -
+                                (number * 7)))).format("YYYY-mm-dd");
+
+                            break;
+
+                        case "D":
+
+                            dob = (new Date((new Date()).setDate((new Date()).getDate() - number))).format("YYYY-mm-dd");
+
+                            break;
+
+                        default:
+
+                            dob = (new Date((new Date()).setHours((new Date()).getHours() - number))).format("YYYY-mm-dd");
+
+                            break;
+
+                    }
+
+                    var sql = "UPDATE person SET birthdate = \"" + dob + "\", birthdate_estimated = 1 WHERE " +
+                        "person_id = \"" + obj.patient_id + "\"";
+
+                    queryRaw(sql, function (res) {
+
+                        iICallback(obj);
+
+                    });
+
+                } else {
+
+                    iICallback(obj);
+
+                }
+
+            } else if (obj.concept.trim().toLowerCase() == "sex/pregnancy") {
+
+                var gender = String(obj.value).trim().substring(0, 1).toUpperCase();
+
+
+                var sql = "UPDATE person SET gender = \"" + gender + "\" WHERE person_id = \"" + obj.patient_id + "\"";
+
+                queryRaw(sql, function (res) {
+
+                    iICallback(obj);
+
+                });
+
+            } else if (obj.concept.trim().toLowerCase() == "first name") {
+
+                var firstName = String(obj.value).trim();
+
+
+                var sql = "UPDATE person_name SET given_name = \"" + firstName + "\" WHERE person_id = \"" + obj.patient_id + "\"";
+
+                queryRaw(sql, function (res) {
+
+                    iICallback(obj);
+
+                });
+
+            } else if (obj.concept.trim().toLowerCase() == "family name") {
+
+                var lastName = String(obj.value).trim();
+
+
+                var sql = "UPDATE person_name SET family_name = \"" + lastName + "\" WHERE person_id = \"" + obj.patient_id + "\"";
+
+                queryRaw(sql, function (res) {
+
+                    iICallback(obj);
+
+                });
+
+            } else if (obj.concept.trim().toLowerCase() == "current district") {
+
+                var currentDistrict = String(obj.value).trim();
+
+                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + obj.patient_id + "\"";
+
+                queryRaw(sql, function (address) {
+
+                    var sql = "UPDATE person_address SET state_province = \"" + currentDistrict +
+                        "\" WHERE person_id = \"" + obj.patient_id + "\" AND person_address_id = \"" +
+                        address[0][0].person_address_id + "\"";
+
+                    queryRaw(sql, function (res) {
+
+                        iICallback(obj);
+
+                    });
+                });
+
+            } else if (obj.concept.trim().toLowerCase() == "current t/a") {
+
+                var currentTA = String(obj.value).trim();
+
+                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + obj.patient_id + "\"";
+
+                queryRaw(sql, function (address) {
+
+                    var sql = "UPDATE person_address SET township_division = \"" + currentTA +
+                        "\" WHERE person_id = \"" + obj.patient_id + "\" AND person_address_id = \"" +
+                        address[0][0].person_address_id + "\"";
+
+                    queryRaw(sql, function (res) {
+
+                        iICallback(obj);
+
+                    });
+
+                });
+
+            } else if (obj.concept.trim().toLowerCase() == "current village") {
+
+                var currentVillage = String(obj.value).trim();
+
+                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
+
+                queryRaw(sql, function (address) {
+
+                    var sql = "UPDATE person_address SET city_village = \"" + currentVillage +
+                        "\" WHERE person_id = \"" + obj.patient_id + "\" AND person_address_id = \"" +
+                        address[0][0].person_address_id + "\"";
+
+                    queryRaw(sql, function (res) {
+
+                        iICallback(obj);
+
+                    });
+
+                });
+
+            } else if (obj.concept.trim().toLowerCase() == "closest landmark") {
+
+                var closestLandmark = String(obj.value).trim();
+
+                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
+
+                queryRaw(sql, function (address) {
+
+                    var sql = "UPDATE person_address SET address1 = \"" + closestLandmark +
+                        "\" WHERE person_id = \"" + obj.patient_id + "\" AND person_address_id = \"" +
+                        address[0][0].person_address_id + "\"";
+
+                    queryRaw(sql, function (res) {
+
+                        iICallback(obj);
+
+                    });
+
+                });
+
+            } else if (obj.concept.trim().toLowerCase().match(/dispatch\sid/i) && false) {  // TODO: Temporary Lock. May Have to remove the block later
+
+                var root = obj.concept.trim().toLowerCase();
+                var consumption_type = "Normal use";
+                var dispatch_id = "";
+                var consumption_quantity = 1;
+                var who_consumed = obj.data.data.patient_id;
+                var date_consumed = obj.data.data.today;
+                var reason_for_consumption = "Normal use";
+                var location = obj.data.data.location;
+                var userId = obj.data.data.userId;
+
+                switch (root) {
+
+                    case "first pass test kit 1 dispatch id":
+
+                        dispatch_id = obj.data.data.obs["text"]["First Pass Test Kit 1 Dispatch ID"];
+
+                        break;
+
+                    case "first pass test kit 2 dispatch id":
+
+                        dispatch_id = obj.data.data.obs["text"]["First Pass Test Kit 2 Dispatch ID"];
+
+                        break;
+
+                    case "immediate repeat test kit 1 dispatch id":
+
+                        dispatch_id = obj.data.data.obs["text"]["Immediate Repeat Test Kit 1 Dispatch ID"];
+
+                        break;
+
+                    case "immediate repeat test kit 2 dispatch id":
+
+                        dispatch_id = obj.data.data.obs["text"]["Immediate Repeat Test Kit 2 Dispatch ID"];
+
+                        break;
+
+                }
+
+                var iData = {
+                    consumption_type: consumption_type,
+                    dispatch_id: dispatch_id,
+                    consumption_quantity: consumption_quantity,
+                    who_consumed: who_consumed,
+                    date_consumed: date_consumed,
+                    reason_for_consumption: reason_for_consumption,
+                    location: location,
+                    userId: userId
+                }
+
+                saveConsumption(iData, undefined, function () {
+
+                    iICallback(obj);
+
+                })
+
+            } else if (obj.concept.trim().toLowerCase() == "client phone number") {
+
+                var phoneNumber = String(obj.value).trim();
+
+                var sql = "SELECT person_attribute_id FROM person_attribute WHERE person_id = \"" + obj.patient_id + "\"";
+
+                queryRaw(sql, function (attr) {
+
+                    if (attr[0].length <= 0) {
+
+                        var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
+                            "creator, date_created, uuid) VALUES (\"" + obj.patient_id + "\", \"" + phoneNumber +
+                            "\", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
+                            "\"Cell Phone Number\" LIMIT 1), \"" + obj.user_id + "\", NOW(), \"" +
+                            uuid.v1() + "\")";
+
+                        queryRaw(sql, function (res) {
+
+                            iICallback(obj);
+
+                        });
+
+                    } else {
+
+                        var sql = "UPDATE person_attribute SET value = \"" + phoneNumber +
+                            "\" WHERE person_id = \"" + obj.patient_id + "\" AND person_attribute_id = \"" +
+                            attr[0][0].person_attribute_id + "\"";
+
+                        queryRaw(sql, function (res) {
+
+                            iICallback(obj);
+
+                        });
+
+                    }
+
+                });
+
+            } else {
+
+                iICallback(obj);
+
+            }
+
+        });
+
+    } else {
+
+        iICallback(obj);
+
+    }
 
 }
 
@@ -5307,8 +5390,7 @@ app.get("/stock_search", function (req, res) {
                 last_order_size: (data[0][i].last_order_size ? data[0][i].last_order_size : 0),
                 avg: (data[0][i].duration > 0 ?
                     (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
-                re_order_level: data[0][i].reorder_level,
-                last_order_size: data[0][i].last_order_size
+                re_order_level: data[0][i].reorder_level
             }
 
             collection.push(entry);
@@ -6594,6 +6676,15 @@ app.get("/static_locations", function (req, res) {
     res.send(results);
 
 })
+
+app.post("/log", function (req, res) {
+
+    var json = req.body;
+
+
+    res.status(200).json({result: ""});
+
+});
 
 app.post("/test", function (req, res) {
 

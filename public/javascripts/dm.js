@@ -74,7 +74,12 @@ function existingDiabetesPatient() {
 
             existing = false;
 
-            if(!__$("data.create_clinic_number")) {
+            if(!__$("data.create_clinic_number") && !window.parent.dashboard.data["data"]["identifiers"][
+                window.parent.dashboard.modules[window.parent.dashboard.getCookie("currentProgram")].identifiers[1]] ||
+                (window.parent.dashboard.data["data"]["identifiers"][window.parent.dashboard.modules[
+                    window.parent.dashboard.getCookie("currentProgram")].identifiers[1]] &&
+                    !window.parent.dashboard.data["data"]["identifiers"][window.parent.dashboard.modules[
+                        window.parent.dashboard.getCookie("currentProgram")].identifiers[1]].identifier)) {
 
                 var input = document.createElement("input");
                 input.type = "hidden";
