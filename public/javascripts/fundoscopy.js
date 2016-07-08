@@ -18,7 +18,7 @@ function loadPage() {
             var input = document.createElement("input");
             input.type = "hidden";
             input.id = "Fundoscopy_root_0_parent_" + i + "_child_" + j;
-            input.name = "data.obs.text." + categories[i] + " FUNDOSCOPY[]";
+            input.name = "data.obs.text.Diabetes Test Type:Fundoscopy[]." + categories[i] + " FUNDOSCOPY[]";
             input.value = parents[j];
             input.setAttribute("disabled", true);
 
@@ -29,7 +29,7 @@ function loadPage() {
                 var input = document.createElement("input");
                 input.type = "hidden";
                 input.id = "Fundoscopy_root_0_parent_" + i + "_child_" + j + "_grandchild_" + k;
-                input.name = "data.obs.text." + categories[i] + " FUNDOSCOPY[]";
+                input.name = "data.obs.text.Diabetes Test Type:Fundoscopy[]." + categories[i] + " FUNDOSCOPY[]";
                 input.value = parents[j] + ": " + children[j][k];
                 input.setAttribute("disabled", true);
 
@@ -40,7 +40,7 @@ function loadPage() {
                     var input = document.createElement("input");
                     input.type = "hidden";
                     input.id = "Fundoscopy_root_0_parent_" + i + "_child_" + j + "_grandchild_" + k + "_greatgrandchild_" + l;
-                    input.name = "data.obs.text." + categories[i] + " FUNDOSCOPY[]";
+                    input.name = "data.obs.text.Diabetes Test Type:Fundoscopy[]." + categories[i] + " FUNDOSCOPY[]";
                     input.value = parents[j] + ": " + children[j][k] + ": " + grandChildren[k][l];
                     input.setAttribute("disabled", true);
 
