@@ -6,13 +6,13 @@ O.1.1.3. Pigs/pork
 O.1.1.4. Traditional medicine
 O.1.1.5. Other
 
-Q.1.2. Smoking Date [pos:: 1$$field_type::birthdate$$ id:: smoking_date]
+Q.1.2. Smoking Date [pos:: 1$$field_type::date$$ id:: smoking_date]
 
-Q.1.3. Alcohol Date [pos:: 2$$field_type::birthdate$$ id:: alcohol_date]
+Q.1.3. Alcohol Date [pos:: 2$$field_type::date$$ id:: alcohol_date]
 
-Q.1.4. Pigs/pork Date [pos:: 3$$field_type::birthdate$$ id:: pigs_pork_date]
+Q.1.4. Pigs/pork Date [pos:: 3$$field_type::date$$ id:: pigs_pork_date]
 
-Q.1.5. Traditional medicine Date [pos:: 4$$field_type::birthdate$$ id:: traditional_medicine_date]
+Q.1.5. Traditional medicine Date [pos:: 4$$field_type::date$$ id:: traditional_medicine_date]
 
 Q.1.6. Other Exposures Specify [pos:: 5$$id:: other0]
 
