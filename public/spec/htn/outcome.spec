@@ -1,6 +1,6 @@
 P.1. UPDATE OUTCOME [program:: HYPERTENSION PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;htn]
 
-Q.1.1. Outcome [pos:: 0$$ concept:: OUTCOME]
+Q.1.1. Outcome [pos:: 0$$ concept:: OUTCOME$$tt_requirenextclick::false]
 O.1.1.1. Discharge
 O.1.1.2. Default
 O.1.1.3. Treatment stopped
