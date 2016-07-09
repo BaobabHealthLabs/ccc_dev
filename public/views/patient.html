@@ -19,7 +19,9 @@
             dashboard.navURLPanel('/spec/dm/complications.html');
 
             setTimeout(function () {
-                dashboard.$("ifrMain").contentWindow.location = dashboard.$("ifrMain").contentWindow.location.href;
+
+                dashboard.$("ifrMain").contentWindow.location = '/spec/dm/complications.html';
+
             }, 200);
 
         }

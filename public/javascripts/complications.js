@@ -177,6 +177,9 @@ function loadPage() {
             var td = document.createElement("td");
             td.innerHTML = row.value + " " + row.units;
             td.style.borderRight = "1px solid #ccc";
+            td.style.width = "25%";
+            td.align = "right";
+            td.style.verticalAlign = "top";
 
             if (i > 0)
                 td.className = "collapsible-creatinine";
@@ -187,6 +190,7 @@ function loadPage() {
             tr.appendChild(td);
 
             var td = document.createElement("td");
+            td.style.verticalAlign = "top";
             td.innerHTML = (row.date == (new Date()).format() ? "Today" : row.date);
 
             if (i > 0)
@@ -198,8 +202,10 @@ function loadPage() {
             tr.appendChild(td);
 
             var td = document.createElement("td");
+            td.style.verticalAlign = "top";
             td.align = "right";
             td.setAttribute("uuid", row.uuid);
+            td.style.width = "40px";
 
             if (i > 0)
                 td.className = "collapsible-creatinine";
@@ -218,7 +224,7 @@ function loadPage() {
 
             var img = document.createElement("img");
             img.src = icoClose;
-            img.height = 40;
+            img.height = 25;
             img.style.cursor = "pointer";
 
             td.appendChild(img);
@@ -267,6 +273,1269 @@ function loadPage() {
                 } else {
 
                     [].slice.call(document.querySelectorAll(".collapsible-creatinine")).forEach(function (el, i) {
+
+                        el.style.display = "none";
+
+                    });
+
+                    this.innerHTML = "Show More";
+
+                }
+
+            }
+
+            tr.appendChild(td);
+
+        }
+
+    }
+
+    if (__$("urine_protein")) {
+
+        __$("urine_protein").innerHTML = "";
+
+        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Urine Protein");
+
+        var visits = Object.keys(nodes);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.borderColor = "#eee";
+        table.cellPadding = 10;
+
+        __$("urine_protein").appendChild(table);
+
+        var data = {};
+
+        for (var i = 0; i < visits.length; i++) {
+
+            var visit = visits[i];
+
+            for (var j = 0; j < nodes[visit].length; j++) {
+
+                var node = nodes[visit][j]["Urine Protein"].data;
+
+                var entry = {
+                    value: "",
+                    date: "",
+                    uuid: nodes[visit][j]["Urine Protein"].UUID
+                }
+
+                for (var k = 0; k < node.length; k++) {
+
+                    var leaf = node[k];
+
+                    var label = Object.keys(leaf)[0];
+
+                    switch (label) {
+
+                        case "Urine Protein Result":
+
+                            entry.value = leaf[label].response.value;
+
+                            break;
+
+                        case "Urine Protein Result Test Date":
+
+                            entry.date = (new Date(leaf[label].response.value)).format();
+
+                            break;
+
+                    }
+
+                }
+
+                data[(new Date(entry.date)).getTime()] = entry;
+
+            }
+
+        }
+
+        var keys = Object.keys(data).sort().reverse();
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var row = data[keys[i]];
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.style.verticalAlign = "top";
+            td.innerHTML = row.value;
+            td.align = "right";
+            td.style.borderRight = "1px solid #ccc";
+            td.style.width = "25%";
+
+            if (i > 0)
+                td.className = "collapsible-urine_protein";
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.verticalAlign = "top";
+            td.innerHTML = (row.date == (new Date()).format() ? "Today" : row.date);
+
+            if (i > 0)
+                td.className = "collapsible-urine_protein";
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.verticalAlign = "top";
+            td.align = "right";
+            td.setAttribute("uuid", row.uuid);
+            td.style.width = "40px";
+
+            if (i > 0)
+                td.className = "collapsible-urine_protein";
+
+            td.onclick = function () {
+
+                window.parent.dashboard.showConfirmMsg("Do you really want to delete this entry?", "Confirm",
+                        "javascript:window.parent.dashboard.voidConcept('" + this.getAttribute("uuid") + "')");
+
+            }
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var img = document.createElement("img");
+            img.src = icoClose;
+            img.height = 25;
+            img.style.cursor = "pointer";
+
+            td.appendChild(img);
+
+        }
+
+        [].slice.call(document.querySelectorAll(".collapsible-urine_protein")).forEach(function (el, i) {
+
+            el.style.display = "none";
+
+        });
+
+        if (keys.length > 1) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.style.borderRight = "1px solid #ccc";
+            td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.colSpan = 2;
+            td.id = "toggle-urine_protein";
+            td.innerHTML = "Show More";
+            td.className = "link";
+            td.align = "right";
+            td.style.fontSize = "18px";
+            td.style.borderTop = "1px solid #ccc";
+
+            td.onclick = function () {
+
+                if (this.innerHTML == "Show More") {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-urine_protein")).forEach(function (el, i) {
+
+                        el.style.display = "table-cell";
+
+                    });
+
+                    this.innerHTML = "Show Less";
+
+                } else {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-urine_protein")).forEach(function (el, i) {
+
+                        el.style.display = "none";
+
+                    });
+
+                    this.innerHTML = "Show More";
+
+                }
+
+            }
+
+            tr.appendChild(td);
+
+        }
+
+    }
+
+    if (__$("visual_acuity")) {
+
+        __$("visual_acuity").innerHTML = "";
+
+        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Visual Acuity");
+
+        var visits = Object.keys(nodes);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.borderColor = "#eee";
+        table.cellPadding = 10;
+
+        __$("visual_acuity").appendChild(table);
+
+        var data = {};
+
+        for (var i = 0; i < visits.length; i++) {
+
+            var visit = visits[i];
+
+            for (var j = 0; j < nodes[visit].length; j++) {
+
+                var node = nodes[visit][j]["Visual Acuity"].data;
+
+                var entry = {
+                    category: [],
+                    value: [],
+                    date: "",
+                    uuid: nodes[visit][j]["Visual Acuity"].UUID
+                }
+
+                for (var k = 0; k < node.length; k++) {
+
+                    var leaf = node[k];
+
+                    var label = Object.keys(leaf)[0];
+
+                    switch (label) {
+
+                        case "Right eye visual acuity":
+
+                        case "Left eye visual acuity":
+
+                            entry.category.push(label);
+
+                            entry.value.push(leaf[label].response.value.split(",").join("<br/>"));
+
+                            break;
+
+                        case "Visual Acuity Result Test Date":
+
+                            entry.date = (new Date(leaf[label].response.value)).format();
+
+                            break;
+
+                    }
+
+                }
+
+                if(!data[(new Date(entry.date)).getTime()])
+                    data[(new Date(entry.date)).getTime()] = {};
+
+                for(var e = 0; e < entry.category.length; e++) {
+
+                    data[(new Date(entry.date)).getTime()][entry.category[e]] = {
+                        category: entry.category[e],
+                        value: entry.value[e],
+                        date: entry.date,
+                        uuid: entry.uuid
+                    };
+
+                }
+
+            }
+
+        }
+
+        var keys = Object.keys(data).sort().reverse();
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var categories = Object.keys(data[keys[i]]);
+
+            for (var j = 0; j < categories.length; j++) {
+
+                var category = categories[j];
+
+                var row = data[keys[i]][category];
+
+                var tr = document.createElement("tr");
+
+                table.appendChild(tr);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.innerHTML = row.category;
+                td.align = "right";
+                td.style.borderRight = "1px solid #ccc";
+                td.style.width = "25%";
+
+                if (i > 0)
+                    td.className = "collapsible-visual_acuity";
+
+                if (i > 0 || j > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.innerHTML = row.value;
+                td.style.borderRight = "1px solid #ccc";
+
+                if (i > 0)
+                    td.className = "collapsible-visual_acuity";
+
+                if (j > 0 || i > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.innerHTML = (row.date == (new Date()).format() ? "Today" : row.date);
+                td.style.width = "25%";
+
+                if (i > 0)
+                    td.className = "collapsible-visual_acuity";
+
+                if (i > 0 || j > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.align = "right";
+                td.setAttribute("uuid", row.uuid);
+                td.style.width = "40px";
+
+                if (i > 0)
+                    td.className = "collapsible-visual_acuity";
+
+                td.onclick = function () {
+
+                    window.parent.dashboard.showConfirmMsg("Do you really want to delete this entry?", "Confirm",
+                            "javascript:window.parent.dashboard.voidConcept('" + this.getAttribute("uuid") + "')");
+
+                }
+
+                if (i > 0 || j > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var img = document.createElement("img");
+                img.src = icoClose;
+                img.height = 25;
+                img.style.cursor = "pointer";
+
+                td.appendChild(img);
+
+            }
+
+        }
+
+        [].slice.call(document.querySelectorAll(".collapsible-visual_acuity")).forEach(function (el, i) {
+
+            el.style.display = "none";
+
+        });
+
+        if (keys.length > 1) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.style.borderRight = "1px solid #ccc";
+            td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.borderRight = "1px solid #ccc";
+            td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.colSpan = 2;
+            td.id = "toggle-visual_acuity";
+            td.innerHTML = "Show More";
+            td.className = "link";
+            td.align = "right";
+            td.style.fontSize = "18px";
+            td.style.borderTop = "1px solid #ccc";
+
+            td.onclick = function () {
+
+                if (this.innerHTML == "Show More") {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-visual_acuity")).forEach(function (el, i) {
+
+                        el.style.display = "table-cell";
+
+                    });
+
+                    this.innerHTML = "Show Less";
+
+                } else {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-visual_acuity")).forEach(function (el, i) {
+
+                        el.style.display = "none";
+
+                    });
+
+                    this.innerHTML = "Show More";
+
+                }
+
+            }
+
+            tr.appendChild(td);
+
+        }
+
+    }
+
+    if (__$("fundoscopy")) {
+
+        __$("fundoscopy").innerHTML = "";
+
+        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Fundoscopy");
+
+        var visits = Object.keys(nodes);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.borderColor = "#eee";
+        table.cellPadding = 10;
+
+        __$("fundoscopy").appendChild(table);
+
+        var data = {};
+
+        for (var i = 0; i < visits.length; i++) {
+
+            var visit = visits[i];
+
+            for (var j = 0; j < nodes[visit].length; j++) {
+
+                var node = nodes[visit][j]["Fundoscopy"].data;
+
+                var entry = {
+                    category: [],
+                    value: [],
+                    date: "",
+                    uuid: nodes[visit][j]["Fundoscopy"].UUID
+                }
+
+                for (var k = 0; k < node.length; k++) {
+
+                    var leaf = node[k];
+
+                    var label = Object.keys(leaf)[0];
+
+                    switch (label) {
+
+                        case "Right eye fundoscopy":
+
+                        case "Left eye fundoscopy":
+
+                            entry.category.push(label);
+
+                            entry.value.push(leaf[label].response.value.split(",").join("<br/>"));
+
+                            break;
+
+                        case "Fundoscopy Result Test Date":
+
+                            entry.date = (new Date(leaf[label].response.value)).format();
+
+                            break;
+
+                    }
+
+                }
+
+                if(!data[(new Date(entry.date)).getTime()])
+                    data[(new Date(entry.date)).getTime()] = {};
+
+                for(var e = 0; e < entry.category.length; e++) {
+
+                    data[(new Date(entry.date)).getTime()][entry.category[e]] = {
+                        category: entry.category[e],
+                        value: entry.value[e],
+                        date: entry.date,
+                        uuid: entry.uuid
+                    };
+
+                }
+
+            }
+
+        }
+
+        var keys = Object.keys(data).sort().reverse();
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var categories = Object.keys(data[keys[i]]);
+
+            for (var j = 0; j < categories.length; j++) {
+
+                var category = categories[j];
+
+                var row = data[keys[i]][category];
+
+                var tr = document.createElement("tr");
+
+                table.appendChild(tr);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.innerHTML = row.category;
+                td.align = "right";
+                td.style.borderRight = "1px solid #ccc";
+                td.style.width = "25%";
+
+                if (i > 0)
+                    td.className = "collapsible-fundoscopy";
+
+                if (i > 0 || j > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.innerHTML = row.value;
+                td.style.borderRight = "1px solid #ccc";
+
+                if (i > 0)
+                    td.className = "collapsible-fundoscopy";
+
+                if (i > 0 || j > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.innerHTML = (row.date == (new Date()).format() ? "Today" : row.date);
+                td.style.width = "25%";
+
+                if (i > 0)
+                    td.className = "collapsible-fundoscopy";
+
+                if (i > 0 || j > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.align = "right";
+                td.setAttribute("uuid", row.uuid);
+                td.style.width = "40px";
+
+                if (i > 0)
+                    td.className = "collapsible-fundoscopy";
+
+                td.onclick = function () {
+
+                    window.parent.dashboard.showConfirmMsg("Do you really want to delete this entry?", "Confirm",
+                            "javascript:window.parent.dashboard.voidConcept('" + this.getAttribute("uuid") + "')");
+
+                }
+
+                if (i > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var img = document.createElement("img");
+                img.src = icoClose;
+                img.height = 25;
+                img.style.cursor = "pointer";
+
+                td.appendChild(img);
+
+            }
+
+        }
+
+        [].slice.call(document.querySelectorAll(".collapsible-fundoscopy")).forEach(function (el, i) {
+
+            el.style.display = "none";
+
+        });
+
+        if (keys.length > 1) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.style.borderRight = "1px solid #ccc";
+            td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.borderRight = "1px solid #ccc";
+            td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.colSpan = 2;
+            td.id = "toggle-fundoscopy";
+            td.innerHTML = "Show More";
+            td.className = "link";
+            td.align = "right";
+            td.style.fontSize = "18px";
+            td.style.borderTop = "1px solid #ccc";
+
+            td.onclick = function () {
+
+                if (this.innerHTML == "Show More") {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-fundoscopy")).forEach(function (el, i) {
+
+                        el.style.display = "table-cell";
+
+                    });
+
+                    this.innerHTML = "Show Less";
+
+                } else {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-fundoscopy")).forEach(function (el, i) {
+
+                        el.style.display = "none";
+
+                    });
+
+                    this.innerHTML = "Show More";
+
+                }
+
+            }
+
+            tr.appendChild(td);
+
+        }
+
+    }
+
+    if (__$("foot_check")) {
+
+        __$("foot_check").innerHTML = "";
+
+        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Foot Check");
+
+        var visits = Object.keys(nodes);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.borderColor = "#eee";
+        table.cellPadding = 10;
+
+        __$("foot_check").appendChild(table);
+
+        var data = {};
+
+        for (var i = 0; i < visits.length; i++) {
+
+            var visit = visits[i];
+
+            for (var j = 0; j < nodes[visit].length; j++) {
+
+                var node = nodes[visit][j]["Foot Check"].data;
+
+                var entry = {
+                    category: [],
+                    value: [],
+                    date: "",
+                    uuid: nodes[visit][j]["Foot Check"].UUID
+                }
+
+                for (var k = 0; k < node.length; k++) {
+
+                    var leaf = node[k];
+
+                    var label = Object.keys(leaf)[0];
+
+                    switch (label) {
+
+                        case "Right Foot/Leg Foot Check":
+
+                        case "Left Foot/Leg Foot Check":
+
+                            entry.category.push(label);
+
+                            entry.value.push(leaf[label].response.value.split(",").join("<br/>"));
+
+                            break;
+
+                        case "Foot Check Result Test Date":
+
+                            entry.date = (new Date(leaf[label].response.value)).format();
+
+                            break;
+
+                    }
+
+                }
+
+                if(!data[(new Date(entry.date)).getTime()])
+                    data[(new Date(entry.date)).getTime()] = {};
+
+                for(var e = 0; e < entry.category.length; e++) {
+
+                    data[(new Date(entry.date)).getTime()][entry.category[e]] = {
+                        category: entry.category[e],
+                        value: entry.value[e],
+                        date: entry.date,
+                        uuid: entry.uuid
+                    };
+
+                }
+
+            }
+
+        }
+
+        var keys = Object.keys(data).sort().reverse();
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var categories = Object.keys(data[keys[i]]);
+
+            for (var j = 0; j < categories.length; j++) {
+
+                var category = categories[j];
+
+                var row = data[keys[i]][category];
+
+                var tr = document.createElement("tr");
+
+                table.appendChild(tr);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.innerHTML = row.category;
+                td.align = "right";
+                td.style.borderRight = "1px solid #ccc";
+                td.style.width = "25%";
+
+                if (i > 0)
+                    td.className = "collapsible-foot_check";
+
+                if (i > 0 || j > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.innerHTML = row.value;
+                td.style.borderRight = "1px solid #ccc";
+
+                if (i > 0)
+                    td.className = "collapsible-foot_check";
+
+                if (i > 0 || j > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.innerHTML = (row.date == (new Date()).format() ? "Today" : row.date);
+                td.style.width = "25%";
+
+                if (i > 0)
+                    td.className = "collapsible-foot_check";
+
+                if (i > 0 || j > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+                td.align = "right";
+                td.setAttribute("uuid", row.uuid);
+                td.style.width = "40px";
+
+                if (i > 0)
+                    td.className = "collapsible-foot_check";
+
+                td.onclick = function () {
+
+                    window.parent.dashboard.showConfirmMsg("Do you really want to delete this entry?", "Confirm",
+                            "javascript:window.parent.dashboard.voidConcept('" + this.getAttribute("uuid") + "')");
+
+                }
+
+                if (i > 0)
+                    td.style.borderTop = "1px solid #ccc";
+
+                tr.appendChild(td);
+
+                var img = document.createElement("img");
+                img.src = icoClose;
+                img.height = 25;
+                img.style.cursor = "pointer";
+
+                td.appendChild(img);
+
+            }
+
+        }
+
+        [].slice.call(document.querySelectorAll(".collapsible-foot_check")).forEach(function (el, i) {
+
+            el.style.display = "none";
+
+        });
+
+        if (keys.length > 1) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.style.borderRight = "1px solid #ccc";
+            td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.borderRight = "1px solid #ccc";
+            td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.colSpan = 2;
+            td.id = "toggle-foot_check";
+            td.innerHTML = "Show More";
+            td.className = "link";
+            td.align = "right";
+            td.style.fontSize = "18px";
+            td.style.borderTop = "1px solid #ccc";
+
+            td.onclick = function () {
+
+                if (this.innerHTML == "Show More") {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-foot_check")).forEach(function (el, i) {
+
+                        el.style.display = "table-cell";
+
+                    });
+
+                    this.innerHTML = "Show Less";
+
+                } else {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-foot_check")).forEach(function (el, i) {
+
+                        el.style.display = "none";
+
+                    });
+
+                    this.innerHTML = "Show More";
+
+                }
+
+            }
+
+            tr.appendChild(td);
+
+        }
+
+    }
+
+    if (__$("urea")) {
+
+        __$("urea").innerHTML = "";
+
+        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Urea");
+
+        var visits = Object.keys(nodes);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.borderColor = "#eee";
+        table.cellPadding = 10;
+
+        __$("urea").appendChild(table);
+
+        var data = {};
+
+        for (var i = 0; i < visits.length; i++) {
+
+            var visit = visits[i];
+
+            for (var j = 0; j < nodes[visit].length; j++) {
+
+                var node = nodes[visit][j]["Urea"].data;
+
+                var entry = {
+                    value: "",
+                    date: "",
+                    uuid: nodes[visit][j]["Urea"].UUID
+                }
+
+                for (var k = 0; k < node.length; k++) {
+
+                    var leaf = node[k];
+
+                    var label = Object.keys(leaf)[0];
+
+                    switch (label) {
+
+                        case "Urea Result":
+
+                            entry.value = leaf[label].response.value;
+
+                            break;
+
+                        case "Urea Result Test Date":
+
+                            entry.date = (new Date(leaf[label].response.value)).format();
+
+                            break;
+
+                    }
+
+                }
+
+                data[(new Date(entry.date)).getTime()] = entry;
+
+            }
+
+        }
+
+        var keys = Object.keys(data).sort().reverse();
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var row = data[keys[i]];
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.innerHTML = row.value;
+            td.style.borderRight = "1px solid #ccc";
+            td.style.width = "25%";
+            td.align = "right";
+            td.style.verticalAlign = "top";
+
+            if (i > 0)
+                td.className = "collapsible-urea";
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.verticalAlign = "top";
+            td.innerHTML = (row.date == (new Date()).format() ? "Today" : row.date);
+
+            if (i > 0)
+                td.className = "collapsible-urea";
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.verticalAlign = "top";
+            td.align = "right";
+            td.setAttribute("uuid", row.uuid);
+            td.style.width = "40px";
+
+            if (i > 0)
+                td.className = "collapsible-urea";
+
+            td.onclick = function () {
+
+                window.parent.dashboard.showConfirmMsg("Do you really want to delete this entry?", "Confirm",
+                        "javascript:window.parent.dashboard.voidConcept('" + this.getAttribute("uuid") + "')");
+
+            }
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var img = document.createElement("img");
+            img.src = icoClose;
+            img.height = 25;
+            img.style.cursor = "pointer";
+
+            td.appendChild(img);
+
+        }
+
+        [].slice.call(document.querySelectorAll(".collapsible-urea")).forEach(function (el, i) {
+
+            el.style.display = "none";
+
+        });
+
+        if (keys.length > 1) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.style.borderRight = "1px solid #ccc";
+            td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.colSpan = 2;
+            td.id = "toggle-urea";
+            td.innerHTML = "Show More";
+            td.className = "link";
+            td.align = "right";
+            td.style.fontSize = "18px";
+            td.style.borderTop = "1px solid #ccc";
+
+            td.onclick = function () {
+
+                if (this.innerHTML == "Show More") {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-urea")).forEach(function (el, i) {
+
+                        el.style.display = "table-cell";
+
+                    });
+
+                    this.innerHTML = "Show Less";
+
+                } else {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-urea")).forEach(function (el, i) {
+
+                        el.style.display = "none";
+
+                    });
+
+                    this.innerHTML = "Show More";
+
+                }
+
+            }
+
+            tr.appendChild(td);
+
+        }
+
+    }
+
+    if (__$("macrovascular")) {
+
+        __$("macrovascular").innerHTML = "";
+
+        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Macrovascular");
+
+        var visits = Object.keys(nodes);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.borderColor = "#eee";
+        table.cellPadding = 10;
+
+        __$("macrovascular").appendChild(table);
+
+        var data = {};
+
+        for (var i = 0; i < visits.length; i++) {
+
+            var visit = visits[i];
+
+            for (var j = 0; j < nodes[visit].length; j++) {
+
+                var node = nodes[visit][j]["Macrovascular"].data;
+
+                var entry = {
+                    value: "",
+                    date: "",
+                    uuid: nodes[visit][j]["Macrovascular"].UUID
+                }
+
+                for (var k = 0; k < node.length; k++) {
+
+                    var leaf = node[k];
+
+                    var label = Object.keys(leaf)[0];
+
+                    switch (label) {
+
+                        case "Macrovascular Result":
+
+                            entry.value = leaf[label].response.value;
+
+                            break;
+
+                        case "Macrovascular Result Test Date":
+
+                            entry.date = (new Date(leaf[label].response.value)).format();
+
+                            break;
+
+                    }
+
+                }
+
+                data[(new Date(entry.date)).getTime()] = entry;
+
+            }
+
+        }
+
+        var keys = Object.keys(data).sort().reverse();
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var row = data[keys[i]];
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.innerHTML = row.value;
+            td.style.borderRight = "1px solid #ccc";
+            td.align = "right";
+            td.style.verticalAlign = "top";
+
+            if (i > 0)
+                td.className = "collapsible-macrovascular";
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.verticalAlign = "top";
+            td.style.width = "25%";
+            td.innerHTML = (row.date == (new Date()).format() ? "Today" : row.date);
+
+            if (i > 0)
+                td.className = "collapsible-macrovascular";
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.verticalAlign = "top";
+            td.align = "right";
+            td.setAttribute("uuid", row.uuid);
+            td.style.width = "40px";
+
+            if (i > 0)
+                td.className = "collapsible-macrovascular";
+
+            td.onclick = function () {
+
+                window.parent.dashboard.showConfirmMsg("Do you really want to delete this entry?", "Confirm",
+                        "javascript:window.parent.dashboard.voidConcept('" + this.getAttribute("uuid") + "')");
+
+            }
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var img = document.createElement("img");
+            img.src = icoClose;
+            img.height = 25;
+            img.style.cursor = "pointer";
+
+            td.appendChild(img);
+
+        }
+
+        [].slice.call(document.querySelectorAll(".collapsible-macrovascular")).forEach(function (el, i) {
+
+            el.style.display = "none";
+
+        });
+
+        if (keys.length > 1) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.style.borderRight = "1px solid #ccc";
+            td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.colSpan = 2;
+            td.id = "toggle-macrovascular";
+            td.innerHTML = "Show More";
+            td.className = "link";
+            td.align = "right";
+            td.style.fontSize = "18px";
+            td.style.borderTop = "1px solid #ccc";
+
+            td.onclick = function () {
+
+                if (this.innerHTML == "Show More") {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-macrovascular")).forEach(function (el, i) {
+
+                        el.style.display = "table-cell";
+
+                    });
+
+                    this.innerHTML = "Show Less";
+
+                } else {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-macrovascular")).forEach(function (el, i) {
 
                         el.style.display = "none";
 
