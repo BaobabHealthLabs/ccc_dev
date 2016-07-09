@@ -10,7 +10,7 @@
         ["TRIGGERS","Epilepsy triggers encounter"],
         ["POST-ICTAL FEATURES","Epilepsy Post-ictal Features encounter"],
         ["PRE-ICTAL WARNING","Epilepsy Pre-ictal Warning encounter"],
-        ["EPILEPSY HIV STATUS","Epilepsy HIV status encounter"],
+        ["HIV STATUS","HIV status encounter"],
         ["EPILEPSY VISIT","Epilepsy visit"],
         ["OUTCOME", "Outcome encounter"],
         ["MEDICAL HISTORY", "Medical history encounter"],
@@ -54,6 +54,8 @@
         "CROSS-CUTTING PROGRAM"
     ],
     "concepts": [
+        "ART Start Date",
+        "On ART?",
         "Secondary diabetes?",
         "Have You Ever Had TB?",
         "Outcome Date",
@@ -169,7 +171,6 @@
         "Drug Related Date",
         "Other Date",
         "Other Complications Specify",
-        "HIV Status",
         "Diagnosis",
         "Asthma diagnosis date",
         "COPD diagnosis date",
