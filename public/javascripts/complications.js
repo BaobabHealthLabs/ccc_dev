@@ -99,7 +99,7 @@ function loadPage() {
 
         __$("creatinine").innerHTML = "";
 
-        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Creatinine");
+        var nodes = window.parent.dashboard.queryExistingObsComplexArray("Diabetes test type", undefined, "Creatinine");
 
         var visits = Object.keys(nodes);
 
@@ -294,7 +294,7 @@ function loadPage() {
 
         __$("urine_protein").innerHTML = "";
 
-        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Urine Protein");
+        var nodes = window.parent.dashboard.queryExistingObsComplexArray("Diabetes test type", undefined, "Urine Protein");
 
         var visits = Object.keys(nodes);
 
@@ -482,7 +482,7 @@ function loadPage() {
 
         __$("visual_acuity").innerHTML = "";
 
-        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Visual Acuity");
+        var nodes = window.parent.dashboard.queryExistingObsComplexArray("Diabetes test type", undefined, "Visual Acuity");
 
         var visits = Object.keys(nodes);
 
@@ -715,7 +715,7 @@ function loadPage() {
 
         __$("fundoscopy").innerHTML = "";
 
-        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Fundoscopy");
+        var nodes = window.parent.dashboard.queryExistingObsComplexArray("Diabetes test type", undefined, "Fundoscopy");
 
         var visits = Object.keys(nodes);
 
@@ -948,7 +948,7 @@ function loadPage() {
 
         __$("foot_check").innerHTML = "";
 
-        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Foot Check");
+        var nodes = window.parent.dashboard.queryExistingObsComplexArray("Diabetes test type", undefined, "Foot Check");
 
         var visits = Object.keys(nodes);
 
@@ -1181,7 +1181,7 @@ function loadPage() {
 
         __$("urea").innerHTML = "";
 
-        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Urea");
+        var nodes = window.parent.dashboard.queryExistingObsComplexArray("Diabetes test type", undefined, "Urea");
 
         var visits = Object.keys(nodes);
 
@@ -1369,7 +1369,7 @@ function loadPage() {
 
         __$("macrovascular").innerHTML = "";
 
-        var nodes = window.parent.dashboard.queryExistingObsArray("Diabetes test type", undefined, "Macrovascular");
+        var nodes = window.parent.dashboard.queryExistingObsComplexArray("Diabetes test type", undefined, "Macrovascular");
 
         var visits = Object.keys(nodes);
 
