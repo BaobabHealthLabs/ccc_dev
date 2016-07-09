@@ -3601,8 +3601,8 @@ var dashboard = ({
 
             if (callback) {
 
-                alert("In");
-
+                callback();
+                
             }
 
         }
