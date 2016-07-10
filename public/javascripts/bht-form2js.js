@@ -93,8 +93,6 @@ var log = [];
 	 */
 	function processNameValues(nameValues, skipEmpty, delimiter)
 	{
-        log = [];
-
         var result = {},
 			arrays = {},
 			i, j, k, l,
@@ -108,9 +106,6 @@ var log = [];
 			name,
 			_nameParts;
 
-        log.push({nameValues: nameValues, "nameValues.length": nameValues.length, value: value, name: name, nameParts: nameParts, result: result,
-            currResult: currResult, arrNameFull: arrNameFull});
-
 		for (i = 0; i < nameValues.length; i++)
 		{
 			value = nameValues[i].value;
@@ -122,9 +117,6 @@ var log = [];
 			nameParts = [];
 			currResult = result;
 			arrNameFull = '';
-
-            log.push({"nameValues.length": nameValues.length, value: value, name: name, nameParts: nameParts, result: result,
-                currResult: currResult, arrNameFull: arrNameFull, i: i});
 
 			for(j = 0; j < _nameParts.length; j++)
 			{
@@ -166,9 +158,6 @@ var log = [];
 			for (j = 0; j < nameParts.length; j++)
 			{
 				namePart = nameParts[j];
-
-                log.push({"nameValues.length": nameValues.length, value: value, name: name, nameParts: nameParts, result: result,
-                    currResult: currResult, arrNameFull: arrNameFull, i: i, j: j});
 
 				if (namePart.indexOf('[]') > -1 && j == nameParts.length - 1)
 				{
@@ -236,9 +225,6 @@ var log = [];
 						currResult[namePart] = value;
 					}
 				}
-
-                log.push({"nameValues.length": nameValues.length, value: value, name: name, nameParts: nameParts, result: result,
-                    currResult: currResult, arrNameFull: arrNameFull, i: i, j: j});
 
             }
 		}

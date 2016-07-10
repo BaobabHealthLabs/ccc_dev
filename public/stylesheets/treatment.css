@@ -1,0 +1,31 @@
+.options {
+    height:8em;
+}
+
+#tt_page_common_prescriptions_for_this_diagnosis .options {
+    font-size:1em;
+    height:24em;
+}
+
+#tt_page_frequency .options {
+    font-size:1em;
+    height:24em;
+}
+
+.tt_controls_frequency #keyboard,
+.tt_controls_frequency #num,
+.tt_controls_frequency #Unknown {
+    display:none;
+}
+
+label {
+    font-size: 1.2em;
+}
+
+#lente td {
+    font-size: 1.2em;
+}
+
+#lente th {
+    font-size: 1em;
+}
