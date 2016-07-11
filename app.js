@@ -6627,12 +6627,38 @@ app.get("/static_locations", function (req, res) {
 
 })
 
-app.post("/log", function (req, res) {
+app.get("/bookings", function (req, res) {
 
-    var json = req.body;
+    var url_parts = url.parse(req.url, true);
 
+    var query = url_parts.query;
 
-    res.status(200).json({result: ""});
+    var sql = 'SELECT person.uuid AS person_uuid, obs.value_text AS appointment_date, identifier, obs.uuid AS obsUuid ' +
+        'FROM obs LEFT OUTER JOIN person ON person.person_id = obs.person_id LEFT OUTER JOIN patient_identifier ON ' +
+        'patient_identifier.patient_id = obs.person_id WHERE concept_id = (SELECT concept_id FROM concept_name WHERE ' +
+        'name = "Appointment date" AND voided = 0 LIMIT 1) AND DATE(value_text) >= DATE("' + query.start_date + '") ' +
+        'AND DATE(value_text) <= DATE("' + query.end_date + '") AND obs.voided = 0 AND patient_identifier.identifier_type = ' +
+        '(SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = "National id" LIMIT 1)';
+
+    queryRaw(sql, function(resp) {
+
+        var data = {};
+
+        for (var i = 0; i < resp[0].length; i++) {
+
+            if (!data[resp[0][i].appointment_date]) {
+
+                data[resp[0][i].appointment_date] = [];
+
+            }
+
+            data[resp[0][i].appointment_date].push([resp[0][i].identifier, resp[0][i].obsUuid]);
+
+        }
+
+        res.status(200).json({error: false, data: data});
+
+    })
 
 });
 

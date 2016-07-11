@@ -434,7 +434,78 @@ var dashboard = ({
 
     },
 
-    queryExistingObsArray: function (concept, callback, specificConcept) {
+    queryExistingObsArray: function (concept, callback) {
+
+        var result = {};
+
+        var programs = Object.keys(dashboard.data.data.programs);
+
+        for (var p = 0; p < programs.length; p++) {
+
+            var program = programs[p];
+
+            if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
+                Object.keys(this.data.data.programs).length > 0) {
+
+                var patientPrograms = this.data.data.programs[program].patient_programs;
+
+                var pKeys = Object.keys(patientPrograms);
+
+                for (var i = 0; i < pKeys.length; i++) {
+
+                    var key = pKeys[i];
+
+                    if (!patientPrograms[key].date_completed) {
+
+                        var vKeys = Object.keys(patientPrograms[key].visits);
+
+                        for (var j = 0; j < vKeys.length; j++) {
+
+                            var visit = vKeys[j];
+
+                            var eKeys = Object.keys(patientPrograms[key].visits[visit]);
+
+                            for (var k = 0; k < eKeys.length; k++) {
+
+                                var encounter = eKeys[k];
+
+                                var oKeys = Object.keys(patientPrograms[key].visits[visit][encounter]);
+
+                                for (var l = 0; l < oKeys.length; l++) {
+
+                                    if (patientPrograms[key].visits[visit][encounter][l][concept]) {
+
+                                        result[visit] = patientPrograms[key].visits[visit][encounter][l][concept].response.value;
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        if (callback) {
+
+            callback(result);
+
+        } else {
+
+            return result;
+
+        }
+
+    },
+
+    queryExistingObsComplexArray: function (concept, callback, specificConcept) {
 
         var result = {};
 
@@ -477,16 +548,19 @@ var dashboard = ({
                                         (specificConcept ? (specificConcept == patientPrograms[key].visits[visit][
                                             encounter][l][concept].response.value ? true : false) : true)) {
 
-                                        if(!result[visit])
+                                        if (!result[visit])
                                             result[visit] = [];
 
                                         var entry = {};
 
                                         entry[patientPrograms[key].visits[visit][encounter][l][concept].response.value] =
-                                            dashboard.queryObsGroupChildren(
+                                        {
+                                            UUID: patientPrograms[key].visits[visit][encounter][l][concept].UUID,
+                                            data: dashboard.queryObsGroupChildren(
                                                 patientPrograms[key].visits[visit][encounter][l][concept].obs_id,
                                                 visit, encounter, key, program
-                                            );
+                                            )
+                                        };
 
                                         result[visit].push(entry);
 
@@ -518,22 +592,22 @@ var dashboard = ({
 
     },
 
-    queryObsGroupChildren: function(obs_id, visitDate, encounter, patientProgramUUID, program) {
+    queryObsGroupChildren: function (obs_id, visitDate, encounter, patientProgramUUID, program) {
 
-        if(!obs_id || !visitDate || !encounter || !patientProgramUUID || !program)
+        if (!obs_id || !visitDate || !encounter || !patientProgramUUID || !program)
             return [];
 
         var obs = [];
 
         var root = dashboard.data.data.programs[program].patient_programs[patientProgramUUID].visits[visitDate][encounter];
 
-        for(var i = 0; i < root.length; i++) {
+        for (var i = 0; i < root.length; i++) {
 
             var concept = Object.keys(root[i])[0];
 
             var node = root[i];
 
-            if(node[concept] && node[concept].obs_group_id != null && node[concept].obs_group_id == obs_id) {
+            if (node[concept] && node[concept].obs_group_id != null && node[concept].obs_group_id == obs_id) {
 
                 obs.push(node);
 
@@ -2560,7 +2634,7 @@ var dashboard = ({
 
         dashboard.subscription.sendUpdateEvent();
 
-        if(dashboard.__$("network")) {
+        if (dashboard.__$("network")) {
 
             dashboard.__$("network").setAttribute("src", dashboard.icoUp);
 
@@ -3527,8 +3601,8 @@ var dashboard = ({
 
             if (callback) {
 
-                alert("In");
-
+                callback();
+                
             }
 
         }
@@ -3623,7 +3697,7 @@ var dashboard = ({
 
         document.body.removeChild(dashboard.$('dashboard.navPanel'));
 
-        if(nextPath) {
+        if (nextPath) {
 
             dashboard.navPanel(nextPath);
 
@@ -3795,7 +3869,7 @@ var dashboard = ({
 
     submitData: function (data) {
 
-        if(dashboard.__$("network")) {
+        if (dashboard.__$("network")) {
 
             dashboard.__$("network").setAttribute("src", dashboard.icoSaving);
 
@@ -3837,7 +3911,7 @@ var dashboard = ({
 
     voidConcept: function (uuid) {
 
-        if(dashboard.__$("network")) {
+        if (dashboard.__$("network")) {
 
             dashboard.__$("network").setAttribute("src", dashboard.icoSaving);
 
@@ -4159,7 +4233,7 @@ var dashboard = ({
 
         var scripts = document.head.getElementsByClassName("script.io");
 
-        for(var i = 0; i < scripts.length; i++) {
+        for (var i = 0; i < scripts.length; i++) {
 
             document.head.removeChild(scripts[i]);
 
@@ -4173,16 +4247,25 @@ var dashboard = ({
 
         setTimeout(function () {
 
-            if(dashboard.__$("network")) {
+            var id = window.location.href.match(/\/([^\/]+)$/)[1];
 
-                dashboard.__$("network").setAttribute("src", dashboard.icoUp);
+            if (typeof(io) == typeof(undefined)) {
+
+                if (dashboard.__$("network")) {
+
+                    dashboard.__$("network").setAttribute("src", dashboard.icoDown);
+
+                }
+
+                return window.location = window.location.href;
 
             }
 
-            var id = window.location.href.match(/\/([^\/]+)$/)[1];
+            if (dashboard.__$("network")) {
 
-            if(!io)
-                window.location = window.location.href;
+                dashboard.__$("network").setAttribute("src", dashboard.icoSaving);
+
+            }
 
             dashboard.socket = io.connect('/');
             dashboard.socket.on('stats', function (data) {
@@ -4197,9 +4280,9 @@ var dashboard = ({
 
             });
 
-            dashboard.socket.on('disconnect', function() {
+            dashboard.socket.on('disconnect', function () {
 
-                if(dashboard.__$("network")) {
+                if (dashboard.__$("network")) {
 
                     dashboard.__$("network").setAttribute("src", dashboard.icoDown);
 
@@ -4207,8 +4290,8 @@ var dashboard = ({
 
             });
 
-            dashboard.socket.on('reconnect', function(){
-                setTimeout(function(){
+            dashboard.socket.on('reconnect', function () {
+                setTimeout(function () {
 
                     dashboard.createWebSocket();
 
@@ -4233,7 +4316,7 @@ var dashboard = ({
 
                 nsp.on('demographics', function (data) {
 
-                    if(dashboard.__$("network")) {
+                    if (dashboard.__$("network")) {
 
                         dashboard.__$("network").setAttribute("src", dashboard.icoSaving);
 
@@ -4271,7 +4354,7 @@ var dashboard = ({
 
                         dashboard.data.data.patient_id = json.patient_id;
 
-                        if(patient) {
+                        if (patient) {
 
                             patient.patientId = json.patient_id;
 
