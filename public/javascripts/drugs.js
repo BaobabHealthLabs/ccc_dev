@@ -804,7 +804,7 @@ function generateDrugs(){
                                 var txtFormualtion = document.createElement("input");
                                 txtFormualtion.type = "hidden";
                                 txtFormualtion.name = "data.prescriptions[" + controlCount + "].formulation";
-                                txtFormualtion.value = formulation;
+                                txtFormualtion.value = "Glibenclamide (10mg tablet)";
                                 txtFormualtion.id = "group_"+controlCount+"_40";
 
                                 document.forms[0].appendChild(txtFormualtion);

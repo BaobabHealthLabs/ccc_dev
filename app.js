@@ -626,17 +626,60 @@ function savePrescriptions(params, callback) {
 
                         console.log(order[0].insertId);
 
+                        var order_id = order[0].insertId;
+
                         var sql = "INSERT INTO drug_order (order_id, drug_inventory_id, dose, equivalent_daily_dose, " +
-                            "units, frequency, prn, quantity) VALUES ('" + order[0].insertId + "', (SELECT drug_id FROM " +
+                            "units, frequency, prn, quantity) VALUES ('" + order_id + "', (SELECT drug_id FROM " +
                             "drug WHERE name = '" + prescription.formulation + "' LIMIT 1), '" + prescription.drug_strength +
-                            "', NULL, (SELECT units FROM drug WHERE name = '" + prescription.formulation +
-                            "' LIMIT 1), 0, '" + prescription.frequency + "', '" + quantity + "')"
+                            "', '" + prescription.frequency + "', (SELECT units FROM drug WHERE name = '" + prescription.formulation +
+                            "' LIMIT 1), \"" + (prescription.prn ? prescription.prn : 0) + "\", \"" +
+                            (parseInt(prescription.drug_strength) * times) + "\", '" + quantity + "')"
+
+                        console.log(sql);
 
                         queryRaw(sql, function(order) {
 
                             console.log(order[0].insertId);
 
-                            mCallback();
+                            var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, order_id, obs_datetime, " +
+                                "location_id, value_numeric, creator, date_created, uuid) VALUES (\"" + patient_id + "\", " +
+                                "(SELECT concept_id FROM concept_name WHERE name = \"PRESCRIBED\" LIMIT 1), \"" +
+                                encounter_id + "\", \"" + order_id + "\", \"" + data.data.today +
+                                "\", (SELECT location_id FROM location WHERE name = \"" + data.data.location +
+                                "\" LIMIT 1), \"" + quantity + "\", \"" + user_id + "\", NOW(), " +
+                                "(SELECT UUID()))";
+
+                            console.log(sql);
+
+                            queryRaw(sql, function(obs) {
+
+                                console.log(data.data.obs.text.selfDispenseDrugs);
+
+                                if(data.data.obs.text.selfDispenseDrugs && data.data.obs.text.selfDispenseDrugs[0] == "true") {
+
+                                    var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, order_id, obs_datetime, " +
+                                        "location_id, obs_group_id, value_numeric, creator, date_created, uuid) VALUES (\"" +
+                                        patient_id + "\", (SELECT concept_id FROM concept_name WHERE name = \"DISPENSED\" " +
+                                        "LIMIT 1), \"" + encounter_id + "\", \"" + order_id + "\", \"" + data.data.today +
+                                        "\", (SELECT location_id FROM location WHERE name = \"" + data.data.location +
+                                        "\" LIMIT 1), \"" + obs[0].insertId + "\", \"" + quantity + "\", \"" + user_id +
+                                        "\", NOW(), (SELECT UUID()))";
+
+                                    console.log(sql);
+
+                                    queryRaw(sql, function (obs) {
+
+                                        mCallback();
+
+                                    });
+
+                                } else {
+
+                                    mCallback();
+
+                                }
+
+                            });
 
                         });
 
@@ -1984,20 +2027,37 @@ function updateUserView(data) {
 
                                         }
 
-                                        buildObs(encounter, function (data) {
+                                        if(encounter.name.trim().toUpperCase() != "TREATMENTS") {
 
-                                            for (var i = 0; i < data.length; i++) {
+                                            buildObs(encounter, function (data) {
 
-                                                collection[program.name]["patient_programs"][program.mUuid]
-                                                    ["visits"][encounterDatetime][encounter.name].push(data[i]);
+                                                for (var i = 0; i < data.length; i++) {
 
-                                            }
+                                                    collection[program.name]["patient_programs"][program.mUuid]
+                                                        ["visits"][encounterDatetime][encounter.name].push(data[i]);
 
-                                            oCallback();
+                                                }
 
-                                        });
+                                                oCallback();
 
-                                        // oCallback();
+                                            });
+
+                                        } else {
+
+                                            buildTreatments(encounter, function (data) {
+
+                                                for (var i = 0; i < data.length; i++) {
+
+                                                    collection[program.name]["patient_programs"][program.mUuid]
+                                                        ["visits"][encounterDatetime][encounter.name].push(data[i]);
+
+                                                }
+
+                                                oCallback();
+
+                                            });
+
+                                        }
 
                                     }, function () {
 
@@ -2193,6 +2253,66 @@ function buildObs(encounter, oCallback) {
             }
 
             collection.push(entry);
+
+        }
+
+        oCallback(collection);
+
+    })
+
+}
+
+function buildTreatments(encounter, oCallback) {
+
+    var sql = "SELECT encounter.uuid AS enc_uuid, orders.uuid AS ord_uuid, obs.uuid AS obs_uuid, instructions, " +
+        "start_date, auto_expire_date, frequency, drug_order.units, quantity, dose, equivalent_daily_dose, drug.name, " +
+        "COALESCE((SELECT SUM(value_numeric) FROM obs WHERE obs.order_id = orders.order_id AND concept_id = " +
+        "\"DISPENSED\"),0) AS dispensed FROM ccc1_7.orders LEFT OUTER JOIN drug_order ON drug_order.order_id = " +
+        "orders.order_id LEFT OUTER JOIN drug ON drug.drug_id = drug_order.drug_inventory_id LEFT OUTER JOIN encounter " +
+        "ON encounter.encounter_id = orders.encounter_id LEFT OUTER JOIN obs ON obs.order_id = orders.order_id WHERE " +
+        "obs.concept_id = (SELECT concept_id FROM concept_name WHERE name = \"PRESCRIBED\" LIMIT 1) AND " +
+        "orders.encounter_id = \"" + encounter.encounter_id + "\" AND encounter.voided = 0 AND orders.voided = 0 AND " +
+        "obs.voided = 0";
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        var collection = [];
+
+        if(data && data[0]) {
+
+            for (var i = 0; i < data[0].length; i++) {
+
+                var entry = {};
+
+                var result = data[0][i];
+
+                entry[result.name] = {
+                    'UUID': result.obs_uuid,
+                    'encounter': {
+                        'UUID': result.enc_uuid
+                    },
+                    'instructions': result.instructions,
+                    'start_date': result.start_date,
+                    'auto_expire_date': result.auto_expire_date,
+                    'frequency': result.frequency,
+                    'units': result.units,
+                    'quantity': result.quantity,
+                    'dose': result.dose,
+                    'equivalent_daily_dose': result.equivalent_daily_dose,
+                    'drug': {
+                        'dispensed': result.dispensed
+                    },
+                    response: {
+                        value: result.instructions + " from " + (new Date(result.start_date)).format() + " to " +
+                            (new Date(result.auto_expire_date)).format()
+                    }
+                }
+
+                collection.push(entry);
+
+            }
 
         }
 
