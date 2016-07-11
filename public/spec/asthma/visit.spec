@@ -6,7 +6,7 @@ Q.1.2. Planned Visit? [pos::1$$tt_requirenextclick::false]
 O.1.2.1. Yes
 O.1.2.2. No
 
-Q.1.3. Weight (kg) [pos::2$$field_type::number$$min::1$$max::200]
+Q.1.3. Weight (kg) [pos::2$$field_type::hidden$$min::1$$max::200$$optional::true$$value::?]
 
 Q.1.4. Day sx [pos::3$$field_type::number]
 

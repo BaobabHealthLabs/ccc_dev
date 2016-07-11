@@ -517,6 +517,20 @@ function loadCardDashboard(){
 
 
 		for(var j = 0 ; j < concept_keys.length ; j++){
+
+			if(concept_keys[j]=="Weight (kg)"){
+
+				var td = document.createElement("td");
+
+				console.log(visitRows[i]["Visit Date"]);
+
+				td.innerHTML =  window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM", visitRows[i]["Visit Date"],"VITALS","Weight (kg)");
+				
+				tr.appendChild(td);
+
+				continue;
+
+			}
 			
 			var response = visitRows[i][concept_keys[j]];
 			
