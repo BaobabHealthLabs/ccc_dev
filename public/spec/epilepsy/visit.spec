@@ -1,9 +1,9 @@
 P.1. EPILEPSY VISIT [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
 Q.1.1. Visit Date [pos::0$$field_type::date]
 
-Q.1.2. Weight (Kg) [pos::1$$field_type::number]
+Q.1.2. Weight (Kg) [pos::1$$field_type::hidden$$value::?$$optional::true]
 
-Q.1.3. Height (cm) [pos::2$$field_type::number]
+Q.1.3. Height (cm) [pos::2$$field_type::hidden$$value::?$$optional::true]
 
 Q.1.4. Seizure since last visit? [pos::3$$tt_requirenextclick::false$$id::seizure_since_last_visit]
 O.1.4.1. Yes

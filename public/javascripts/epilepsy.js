@@ -796,17 +796,21 @@ function epilepsyVisits(encounter_data,visitDate){
 
 		var concept = Object.keys(encounter_data[i]);
 		
+		console.log(encounter_data[i]);
 
 		if(concept[0]=="Weight (kg)"){
 
-			weight = encounter_data[i][concept[0]].response.value;
+			weight = window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visitDate)).format("YYYY-mm-dd"),"VITALS","Weight (kg)");
+
+			visitRow[concept[0]] = weight;
+			
+			continue;
 
 		}
 		if(concept[0]=="Height (cm)"){
 
 
-
-			height = encounter_data[i][concept[0]].response.value;
+			height = window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visitDate)).format("YYYY-mm-dd"),"VITALS","Height (cm)");
 
 			continue;
 
