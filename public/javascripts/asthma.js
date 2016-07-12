@@ -426,6 +426,96 @@ function drawResponse(encounter,encounter_data,visit){
 
 }
 
+function hivStatus(patient_programs){
+		
+
+		var patient_program_keys = Object.keys(patient_programs);
+
+
+		for(var i = 0 ; i < patient_program_keys.length; i++){
+
+			var visits = Object.keys(patient_programs[patient_program_keys[i]]["visits"]).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+			
+		
+				for (var j = visits.length - 1; j >= 0; j--) {
+
+					var encounters = Object.keys(patient_programs[patient_program_keys[i]]["visits"][visits[j]]);
+
+					for (var k = encounters.length - 1; k >= 0; k--) {
+
+						if(encounters[k] == "HIV/ART STATUS"){
+
+							var concepts = patient_programs[patient_program_keys[i]]["visits"][visits[j]][encounters[k]];
+
+							for (var l = concepts.length - 1; l >= 0; l--) {
+
+								var element_id = Object.keys(concepts[l])[0].toLowerCase();
+
+								element_id= element_id.replace("/","_").replace(/\s+/g,"_");
+			
+								element_id = element_id.replace("/","").replace("__","_");
+
+								element_id = element_id.replace("/","").replace("__","_");
+
+
+								if(element_id == "hiv_status"){
+
+									var status = concepts[l][Object.keys(concepts[l])[0]].response.value;
+
+									console.log(status);
+
+									if(status=="Reactive"){
+
+										__$("r").style.border ="2px solid #ffffff";
+
+										__$("nr").style.border ="2px solid #ffffff";
+
+										__$("r").style.border ="2px solid red";
+
+									}
+									if(status=="Non-Reactive"){
+
+									 	__$("r").style.border ="2px solid #ffffff";
+
+										__$("nr").style.border ="2px solid #ffffff";
+
+										__$("nr").style.border ="2px solid red";
+	
+									}
+
+								}
+
+								if(__$(element_id)){
+
+									if(element_id =="date_antiretrovirals_started"){
+										
+										__$(element_id).innerHTML = new Date(concepts[l][Object.keys(concepts[l])[0]].response.value).format();
+
+									}
+
+									else{
+
+										__$(element_id).innerHTML = concepts[l][Object.keys(concepts[l])[0]].response.value;
+
+									}
+
+								}
+									
+							}
+
+						}
+
+					}
+
+				}
+		
+		}
+	
+
+}
+
 function loadCardDashboard(){
 	var data = window.parent.dashboard.data.data;
 
@@ -473,6 +563,9 @@ function loadCardDashboard(){
 
    		__$("relation_to_patient").innerHTML =  guardain[0].relative_type;
    	}
+
+   	//HIV ART Status
+    hivStatus(data.programs["CROSS-CUTTING PROGRAM"].patient_programs);
 
     //Program Data
 

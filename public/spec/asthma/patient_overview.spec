@@ -15,33 +15,28 @@ Q.1.5. Family History of COPD? [pos:: 4$$tt_requirenextclick::false]
 O.1.5.1. Yes
 O.1.5.2. No
 
-Q.1.6. HIV Status [pos::5$$id::hiv_status$$tt_requirenextclick::false]
-O.1.6.1. R
-O.1.6.2. NR
+Q.1.6. Patient History and Exposures [pos::5$$id::complications$$multiple:: multiple$$tt_beforeUnLoad::loadCheckConditions()]
+O.1.6.1. Chronic dry cough
+O.1.6.2. Indoor cooking
+O.1.6.3. Occupational Exposure
+O.1.6.4. TB Contact
+O.1.6.5. Smoking
+O.1.6.6. Secondhand smoking
 
-Q.1.7. ART start Date [pos::6$$field_type::date$$condition::__$("hiv_status").value=="R"]
+Q.1.7. Chronic dry cough duration [pos:: 6$$id::chronic_dry_cough0$$parent::Patient History and Exposures:Chronic dry cough]
+
+Q.1.8. Chronic dry cough Age onset   [pos::7 $$field_type::number$$ id::chronic_dry_cough1$$parent::Patient History and Exposures:Chronic dry cough]
+
+Q.1.9. Indoor cooking date [pos:: 8$$field_type::date$$id::indoor_cooking_date$$parent::Patient History and Exposures:TB Contact]
+
+Q.1.10. TB Contact Date [pos::9$$field_type::date$$ id::tb_contact_date$$parent::Patient History and Exposures:Indoor cooking]
+
+Q.1.11. Smoking Date [pos:: 10$$field_type::date$$ id:: smoking_date$$parent::Patient History and Exposures:Smoking]
+
+Q.1.12. Secondhand smocking Date [pos:: 11$$field_type::date$$ id::secondhand_smoking_date$$parent::Patient History and Exposures:Secondhand smoking]
+
+Q.1.13. Occupation [pos:: 12$$ id:: occupation$$optional::true$$id::occupational_exposure0$$parent::Patient History and Exposures:Occupational Exposure]
+
+Q.1.14. Occupation Exposure Date[pos:: 13$$field_type::date$$id::occupational_exposure1$$parent::Patient History and Exposures:Occupational Exposure]
 
 
-Q.1.8. Patient History and Exposures [pos::7$$id::complications$$multiple:: multiple$$tt_beforeUnLoad::loadCheckConditions()]
-O.1.8.1. Chronic dry cough
-O.1.8.2. Indoor cooking
-O.1.8.3. Occupational Exposure
-O.1.8.4. TB Contact
-O.1.8.5. Smoking
-O.1.8.6. Secondhand smoking
-
-Q.1.9. Indoor cooking date [pos:: 8$$field_type::date$$id::indoor_cooking_date]
-
-Q.1.10. TB Contact Date [pos:: 11$$field_type::date$$ id::tb_contact_date]
-
-Q.1.11. Smocking Date [pos:: 12$$field_type::date$$ id:: smoking_date]
-
-Q.1.12. Secondhand smocking Date [pos:: 13$$field_type::date$$ id::secondhand_smoking_date]
-
-Q.1.13. Occupation [pos:: 9$$ id:: occupation$$optional::true$$id::occupational_exposure0]
-
-Q.1.14. Occupation Exposure Date[pos:: 10$$field_type::date$$id::occupational_exposure1]
-
-Q.1.15. Chronic dry cough duration [pos:: 14$$id::chronic_dry_cough0]
-
-Q.1.16. Chronic dry cough Age onset   [pos:: 15$$field_type::number$$ id::chronic_dry_cough1]

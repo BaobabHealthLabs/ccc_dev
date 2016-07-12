@@ -332,36 +332,7 @@ function familyHistory(concept_data){
 	}
 
 }
-function hivStatus(encounter_data){
 
-	var concept_names = Object.keys(encounter_data);
-
-	for(var i = 0 ; i < concept_names.length ; i++){
-
-		var status = encounter_data[concept_names[i]].response.value.toLowerCase();
-
-		if(status=="r"){
-
-			__$("r").style.border ="2px solid #ffffff";
-
-			__$("nr").style.border ="2px solid #ffffff";
-
-			__$(status).style.border ="2px solid red";
-
-		}
-		if(status=="nr"){
-
-			__$("r").style.border ="2px solid #ffffff";
-
-			__$("nr").style.border ="2px solid #ffffff";
-
-			__$(status).style.border ="2px solid red";
-			
-		}
-
-	}
-
-}
 
 function vdrlStatus(encounter_data){
 
@@ -792,29 +763,15 @@ function epilepsyVisits(encounter_data,visitDate){
 	}	
 	var weight,height;
 
+	weight = window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visitDate)).format("YYYY-mm-dd"),"VITALS","Weight (kg)");
+
+	visitRow["Weight (kg)"] = weight;
+
+	height = window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visitDate)).format("YYYY-mm-dd"),"VITALS","Height (cm)");
+
 	for(var i = 0 ; i < encounter_data.length ; i++){
 
 		var concept = Object.keys(encounter_data[i]);
-		
-		console.log(encounter_data[i]);
-
-		if(concept[0]=="Weight (kg)"){
-
-			weight = window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visitDate)).format("YYYY-mm-dd"),"VITALS","Weight (kg)");
-
-			visitRow[concept[0]] = weight;
-			
-			continue;
-
-		}
-		if(concept[0]=="Height (cm)"){
-
-
-			height = window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visitDate)).format("YYYY-mm-dd"),"VITALS","Height (cm)");
-
-			continue;
-
-		}
 
 		visitRow[concept[0]] = encounter_data[i][concept[0]].response.value;
 
@@ -834,6 +791,7 @@ function epilepsyVisits(encounter_data,visitDate){
 }
 
 function drawResponse(encounter,encounter_data,visit){
+	
 
 	if(encounter=="EPILEPSY VISIT"){
 		
@@ -884,7 +842,7 @@ function drawResponse(encounter,encounter_data,visit){
 
 				case "HIV/ART STATUS":
 
-					hivStatus(encounter_data[i]);
+					//hivStatus(encounter_data[i]);
 
 					break;
 				case "VDRL STATUS":
@@ -945,6 +903,96 @@ function drawResponse(encounter,encounter_data,visit){
 
 }
 
+function hivStatus(patient_programs){
+		
+
+		var patient_program_keys = Object.keys(patient_programs);
+
+
+		for(var i = 0 ; i < patient_program_keys.length; i++){
+
+			var visits = Object.keys(patient_programs[patient_program_keys[i]]["visits"]).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+			
+		
+				for (var j = visits.length - 1; j >= 0; j--) {
+
+					var encounters = Object.keys(patient_programs[patient_program_keys[i]]["visits"][visits[j]]);
+
+					for (var k = encounters.length - 1; k >= 0; k--) {
+
+						if(encounters[k] == "HIV/ART STATUS"){
+
+							var concepts = patient_programs[patient_program_keys[i]]["visits"][visits[j]][encounters[k]];
+
+							for (var l = concepts.length - 1; l >= 0; l--) {
+
+								var element_id = Object.keys(concepts[l])[0].toLowerCase();
+
+								element_id= element_id.replace("/","_").replace(/\s+/g,"_");
+			
+								element_id = element_id.replace("/","").replace("__","_");
+
+								element_id = element_id.replace("/","").replace("__","_");
+
+
+								if(element_id == "hiv_status"){
+
+									var status = concepts[l][Object.keys(concepts[l])[0]].response.value;
+
+									console.log(status);
+
+									if(status=="Reactive"){
+
+										__$("r").style.border ="2px solid #ffffff";
+
+										__$("nr").style.border ="2px solid #ffffff";
+
+										__$("r").style.border ="2px solid red";
+
+									}
+									if(status=="Non-Reactive"){
+
+									 	__$("r").style.border ="2px solid #ffffff";
+
+										__$("nr").style.border ="2px solid #ffffff";
+
+										__$("nr").style.border ="2px solid red";
+	
+									}
+
+								}
+
+								if(__$(element_id)){
+
+									if(element_id =="date_antiretrovirals_started"){
+										
+										__$(element_id).innerHTML = new Date(concepts[l][Object.keys(concepts[l])[0]].response.value).format();
+
+									}
+
+									else{
+
+										__$(element_id).innerHTML = concepts[l][Object.keys(concepts[l])[0]].response.value;
+
+									}
+
+								}
+									
+							}
+
+						}
+
+					}
+
+				}
+		
+		}
+	
+
+}
+
 function loadCardDashboard(){
 	var data = window.parent.dashboard.data.data;
 
@@ -975,11 +1023,17 @@ function loadCardDashboard(){
         	}
     }
 
+   
+
+
     //Address
     var address = data.addresses[0]["Current District"] +"\tDistrict, TA\t"
     			+data.addresses[0]["Current T/A"]+",\t"+data.addresses[0]["Current Village"]+"\tvillage";
 
     __$("address").innerHTML = address;		
+
+    //HIV ART Status
+    hivStatus(data.programs["CROSS-CUTTING PROGRAM"].patient_programs);
 
 
     //Gardian Data

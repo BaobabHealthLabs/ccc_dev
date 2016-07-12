@@ -219,6 +219,10 @@
         "VDRL Status",
         "Do you do Exercises?",
         "Family History Of Premature CVD Death?",
-        "Family History Of Hypertension?"
+        "Family History Of Hypertension?",
+        "Any silent markers?",
+        "HIV Test Date",
+        "ART Start Date",
+        "Any triggers"
     ]
 }

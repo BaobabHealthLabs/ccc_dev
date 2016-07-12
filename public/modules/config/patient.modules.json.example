@@ -8,7 +8,7 @@
             "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
             "Lab Results": "javascript:dashboard.navPanel('/spec/lab_results.spec')",
             "Complications": "javascript:dashboard.navURLPanel('/spec/dm/complications.html')",
-            "Mastercard": "javascript:dashboard.navURLPanel('/views/card_shell.html')"
+            "Mastercard": "javascript:dashboard.navURLPanel('/views/htn/card.html')"
         },
         "program": "DIABETES PROGRAM",
         "identifiers": ["National id", "DTM Number"],
@@ -50,7 +50,7 @@
             "Hypertension Initial Questions": "javascript:dashboard.navPanel('/spec/htn/initial_questions.spec')",
             "Social History": "javascript:dashboard.navPanel('/spec/htn/social_history.spec')",
             "Family History": "javascript:dashboard.navPanel('/spec/htn/family_history.spec')",
-            "HIV Status": "javascript:dashboard.navPanel('/spec/htn/hiv_status.spec')",
+            "HIV Status": "javascript:dashboard.navPanel('/spec/hiv_status.spec')",
             "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
             "HTN Visit": "javascript:dashboard.navPanel('/spec/htn/visit.spec')",
             "Outcome": "javascript:dashboard.navPanel('/spec/htn/outcome.spec')",
@@ -104,6 +104,7 @@
         "tasks": {
             "Asthma Initial Questions": "javascript:dashboard.navPanel('/spec/asthma/initial_questions.spec')",
             "Patient Overview": "javascript:dashboard.navPanel('/spec/asthma/patient_overview.spec')",
+            "HIV Status" :"javascript:dashboard.navPanel('/spec/hiv_status.spec')",
             "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
             "Asthma Visit": "javascript:dashboard.navPanel('/spec/asthma/visit.spec')",
             "Next Appointment": "javascript:dashboard.navPanel('/spec/asthma/appointment.spec')",
@@ -118,6 +119,11 @@
             },
             "Patient Overview": {
                 "encounter": "ASTHMA PATIENT OVERVIEW"
+            },
+            "HIV Status": {
+                "encounter": "HIV/ART STATUS",
+                "scope": "TODAY",
+                "program": "CROSS-CUTTING PROGRAM"
             },
             "Vitals": {
                 "encounter": "VITALS",
@@ -134,6 +140,7 @@
         "workflow": [
             "Client Registration",
             "Patient Overview",
+            "HIV Status",
             "Asthma Visit",
             "Next Appointment"
         ],
@@ -146,7 +153,7 @@
             "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
             "Seizure Type": "javascript:dashboard.navPanel('/spec/epilepsy/seizure_type.spec')",
             "Family Histroy": "javascript:dashboard.navPanel('/spec/epilepsy/family_history.spec')",
-            "HIV Status" :"javascript:dashboard.navPanel('/spec/epilepsy/hiv_status.spec')",
+            "HIV Status" :"javascript:dashboard.navPanel('/spec/hiv_status.spec')",
             "VDRL Status" :"javascript:dashboard.navPanel('/spec/epilepsy/vdrl_status.spec')",
             "Patient Histroy at Enrolment": "javascript:dashboard.navPanel('/spec/epilepsy/enrolment_history.spec')",
             "Medical and Surgical Histroy": "javascript:dashboard.navPanel('/spec/epilepsy/medical_history.spec')",
