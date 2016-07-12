@@ -66,7 +66,7 @@
             "Family History": "javascript:dashboard.navPanel('/spec/htn/family_history.spec')",
             "HIV Status": "javascript:dashboard.navPanel('/spec/hiv_status.spec')",
             "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
-            "HTN Visit": "javascript:dashboard.navPanel('/spec/htn/visit.spec')",
+            "Lab Results": "javascript:dashboard.navPanel('/spec/lab_results.spec')",
             "Outcome": "javascript:dashboard.navPanel('/spec/htn/outcome.spec')",
             "Mastercard" :"javascript:dashboard.navURLPanel('/views/dm/card.html')"
         },
@@ -91,8 +91,10 @@
             "HIV Status":{
             	  "encounter": "HIV/ART STATUS"
             },
-            "HTN Visit": {
-                "encounter": "HTN VISIT"
+            "Lab Results": {
+                "encounter": "LAB RESULTS",
+                "scope": "TODAY",
+                "program": "CROSS-CUTTING PROGRAM"
             },
             "Outcome": {
                 "encounter": "UPDATE OUTCOME"
@@ -104,7 +106,7 @@
             "Family History",
             "HIV Status",
             "Vitals",
-            "HTN Visit",
+            "Lab Results",
             "Outcome"
         ],
         "clinicPrefix": "HTN",
