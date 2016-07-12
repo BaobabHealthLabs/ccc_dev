@@ -33,7 +33,8 @@
         ["ASTHMA INITIAL QUESTIONS","Asthma Initial Questions"],
         ["HYPERTENSION INITIAL QUESTIONS","Hypertension Initial Questions"],
         ["HYPERTENSION SOCIAL HISTORY","Hypertension Social History"],
-        ["HYPERTENSION FAMILY HISTORY","Hypertension Social History"]
+        ["HYPERTENSION FAMILY HISTORY","Hypertension Social History"],
+        ["TREATMENTS", "Treatments encounter"]
 
     ],
     "patient_identifier_types": [
@@ -54,6 +55,8 @@
         "CROSS-CUTTING PROGRAM"
     ],
     "concepts": [
+        "Dispensed",
+        "Prescribed",
         "ART Start Date",
         "On ART?",
         "Secondary diabetes?",

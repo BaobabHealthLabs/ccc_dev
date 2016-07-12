@@ -3899,6 +3899,10 @@ var dashboard = ({
 
                 dashboard.socket.emit('relationship', data);
 
+            } else if (data.data.obs.text.datatype[0] == "prescriptions") {
+
+                dashboard.socket.emit('prescriptions', data);
+
             } else {
 
                 dashboard.socket.emit('update', data);
