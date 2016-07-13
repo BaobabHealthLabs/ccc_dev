@@ -11,7 +11,7 @@
             "Treatments": "javascript:dashboard.navPanel('/spec/dm/treatment.spec')",
             "HIV/ART Status": "javascript:dashboard.navPanel('/spec/hiv_status.spec')",
             "Bookings": "javascript:dashboard.navPanel('/spec/appointment.spec')",
-            "Mastercard": "javascript:dashboard.navURLPanel('/views/htn/card.html')"
+            "Mastercard": "javascript:dashboard.navURLPanel('/views/dm/card.html')"
         },
         "program": "DIABETES PROGRAM",
         "identifiers": ["National id", "DTM Number"],
@@ -195,10 +195,11 @@
             },
             "Family Histroy": {
                 "encounter": "FAMILY HISTORY"
-            }
-            ,
-            "HIV Status" :{
-            	"encounter": "HIV STATUS"
+            },
+            "HIV/ART Status": {
+                "encounter": "HIV/ART STATUS",
+                "scope": "TODAY",
+                "program": "CROSS-CUTTING PROGRAM"
             },
             "VDRL Status":{
             	"encounter": "VDRL STATUS"
