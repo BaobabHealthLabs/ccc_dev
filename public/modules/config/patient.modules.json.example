@@ -67,6 +67,7 @@
             "HIV Status": "javascript:dashboard.navPanel('/spec/hiv_status.spec')",
             "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
             "Lab Results": "javascript:dashboard.navPanel('/spec/lab_results.spec')",
+            "Complications": "javascript:dashboard.navURLPanel('/spec/htn/complications.html')",
             "Outcome": "javascript:dashboard.navPanel('/spec/htn/outcome.spec')",
             "Mastercard" :"javascript:dashboard.navURLPanel('/views/dm/card.html')"
         },

@@ -34,7 +34,8 @@
         ["HYPERTENSION INITIAL QUESTIONS","Hypertension Initial Questions"],
         ["HYPERTENSION SOCIAL HISTORY","Hypertension Social History"],
         ["HYPERTENSION FAMILY HISTORY","Hypertension Social History"],
-        ["TREATMENTS", "Treatments encounter"]
+        ["TREATMENTS", "Treatments encounter"],
+        ["HYPERTENSION TEST","Hypertension Test"]
 
     ],
     "patient_identifier_types": [
