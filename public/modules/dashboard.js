@@ -3895,17 +3895,18 @@ var dashboard = ({
 
             data.data.token = dashboard.getCookie("token");
 
-            if (data.data.datatype == "relationship") {
+            if (data.data && data.data.datatype == "relationship") {
 
                 dashboard.socket.emit('relationship', data);
 
-            } else if (data.data.obs.text.datatype[0] == "prescriptions") {
+            } else if (data.data && data.data.obs && data.data.obs.text && data.data.obs.text.datatype &&
+                data.data.obs.text.datatype[0] == "prescriptions") {
 
                 dashboard.socket.emit('prescriptions', data);
 
             } else {
 
-                dashboard.socket.emit('update', data);
+                dashboard.socket.emit('updateMe', data);
 
             }
 

@@ -297,11 +297,15 @@ io.on("connection", function (socket) {
 
             })
 
-            socket.on("update", function (data) {
+            socket.on("updateMe", function (data) {
+
+                console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
                 console.log(JSON.stringify(data));
 
                 saveData(data, function (unathorized) {
+
+                    console.log(data);
 
                     if (unathorized) {
 
@@ -770,7 +774,7 @@ function saveRelationship(params, callback) {
                 if (!data.relation_id || (data.relation_id && data.relation_id.trim().length <= 0)) {
 
                     var sql = "INSERT INTO person (gender, creator, date_created, uuid) VALUES (\"" +
-                        data.gender.substring(0, 1).toUpperCase() + "\", (SELECT user_id FROM users WHERE username = \"" +
+                        data.gender[0].substring(0, 1).toUpperCase() + "\", (SELECT user_id FROM users WHERE username = \"" +
                         data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
                     console.log(sql);
@@ -1029,6 +1033,8 @@ function voidConcept(data, callback) {
 }
 
 function saveData(data, callback) {
+
+    console.log(data);
 
     loggedIn(data.data.token, function (authentic, user_id, username) {
 
