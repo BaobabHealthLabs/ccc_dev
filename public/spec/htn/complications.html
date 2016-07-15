@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Complications</title>
+    <link rel="stylesheet" href="/touchscreentoolkit/lib/stylesheets/touch-fancy.css" type="text/css">
+    <style id="styles">
+        td {
+            border-color: #eee;
+            -moz-user-select: none;
+        }
+
+        .link {
+            text-decoration: underline;
+            color: #333;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .link:hover {
+            color: #fb9d23;
+            text-decoration: overline;
+        }
+
+        .collapsible-creatinine {
+            display: table-cell;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" style="margin: 0px;">
+
+<table width="100%" style="border-collapse: collapse; border-color: #eee;" cellpadding="0">
+    <tr>
+        <td align="center" style="font-size: 24px; background-color: #6281a7; color: #eee; padding-top: 10px;">
+            Hypertension Clinic
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="background-color: #6281a7; color: #eee; padding-bottom: 5px;">
+            <a class="link" style="font-size: 12px; color: #eee; " href="#creatinine">Creatinine</a> |
+            <a class="link" style="font-size: 12px; color: #eee; " href="#urine_protein">Urine Protein</a> |
+            <a class="link" style="font-size: 12px; color: #eee; " href="#visual_acuity">Visual Acuity</a> |
+            <a class="link" style="font-size: 12px; color: #eee; " href="#fundoscopy">Fundoscopy</a> |
+            <a class="link" style="font-size: 12px; color: #eee; " href="#foot_check">Foot Check</a> |
+            <a class="link" style="font-size: 12px; color: #eee; " href="#urea">Urea</a> |
+            <a class="link" style="font-size: 12px; color: #eee; " href="#macrovascular">Macrovascular</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="divMain" style="background-color: rgb(255, 255, 255); overflow: auto; height: calc(100vh - 145px);">
+                <table width="100%" border="1" style="border-collapse: collapse; border-color: #eee;" cellpadding="10">
+                    <tr>
+                        <td style="vertical-align: top; width: 150px;" align="right">
+                            &nbsp;
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
+                            onclick="window.parent.dashboard.exitNavPanel('/spec/htn/creatinine.spec');">
+                            Creatinine
+                        </td>
+                        <td id="creatinine">
+
+                        </td>
+                    </tr>
+                    <tr style="background-color: rgba(238,238,238, 0.3);">
+                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
+                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/urine_protein.spec');">
+                            Urine Protein
+                        </td>
+                        <td id="urine_protein">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
+                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/visual_acuity.spec');">
+                            Visual Acuity
+                        </td>
+                        <td id="visual_acuity">
+
+                        </td>
+                    </tr>
+                    <tr style="background-color: rgba(238,238,238, 0.3);">
+                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
+                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/fundoscopy.spec');">
+                            Fundoscopy
+                        </td>
+                        <td id="fundoscopy">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
+                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/foot_check.spec');">
+                            Foot Check
+                        </td>
+                        <td id="foot_check">
+
+                        </td>
+                    </tr>
+                    <tr style="background-color: rgba(238,238,238, 0.3);">
+                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
+                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/urea.spec');">
+                            Urea
+                        </td>
+                        <td id="urea">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
+                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/macrovascular.spec');">
+                            Macrovascular
+                        </td>
+                        <td id="macrovascular">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top; width: 150px;" align="right">
+                            &nbsp;
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </td>
+    </tr>
+</table>
+
+<div style="background-color: rgb(51, 51, 51); height: 80px; overflow: hidden; padding: 0px;">
+    <button class="green" style="float: right; margin: 10px 15px 15px; min-width: 140px;" id="nextButton"
+            onclick="window.parent.dashboard.activeTask = null; window.parent.dashboard.exitNavPanel();">
+        Finish
+    </button>
+    <button class="blue" style="float: right; margin: 10px 0px 15px; min-width: 140px;" id="printButton"
+            onclick="">
+        Print Complications Label
+    </button>
+</div>
+<script src="/javascripts/complications.js"></script>
+</body>
+</html>

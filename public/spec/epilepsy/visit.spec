@@ -5,7 +5,7 @@ Q.1.4. Seizure since last visit? [pos::3$$tt_requirenextclick::false$$id::seizur
 O.1.4.1. Yes
 O.1.4.2. No
 
-Q.1.5. Number of seizures [pos::4$$field_type::number$$condition::__$('seizure_since_last_visit').value=="Yes"$$parent::Seizure since last visit?:Yes]
+Q.1.5. Number of seizures [pos::4$$field_type::number$$condition::__$('seizure_since_last_visit').value=="Yes"$$parent::Seizure since last visit?:Yes$$ tt_pageStyleClass :: Numeric NumbersOnly$$ min :: 0$$ max :: 20]
 
 Q.1.6. Any triggers [pos::5$$tt_requirenextclick::false$$id::triggers$$parent::Visit Date]
 O.1.6.1. Yes
