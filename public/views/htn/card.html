@@ -2,9 +2,10 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>DM Master Card</title>
+    <title>Hypertension Master Card</title>
     <link rel="stylesheet" href="/touchscreentoolkit/lib/stylesheets/touch-fancy.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
+    <script type="text/javascript" src="/javascripts/htn.js"></script>
 </head>
 <style type="text/css">
     body{
@@ -44,21 +45,39 @@
     td.rotate > div > span {
       padding: 5px 10px;
     }
+    .circle{
+        display: block;
+        width: 23px;
+        height: 23px;
+        padding: 2%;
+        
+        text-align: center;
+        border-radius: 50%;
+    }
+    .square{
+        display: block;
+        width: 13px;
+        height: 13px;
+        border: 2px solid black;
+        padding: 2%;
+        text-align: center;
+
+    }
     
 </style>
 <body oncontextmenu="return false;" style="margin: 0px;">
 <div id="divMain" style="background-color: rgb(255, 255, 255); overflow: auto; height: calc(100vh - 80px); padding-left:1%; padding-right:1%">
 <table width="100%" id="head_table" style="margin-top:2%">
     <tr >
-        <td>NCD Patient Card<br/><span style="font-size:0.8em;background:yellow">Yellow Card</span></td>
-        <td>Hypertension & Diabetes</td>
+        <th style="text-align:left">NCD Patient Card<br/><span style="font-size:0.8em;background:yellow">Yellow Card</span></th>
+        <th>Hypertension</th>
         <td>Version 1</td>
         <td>Transfer-In Date</td>
-        <td style="border:1px solid black;width:12%"></td>
+        <td style="border:1px solid black;width:12%" id="transfer_in_date"></td>
         <td>NCD Reg no</td>
-        <td style="border:1px solid black;width:12%"></td>
+        <td style="border:1px solid black;width:12%" id="ncd_reg_no"></td>
         <td>Year</td>
-        <td style="border:1px solid black;width:12%"></td>
+        <td style="border:1px solid black;width:12%" id="year"></td>
     </tr>
 
 </table>
@@ -69,7 +88,7 @@
     </tr>
     <tr>
         <td>Patient Name</td>
-        <td colspan="3"></td>
+        <td colspan="3" id="patient_name"></td>
         <td rowspan="2">Diagnoses</td>
         <td>Type 1 DM Type 2 DM</td>
         <td>Date:</td>
@@ -79,9 +98,9 @@
     </tr>
     <tr>
         <td>Sex, DOB</td>
-        <th>M</th>
-        <th>F</th>
-        <td>DOB/Age</td>
+        <th><span class="circle" id="male">M</span></th>
+        <th><span class="circle" id="female">F</span></th>
+        <td>DOB/Age :  <span id="dob"></span></td>
         <td>Hypertension</td>
         <td>Date:</td>
         
@@ -94,10 +113,10 @@
        <td colspan="7"></td>
     </tr>
     <tr>
-        <td colspan="3">Near:</td>
+        <td colspan="3"> <span id="address"></span><br/>Near:</td>
         <td rowspan="6">Patient History & Complications</td>
-        <td>HIV R NR</td>
-        <td>ART Start Date:</td>
+        <th>HIV Status : <span class="circle" id="r" style="float:right">R</span> <span class="circle" id="nr" style="float:right; margin-right:20%;">NR</span></th>
+        <td><b>ART Start Date:</b> <span id="date_antiretrovirals_started"></span></td>
         <td>TB </td><td colspan="2"> Year:</td>
     </tr>
     <tr>
@@ -348,7 +367,9 @@
 </div>
 </div>
 <script type="text/javascript">
-        
+
+    loadCardDashboard();
+   
 </script>
 <div style="background-color: rgb(51, 51, 51); height: 80px; overflow: hidden; padding: 0px;">&nbsp;
     <button class="green" style="float: right; margin: 10px 15px 15px; min-width: 140px;" id="nextButton"

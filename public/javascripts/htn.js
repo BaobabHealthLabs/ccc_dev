@@ -217,3 +217,151 @@ function existingPatient() {
     return existing;
 
 }
+
+function hivStatus(patient_programs){
+        
+
+        var patient_program_keys = Object.keys(patient_programs);
+
+
+        for(var i = 0 ; i < patient_program_keys.length; i++){
+
+            var visits = Object.keys(patient_programs[patient_program_keys[i]]["visits"]).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+            
+        
+                for (var j = visits.length - 1; j >= 0; j--) {
+
+                    var encounters = Object.keys(patient_programs[patient_program_keys[i]]["visits"][visits[j]]);
+
+                    for (var k = encounters.length - 1; k >= 0; k--) {
+
+                        if(encounters[k] == "HIV/ART STATUS"){
+
+                            var concepts = patient_programs[patient_program_keys[i]]["visits"][visits[j]][encounters[k]];
+
+                            for (var l = concepts.length - 1; l >= 0; l--) {
+
+                                var element_id = Object.keys(concepts[l])[0].toLowerCase();
+
+                                element_id= element_id.replace("/","_").replace(/\s+/g,"_");
+            
+                                element_id = element_id.replace("/","").replace("__","_");
+
+                                element_id = element_id.replace("/","").replace("__","_");
+
+
+                                if(element_id == "hiv_status"){
+
+                                    var status = concepts[l][Object.keys(concepts[l])[0]].response.value;
+
+                                    console.log(status);
+
+                                    if(status=="Reactive"){
+
+                                        __$("r").style.border ="2px solid #ffffff";
+
+                                        __$("nr").style.border ="2px solid #ffffff";
+
+                                        __$("r").style.border ="2px solid red";
+
+                                    }
+                                    if(status=="Non-Reactive"){
+
+                                        __$("r").style.border ="2px solid #ffffff";
+
+                                        __$("nr").style.border ="2px solid #ffffff";
+
+                                        __$("nr").style.border ="2px solid red";
+    
+                                    }
+
+                                }
+
+                                if(__$(element_id)){
+
+                                    if(element_id =="date_antiretrovirals_started"){
+                                        
+                                        __$(element_id).innerHTML = new Date(concepts[l][Object.keys(concepts[l])[0]].response.value).format();
+
+                                    }
+
+                                    else{
+
+                                        __$(element_id).innerHTML = concepts[l][Object.keys(concepts[l])[0]].response.value;
+
+                                    }
+
+                                }
+                                    
+                            }
+
+                        }
+
+                    }
+
+                }
+        
+        }
+    
+
+}
+
+function loadCardDashboard(){
+    var data = window.parent.dashboard.data.data;
+
+    var id_keys = Object.keys(data.identifiers)
+
+    __$("ncd_reg_no").innerHTML = data.identifiers[id_keys[0]].identifier;
+
+    //Setting Demographics
+    var name_keys = Object.keys(data["names"][0]);
+    
+    var patient_name = data["names"][0][name_keys[0]] + "\t" + data["names"][0][name_keys[2]] +"\t" +data["names"][0][name_keys[1]];
+
+    __$("patient_name").innerHTML = patient_name;
+
+
+    __$("dob").innerHTML = new Date(data.birthdate).format();
+
+    var gender = data.gender;
+
+    if(gender == "M"){
+            if(__$("male")){
+                __$("male").style.border ="2px solid red";
+            }
+     }
+     else if(gender == "F"){
+            if(__$("female")){
+                __$("female").style.border ="2px solid red";
+            }
+    }
+
+   
+
+
+    /*Address*/
+    var address = data.addresses[0]["Current District"] +"\tDistrict, TA\t"
+                +data.addresses[0]["Current T/A"]+",\t"+data.addresses[0]["Current Village"]+"\tvillage";
+
+    __$("address").innerHTML = address;     
+
+    //HIV ART Status
+    hivStatus(data.programs["CROSS-CUTTING PROGRAM"].patient_programs);
+
+
+    //Gardian Data
+
+    var guardain = data.relationships;
+    
+    if(guardain.length > 0){
+
+        __$("guardian_name").innerHTML = guardain[0].relative_name; 
+
+        __$("relation_to_patient").innerHTML =  guardain[0].relative_type;
+    }
+
+
+
+}
