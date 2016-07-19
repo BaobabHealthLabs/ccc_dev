@@ -299,8 +299,6 @@ io.on("connection", function (socket) {
 
             socket.on("updateMe", function (data) {
 
-                console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-
                 console.log(JSON.stringify(data));
 
                 saveData(data, function (unathorized) {
