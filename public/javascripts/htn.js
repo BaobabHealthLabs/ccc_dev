@@ -56,7 +56,41 @@ function __$(id) {
     return document.getElementById(id);
 
 }
+function loadYears(id){
 
+    if(__$(id)) {
+
+        __$(id).innerHTML = "";
+
+        __$(id).removeAttribute("disabled");
+
+        var endYear = 1950;
+
+        if(window.parent.dashboard && window.parent.dashboard.data && window.parent.dashboard.data.data) {
+
+            var year = (new Date(window.parent.dashboard.data.data.birthdate)).getFullYear()
+
+            if(!isNaN(year)) {
+
+                endYear = year;
+
+            }
+
+        }
+
+        for(var i = (new Date()).getFullYear(); i > endYear; i--) {
+
+            var opt = document.createElement("option");
+            
+            opt.innerHTML = i;
+
+            __$(id).appendChild(opt);
+
+        }
+
+    }
+
+}
 function ajaxRequest(url, callback) {
 
     var httpRequest = new XMLHttpRequest();

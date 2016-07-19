@@ -228,6 +228,8 @@
         "HIV Test Date",
         "ART Start Date",
         "Any triggers",
-        "Hypertension Test Type"
+        "Hypertension Test Type",
+        "Do you drink alcohol?",
+        "Are you a heavy alcohol drinker?"
     ]
 }
