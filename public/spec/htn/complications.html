@@ -38,10 +38,8 @@
     <tr>
         <td align="center" style="background-color: #6281a7; color: #eee; padding-bottom: 5px;">
             <a class="link" style="font-size: 12px; color: #eee; " href="#creatinine">Creatinine</a> |
-            <a class="link" style="font-size: 12px; color: #eee; " href="#urine_protein">Urine Protein</a> |
             <a class="link" style="font-size: 12px; color: #eee; " href="#visual_acuity">Visual Acuity</a> |
             <a class="link" style="font-size: 12px; color: #eee; " href="#fundoscopy">Fundoscopy</a> |
-            <a class="link" style="font-size: 12px; color: #eee; " href="#foot_check">Foot Check</a> |
             <a class="link" style="font-size: 12px; color: #eee; " href="#urea">Urea</a> |
             <a class="link" style="font-size: 12px; color: #eee; " href="#macrovascular">Macrovascular</a>
         </td>
@@ -67,18 +65,9 @@
 
                         </td>
                     </tr>
-                    <tr style="background-color: rgba(238,238,238, 0.3);">
-                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/urine_protein.spec');">
-                            Urine Protein
-                        </td>
-                        <td id="urine_protein">
-
-                        </td>
-                    </tr>
                     <tr>
                         <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/visual_acuity.spec');">
+                            onclick="window.parent.dashboard.exitNavPanel('/spec/htn/visual_acuity.spec');">
                             Visual Acuity
                         </td>
                         <td id="visual_acuity">
@@ -87,34 +76,18 @@
                     </tr>
                     <tr style="background-color: rgba(238,238,238, 0.3);">
                         <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/fundoscopy.spec');">
+                            onclick="window.parent.dashboard.exitNavPanel('/spec/htn/fundoscopy.spec');">
                             Fundoscopy
                         </td>
                         <td id="fundoscopy">
 
                         </td>
                     </tr>
+                   
+        
                     <tr>
                         <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/foot_check.spec');">
-                            Foot Check
-                        </td>
-                        <td id="foot_check">
-
-                        </td>
-                    </tr>
-                    <tr style="background-color: rgba(238,238,238, 0.3);">
-                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/urea.spec');">
-                            Urea
-                        </td>
-                        <td id="urea">
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/dm/macrovascular.spec');">
+                            onclick="window.parent.dashboard.exitNavPanel('/spec/htn/macrovascular.spec');">
                             Macrovascular
                         </td>
                         <td id="macrovascular">
@@ -146,6 +119,6 @@
         Print Complications Label
     </button>
 </div>
-<script src="/javascripts/complications.js"></script>
+<script src="/javascripts/htncomplications.js"></script>
 </body>
 </html>

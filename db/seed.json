@@ -35,7 +35,7 @@
         ["HYPERTENSION SOCIAL HISTORY","Hypertension Social History"],
         ["HYPERTENSION FAMILY HISTORY","Hypertension Social History"],
         ["TREATMENTS", "Treatments encounter"],
-        ["HYPERTENSION TEST","Hypertension Test"]
+        ["HYPERTENSION TEST","Hypertension Test encounter"]
 
     ],
     "patient_identifier_types": [
@@ -227,6 +227,7 @@
         "Any silent markers?",
         "HIV Test Date",
         "ART Start Date",
-        "Any triggers"
+        "Any triggers",
+        "Hypertension Test Type"
     ]
 }

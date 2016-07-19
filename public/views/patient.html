@@ -14,13 +14,24 @@
 
     dashboard.subscription.addEventlistener("done", function () {
 
-        if (dashboard.activeTask == "Complications") {
+        if (dashboard.activeTask == "Complications" && dashboard.getCookie("currentProgram")=="Diabetes") {
 
             dashboard.navURLPanel('/spec/dm/complications.html');
 
             setTimeout(function () {
 
                 dashboard.$("ifrMain").contentWindow.location = '/spec/dm/complications.html';
+
+            }, 200);
+
+        }
+         if (dashboard.activeTask == "Complications" && dashboard.getCookie("currentProgram")=="HTN") {
+
+            dashboard.navURLPanel('/spec/htn/complications.html');
+
+            setTimeout(function () {
+
+                dashboard.$("ifrMain").contentWindow.location = '/spec/htn/complications.html';
 
             }, 200);
 
