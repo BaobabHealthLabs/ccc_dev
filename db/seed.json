@@ -230,6 +230,12 @@
         "Any triggers",
         "Hypertension Test Type",
         "Do you drink alcohol?",
-        "Are you a heavy alcohol drinker?"
+        "Are you a heavy alcohol drinker?",
+        "Oedema measure",
+        "Any sign of Oedema?",
+        "Oedema Test Date",
+        "Any shortness breath?",
+        "Shortness of breath measure",
+        "Shortness of breath Test Date"
     ]
 }
