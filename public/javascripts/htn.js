@@ -308,6 +308,92 @@ function hivStatus(patient_programs){
 
 }
 
+function loadVisits(visit_dates){
+
+    var visit_dates = Object.keys(visit_dates);
+
+    var dashboard = window.parent.dashboard;
+
+    for (var i = 0; i < visit_dates.length; i++) {
+
+        var visit_row = {
+
+                "Visit Date": (new Date(visit_dates[i])).format(),
+                "Weight (kg)": "",
+                "BMI":"",
+                "BP":"",
+                "PR":"",
+                "Fasting":"",
+                "Random":"",
+                "alcohol":"",
+                "# of F/V portions":"",
+                "exercise / wk of 30 min":"",
+                "CV Risk %":"",
+                "Neuropathy / PVD":"",
+                "Deformities" :"",
+                "Ulcers":"",
+                "Long acting":"",
+                "Short acting":"",
+                "M":"",
+                "G":"",
+                "Diuretic":"",
+                "CCB":"",
+                "ACE-I":"",
+                "BB":"",
+                "Other Treatment":"",
+                "Next Appointment Date" :"",
+                "Comments" :""
+            }
+
+            var weight = window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visit_dates[i])).format("YYYY-mm-dd"),"VITALS","Weight (kg)");
+
+            visit_row["Weight (kg)"] = weight;
+
+            var height = window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visit_dates[i])).format("YYYY-mm-dd"),"VITALS","Height (cm)");
+            
+            if(weight && height) {
+
+                var bmi = (weight / ((height / 100) * (height / 100))).toFixed(1);
+
+                visit_row["BMI"] = bmi;
+
+            }
+
+            var sp = dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visit_dates[i])).format("YYYY-mm-dd"),"VITALS","Systolic blood pressure");
+
+            var dp = dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visit_dates[i])).format("YYYY-mm-dd"),"VITALS","Diastolic blood pressure");
+           
+            if(sp && dp ){
+
+                 visit_row["BP"] = sp+"/"+dp;
+
+            }
+           
+
+            var fasting = dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visit_dates[i])).format("YYYY-mm-dd"),"LAB RESULTS","Fasting Blood Sugar Value");
+
+            var random = dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visit_dates[i])).format("YYYY-mm-dd"),"LAB RESULTS","Random Blood Sugar Value");
+
+            if(fasting){
+
+                visit_row["Fasting"] = fasting;
+
+            }
+
+            if(random){
+
+                visit_row["Random"] = random;
+
+            }
+         
+
+            visitRows.push(visit_row);
+        
+
+    }
+
+}
+
 function loadCardDashboard(){
     var data = window.parent.dashboard.data.data;
 
@@ -362,6 +448,111 @@ function loadCardDashboard(){
         __$("relation_to_patient").innerHTML =  guardain[0].relative_type;
     }
 
+
+    var visit_dates  = {};
+
+    var programs  = data.programs
+
+    var patient_program_keys = Object.keys(programs);
+
+
+    for(var i = 0 ; i < patient_program_keys.length ; i++){
+
+        var program_data_key = Object.keys(programs[patient_program_keys[i]].patient_programs);
+
+
+        var visit_keys = Object.keys(programs[patient_program_keys[i]].patient_programs[program_data_key[0]]["visits"]);
+
+        for(var j = 0 ; j < visit_keys.length ; j ++){
+
+            visit_dates[visit_keys[j]] = visit_keys[j];
+
+        }
+
+        
+
+    }
+
+    loadVisits(visit_dates);
+
+    for(var i = 0 ; i < visitRows.length; i++){
+
+        var concept_keys = Object.keys(visitRows[i]);
+
+        var tr = document.createElement("tr");
+
+        var height, weight;
+
+
+        for(var j = 0 ; j < concept_keys.length ; j++){
+
+            if(concept_keys[j]=="BMI"){
+
+                var td = document.createElement("td");
+
+                if(visitRows[i][concept_keys[j]] < 19){
+
+                        td.innerHTML = "<span class='circle' style='border:2px solid red' >U</span>";
+
+                }
+                else{
+
+                     td.innerHTML = "<span class='circle'>U</span>";
+
+
+                }
+
+                tr.appendChild(td);
+
+
+                td = document.createElement("td");
+
+                if(visitRows[i][concept_keys[j]] >= 19 && visitRows[i][concept_keys[j]] < 25){
+
+                        td.innerHTML = "<span class='circle' style='border:2px solid red' >N</span>";
+
+                }
+                else{
+
+                     td.innerHTML = "<span class='circle'>N</span>";
+
+
+                }
+                tr.appendChild(td);
+
+                td = document.createElement("td");
+
+                if(visitRows[i][concept_keys[j]] >= 25){
+
+                        td.innerHTML = "<span class='circle' style='border:2px solid red' >O</span>";
+
+                }
+                else{
+
+                     td.innerHTML = "<span class='circle'>O</span>";
+
+
+                }
+                tr.appendChild(td);
+
+                continue;
+
+            }
+
+            var td = document.createElement("td");
+
+            td.innerHTML = visitRows[i][concept_keys[j]];
+            
+            tr.appendChild(td);
+
+        }
+
+
+
+        __$("visit_body").appendChild(tr);
+
+
+    }
 
 
 }
