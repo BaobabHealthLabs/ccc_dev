@@ -1,0 +1,116 @@
+<!--
+
+var generic = [
+                "SODIUM VALPROATE",
+                "CARBAMAZEPINE",
+                "PHENYTOIN",
+                "ETHOSUXIMIDE",
+                "PHENOBARBITONE",
+                "GABAPENTIN",
+                "PREDNISOLONE",
+                "DIAZEPAM"
+            ];
+
+var drugs = {"PHENYTOIN":[
+                    ["25mg","OD","Phenytoin Sodium (25mg Tablet)","1.0","tab(s)","One per day"],
+                    ["25mg","BD","Phenytoin Sodium (25mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["25mg","TDS","Phenytoin Sodium (25mg Tablet)","1.0","tab(s)","Three per day"],
+                    ["150mg","OD","Phenytoin Sodium (150mg Tablet)","1.0","tab(s)","One per day"],
+                    ["150mg","BD","Phenytoin Sodium (150mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["150mg","TDS","Phenytoin Sodium (150mg Tablet)","1.0","tab(s)","Three per day"],
+                    ["300mg","OD","Phenytoin Sodium (300mg Tablet)","1.0","tab(s)","One per day"],
+                    ["300mg","BD","Phenytoin Sodium (300mg Tablet)","1.0","tab(s)","Two per day"],[
+                    "300mg","TDS","Phenytoin Sodium (300mg Tablet)","1.0","tab(s)","Three per day"]
+                    ],
+            "SODIUM VALPROATE":[
+                    ["150mg","OD","Sodium Valproate (150mg  Capsule (Covulex))","1.0","tab(s)","One per day"],
+                    ["150mg","BD","Sodium Valproate (150mg  Capsule (Covulex))","1.0","tab(s)","Two per day"],
+                    ["150mg","TDS","Sodium Valproate (150mg  Capsule (Covulex))","1.0","tab(s)","Three per day"],
+                    ["200mg","OD","Sodium Valproate (200mg Tablet)","1.0","tab(s)","One per day"],
+                    ["200mg","BD","Sodium Valproate (200mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["200mg","TDS","Sodium Valproate (200mg Tablet)","1.0","tab(s)","Three per day"],
+                    ["60mg","OD","Sodium Valproate (60mg)","1.0","tab(s)","One per day"],
+                    ["60mg","BD","Sodium Valproate (60mg)","1.0","tab(s)","Two per day"],
+                    ["60mg","TDS","Sodium Valproate (60mg)","1.0","tab(s)","Three per day"]
+                    ],
+            "GABAPENTIN":[
+                    ["100mg","OD","Gabapentin (100mg Tablet)","1.0","tab(s)","One per day"],
+                    ["100mg","BD","Gabapentin (100mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["100mg","TDS","Gabapentin (100mg Tablet)","1.0","tab(s)","Three per day"],
+                    ["400mg","OD","Gabapentin (400mg Tablet)","1.0","tab(s)","One per day"],
+                    ["400mg","BD","Gabapentin (400mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["400mg","TDS","Gabapentin (400mg Tablet)","1.0","tab(s)","Three per day"]],
+            "PREDNISOLONE":[
+                    ["10mg","OD","Prednisolone (10mg)","1.0","tab(s)","One per day"],
+                    ["10mg","BD","Prednisolone (10mg)","1.0","tab(s)","Two per day"],
+                    ["10mg","TDS","Prednisolone (10mg)","1.0","tab(s)","Three per day"],
+                    ["5mg","OD","Prednisolone (5mg Tablet)","1.0","tab(s)","One per day"],
+                    ["5mg","BD","Prednisolone (5mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["5mg","TDS","Prednisolone (5mg Tablet)","1.0","tab(s)","Three per day"],
+                    ["40mg","OD","Prednisolone (40mg)","1.0","tab(s)","One per day"],
+                    ["40mg","BD","Prednisolone (40mg)","1.0","tab(s)","Two per day"],
+                    ["40mg","TDS","Prednisolone (40mg)","1.0","tab(s)","Three per day"],
+                    ["60mg","OD","Prednisolone (60mg)","1.0","tab(s)","One per day"],
+                    ["60mg","BD","Prednisolone (60mg)","1.0","tab(s)","Two per day"],
+                    ["60mg","TDS","Prednisolone (60mg)","1.0","tab(s)","Three per day"],
+                    ["20mg","OD","Prednisolone (20 Mg)","1.0","tab(s)","One per day"],
+                    ["20mg","BD","Prednisolone (20 Mg)","1.0","tab(s)","Two per day"],
+                    ["20mg","TDS","Prednisolone (20 Mg)","1.0","tab(s)","Three per day"],
+                    ["15mg","OD","Prednisolone (15mg)","1.0","tab(s)","One per day"],
+                    ["15mg","BD","Prednisolone (15mg)","1.0","tab(s)","Two per day"],
+                    ["15mg","TDS","Prednisolone (15mg)","1.0","tab(s)","Three per day"],
+                    ["30mg","OD","Prednisolone (30 Mg)","1.0","tab(s)","One per day"],
+                    ["30mg","BD","Prednisolone (30 Mg)","1.0","tab(s)","Two per day"],
+                    ["30mg","TDS","Prednisolone (30 Mg)","1.0","tab(s)","Three per day"]],
+            "PHENOBARBITONE":[
+                    ["30mg","OD","Phenobarbitone (30mg Tablet) ","1.0","tab(s)","One per day"],
+                    ["30mg","BD","Phenobarbitone (30mg Tablet) ","1.0","tab(s)","Two per day"],
+                    ["30mg","TDS","Phenobarbitone (30mg Tablet) ","1.0","tab(s)","Three per day"],
+                    ["60mg","OD","Phenobarbitone (60mg) ","1.0","tab(s)","One per day"],
+                    ["60mg","BD","Phenobarbitone (60mg) ","1.0","tab(s)","Two per day"],
+                    ["60mg","TDS","Phenobarbitone (60mg) ","1.0","tab(s)","Three per day"],
+                    ["90mg","OD","Phenobarbitone (90 Mg) ","1.0","tab(s)","One per day"],
+                    ["90mg","BD","Phenobarbitone (90 Mg) ","1.0","tab(s)","Two per day"],
+                    ["90mg","TDS","Phenobarbitone (90 Mg) ","1.0","tab(s)","Three per day"],
+                    ["120mg","OD","Phenobarbitone (120 Mg) ","1.0","tab(s)","One per day"],
+                    ["120mg","BD","Phenobarbitone (120 Mg) ","1.0","tab(s)","Two per day"],
+                    ["120mg","TDS","Phenobarbitone (120 Mg) ","1.0","tab(s)","Three per day"]],
+            "ETHOSUXIMIDE":[
+                    ["250mg","OD","Ethosuximide (Capsule 250mg)","1.0","","One per day"],
+                    ["250mg","BD","Ethosuximide (Capsule 250mg)","1.0","","Two per day"],
+                    ["250mg","TDS","Ethosuximide (Capsule 250mg)","1.0","","Three per day"]],
+            "CARBAMAZEPINE":[
+                    ["200mg","OD","Carbamazepine (200mg Tablet)","1.0","tab(s)","One per day"],
+                    ["200mg","BD","Carbamazepine (200mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["200mg","TDS","Carbamazepine (200mg Tablet)","1.0","tab(s)","Three per day"],
+                    ["100mg","OD","Carbamazepine (100mg Tablet)","1.0","tab(s)","One per day"],
+                    ["100mg","BD","Carbamazepine (100mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["100mg","TDS","Carbamazepine (100mg Tablet)","1.0","tab(s)","Three per day"],
+                    ["300mg","OD","Carbamazepine (300mg Tablet)","1.0","tab(s)","One per day"],
+                    ["300mg","BD","Carbamazepine (300mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["300mg","TDS","Carbamazepine (300mg Tablet)","1.0","tab(s)","Three per day"],
+                    ["400mg","OD","Carbamazepine (400mg Tablet)","1.0","tab(s)","One per day"],
+                    ["400mg","BD","Carbamazepine (400mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["400mg","TDS","Carbamazepine (400mg Tablet)","1.0","tab(s)","Three per day"]],
+            "DIAZEPAM":[
+                    ["52mg/ml","OD","Diazepam 5mg/ml (2ml Ampulle)","2.0","ml","One per day"],
+                    ["52mg/ml","BD","Diazepam 5mg/ml (2ml Ampulle)","2.0","ml","Two per day"],
+                    ["52mg/ml","TDS","Diazepam 5mg/ml (2ml Ampulle)","2.0","ml","Three per day"],
+                    ["5mg","OD","Diazepam (5mg Tablet)","1.0","tab(s)","One per day"],
+                    ["5mg","BD","Diazepam (5mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["5mg","TDS","Diazepam (5mg Tablet)","1.0","tab(s)","Three per day"],
+                    ["","OD","Diazepam","0.0","","One per day"],["","BD","Diazepam","0.0","","Two per day"],
+                    ["","TDS","Diazepam","0.0","","Three per day"],
+                    ["10mg","OD","Diazepam (10mg Tablet)","1.0","tab(s)","One per day"],
+                    ["10mg","BD","Diazepam (10mg Tablet)","1.0","tab(s)","Two per day"],
+                    ["10mg","TDS","Diazepam (10mg Tablet)","1.0","tab(s)","Three per day"],
+                    ["10mg","OD","Diazepam Injection (10mg)","10.0","mg (injection)","One per day"],
+                    ["10mg","BD","Diazepam Injection (10mg)","10.0","mg (injection)","Two per day"],
+                    ["10mg","TDS","Diazepam Injection (10mg)","10.0","mg (injection)","Three per day"],
+                    ["20mg","OD","Diazepam Injection (20mg)","20.0","mg (injection)","One per day"],
+                    ["20mg","BD","Diazepam Injection (20mg)","20.0","mg (injection)","Two per day"],
+                    ["20mg","TDS","Diazepam Injection (20mg)","20.0","mg (injection)","Three per day"]]};
+
+
+
+//-->
