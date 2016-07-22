@@ -124,7 +124,7 @@
             "Patient Overview": "javascript:dashboard.navPanel('/spec/asthma/patient_overview.spec')",
             "HIV Status" :"javascript:dashboard.navPanel('/spec/hiv_status.spec')",
             "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
-            "Asthma Visit": "javascript:dashboard.navPanel('/spec/asthma/visit.spec')",
+            "Visit": "javascript:dashboard.navPanel('/spec/asthma/visit.spec')",
             "Treatments": "javascript:dashboard.navPanel('/spec/asthma/treatment.spec')",
             "Next Appointment": "javascript:dashboard.navPanel('/spec/asthma/appointment.spec')",
             "Mastercard" :"javascript:dashboard.navURLPanel('/views/asthma/card.html')"
@@ -160,7 +160,7 @@
             "Client Registration",
             "Patient Overview",
             "HIV Status",
-            "Asthma Visit",
+            "Visit",
             "Next Appointment"
         ],
         "clinicPrefix": "AST",

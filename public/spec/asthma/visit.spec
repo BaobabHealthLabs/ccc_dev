@@ -6,18 +6,17 @@ Q.1.2. Planned Visit? [pos::1$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.2.1. Yes
 O.1.2.2. No
 
-Q.1.3. Weight (kg) [pos::2$$field_type::hidden$$min::1$$max::200$$optional::true$$value::?$$condition::false]
 
-Q.1.4. Day sx [pos::3$$field_type::number$$parent::Visit Date]
+Q.1.3. Day sx [pos::2$$field_type::number$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal]
 
-Q.1.5. Night sx [pos::4$$field_type::number$$parent::Visit Date]
+Q.1.4. Night sx [pos::3$$field_type::number$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal]
 
 
-Q.1.6. Beta-agonist inhaler use: frequency [pos::5$$tt_requirenextclick::false$$parent::Visit Date]
-O.1.6.1. day
-O.1.6.2. wk
-O.1.6.3. mo
-O.1.6.4. yr
+Q.1.5. Beta-agonist inhaler use: frequency [pos::4$$tt_requirenextclick::false$$parent::Visit Date]
+O.1.5.1. day
+O.1.5.2. wk
+O.1.5.3. mo
+O.1.5.4. yr
 
 Q.1.7. Steroid inhaler daily? [pos::6$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.7.1. Yes
@@ -27,7 +26,7 @@ Q.1.8. Smoke? [pos::7$$id::do_smoke$$tt_requirenextclick::false$$parent::Visit D
 O.1.8.1. Yes
 O.1.8.2. No
 
-Q.1.9. Number of cigarette per day? [pos::8$$field_type::number$$condition::__$('do_smoke').value=='Yes'$$min::0$$max::20$$parent::Smoke?:Yes]
+Q.1.9. Number of cigarette per day? [pos::8$$field_type::number$$condition::__$('do_smoke').value=='Yes'$$parent::Smoke?:Yes$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal$$min::0max::100]
 
 Q.1.10. Passive smoking? [pos::9$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.10.1. Yes
