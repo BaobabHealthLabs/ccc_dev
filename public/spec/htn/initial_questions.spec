@@ -5,7 +5,7 @@ O.1.1.1. New Patient
 O.1.1.2. Transfer in
 O.1.1.3. Temporary Patient
 
-Q.1.2. Hypertension Diagnosis Date [pos:: 1$$ id:: initial_diagnosis_date$$ field_type:: birthdate$$ estimate_label:: Number of years ago]
+Q.1.2. Hypertension Diagnosis Date [pos:: 1$$ id:: initial_diagnosis_date$$ field_type:: date$$ estimate_label:: Number of years ago]
 
 Q.1.3. Have You Ever Had TB? [pos:: 2$$ tt_onUnLoad:: loadYears("year_of_tb_diagnosis")$$ condition:: !existingPatient() $$ parent :: TYPE OF PATIENT$$tt_requirenextclick::false]
 O.1.3.1. No

@@ -87,7 +87,14 @@ function ajaxRequest(url, callback) {
     }
 
 }
+function setDate(element){
 
+	var date = (new Date()).format();
+
+
+	__$(element).value = date;
+
+}
 function loadCheckConditions(){
 
 	var opts = __$("touchscreenInput" + tstCurrentPage).value.split(";");
