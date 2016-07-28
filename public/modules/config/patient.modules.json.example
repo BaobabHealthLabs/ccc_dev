@@ -175,23 +175,15 @@
         "tasks": {
             "Epilepsy Initial Questions": "javascript:dashboard.navPanel('/spec/epilepsy/initial_questions.spec')",
             "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
-            "Seizure Type": "javascript:dashboard.navPanel('/spec/epilepsy/seizure_type.spec')",
-            "Family Histroy": "javascript:dashboard.navPanel('/spec/epilepsy/family_history.spec')",
+            "Patient History": "javascript:dashboard.loadCustomScript('/javascripts/epilepsy_history.js', 'details')",
+            "Patient Overview": "javascript:dashboard.loadCustomScript('/javascripts/epilepsy_patient_overview.js', 'details')",
             "HIV Status" :"javascript:dashboard.navPanel('/spec/hiv_status.spec')",
             "VDRL Status" :"javascript:dashboard.navPanel('/spec/epilepsy/vdrl_status.spec')",
-            "Patient Histroy at Enrolment": "javascript:dashboard.navPanel('/spec/epilepsy/enrolment_history.spec')",
-            "Medical and Surgical Histroy": "javascript:dashboard.navPanel('/spec/epilepsy/medical_history.spec')",
-            "Pre-ictal Warning": "javascript:dashboard.navPanel('/spec/epilepsy/pre_ictal_warning.spec')",
-            "Post-ictal Features": "javascript:dashboard.navPanel('/spec/epilepsy/post_ictal_features.spec')",
-            "Triggers": "javascript:dashboard.navPanel('/spec/epilepsy/triggers.spec')",
-            "Patient Overview": "javascript:dashboard.navPanel('/spec/epilepsy/patient_overview.spec')",
             "Epilepsy visit": "javascript:dashboard.navPanel('/spec/epilepsy/visit.spec')",
             "Treatments": "javascript:dashboard.navPanel('/spec/epilepsy/treatment.spec')",
             "Outcome": "javascript:dashboard.navPanel('/spec/epilepsy/outcome.spec')",
             "Bookings": "javascript:dashboard.navPanel('/spec/appointment.spec')",
             "Mastercard" :"javascript:dashboard.navURLPanel('/views/epilepsy/card.html')"
-
-
         },
         "program": "EPILEPSY PROGRAM",
         "identifiers": ["National id", "EPL Number"],
