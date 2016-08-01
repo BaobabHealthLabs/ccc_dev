@@ -945,18 +945,18 @@ function hivStatus(patient_programs){
 
 									if(status=="Reactive"){
 
-										__$("r").style.border ="2px solid #ffffff";
+										__$("r").style.border ="2px solid #99ff99";
 
-										__$("nr").style.border ="2px solid #ffffff";
+										__$("nr").style.border ="2px solid #99ff99";
 
 										__$("r").style.border ="2px solid red";
 
 									}
 									if(status=="Non-Reactive"){
 
-									 	__$("r").style.border ="2px solid #ffffff";
+									 	__$("r").style.border ="2px solid #99ff99";
 
-										__$("nr").style.border ="2px solid #ffffff";
+										__$("nr").style.border ="2px solid #99ff99";
 
 										__$("nr").style.border ="2px solid red";
 	

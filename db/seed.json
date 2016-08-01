@@ -19,6 +19,7 @@
         ["OUTCOME", "Visit patient outcome encounter"],
         ["MEDICAL HISTORY", "Patient medical history encounter"],
         ["DIABETES HISTORY", "Diabetes patient history"],
+        ["DIABETES FAMILY HISTORY", "Diabetes Patient family history"],
         ["PAST DIABETES MEDICAL HISTORY", "Past diabetes patient medical history"],
         ["GENERAL HEALTH", "Patient general health encounter"],
         ["VITALS", "Patient vitals encounter"],

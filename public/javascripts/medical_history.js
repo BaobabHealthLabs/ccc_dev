@@ -385,6 +385,67 @@
 
             })
 
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td")
+            td.style.backgroundColor = colors[1][0];
+            td.style.color = "#fff";
+            td.style.fontWeight = "bold";
+            td.style.verticalAlign = "middle";
+            td.style.padding = "8px";
+            td.style.fontSize = "18px";
+            td.innerHTML = "Family History";
+
+            table.appendChild(td);
+
+            var img = document.createElement("img");
+            img.setAttribute("src", icoAdd);
+            img.height = "32";
+            img.style.cssFloat = "right";
+            img.style.margin = "-5px";
+            img.style.cursor = "pointer";
+
+            img.onclick = function () {
+
+                window.parent.dashboard.navPanel('/spec/dm/family_history.spec')
+
+            }
+
+            if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES FAMILY HISTORY")) {
+
+                td.appendChild(img);
+
+            }
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            table.appendChild(td);
+
+            var div = document.createElement("div");
+            div.id = "divFamilyHistory";
+            div.style.border = "1px solid " + colors[1][0];
+            div.style.minHeight = "30px";
+            div.style.backgroundColor = colors[1][1];
+            div.innerHTML = "&nbsp;";
+
+            td.appendChild(div);
+
+            queryEncounter("DIABETES FAMILY HISTORY", "divFamilyHistory", function (data, id) {
+
+                if (__$__(id)) {
+
+                    loadDetails(__$__(id), data);
+
+                }
+
+            })
+
         }
 
     }
