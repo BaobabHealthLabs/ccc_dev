@@ -1,6 +1,6 @@
 P.1. DIABETES HISTORY [program:: DIABETES PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 
-Q.1.1. Diabetes Diagnosis Date [pos:: 0$$ id:: initial_diagnosis_date$$ field_type:: birthdate$$ condition:: !existingDiabetesPatient()$$ estimate_label:: Number of years ago $$ parent :: Type of diabetes]
+Q.1.1. Diabetes Diagnosis Date [pos:: 0$$ id:: initial_diagnosis_date$$ field_type:: date$$ condition:: !existingDiabetesPatient()$$ estimate_label:: Number of years ago $$ parent :: Type of diabetes]
 
 Q.1.2. Type of diabetes [pos:: 1]
 O.1.2.1. Type 1 Diabetes

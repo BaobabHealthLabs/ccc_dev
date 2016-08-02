@@ -399,7 +399,7 @@ function loadCardDashboard(){
 
     var id_keys = Object.keys(data.identifiers)
 
-    __$("ncd_reg_no").innerHTML = data.identifiers[id_keys[0]].identifier;
+    __$("ncd_reg_no").innerHTML = data.identifiers["HTN Number"].identifier;
 
     //Setting Demographics
     var name_keys = Object.keys(data["names"][0]);
