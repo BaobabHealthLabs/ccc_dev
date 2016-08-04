@@ -165,7 +165,7 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
             ((new Date()).getFullYear()));
 
         var sql = "SELECT property_value FROM global_property WHERE property = \"" + prefix.trim().toLowerCase() +
-            ".id.counter." + yr + "\"";
+            (suffix ? "." + suffix.trim().toLowerCase() : "") + ".id.counter." + yr + "\"";
 
         queryRaw(sql, function (res) {
 
@@ -176,11 +176,11 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
                 nextId = parseInt(res[0][0].property_value) + 1;
 
                 sql = "UPDATE global_property SET property_value = \"" + nextId + "\" WHERE property = \"" +
-                    prefix.trim().toLowerCase() + ".id.counter." + yr + "\"";
+                    prefix.trim().toLowerCase() + (suffix ? "." + suffix.trim().toLowerCase() : "") + ".id.counter." + yr + "\"";
 
                 queryRaw(sql, function (res) {
 
-                    var id = prefix.trim().toUpperCase() + "-" + nextId + "-" + yr;
+                    var id = prefix.trim().toUpperCase() + "-" + nextId + "-" + yr + (suffix ? "-" + suffix.trim().toUpperCase() : "");
 
                     var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
                         "creator, date_created, uuid) VALUES (\"" + patientId + "\", \"" + id +
@@ -203,12 +203,12 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
             } else {
 
                 sql = "INSERT INTO global_property (property, property_value, uuid) VALUES (\"" +
-                    prefix.trim().toLowerCase() + ".id.counter." + yr + "\", \"" +
-                    nextId + "\", \"" + uuid.v1() + "\")";
+                    prefix.trim().toLowerCase() + (suffix ? "." + suffix.trim().toLowerCase() : "") + ".id.counter." +
+                    yr + "\", \"" + nextId + "\", \"" + uuid.v1() + "\")";
 
                 queryRaw(sql, function (res) {
 
-                    var id = prefix.trim().toUpperCase() + "-" + nextId + "-" + yr;
+                    var id = prefix.trim().toUpperCase() + "-" + nextId + "-" + yr + (suffix ? "-" + suffix.trim().toUpperCase() : "");
 
                     var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
                         "creator, date_created, uuid) VALUES (\"" + patientId + "\", \"" + id +
@@ -1269,7 +1269,7 @@ function saveData(data, callback) {
                 if (data.data.create_clinic_number) {
 
                     generateId(patient_id, data.data.userId, (data.data.location != undefined ? data.data.location : "Unknown"),
-                        data.data.create_clinic_number, undefined, function (response) {
+                        data.data.create_clinic_number, site.facility_code, function (response) {
 
                             var npid = response;
 
@@ -3552,7 +3552,7 @@ app.post("/save_dummy_patient", function (req, res) {
                         console.log(patient_id);
 
                         generateId(patient_id, data.userId, (data.location != undefined ? data.location : "Unknown"),
-                            (data.prefix ? data.prefix : "HTC"), undefined, function (response) {
+                            (data.prefix ? data.prefix : "HTC"), site.facility_code, function (response) {
 
                                 npid = response;
 
@@ -3995,7 +3995,7 @@ app.post("/save_patient", function (req, res) {
                         console.log(patient_id);
 
                         generateId(patient_id, data["User ID"], (data["Location"] != undefined ? data["Location"] :
-                            "Unknown"), (data.prefix ? data.prefix : "HTC"), undefined, function (response) {
+                            "Unknown"), (data.prefix ? data.prefix : "HTC"), site.facility_code, function (response) {
 
                             npid = response;
 
@@ -7124,6 +7124,7 @@ portfinder.getPort(function (err, port) {
         }
 
         console.log("✔ Server running on port %d in %s mode", port, app.get("env"));
+
     });
 
 });
