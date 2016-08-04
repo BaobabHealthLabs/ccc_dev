@@ -5,7 +5,7 @@ O.1.1.1. New Patient
 O.1.1.2. Transfer in
 O.1.1.3. Temporary Patient
 
-Q.1.2. Transfer-In Date [pos:: 1$$ id:: transfer_in_date$$ field_type:: date$$ condition:: !existingDiabetesPatient()$$ estimate_label:: Number of years ago $$ parent :: TYPE OF PATIENT]
+Q.1.2. Transfer-In Date [pos:: 1$$ id:: transfer_in_date$$ field_type:: date$$ condition:: !existingDiabetesPatient()$$ estimate_label:: Number of years ago $$ parent :: TYPE OF PATIENT$$condition::false]
 
 Q.1.3. Diabetes Diagnosis Date [pos:: 2$$ id:: initial_diagnosis_date$$ field_type:: date$$ condition:: !existingDiabetesPatient()$$ estimate_label:: Number of years ago $$ parent :: TYPE OF PATIENT]
 
