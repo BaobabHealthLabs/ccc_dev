@@ -559,6 +559,8 @@ function loadCardDashboard(){
 
     __$("ncd_reg_no").innerHTML = data.identifiers["DTM Number"].identifier;
 
+    __$("year").innerHTML= (new Date()).getFullYear();
+
     //Setting Demographics
     var name_keys = Object.keys(data["names"][0]);
     
@@ -601,9 +603,11 @@ function loadCardDashboard(){
     
     if(guardain.length > 0){
 
-        __$("guardian_name").innerHTML = guardain[0].relative_name; 
+        __$("guardian_name").innerHTML = guardain[guardain.length-1].relative_name; 
 
-        __$("relation_to_patient").innerHTML =  guardain[0].relative_type;
+        __$("relation_to_patient").innerHTML =  guardain[guardain.length-1].relative_type;
+
+        __$("gardian_phone_number").innerHTML = guardain[guardain.length-1].phone_number
     }
 
     var dashboard = window.parent.dashboard;
