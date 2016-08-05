@@ -906,13 +906,17 @@ function saveRelationship(params, callback) {
 
                 if (relation_id != person_id) {
 
-                    if (data["Phone Number"]) {
+                    if (data.phone_number) {
+
+                        console.log(data.phone_number);
 
                         var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
-                            "creator, date_created, uuid) VALUES (\"" + relation_id + "\", \"" + data["Phone Number"] +
+                            "creator, date_created, uuid) VALUES (\"" + relation_id + "\", \"" + data.phone_number +
                             "\", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
                             "\"Cell Phone Number\" LIMIT 1), \"" + user_id + "\", NOW(), \"" +
                             uuid.v1() + "\")";
+
+                        console.log(sql);
 
                         queryRaw(sql, function (res) {
 
@@ -2125,10 +2129,14 @@ function updateUserView(data) {
 
                 var sql = "SELECT CONCAT(given_name, \" \", family_name) AS relative_name, (SELECT identifier FROM " +
                     "patient_identifier WHERE patient_id = person_b LIMIT 1) AS relative_id, b_is_to_a, gender, " +
-                    "relationship.uuid AS uuid FROM relationship LEFT OUTER JOIN person_name ON person_name.person_id = " +
-                    "relationship.person_b LEFT OUTER JOIN relationship_type ON relationship_type.relationship_type_id " +
-                    "= relationship.relationship LEFT OUTER JOIN person ON person.person_id = relationship. person_b " +
-                    "WHERE person_a = \"" + patient_id + "\"";
+                    "relationship.uuid AS uuid, (SELECT person_attribute.value FROM person_attribute WHERE person_id = " +
+                    "relationship.person_b AND person_attribute_type_id = (SELECT person_attribute_type_id FROM " +
+                    "person_attribute_type WHERE name = 'Cell Phone Number' LIMIT 1)) AS phone_number FROM relationship LEFT OUTER " +
+                    "JOIN person_name ON person_name.person_id = relationship.person_b LEFT OUTER JOIN relationship_type " +
+                    "ON relationship_type.relationship_type_id = relationship.relationship LEFT OUTER JOIN person ON " +
+                    " person.person_id = relationship. person_b WHERE person_a = \"" + patient_id + "\"";
+
+                console.log(sql)
 
                 queryRaw(sql, function (relationships) {
 
@@ -2140,6 +2148,7 @@ function updateUserView(data) {
                             relative_name: relationships[0][i].relative_name,
                             relative_id: relationships[0][i].relative_id,
                             relative_type: relationships[0][i].b_is_to_a,
+                            phone_number: relationships[0][i].phone_number,
                             gender: relationships[0][i].gender,
                             UUID: relationships[0][i].uuid
                         }
@@ -7123,7 +7132,7 @@ portfinder.getPort(function (err, port) {
 
         }
 
-        console.log("✔ Server running on port %d in %s mode", port, app.get("env"));
+        console.log("✔ Server running on %s in %s mode", address, app.get("env"));
 
     });
 
