@@ -3048,6 +3048,19 @@ var dashboard = ({
 
             dashboard.__$("details").innerHTML = "";
 
+            if(dashboard.modules[dashboard.selectedProgram].landing_page) {
+
+                var ifrm = document.createElement("iframe");
+                ifrm.style.width = "100%";
+                ifrm.style.height = "100%";
+                ifrm.style.border = "none";
+                ifrm.style.overflow = "auto";
+                ifrm.setAttribute("src", dashboard.modules[dashboard.selectedProgram].landing_page);
+
+                dashboard.__$("details").appendChild(ifrm);
+
+            }
+
         }
 
         if (dashboard.__$("visits") && dashboard.data) {
