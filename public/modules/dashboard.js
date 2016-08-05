@@ -1677,8 +1677,9 @@ var dashboard = ({
                 validationRule: "^0\\d{7}$|Unknown|Not Available|^0\\d{9}$|^N\\/A$",
                 validationMessage: "Not a valid phone number",
                 field_type: "number",
-                optional: true
-
+                optional: true,
+                name: "data.phone_number",
+                id: "data.phone_number"
             },
             "Select or Create New Person": {
                 id: "selected_patient",
@@ -2170,7 +2171,7 @@ var dashboard = ({
 
                     var input = document.createElement("input");
                     input.id = fields[key].id;
-                    input.name = fields[key].id;
+                    input.name = (fields[key].name ? fields[key].name : fields[key].id);
                     input.setAttribute("helpText", key);
 
                     if (fields[key].field_type == "hidden") {
@@ -2460,6 +2461,10 @@ var dashboard = ({
             li.style.borderBottom = "1px solid #ccc";
             li.setAttribute("relation_id", sourceData[i].relative_id);
 
+            li.setAttribute("details", "<table cellpadding='5'><tr><td><b>Name:</b></td><td>" + sourceData[i].relative_name +
+                "</td></tr><tr><td><b>Phone Number:</b></td><td>" + (sourceData[i].phone_number || "") +
+                "</td></tr></table>" );
+
             li.onmouseover = function () {
 
                 if (this.getAttribute('selected') == null) {
@@ -2482,7 +2487,17 @@ var dashboard = ({
 
             li.onclick = function () {
 
-                window.location = "/patient/" + this.getAttribute("relation_id");
+                if (this.getAttribute("relation_id").match(/GDN/i)) {
+
+                    var details = (this.getAttribute("details") || "");
+
+                    dashboard.showMsg(details, "Guardian Details (" + this.getAttribute("relation_id") + ")");
+
+                } else {
+
+                    window.location = "/patient/" + this.getAttribute("relation_id");
+
+                }
 
             }
 
@@ -3602,7 +3617,7 @@ var dashboard = ({
             if (callback) {
 
                 callback();
-                
+
             }
 
         }
