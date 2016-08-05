@@ -230,8 +230,6 @@ function hivStatus(patient_programs){
 
                                     var status = concepts[l][Object.keys(concepts[l])[0]].response.value;
 
-                                    console.log(status);
-
                                     if(status=="Reactive"){
 
                                         __$("r").style.border ="2px solid #ffff4d";

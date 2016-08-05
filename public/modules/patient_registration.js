@@ -1846,6 +1846,8 @@ var patient = ({
 
                         input.setAttribute("ajaxURL", patient.settings.firstNamesPath + "?name=");
 
+                        input.setAttribute("allowFreeText",true);
+
                         break;
 
                     case "First Name":
