@@ -4344,7 +4344,7 @@ var dashboard = ({
 
                     dashboard.createWebSocket();
 
-                }, 100);
+                }, 1000);
             });
 
             dashboard.socket.on('newConnection', function (data) {
