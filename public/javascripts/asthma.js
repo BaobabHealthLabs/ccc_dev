@@ -225,14 +225,46 @@ function patientOverview(encounter_data){
 				case "Diagnosis":
 
 					var response = encounter_data[concept_names[i]].response.value.split(",");
-		
+		  
 
 					if(response.indexOf("COPD") >= 0){
-						__$("copd").style.background ="red";
+
+                        var span = __$("copd")
+
+                        span.removeAttribute("class");
+
+                        var img = document.createElement("img");
+
+                        img.style.height = "23px";
+
+                        img.style.width = "23px";
+
+                        img.style.float ="right";
+
+                        img.src = checked_checkbox;
+
+                        span.appendChild(img);
+
 					}
 
 					if(response.indexOf("Asthma") >=0){
-						__$("asthma").style.background ="red";
+
+                        var span = __$("asthma")
+
+                        span.removeAttribute("class");
+
+                        var img = document.createElement("img");
+
+                        img.style.height = "23px";
+
+                        img.style.width = "23px";
+
+                        img.style.float ="right";
+
+                        img.src = checked_checkbox;
+
+                        span.appendChild(img);
+
 					}
 
 					break;
@@ -661,6 +693,7 @@ function loadCardDashboard(){
 				continue;
 
 			}
+
 			
 			var response = visitRows[i][concept_keys[j]];
 			
@@ -676,7 +709,22 @@ function loadCardDashboard(){
 
 				if(response =="day"){
 
-					span.style.background ="red";
+
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
+
+					//span.style.background ="red";
 
 				}
 
@@ -693,7 +741,22 @@ function loadCardDashboard(){
 
 				if(response =="wk"){
 
-					span.style.background ="red";
+
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
+
+                    //span.style.background ="red";
 
 				}
 
@@ -709,7 +772,22 @@ function loadCardDashboard(){
 
 				if(response =="mo"){
 
-					span.style.background ="red";
+
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
+
+                    //span.style.background ="red";
 
 				}
 
@@ -723,9 +801,22 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="day"){
+				if(response =="year"){
 
-					span.style.background ="red";
+				
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
 
 				}
 
@@ -747,7 +838,20 @@ function loadCardDashboard(){
 
 				if(response =="Not Asthma"){
 
-					span.style.background ="red";
+					
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
 
 				}
 
@@ -763,7 +867,20 @@ function loadCardDashboard(){
 
 				if(response =="Intemittent"){
 
-					span.style.background ="red";
+				
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
 
 				}
 
@@ -779,9 +896,22 @@ function loadCardDashboard(){
 
 				if(response =="Mild persistent"){
 
-					span.style.background ="red";
 
-				}
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
+
+                }
 
 				td.appendChild(span);
 
@@ -795,7 +925,20 @@ function loadCardDashboard(){
 
 				if(response =="Mod persistent"){
 
-					span.style.background ="red";
+				
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
 
 				}
 
@@ -811,9 +954,22 @@ function loadCardDashboard(){
 
 				if(response =="Severe persistent"){
 
-					span.style.background ="red";
 
-				}
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
+
+                }
 
 				td.appendChild(span);
 
@@ -827,9 +983,22 @@ function loadCardDashboard(){
 
 				if(response =="Uncontrolled"){
 
-					span.style.background ="red";
 
-				}
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
+
+                }
 
 				td.appendChild(span);
 
@@ -851,7 +1020,20 @@ function loadCardDashboard(){
 
 				if(response =="Inhaled B-agonist"){
 
-					span.style.background ="red";
+					
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
 
 				}
 
@@ -867,7 +1049,20 @@ function loadCardDashboard(){
 
 				if(response =="Inhaled steroid"){
 
-					span.style.background ="red";
+
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
 
 				}
 
@@ -883,9 +1078,22 @@ function loadCardDashboard(){
 
 				if(response =="Oral steroid"){
 
-					span.style.background ="red";
 
-				}
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
+
+                }
 
 				td.appendChild(span);
 
@@ -899,7 +1107,20 @@ function loadCardDashboard(){
 
 				if(response =="Other"){
 
-					span.style.background ="red";
+
+                    span.removeAttribute("class");
+
+                    var img = document.createElement("img");
+
+                    img.style.height = "23px";
+
+                    img.style.width = "23px";
+
+                    img.style.float ="right";
+
+                    img.src = checked_checkbox;
+
+                    span.appendChild(img);
 
 				}
 
