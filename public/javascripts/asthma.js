@@ -410,7 +410,8 @@ function asthmaVisits(encounter_data,visitDate){
         "Asthma severity":"",
         "Treatment":"",
         "Other Treatment Specify":"",
-        "Comment":""
+        "Physical system comment":"",
+        "Next Appointment":""
 
 	}	
 	var weight,height;
@@ -680,6 +681,8 @@ function loadCardDashboard(){
 
 		for(var j = 0 ; j < concept_keys.length ; j++){
 
+            console.log(concept_keys[j]);
+
 			if(concept_keys[j]=="Weight (kg)"){
 
 				var td = document.createElement("td");
@@ -724,8 +727,6 @@ function loadCardDashboard(){
 
                     span.appendChild(img);
 
-					//span.style.background ="red";
-
 				}
 
 				td.appendChild(span);
@@ -756,8 +757,6 @@ function loadCardDashboard(){
 
                     span.appendChild(img);
 
-                    //span.style.background ="red";
-
 				}
 
 				td.appendChild(span);
@@ -786,8 +785,6 @@ function loadCardDashboard(){
                     img.src = checked_checkbox;
 
                     span.appendChild(img);
-
-                    //span.style.background ="red";
 
 				}
 
@@ -1137,11 +1134,18 @@ function loadCardDashboard(){
 				continue;
 
 			}
-			if(concept_keys[j]=="Comment"){
+		
+            if(concept_keys[j]=="Next Appointment"){
 
-				continue;
+                var td = document.createElement("td");
 
-			}
+                td.innerHTML =  window.parent.dashboard.queryActiveObs("ASTHMA PROGRAM",visitRows[i]["Visit Date"],"APPOINTMENT","Appointment date");
+                
+                tr.appendChild(td);
+
+                continue;
+
+            }
 			var td = document.createElement("td");
 			td.innerHTML = visitRows[i][concept_keys[j]];
 			tr.appendChild(td);
