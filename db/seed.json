@@ -238,6 +238,7 @@
         "Any shortness breath?",
         "Shortness of breath measure",
         "Shortness of breath Test Date",
-        "Transfer-In Date"
+        "Diabetes Transfer-In Date",
+        "Hypertension Transfer-In Date"
     ]
 }
