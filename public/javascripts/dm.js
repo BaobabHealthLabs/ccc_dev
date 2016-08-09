@@ -282,6 +282,21 @@ function hivStatus(patient_programs){
 
 function loadPatientOverView(dashboard){
 
+    if(dashboard.queryAnyExistingObs("Diabetes Transfer-In Date")){
+
+        dashboard.queryExistingObsArray("Diabetes Transfer-In Date",function(data){
+
+            var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+
+            __$("transfer_in_date").innerHTML = (new Date(data[keys[0]])).format();
+
+        });
+
+
+    }
+
     if(dashboard.queryAnyExistingObs("Type of diabetes")){
 
         dashboard.queryExistingObsArray("Type of diabetes",function(data){ 
@@ -458,6 +473,103 @@ function loadPatientOverView(dashboard){
     }
 
     //load other complications
+
+    if(dashboard.queryAnyExistingObs("Left eye fundoscopy") || dashboard.queryAnyExistingObs("Right eye fundoscopy")){
+
+        var dates;
+
+        dashboard.queryExistingObsArray("Left eye fundoscopy", function(data){
+
+            var keys = Object.keys(data);
+
+            dates = keys;
+
+            for(var i = 0 ; i < keys.length ; i++){
+
+                var value = data[keys[i]];
+
+                if(value.toLowerCase().indexOf("retinopathy") >= 0){
+
+                    var element_id = "retinopathy";
+
+                    if(__$(element_id)){
+
+                            var element = __$(element_id);
+
+                            element.removeAttribute("class");
+
+                            var img = document.createElement("img");
+
+                            img.style.height = "23px";
+
+                            img.style.width = "23px";
+
+                            img.src = checked_checkbox;
+
+                            element.appendChild(img);   
+                    }
+
+
+                }
+
+            }
+
+
+
+        });
+
+        dashboard.queryExistingObsArray("Right eye fundoscopy", function(data){
+
+            var keys = Object.keys(data);
+
+
+            for(var i = 0 ; i < keys.length ; i++){
+
+
+                dates.push(keys[i])
+
+                var value = data[keys[i]];
+
+                if(value.toLowerCase().indexOf("retinopathy") >= 0){
+
+                    var element_id = "retinopathy";
+
+                    if(__$(element_id)){
+
+                            var element = __$(element_id);
+
+                            element.removeAttribute("class");
+
+                            var img = document.createElement("img");
+
+                            img.style.height = "23px";
+
+                            img.style.width = "23px";
+
+                            img.src = checked_checkbox;
+
+                            element.appendChild(img);   
+                    }
+
+
+                }
+
+            }
+
+
+        });
+
+        var string_of_dates = [];
+
+        for (var i = 0; i < dates.length; i++) {
+
+             string_of_dates.push((new Date(dates[i])).format());
+
+        }
+
+        __$("retinopathy_dates").innerHTML = string_of_dates.toString();
+
+    }
 
 
 
