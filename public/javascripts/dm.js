@@ -363,6 +363,143 @@ function loadPatientOverView(dashboard){
 
     }
 
+    if(dashboard.queryAnyExistingObs("Past medical history")){
+
+        dashboard.queryExistingObsArray("Past medical history",function(data){
+
+             var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+
+            for(var i = 0 ; i < keys.length; i++){
+
+                if(data[keys[i]]=="Hypertension"){
+
+                    if(__$("history_of_htn")){
+
+                        var element = __$("history_of_htn");
+
+                        element.removeAttribute("class");
+
+                        var img = document.createElement("img");
+
+                        img.style.height = "23px";
+
+                        img.style.width = "23px";
+
+                        img.src = checked_checkbox;
+
+                        element.appendChild(img);
+
+                    }
+
+                     dashboard.queryExistingObsArray("Hypertension diagnosis year",function(date_data){
+
+                             var keys_for_date = Object.keys(date_data).sort(function (a, b) {
+                                                return (new Date(b)) - (new Date(a))
+                             });
+
+                             if(__$("history_of_htn_year")){
+
+                                __$("history_of_htn_year").innerHTML = "Diagnosis Year : "+ date_data[keys_for_date[0]];
+
+                             }
+
+
+                     });
+
+
+                }
+
+
+            }
+
+
+         })
+
+    }
+
+    if(dashboard.queryAnyExistingObs("Family History of Diabetes?")){
+
+        dashboard.queryExistingObsArray("Family History of Diabetes?", function(data){
+
+            var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+
+            for(var i = 0 ; i < keys.length; i++){
+
+                if(data[keys[i]]=="Yes"){
+
+                    if(__$("family_history_of_dm")){
+
+                        var element = __$("family_history_of_dm");
+
+                        element.removeAttribute("class");
+
+                        var img = document.createElement("img");
+
+                        img.style.height = "23px";
+
+                        img.style.width = "23px";
+
+                        img.src = checked_checkbox;
+
+                        element.appendChild(img);
+
+                    }
+
+                }
+
+
+            }
+
+
+        });
+
+
+    }
+
+    if(dashboard.queryAnyExistingObs("Family History Of Hypertension?")){
+
+        dashboard.queryExistingObsArray("Family History Of Hypertension?", function(data){
+
+            var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+
+            for(var i = 0 ; i < keys.length; i++){
+
+                if(data[keys[i]]=="Yes"){
+
+                    if(__$("family_history_of_htn")){
+
+                        var element = __$("family_history_of_htn");
+
+                        element.removeAttribute("class");
+
+                        var img = document.createElement("img");
+
+                        img.style.height = "23px";
+
+                        img.style.width = "23px";
+
+                        img.src = checked_checkbox;
+
+                        element.appendChild(img);
+
+                    }
+
+                }
+
+
+            }
+
+
+        });
+
+
+    }
 
     if(dashboard.queryAnyExistingObs("Diabetes diagnosis date")){
 
@@ -568,6 +705,48 @@ function loadPatientOverView(dashboard){
         }
 
         __$("retinopathy_dates").innerHTML = string_of_dates.toString();
+
+    }
+
+    if(dashboard.queryAnyExistingObs("Outcome")){
+
+        dashboard.queryExistingObsArray("Outcome",function(data){ 
+
+            var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(a)) - (new Date(b))
+                    });
+
+
+
+           for(var i = 0 ; i <  keys.length; i++){
+            
+
+                __$("alive").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+
+                __$("dead").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+
+                __$("treatment_stopped").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+
+                __$("transfer_out").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+
+                var element_id = data[keys[i]];
+
+                element_id = element_id.toLowerCase();
+
+                element_id= element_id.replace("/","_").replace(/\s+/g,"_");
+            
+                element_id = element_id.replace("/","").replace("__","_");
+
+                element_id = element_id.replace("/","").replace("__","_");
+
+                __$(element_id).setAttribute("style","border-bottom:2px dotted red;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+
+                __$("outcome_date").innerHTML = (new Date(keys[i])).format();
+
+           }
+
+        })
+
 
     }
 
