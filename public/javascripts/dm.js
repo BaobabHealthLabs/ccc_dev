@@ -585,7 +585,7 @@ function loadVisits(visit_dates){
 
         var visit_row = {
 
-                "Visit Date": (new Date(visit_dates[i])).format(),
+                "Visit Date": (new Date(visit_dates[i])).format("YYYY-mm-dd"),
                 "Weight (kg)": "",
                 "BMI":"",
                 "BP":"",
@@ -608,8 +608,8 @@ function loadVisits(visit_dates){
                 "ACE-I":"",
                 "BB":"",
                 "Other Treatment":"",
-                "Next Appointment Date" :"",
-                "Comments" :""
+                "Comments" :"",
+                "Next Appointment Date" :""
             }
 
             var weight = window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visit_dates[i])).format("YYYY-mm-dd"),"VITALS","Weight (kg)");
@@ -809,6 +809,19 @@ function loadCardDashboard(){
 
 
                 }
+                tr.appendChild(td);
+
+                continue;
+
+            }
+            if(concept_keys[j]=="Next Appointment Date"){
+
+                var td = document.createElement("td");
+
+                console.log(visitRows[i]["Visit Date"]);
+
+                td.innerHTML =  window.parent.dashboard.queryActiveObs("DIABETES PROGRAM",visitRows[i]["Visit Date"],"APPOINTMENT","Appointment date");
+                
                 tr.appendChild(td);
 
                 continue;
