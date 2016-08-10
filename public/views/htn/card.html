@@ -96,7 +96,7 @@
         <td style="width:15%"> Type 2 DM <span id="type_2" class="square" style="float:right"></span></td>
         <td>Date: <span id="dm_daigosis"></span></td>
         <td rowspan="2">Family History</td>
-        <td colspan="2">Diabetes</td>
+        <td colspan="2">Diabetes <span id="family_history_of_dm" class="square" style="float:right;"></span></td>
        
     </tr>
     <tr>
@@ -104,10 +104,10 @@
         <th><span class="circle" id="male">M</span></th>
         <th><span class="circle" id="female">F</span></th>
         <td>DOB/Age :  <span id="dob"></span></td>
-        <td colspan="2">Hypertension</td>
-        <td>Date:</td>
+        <td colspan="2">Hypertension <span id="history_of_htn" class="square" style="float:right;"></span></td>
+        <td id="history_of_htn_year">Date:</td>
         
-        <td colspan="2">Hypertension</td>
+        <td colspan="2">Hypertension<span id="family_history_of_htn" class="square" style="float:right;"></span></td>
     </tr>
     <tr>
         <td rowspan="2">Physical Adress</td>
@@ -135,16 +135,16 @@
     </tr>
     <tr>
         <td>Guardian Name</td>
-        <td colspan="3"></td>
+        <td colspan="3" id="guardian_name"></td>
         <td><span id="retinopathy" class="square" style="float:left;margin-right:10%"></span>Retinopathy</td>
-        <td>Date:</td>
+        <td>Date: <span id="retinopathy_dates"></span></td>
         <td><span id="nueropathy" class="square" style="float:left;margin-right:10%"></span>Neuropathy</td>
         <td colspan="3"></td>
     </tr>
     <tr>
         <td>Guardian Phone</td>
-        <td colspan="2"></td>
-        <td>Relation to patient</td>
+        <td colspan="2" id="gardian_phone_number"></td>
+        <td>Relation to patient: <span id="relation_to_patient"></span></td>
         <td><span id="renal_disease" class="square" style="float:left;margin-right:10%"></span>Renal disease</td>
         <td>Date:</td>
         <td><span id="sexual_dysfunction" class="square" style="float:left;margin-right:10%"></span>Sexual dysfunction</td>
@@ -154,7 +154,7 @@
         <td>Agrees to FUP</td>
         <td>N Y</td>
         <td colspan="2"></td>
-        <td colspan="6">Outcome: Discharge / Default /Stop Tx /Transfer Out Date</td>
+        <th>Discharge Outcome:</th><td colspan="3"> <span id="alive">Alive</span> /<span id="dead"> Dead</span> / <span id="treatment_stopped">Stop Treatment </span> / <span id="transfer_out">Transfer Out</span></td><td colspan="2">Date : <span id="outcome_date"></span></td>
     </tr>
 </table>
 <table width="100%" class="card">

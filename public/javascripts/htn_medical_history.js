@@ -314,7 +314,7 @@
 
             td.appendChild(div);
 
-            queryEncounter("PAST DIABETES MEDICAL HISTORY", "divPastMedicalHistory", function (data, id) {
+            queryEncounter("PAST HYPERTENSION MEDICAL HISTORY", "divPastMedicalHistory", function (data, id) {
 
                 if (__$__(id)) {
 
