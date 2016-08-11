@@ -592,6 +592,22 @@ function loadCardDashboard(){
 
 	}
 
+    //Transfer in Date
+     if(window.parent.dashboard.queryAnyExistingObs("Asthma Transfer-In Date")){
+
+        window.parent.dashboard.queryExistingObsArray("Asthma Transfer-In Date",function(data){
+
+            var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+
+            __$("transfer_in_date").innerHTML = (new Date(data[keys[0]])).format();
+
+        });
+
+
+    }
+
 
 	//Setting Demographics
 	var name_keys = Object.keys(data["names"][0]);
@@ -635,7 +651,12 @@ function loadCardDashboard(){
    	}
 
    	//HIV ART Status
-    hivStatus(data.programs["CROSS-CUTTING PROGRAM"].patient_programs);
+   //HIV ART Status
+    if(window.parent.dashboard.queryAnyExistingObs("HIV status")){
+        
+         hivStatus(data.programs["CROSS-CUTTING PROGRAM"].patient_programs);
+
+    }
 
     //Program Data
 

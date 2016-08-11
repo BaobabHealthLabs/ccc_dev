@@ -11,13 +11,13 @@ Q.1.2. Select blood sugar units of measure [pos:: 1$$ condition:: __$("test_type
 O.1.2.1. mmol/l
 O.1.2.2. mg/dl
 
-Q.1.3. Fasting Blood Sugar Value [pos:: 2$$ field_type:: number$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter a decimal between 0 and 9 (for example: 36<b>.6</b>)$$ tt_pageStyleClass:: Numeric NumbersOnlyWithDecimal$$ id:: fbs_value]
+Q.1.3. Fasting Blood Sugar Value [pos:: 2$$ field_type:: number$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter a decimal between 0 and 9 (for example: 36<b>.6</b>)$$ tt_pageStyleClass:: Numeric NumbersOnlyWithDecimal$$condition::__$("fbs_unit").value=="mmol/l" || __$("fbs_unit").value=="mg/dl"$$ id:: fbs_value]
 
 Q.1.4. Select blood sugar units of measure [pos:: 3$$ condition:: __$("test_types").selectedOptions.map().indexOf("Random Blood Sugar") >= 0$$ concept:: Random Blood Sugar Units$$ tt_onLoad:: __$('infoBar'+tstCurrentPage).innerHTML = ' Random Blood Sugar'$$ tt_requireNextClick:: false$$ id:: rbs_unit$$ tt_onUnLoad:: resetPageAttributes(__$("rbs_value"), "rbs")]
 O.1.4.1. mmol/l
 O.1.4.2. mg/dl
 
-Q.1.5. Random Blood Sugar Value [pos:: 4$$ field_type:: number$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter a decimal between 0 and 9 (for example: 36<b>.6</b>)$$ tt_pageStyleClass:: Numeric NumbersOnlyWithDecimal$$ id:: rbs_value]
+Q.1.5. Random Blood Sugar Value [pos:: 4$$ field_type:: number$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter a decimal between 0 and 9 (for example: 36<b>.6</b>)$$ tt_pageStyleClass:: Numeric NumbersOnlyWithDecimal$$condition::__$("rbs_unit").value=="mmol/l" || __$("rbs_unit").value=="mg/dl"$$ id:: rbs_value]
 
 Q.1.6. HbA1c Value [pos:: 5$$ field_type:: number$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter a decimal between 0 and 9 (for example: 36<b>.6</b>)$$ tt_pageStyleClass:: Numeric NumbersOnlyWithDecimal$$ id:: HbA1c_value$$ condition:: __$("test_types").selectedOptions.map().indexOf("HbA1c") >= 0$$ min:: 0$$ max:: 30$$ absoluteMin:: 0$$ absoluteMax:: 50$$ tt_onLoad:: resetPageAttributes(__$('touchscreenInput'+tstCurrentPage), 'hba1c')]
 

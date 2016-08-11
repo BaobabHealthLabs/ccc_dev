@@ -263,18 +263,18 @@ function hivStatus(patient_programs){
 
                                     if(status=="Reactive"){
 
-                                        __$("r").style.border ="2px solid #ffffff";
+                                        __$("r").style.border ="2px solid #ffff4d";
 
-                                        __$("nr").style.border ="2px solid #ffffff";
+                                        __$("nr").style.border ="2px solid #ffff4d";
 
                                         __$("r").style.border ="2px solid red";
 
                                     }
                                     if(status=="Non-Reactive"){
 
-                                        __$("r").style.border ="2px solid #ffffff";
+                                        __$("r").style.border ="2px solid #ffff4d";
 
-                                        __$("nr").style.border ="2px solid #ffffff";
+                                        __$("nr").style.border ="2px solid #ffff4d";
 
                                         __$("nr").style.border ="2px solid red";
     
@@ -398,9 +398,9 @@ function loadVisits(visit_dates){
 }
 function loadPatientOverView(dashboard){
 
-    if(dashboard.queryAnyExistingObs("Diabetes Transfer-In Date")){
+   if(dashboard.queryAnyExistingObs("Hypertension Transfer-In Date")){
 
-        dashboard.queryExistingObsArray("Diabetes Transfer-In Date",function(data){
+        dashboard.queryExistingObsArray("Hypertension Transfer-In Date",function(data){
 
             var keys = Object.keys(data).sort(function (a, b) {
                         return (new Date(b)) - (new Date(a))
@@ -670,29 +670,49 @@ function loadPatientOverView(dashboard){
 
     if(dashboard.queryAnyExistingObs("Have you ever had TB?")){
 
-        if(__$("tb")){
 
-            var element = __$("tb");
+         dashboard.queryExistingObsArray("Have you ever had TB?", function(data){
 
-            if(element.getElementsByTagName("img").length > 0){
+            var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+
+            for(var i = 0 ; i < keys.length; i++){
+
+                if(data[keys[i]]=="Yes"){
+
+                    if(__$("tb")){
+
+                        var element = __$("tb");
+
+                        if(element.getElementsByTagName("img").length > 0){
 
 
-            }else{
+                        }else{
 
-                element.removeAttribute("class");
+                            element.removeAttribute("class");
 
-                var img = document.createElement("img");
+                            var img = document.createElement("img");
 
-                img.style.height = "23px";
+                            img.style.height = "23px";
 
-                img.style.width = "23px";
+                            img.style.width = "23px";
 
-                img.src = checked_checkbox;
+                            img.src = checked_checkbox;
 
-                element.appendChild(img);
+                            element.appendChild(img);
+                        }
+
+                    }
+
+                }
+
+
             }
 
-        }
+
+        });
+
 
         dashboard.queryExistingObsArray("Year(s) of TB Diagnosis",function(data){ 
 
@@ -909,10 +929,13 @@ function loadPatientOverView(dashboard){
 
                 element_id = element_id.replace("/","").replace("__","_");
 
-                __$(element_id).setAttribute("style","border-bottom:2px solid red;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+                if(__$(element_id)){
 
-                __$("outcome_date").innerHTML = (new Date(keys[i])).format();
+                    __$(element_id).setAttribute("style","border-bottom:2px solid red;padding:0.2%;padding-left:0.5;padding-right:0.5;");
 
+                    __$("outcome_date").innerHTML = (new Date(keys[i])).format();
+
+                }
            }
 
         })
@@ -965,7 +988,11 @@ function loadCardDashboard(){
     __$("address").innerHTML = address;     
 
     //HIV ART Status
-    hivStatus(data.programs["CROSS-CUTTING PROGRAM"].patient_programs);
+    if(window.parent.dashboard.queryAnyExistingObs("HIV status")){
+        
+         hivStatus(data.programs["CROSS-CUTTING PROGRAM"].patient_programs);
+
+    }
 
 
     //Gardian Data

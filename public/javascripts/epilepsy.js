@@ -1096,9 +1096,25 @@ function loadCardDashboard(){
 
 	var id_keys = Object.keys(data.identifiers)
 
-	__$("ncd_reg_no").innerHTML = data.identifiers[id_keys[0]].identifier;
+	__$("ncd_reg_no").innerHTML = data.identifiers["AST Number"].identifier;
 
      __$("year").innerHTML= (new Date()).getFullYear();
+
+     //Transfer in Date
+     if(window.parent.dashboard.queryAnyExistingObs("Epilepsy Transfer-In Date")){
+
+        window.parent.dashboard.queryExistingObsArray("Epilepsy Transfer-In Date",function(data){
+
+            var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+
+            __$("transfer_in_date").innerHTML = (new Date(data[keys[0]])).format();
+
+        });
+
+
+    }
 
 	//Setting Demographics
 	var name_keys = Object.keys(data["names"][0]);
@@ -1133,7 +1149,11 @@ function loadCardDashboard(){
     __$("address").innerHTML = address;		
 
     //HIV ART Status
-    hivStatus(data.programs["CROSS-CUTTING PROGRAM"].patient_programs);
+    if(window.parent.dashboard.queryAnyExistingObs("HIV status")){
+        
+         hivStatus(data.programs["CROSS-CUTTING PROGRAM"].patient_programs);
+
+    }
 
 
     //Gardian Data
