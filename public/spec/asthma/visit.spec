@@ -40,7 +40,7 @@ Q.1.12. Exacerbation today? [pos::11$$tt_requirenextclick::false$$parent::Visit 
 O.1.12.1. Yes
 O.1.12.2. No
 
-Q.1.13. Asthma severity [pos::12$$tt_requirenextclick::false$$parent::Visit Date]
+Q.1.13. Asthma severity [pos::12$$tt_requirenextclick::false$$parent::Visit Date$$tt_pageStyleClass::NoKeyboard]
 O.1.13.1. Not Asthma
 O.1.13.2. Intemittent
 O.1.13.3. Mild persistent
