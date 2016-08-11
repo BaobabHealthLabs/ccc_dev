@@ -15,7 +15,7 @@ Q.1.5. Family History of COPD? [pos:: 4$$tt_requirenextclick::false]
 O.1.5.1. Yes
 O.1.5.2. No
 
-Q.1.6. Patient History and Exposures [pos::5$$id::complications$$multiple:: multiple$$tt_beforeUnLoad::loadCheckConditions()]
+Q.1.6. Patient History and Exposures [pos::5$$id::complications$$multiple:: multiple$$tt_beforeUnLoad::loadCheckConditions()$$tt_pageStyleClass::NoKeyboard]
 O.1.6.1. Chronic dry cough
 O.1.6.2. Indoor cooking
 O.1.6.3. Occupational Exposure
@@ -23,7 +23,7 @@ O.1.6.4. TB Contact
 O.1.6.5. Smoking
 O.1.6.6. Secondhand smoking
 
-Q.1.7. Chronic dry cough duration [pos:: 6$$id::chronic_dry_cough0$$parent::Patient History and Exposures:Chronic dry cough]
+Q.1.7. Chronic dry cough duration [pos:: 6$$field_type::number$$id::chronic_dry_cough0$$parent::Patient History and Exposures:Chronic dry cough$$tt_pageStyleClass :: Numeric NumbersOnly]
 
 Q.1.8. Chronic dry cough Age onset   [pos::7 $$field_type::number$$ id::chronic_dry_cough1$$parent::Patient History and Exposures:Chronic dry cough]
 
