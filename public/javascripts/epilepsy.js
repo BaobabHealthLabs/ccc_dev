@@ -852,6 +852,7 @@ function getTreatmentData(encounter_data,visit){
 
 	if(treatments[visit]){
 
+
 		var treatment = treatments[visit];
 
 		treatment.push(encounter_data[key[0]].response.value)
@@ -863,7 +864,15 @@ function getTreatmentData(encounter_data,visit){
 
 		treatments[visit] = [];
 
+        var treatment = treatments[visit];
+
+        treatment.push(encounter_data[key[0]].response.value)
+
+        treatments[visit] = treatment;
+
 	}
+
+
 
 
 
@@ -1089,6 +1098,8 @@ function loadCardDashboard(){
 
 	__$("ncd_reg_no").innerHTML = data.identifiers[id_keys[0]].identifier;
 
+     __$("year").innerHTML= (new Date()).getFullYear();
+
 	//Setting Demographics
 	var name_keys = Object.keys(data["names"][0]);
 	
@@ -1131,10 +1142,26 @@ function loadCardDashboard(){
     
     if(guardain.length > 0){
 
-   		__$("guardian_name").innerHTML = guardain[0].relative_name;	
+        if(guardain[guardain.length-1].relative_name){
 
-   		__$("relation_to_patient").innerHTML =  guardain[0].relative_type;
-   	}
+            __$("guardian_name").innerHTML = guardain[guardain.length-1].relative_name; 
+
+        }
+
+        if(guardain[guardain.length-1].relative_type){
+
+            __$("relation_to_patient").innerHTML =  guardain[guardain.length-1].relative_type;
+
+        }
+
+        if(guardain[guardain.length-1].phone_number){
+
+            __$("gardian_phone_number").innerHTML =  guardain[guardain.length-1].phone_number;
+
+        }
+
+        
+    }
 
 
    //Program data

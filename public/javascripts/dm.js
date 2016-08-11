@@ -319,17 +319,23 @@ function loadPatientOverView(dashboard){
 
                         var element = __$("type_1");
 
-                        element.removeAttribute("class");
+                        if(element.getElementsByTagName("img").length > 0){
 
-                        var img = document.createElement("img");
 
-                        img.style.height = "23px";
+                        }else{
 
-                        img.style.width = "23px";
+                                element.removeAttribute("class");
 
-                        img.src = checked_checkbox;
+                                var img = document.createElement("img");
 
-                        element.appendChild(img);
+                                img.style.height = "23px";
+
+                                img.style.width = "23px";
+
+                                img.src = checked_checkbox;
+
+                                element.appendChild(img);
+                        }
 
                  }
                    
@@ -341,17 +347,23 @@ function loadPatientOverView(dashboard){
 
                         var element = __$("type_2");
 
-                        element.removeAttribute("class");
+                        if(element.getElementsByTagName("img").length > 0){
 
-                        var img = document.createElement("img");
 
-                        img.style.height = "23px";
+                        }else{
 
-                        img.style.width = "23px";
+                                element.removeAttribute("class");
 
-                        img.src = checked_checkbox;
+                                var img = document.createElement("img");
 
-                        element.appendChild(img);
+                                img.style.height = "23px";
+
+                                img.style.width = "23px";
+
+                                img.src = checked_checkbox;
+
+                                element.appendChild(img);
+                        }
 
                     }
                    
@@ -363,6 +375,161 @@ function loadPatientOverView(dashboard){
 
     }
 
+    if(dashboard.queryAnyExistingObs("Past medical history")){
+
+        dashboard.queryExistingObsArray("Past medical history",function(data){
+
+             var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+
+            for(var i = 0 ; i < keys.length; i++){
+
+                if(data[keys[i]]=="Hypertension"){
+
+                    if(__$("history_of_htn")){
+
+                        var element = __$("history_of_htn");
+
+                        if(element.getElementsByTagName("img").length > 0){
+
+
+                        }else{
+
+                                element.removeAttribute("class");
+
+                                var img = document.createElement("img");
+
+                                img.style.height = "23px";
+
+                                img.style.width = "23px";
+
+                                img.src = checked_checkbox;
+
+                                element.appendChild(img);
+                        }
+
+                    }
+
+                     dashboard.queryExistingObsArray("Hypertension diagnosis year",function(date_data){
+
+                             var keys_for_date = Object.keys(date_data).sort(function (a, b) {
+                                                return (new Date(b)) - (new Date(a))
+                             });
+
+                             if(__$("history_of_htn_year")){
+
+                                __$("history_of_htn_year").innerHTML = "Diagnosis Year : "+ date_data[keys_for_date[0]];
+
+                             }
+
+
+                     });
+
+
+                }
+
+
+            }
+
+
+         })
+
+    }
+
+    if(dashboard.queryAnyExistingObs("Family History of Diabetes?")){
+
+        dashboard.queryExistingObsArray("Family History of Diabetes?", function(data){
+
+            var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+
+            for(var i = 0 ; i < keys.length; i++){
+
+                if(data[keys[i]]=="Yes"){
+
+                    if(__$("family_history_of_dm")){
+
+                        var element = __$("family_history_of_dm");
+
+                        if(element.getElementsByTagName("img").length > 0){
+
+
+                        }else{
+
+                                element.removeAttribute("class");
+
+                                var img = document.createElement("img");
+
+                                img.style.height = "23px";
+
+                                img.style.width = "23px";
+
+                                img.src = checked_checkbox;
+
+                                element.appendChild(img);
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+
+        });
+
+
+    }
+
+    if(dashboard.queryAnyExistingObs("Family History Of Hypertension?")){
+
+        dashboard.queryExistingObsArray("Family History Of Hypertension?", function(data){
+
+            var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
+
+            for(var i = 0 ; i < keys.length; i++){
+
+                if(data[keys[i]]=="Yes"){
+
+                    if(__$("family_history_of_htn")){
+
+                        var element = __$("family_history_of_htn");
+
+                        if(element.getElementsByTagName("img").length > 0){
+
+
+                        }else{
+
+                                element.removeAttribute("class");
+
+                                var img = document.createElement("img");
+
+                                img.style.height = "23px";
+
+                                img.style.width = "23px";
+
+                                img.src = checked_checkbox;
+
+                                element.appendChild(img);
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+
+        });
+
+
+    }
 
     if(dashboard.queryAnyExistingObs("Diabetes diagnosis date")){
 
@@ -391,17 +558,23 @@ function loadPatientOverView(dashboard){
 
             var element = __$("tb");
 
-            element.removeAttribute("class");
+            if(element.getElementsByTagName("img").length > 0){
 
-            var img = document.createElement("img");
 
-            img.style.height = "23px";
+            }else{
 
-            img.style.width = "23px";
+                element.removeAttribute("class");
 
-            img.src = checked_checkbox;
+                var img = document.createElement("img");
 
-            element.appendChild(img);
+                img.style.height = "23px";
+
+                img.style.width = "23px";
+
+                img.src = checked_checkbox;
+
+                element.appendChild(img);
+            }
 
         }
 
@@ -445,17 +618,23 @@ function loadPatientOverView(dashboard){
 
                         var element = __$(element_id);
 
-                        element.removeAttribute("class");
+                        if(element.getElementsByTagName("img").length > 0){
 
-                        var img = document.createElement("img");
 
-                        img.style.height = "23px";
+                        }else{
 
-                        img.style.width = "23px";
+                                element.removeAttribute("class");
 
-                        img.src = checked_checkbox;
+                                var img = document.createElement("img");
 
-                        element.appendChild(img);   
+                                img.style.height = "23px";
+
+                                img.style.width = "23px";
+
+                                img.src = checked_checkbox;
+
+                                element.appendChild(img);
+                        }
 
                         __$(element_id+"_date").innerHTML = new Date( dashboard.queryActiveObs("DIABETES PROGRAM",keys[i],"DIABETES TEST","Macrovascular Result Test Date")).format();
 
@@ -496,17 +675,23 @@ function loadPatientOverView(dashboard){
 
                             var element = __$(element_id);
 
-                            element.removeAttribute("class");
+                            if(element.getElementsByTagName("img").length > 0){
 
-                            var img = document.createElement("img");
 
-                            img.style.height = "23px";
+                            }else{
 
-                            img.style.width = "23px";
+                                element.removeAttribute("class");
 
-                            img.src = checked_checkbox;
+                                var img = document.createElement("img");
 
-                            element.appendChild(img);   
+                                img.style.height = "23px";
+
+                                img.style.width = "23px";
+
+                                img.src = checked_checkbox;
+
+                                element.appendChild(img);
+                            }  
                     }
 
 
@@ -538,17 +723,24 @@ function loadPatientOverView(dashboard){
 
                             var element = __$(element_id);
 
-                            element.removeAttribute("class");
+                            if(element.getElementsByTagName("img").length > 0){
 
-                            var img = document.createElement("img");
 
-                            img.style.height = "23px";
+                            }else{
 
-                            img.style.width = "23px";
+                                element.removeAttribute("class");
 
-                            img.src = checked_checkbox;
+                                var img = document.createElement("img");
 
-                            element.appendChild(img);   
+                                img.style.height = "23px";
+
+                                img.style.width = "23px";
+
+                                img.src = checked_checkbox;
+
+                                element.appendChild(img);
+                            }
+ 
                     }
 
 
@@ -568,6 +760,48 @@ function loadPatientOverView(dashboard){
         }
 
         __$("retinopathy_dates").innerHTML = string_of_dates.toString();
+
+    }
+
+    if(dashboard.queryAnyExistingObs("Outcome")){
+
+        dashboard.queryExistingObsArray("Outcome",function(data){ 
+
+            var keys = Object.keys(data).sort(function (a, b) {
+                        return (new Date(a)) - (new Date(b))
+                    });
+
+
+
+           for(var i = 0 ; i <  keys.length; i++){
+            
+
+                __$("alive").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+
+                __$("dead").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+
+                __$("treatment_stopped").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+
+                __$("transfer_out").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+
+                var element_id = data[keys[i]];
+
+                element_id = element_id.toLowerCase();
+
+                element_id= element_id.replace("/","_").replace(/\s+/g,"_");
+            
+                element_id = element_id.replace("/","").replace("__","_");
+
+                element_id = element_id.replace("/","").replace("__","_");
+
+                __$(element_id).setAttribute("style","border-bottom:2px solid red;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+
+                __$("outcome_date").innerHTML = (new Date(keys[i])).format();
+
+           }
+
+        })
+
 
     }
 
@@ -713,11 +947,25 @@ function loadCardDashboard(){
     
     if(guardain.length > 0){
 
-        __$("guardian_name").innerHTML = guardain[guardain.length-1].relative_name; 
+        if(guardain[guardain.length-1].relative_name){
 
-        __$("relation_to_patient").innerHTML =  guardain[guardain.length-1].relative_type;
+            __$("guardian_name").innerHTML = guardain[guardain.length-1].relative_name; 
 
-        __$("gardian_phone_number").innerHTML = guardain[guardain.length-1].phone_number
+        }
+
+        if(guardain[guardain.length-1].relative_type){
+
+            __$("relation_to_patient").innerHTML =  guardain[guardain.length-1].relative_type;
+
+        }
+
+        if(guardain[guardain.length-1].phone_number){
+
+            __$("gardian_phone_number").innerHTML =  guardain[guardain.length-1].phone_number;
+
+        }
+
+        
     }
 
     var dashboard = window.parent.dashboard;
@@ -736,8 +984,9 @@ function loadCardDashboard(){
 
         var program_data_key = Object.keys(programs[patient_program_keys[i]].patient_programs);
 
-
-        var visit_keys = Object.keys(programs[patient_program_keys[i]].patient_programs[program_data_key[0]]["visits"]);
+        var visit_keys = Object.keys(programs[patient_program_keys[i]].patient_programs[program_data_key[0]]["visits"]).sort(function (a, b) {
+                        return (new Date(b)) - (new Date(a))
+                    });
 
         for(var j = 0 ; j < visit_keys.length ; j ++){
 
@@ -820,7 +1069,15 @@ function loadCardDashboard(){
 
                 console.log(visitRows[i]["Visit Date"]);
 
-                td.innerHTML =  window.parent.dashboard.queryActiveObs("DIABETES PROGRAM",visitRows[i]["Visit Date"],"APPOINTMENT","Appointment date");
+                var appointment = window.parent.dashboard.queryActiveObs("DIABETES PROGRAM",visitRows[i]["Visit Date"],"APPOINTMENT","Appointment date");
+
+
+                if(appointment){
+
+                       td.innerHTML = appointment;
+
+                }
+              
                 
                 tr.appendChild(td);
 
