@@ -239,6 +239,8 @@
         "Shortness of breath measure",
         "Shortness of breath Test Date",
         "Diabetes Transfer-In Date",
-        "Hypertension Transfer-In Date"
+        "Hypertension Transfer-In Date",
+        "Asthma Transfer-In Date",
+        "Epilepsy Transfer-In Date"
     ]
 }
