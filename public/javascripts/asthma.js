@@ -98,6 +98,42 @@ function setDate(element){
 	__$(element).value = date;
 
 }
+function loadYears(id){
+
+    if(__$(id)) {
+
+        __$(id).innerHTML = "";
+
+        __$(id).removeAttribute("disabled");
+
+        var endYear = 1950;
+
+        if(window.parent.dashboard && window.parent.dashboard.data && window.parent.dashboard.data.data) {
+
+            var year = (new Date(window.parent.dashboard.data.data.birthdate)).getFullYear()
+
+            if(!isNaN(year)) {
+
+                endYear = year;
+
+            }
+
+        }
+
+        for(var i = (new Date()).getFullYear(); i > endYear; i--) {
+
+            var opt = document.createElement("option");
+            
+            opt.innerHTML = i;
+
+            __$(id).appendChild(opt);
+
+        }
+
+    }
+
+}
+
 function loadCheckConditions(){
 
 	var opts = __$("touchscreenInput" + tstCurrentPage).value.split(";");
@@ -403,7 +439,7 @@ function asthmaVisits(encounter_data,visitDate){
         "Night sx": "",
         "Beta-agonist inhaler use: frequency": "",
         "Steroid inhaler daily?":"",
-        "Number of cigarette per day?":"",
+        "Number of cigarettes per day?":"",
         "Passive smoking?":"",
         "Indoor cooking?":"",
         "Exacerbation today?":"",

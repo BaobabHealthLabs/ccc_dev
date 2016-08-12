@@ -1,4 +1,4 @@
-P.1. HYPERTENSION SOCIAL HISTORY [program:: HYPERTENSION PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;htn]
+P.1. ASTHMA SOCIAL HISTORY [program:: ASTHMA PROGRAM$$ scope:: EXISTS$$includejs:: touchScreenToolkit;asthma]
 
 Q.1.1. Ever smoked?[pos::0$$tt_requirenextclick::false]
 O.1.1.1. Yes
@@ -22,4 +22,23 @@ Q.1.6. 	Do you do Exercises? [pos::5$$tt_requirenextclick::false]
 O.1.6.1. Yes
 O.1.6.2. No
 
-Q.1.7. Occupation [pos:: 6$$allowFreeText:: true$$ajaxURL::/occupations_query$$optional::true]
+Q.1.7. Patient mode of coking? [pos::6]
+O.1.7.1. Gas
+O.1.7.2. Electricity
+O.1.7.3. Charcoal
+O.1.7.4. None
+
+Q.1.8. Patient exposed to pollution?[pos ::7]
+O.1.8.1. Yes
+O.1.8.2. No
+
+Q.1.9. Patient lives or works near? [pos::8]
+O.1.9.1. Near factory
+O.1.9.2. Near hospital
+O.1.9.1. None
+
+
+Q.1.10. Occupation [pos:: 8$$allowFreeText:: true$$ajaxURL::/occupations_query$$optional::true]
+
+
+

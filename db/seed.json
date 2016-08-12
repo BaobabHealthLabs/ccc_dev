@@ -201,7 +201,7 @@
         "Beta-agonist inhaler use: frequency",
         "Steroid inhaler daily?",
         "Smoke?",
-        "Number of cigarette per day?",
+        "Number of cigarettes per day?",
         "Passive smoking?",
         "Indoor cooking?",
         "Exacerbation today?",
@@ -241,6 +241,20 @@
         "Diabetes Transfer-In Date",
         "Hypertension Transfer-In Date",
         "Asthma Transfer-In Date",
-        "Epilepsy Transfer-In Date"
+        "Epilepsy Transfer-In Date",
+        "Is patient breastfeeding?",
+        "Is patient pregnant?",
+        "Family History of TB?",
+        "Asthma history in the past month?",
+        "Allergic to:",
+        "Ever smoked?",
+        "Patient mode of coking?",
+        "Patient exposed to pollution?",
+        "Patient lives or works near?",
+        "Symptoms",
+        "Attack triggered by",
+        "Any triggers",
+        "Patient is currently having an attack",
+        "Attack triggered by"
     ]
 }
