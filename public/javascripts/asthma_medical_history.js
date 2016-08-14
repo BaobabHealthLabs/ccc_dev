@@ -49,7 +49,7 @@
 
         if (window.parent.dashboard) {
 
-            result = window.parent.dashboard.getAnyExistingEncounters("HYPERTENSION PROGRAM", encounter);
+            result = window.parent.dashboard.getAnyExistingEncounters("ASTHMA PROGRAM", encounter);
 
         }
 
@@ -207,7 +207,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[1][0];
+            td.style.backgroundColor = colors[0][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -226,11 +226,11 @@
 
             img.onclick = function () {
 
-                window.parent.dashboard.navPanel('/spec/htn/initial_questions.spec')
+                window.parent.dashboard.navPanel('/spec/asthma/initial_questions.spec')
 
             }
 
-            if (!window.parent.dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM", "HYPERTENSION INITIAL QUESTIONS")) {
+            if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA INITIAL QUESTIONS")) {
 
                 td.appendChild(img);
 
@@ -245,7 +245,7 @@
             table.appendChild(td);
 
             var div = document.createElement("div");
-            div.id = "divInitialQuestions";
+            div.id = "divIntialQuestions";
             div.style.border = "1px solid " + colors[0][0];
             div.style.minHeight = "30px";
             div.style.backgroundColor = colors[0][1];
@@ -253,68 +253,7 @@
 
             td.appendChild(div);
 
-            queryEncounter("HYPERTENSION INITIAL QUESTIONS", "divInitialQuestions", function (data, id) {
-
-                if (__$__(id)) {
-
-                    loadDetails(__$__(id), data);
-
-                }
-
-            })
-
-            var tr = document.createElement("tr");
-
-            table.appendChild(tr);
-
-            var td = document.createElement("td")
-            td.style.backgroundColor = colors[0][0];
-            td.style.color = "#fff";
-            td.style.fontWeight = "bold";
-            td.style.verticalAlign = "middle";
-            td.style.padding = "8px";
-            td.style.fontSize = "18px";
-            td.innerHTML = "Social History";
-
-            table.appendChild(td);
-
-            var img = document.createElement("img");
-            img.setAttribute("src", icoAdd);
-            img.height = "32";
-            img.style.cssFloat = "right";
-            img.style.margin = "-5px";
-            img.style.cursor = "pointer";
-
-            img.onclick = function () {
-
-                window.parent.dashboard.navPanel('/spec/htn/social_history.spec')
-
-            }
-
-            if (!window.parent.dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM", "HYPERTENSION SOCIAL HISTORY")) {
-
-                td.appendChild(img);
-
-            }
-
-            var tr = document.createElement("tr");
-
-            table.appendChild(tr);
-
-            var td = document.createElement("td");
-
-            table.appendChild(td);
-
-            var div = document.createElement("div");
-            div.id = "divSocialHistory";
-            div.style.border = "1px solid " + colors[0][0];
-            div.style.minHeight = "30px";
-            div.style.backgroundColor = colors[0][1];
-            div.innerHTML = "&nbsp;";
-
-            td.appendChild(div);
-
-            queryEncounter("HYPERTENSION SOCIAL HISTORY", "divSocialHistory", function (data, id) {
+            queryEncounter("ASTHMA INITIAL QUESTIONS", "divIntialQuestions", function (data, id) {
 
                 if (__$__(id)) {
 
@@ -348,11 +287,11 @@
 
             img.onclick = function () {
 
-                window.parent.dashboard.navPanel('/spec/htn/past_medical_history.spec')
+                window.parent.dashboard.navPanel('/spec/asthma/medical_history.spec')
 
             }
 
-            if (!window.parent.dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM", "PAST HYPERTENSION MEDICAL HISTORY")) {
+            if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA MEDICAL HISTORY")) {
 
                 td.appendChild(img);
 
@@ -375,7 +314,7 @@
 
             td.appendChild(div);
 
-            queryEncounter("PAST HYPERTENSION MEDICAL HISTORY", "divPastMedicalHistory", function (data, id) {
+            queryEncounter("ASTHMA MEDICAL HISTORY", "divPastMedicalHistory", function (data, id) {
 
                 if (__$__(id)) {
 
@@ -409,11 +348,11 @@
 
             img.onclick = function () {
 
-                window.parent.dashboard.navPanel('/spec/htn/family_history.spec')
+                window.parent.dashboard.navPanel('/spec/asthma/family_history.spec')
 
             }
 
-            if (!window.parent.dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM", "HYPERTENSION FAMILY HISTORY")) {
+            if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA FAMILY HISTORY")) {
 
                 td.appendChild(img);
 
@@ -436,7 +375,7 @@
 
             td.appendChild(div);
 
-            queryEncounter("HYPERTENSION FAMILY HISTORY", "divFamilyHistory", function (data, id) {
+            queryEncounter("ASTHMA FAMILY HISTORY", "divFamilyHistory", function (data, id) {
 
                 if (__$__(id)) {
 

@@ -36,7 +36,9 @@
         ["HYPERTENSION SOCIAL HISTORY","Hypertension Social History"],
         ["HYPERTENSION FAMILY HISTORY","Hypertension Social History"],
         ["HYPERTENSION TEST","Hypertension Test encounter"],
-        ["PAST HYPERTENSION MEDICAL HISTORY","Hypertension Past Medical History"]
+        ["PAST HYPERTENSION MEDICAL HISTORY","Hypertension Past Medical History"],
+        ["ASTHMA MEDICAL HISTORY","Asthma Medical History"],
+        ["ASTHMA FAMILY HISTORY","Asthma Family History"]
 
     ],
     "patient_identifier_types": [
@@ -255,6 +257,8 @@
         "Attack triggered by",
         "Any triggers",
         "Patient is currently having an attack",
-        "Attack triggered by"
+        "Attack triggered by",
+        "Allergic to:",
+        "Asthma history in the past month?"
     ]
 }

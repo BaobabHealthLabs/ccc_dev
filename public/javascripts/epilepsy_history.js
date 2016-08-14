@@ -202,6 +202,67 @@
 
             __$__("details").appendChild(table);
 
+             var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td")
+            td.style.backgroundColor = colors[1][0];
+            td.style.color = "#fff";
+            td.style.fontWeight = "bold";
+            td.style.verticalAlign = "middle";
+            td.style.padding = "8px";
+            td.style.fontSize = "18px";
+            td.innerHTML = "Initial Questions";
+
+            table.appendChild(td);
+
+            var img = document.createElement("img");
+            img.setAttribute("src", icoAdd);
+            img.height = "32";
+            img.style.cssFloat = "right";
+            img.style.margin = "-5px";
+            img.style.cursor = "pointer";
+
+            img.onclick = function () {
+
+                window.parent.dashboard.navPanel('/spec/epilepsy/initial_questions.spec')
+
+            }
+
+            if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "EPILEPSY INITIAL QUESTIONS")) {
+
+                td.appendChild(img);
+
+            }
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            table.appendChild(td);
+
+            var div = document.createElement("div");
+            div.id = "divInitialQuestions";
+            div.style.border = "1px solid " + colors[0][0];
+            div.style.minHeight = "30px";
+            div.style.backgroundColor = colors[0][1];
+            div.innerHTML = "&nbsp;";
+
+            td.appendChild(div);
+
+            queryEncounter("EPILEPSY INITIAL QUESTIONS", "divInitialQuestions", function (data, id) {
+
+                if (__$__(id)) {
+
+                    loadDetails(__$__(id), data);
+
+                }
+
+            })
+
             var tr = document.createElement("tr");
 
             table.appendChild(tr);

@@ -1,4 +1,4 @@
-P.1. ASTHMA FAMILY HISTORY [program:: ASTHMA PROGRAM$$ scope:: EXISTS$$includejs:: touchScreenToolkit;asthma]
+P.1. ASTHMA FAMILY HISTORY [program::ASTHMA PROGRAM$$ scope:: EXISTS$$includejs:: touchScreenToolkit;asthma]
 
 Q.1.1. Family History of Asthma? [pos:: 0$$tt_requirenextclick::false]
 O.1.1.1. Yes
