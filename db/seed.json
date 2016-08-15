@@ -259,6 +259,11 @@
         "Patient is currently having an attack",
         "Attack triggered by",
         "Allergic to:",
-        "Asthma history in the past month?"
+        "Asthma history in the past month?",
+        "History of TB in the Past Two Years?",
+        "History of Stroke?",
+        "Chest deformities at Birth?",
+        "Advice on life changes"
+
     ]
 }
