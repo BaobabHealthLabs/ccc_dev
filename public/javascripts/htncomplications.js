@@ -95,6 +95,391 @@ function ajaxRequest(url, callback) {
 
 function loadPage() {
 
+     if(__$("oedema")){
+
+        __$("oedema").innerHTML = "";
+
+        var nodes = window.parent.dashboard.queryExistingObsComplexArray("Hypertension Test Type", undefined, "Oedema");
+
+        var visits = Object.keys(nodes);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.borderColor = "#eee";
+        table.cellPadding = 10;
+
+        __$("oedema").appendChild(table);
+
+        console.log(nodes);
+
+        var data = {};
+
+        for (var i = 0; i < visits.length; i++) {
+
+            var visit = visits[i];
+
+            for (var j = 0; j < nodes[visit].length; j++) {
+
+                var node = nodes[visit][j]["Oedema"].data;
+
+                var entry = {
+                    units: "",
+                    value: "",
+                    date: "",
+                    uuid: nodes[visit][j]["Oedema"].UUID
+                }
+
+                for (var k = 0; k < node.length; k++) {
+
+                    var leaf = node[k];
+
+                    var label = Object.keys(leaf)[0];
+
+                    switch (label) {
+
+                        case "Oedema measure":
+
+                            entry.value = leaf[label].response.value;
+
+                            break;
+
+                        case "Oedema Test Date":
+
+                            entry.date = (new Date(leaf[label].response.value)).format();
+
+                            break;
+
+                    }
+
+                }
+
+                data[(new Date(entry.date)).getTime()] = entry;
+
+            }
+
+        }
+
+        var keys = Object.keys(data).sort().reverse();
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var row = data[keys[i]];
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.innerHTML = row.value + " " + row.units;
+            td.style.borderRight = "1px solid #ccc";
+            td.style.width = "25%";
+            td.align = "right";
+            td.style.verticalAlign = "top";
+
+            if (i > 0)
+                td.className = "collapsible-oedema";
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.verticalAlign = "top";
+            td.innerHTML = (row.date == (new Date()).format() ? "Today" : row.date);
+
+            if (i > 0)
+                td.className = "collapsible-oedema";
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.verticalAlign = "top";
+            td.align = "right";
+            td.setAttribute("uuid", row.uuid);
+            td.style.width = "40px";
+
+            if (i > 0)
+                td.className = "collapsible-oedema";
+
+            td.onclick = function () {
+
+                window.parent.dashboard.showConfirmMsg("Do you really want to delete this entry?", "Confirm",
+                        "javascript:window.parent.dashboard.voidConcept('" + this.getAttribute("uuid") + "')");
+
+            }
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var img = document.createElement("img");
+            img.src = icoClose;
+            img.height = 25;
+            img.style.cursor = "pointer";
+
+            td.appendChild(img);
+
+        }
+
+        [].slice.call(document.querySelectorAll(".collapsible-oedema")).forEach(function (el, i) {
+
+            el.style.display = "none";
+
+        });
+
+        if (keys.length > 1) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.style.borderRight = "1px solid #ccc";
+            td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.colSpan = 2;
+            td.id = "toggle-oedema";
+            td.innerHTML = "Show More";
+            td.className = "link";
+            td.align = "right";
+            td.style.fontSize = "18px";
+            td.style.borderTop = "1px solid #ccc";
+
+            td.onclick = function () {
+
+                if (this.innerHTML == "Show More") {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-oedema")).forEach(function (el, i) {
+
+                        el.style.display = "table-cell";
+
+                    });
+
+                    this.innerHTML = "Show Less";
+
+                } else {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-oedema")).forEach(function (el, i) {
+
+                        el.style.display = "none";
+
+                    });
+
+                    this.innerHTML = "Show More";
+
+                }
+
+            }
+
+            tr.appendChild(td);
+
+        }
+
+
+    }
+
+
+    if(__$("shortness_of_breath")){
+
+        __$("shortness_of_breath").innerHTML = "";
+
+        var nodes = window.parent.dashboard.queryExistingObsComplexArray("Hypertension Test Type", undefined, "Shortness of breath");
+
+        var visits = Object.keys(nodes);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.borderColor = "#eee";
+        table.cellPadding = 10;
+
+        __$("shortness_of_breath").appendChild(table);
+
+        console.log(nodes);
+
+        var data = {};
+
+        for (var i = 0; i < visits.length; i++) {
+
+            var visit = visits[i];
+
+            for (var j = 0; j < nodes[visit].length; j++) {
+
+                var node = nodes[visit][j]["Shortness of breath"].data;
+
+                var entry = {
+                    units: "",
+                    value: "",
+                    date: "",
+                    uuid: nodes[visit][j]["Shortness of breath"].UUID
+                }
+
+                for (var k = 0; k < node.length; k++) {
+
+                    var leaf = node[k];
+
+                    var label = Object.keys(leaf)[0];
+
+                    switch (label) {
+
+                        case "Shortness of breath measure":
+
+                            entry.value = leaf[label].response.value;
+
+                            break;
+
+                        case "Shortness of breath Test Date":
+
+                            entry.date = (new Date(leaf[label].response.value)).format();
+
+                            break;
+
+                    }
+
+                }
+
+                data[(new Date(entry.date)).getTime()] = entry;
+
+            }
+
+        }
+
+        var keys = Object.keys(data).sort().reverse();
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var row = data[keys[i]];
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.innerHTML = row.value + " " + row.units;
+            td.style.borderRight = "1px solid #ccc";
+            td.style.width = "25%";
+            td.align = "right";
+            td.style.verticalAlign = "top";
+
+            if (i > 0)
+                td.className = "collapsible-shortness_of_breath";
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.verticalAlign = "top";
+            td.innerHTML = (row.date == (new Date()).format() ? "Today" : row.date);
+
+            if (i > 0)
+                td.className = "collapsible-shortness_of_breath";
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.verticalAlign = "top";
+            td.align = "right";
+            td.setAttribute("uuid", row.uuid);
+            td.style.width = "40px";
+
+            if (i > 0)
+                td.className = "collapsible-shortness_of_breath";
+
+            td.onclick = function () {
+
+                window.parent.dashboard.showConfirmMsg("Do you really want to delete this entry?", "Confirm",
+                        "javascript:window.parent.dashboard.voidConcept('" + this.getAttribute("uuid") + "')");
+
+            }
+
+            if (i > 0)
+                td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var img = document.createElement("img");
+            img.src = icoClose;
+            img.height = 25;
+            img.style.cursor = "pointer";
+
+            td.appendChild(img);
+
+        }
+
+        [].slice.call(document.querySelectorAll(".collapsible-shortness_of_breath")).forEach(function (el, i) {
+
+            el.style.display = "none";
+
+        });
+
+        if (keys.length > 1) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.style.borderRight = "1px solid #ccc";
+            td.style.borderTop = "1px solid #ccc";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.colSpan = 2;
+            td.id = "toggle-shortness_of_breath";
+            td.innerHTML = "Show More";
+            td.className = "link";
+            td.align = "right";
+            td.style.fontSize = "18px";
+            td.style.borderTop = "1px solid #ccc";
+
+            td.onclick = function () {
+
+                if (this.innerHTML == "Show More") {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-shortness_of_breath")).forEach(function (el, i) {
+
+                        el.style.display = "table-cell";
+
+                    });
+
+                    this.innerHTML = "Show Less";
+
+                } else {
+
+                    [].slice.call(document.querySelectorAll(".collapsible-shortness_of_breath")).forEach(function (el, i) {
+
+                        el.style.display = "none";
+
+                    });
+
+                    this.innerHTML = "Show More";
+
+                }
+
+            }
+
+            tr.appendChild(td);
+
+        }
+
+
+    }
+
     if (__$("creatinine")) {
 
         __$("creatinine").innerHTML = "";

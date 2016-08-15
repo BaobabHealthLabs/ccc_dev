@@ -171,10 +171,7 @@
 
             __$__("details").innerHTML = "";
 
-            var colors = [
-                ["#9966cc", "rgba(153,102,204,0.05)", "#ffffff"],
-                ["#669900", "rgba(102,153,0,0.05)", "#ffffff"],
-                ["#ff420e", "rgba(255,66,14,0.05)", "#ffffff"],
+           var colors = [
                 ["#6a8ac9", "rgba(106,138,201,0.05)", "#ffffff"],
                 ["#c99414", "rgba(201,148,20,0.05)", "#ffffff"],
                 ["#3870f1", "rgba(56,112,241,0.05)", "#ffffff"],
@@ -194,8 +191,6 @@
                 ["#068aab", "rgba(6,138,171,0.05)", "#ffffff"]
             ];
 
-            colors = colors.shuffle();
-
             var table = document.createElement("table");
             table.width = "100%";
             table.style.borderCollapse = "collapse";
@@ -207,7 +202,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[1][0];
+            td.style.backgroundColor = colors[0][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -269,7 +264,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[0][0];
+            td.style.backgroundColor = colors[2][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -330,7 +325,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[2][0];
+            td.style.backgroundColor = colors[3][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -369,9 +364,9 @@
 
             var div = document.createElement("div");
             div.id = "divPastMedicalHistory";
-            div.style.border = "1px solid " + colors[2][0];
+            div.style.border = "1px solid " + colors[0][0];
             div.style.minHeight = "30px";
-            div.style.backgroundColor = colors[2][1];
+            div.style.backgroundColor = colors[0][1];
             div.innerHTML = "&nbsp;";
 
             td.appendChild(div);
@@ -391,7 +386,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[1][0];
+            td.style.backgroundColor = colors[4][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -430,9 +425,9 @@
 
             var div = document.createElement("div");
             div.id = "divGeneralHealth";
-            div.style.border = "1px solid " + colors[1][0];
+            div.style.border = "1px solid " + colors[4][0];
             div.style.minHeight = "30px";
-            div.style.backgroundColor = colors[1][1];
+            div.style.backgroundColor = colors[0][2];
             div.innerHTML = "&nbsp;";
 
             td.appendChild(div);
@@ -452,7 +447,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[1][0];
+            td.style.backgroundColor = colors[5][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -491,9 +486,9 @@
 
             var div = document.createElement("div");
             div.id = "divFamilyHistory";
-            div.style.border = "1px solid " + colors[1][0];
+            div.style.border = "1px solid " + colors[5][0];
             div.style.minHeight = "30px";
-            div.style.backgroundColor = colors[1][1];
+            div.style.backgroundColor = colors[0][2];
             div.innerHTML = "&nbsp;";
 
             td.appendChild(div);

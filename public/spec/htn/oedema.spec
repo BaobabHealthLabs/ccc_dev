@@ -6,6 +6,9 @@ Q.1.2. Any sign of Oedema? [pos :: 1$$ tt_requireNextClick :: false $$ parent ::
 O.1.2.1. Yes
 O.1.2.2. No
 
-Q.1.2.1.1. Oedema measure [pos :: 2$$ min :: 0$$ max :: 100$$ field_type :: number$$ tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal $$ parent :: Hypertension Test Type:Oedema]
+Q.1.2.1.1. Oedema measure [pos :: 2 $$ tt_requireNextClick :: false $$ parent :: Hypertension Test Type:Oedema]
+O.1.2.1.1.1. Mild
+O.1.2.1.1.2. Moderate
+O.1.2.1.1.3. Severe
 
 Q.1.2.1.2. Oedema Test Date [pos :: 4 $$ field_type:: date $$ estimate_label :: Year(s) ago $$ parent :: Hypertension Test Type:Oedema]

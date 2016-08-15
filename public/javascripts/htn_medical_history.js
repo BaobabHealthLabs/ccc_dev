@@ -172,9 +172,6 @@
             __$__("details").innerHTML = "";
 
             var colors = [
-                ["#9966cc", "rgba(153,102,204,0.05)", "#ffffff"],
-                ["#669900", "rgba(102,153,0,0.05)", "#ffffff"],
-                ["#ff420e", "rgba(255,66,14,0.05)", "#ffffff"],
                 ["#6a8ac9", "rgba(106,138,201,0.05)", "#ffffff"],
                 ["#c99414", "rgba(201,148,20,0.05)", "#ffffff"],
                 ["#3870f1", "rgba(56,112,241,0.05)", "#ffffff"],
@@ -194,7 +191,6 @@
                 ["#068aab", "rgba(6,138,171,0.05)", "#ffffff"]
             ];
 
-            colors = colors.shuffle();
 
             var table = document.createElement("table");
             table.width = "100%";
@@ -207,7 +203,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[1][0];
+            td.style.backgroundColor = colors[0][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -268,7 +264,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[0][0];
+            td.style.backgroundColor = colors[2][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -329,7 +325,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[2][0];
+            td.style.backgroundColor = colors[3][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -390,7 +386,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[1][0];
+            td.style.backgroundColor = colors[5][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";

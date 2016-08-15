@@ -835,11 +835,13 @@ function generateDrugs(){
     }
 
     var btnView = document.createElement("input");
-    btnView.type = "button";
+    btnView.type = "button"
     btnView.value = "View Selection";
-    btnView.style.width = "150px";
+    btnView.setAttribute("class","button blue");
+    btnView.style.width = "180px";
     btnView.style.height = "40px";
     btnView.style.fontSize = "1em";
+
     
     btnView.onclick = function(){
         viewSelectedDrugs();
@@ -1237,11 +1239,12 @@ function viewSelectedDrugs(){
     
     var btnContinue = document.createElement("input");
     btnContinue.type = "button";
+    btnContinue.setAttribute("class","button blue");
     btnContinue.style.height = "60px";
-    btnContinue.style.width = "100%";
+    btnContinue.style.width = "10%";
     btnContinue.value = "Continue...";
     btnContinue.style.fontSize = "1.5em";
-    btnContinue.align = "center";
+    btnContinue.style.float = "right";
 
     btnContinue.onclick = function(){
         generateDrugs();
