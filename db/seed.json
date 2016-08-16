@@ -269,6 +269,10 @@
         "Year of first seizure?",
         "What triggered the seizure?",
         "Patient in active seizure?",
-        "How often seizure occurrs"
+        "How often seizure occurrs",
+        "History of TB in the Past Two Years?",
+        "History of Stroke?",
+        "Chest deformities at Birth?",
+        "Advice on life changes"
     ]
 }
