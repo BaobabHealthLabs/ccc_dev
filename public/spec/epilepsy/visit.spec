@@ -1,9 +1,17 @@
 P.1. EPILEPSY VISIT [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
 Q.1.1. Visit Date [pos::0$$field_type::date]
 
-Q.1.4. Seizure since last visit? [pos::3$$tt_requirenextclick::false$$id::seizure_since_last_visit$$parent::Visit Date]
-O.1.4.1. Yes
-O.1.4.2. No
+Q.1.2. Seizure since last visit? [pos::1$$tt_requirenextclick::false$$id::seizure_since_last_visit$$parent::Visit Date]
+O.1.2.1. Yes
+O.1.2.2. No
+
+Q.1.3. Patient in active seizure? [pos::2]
+O.1.3.1. Yes
+O.1.3.2. No
+
+Q.1.4. How often seizure occurrs[pos::3]
+O.1.4.1. Regulary
+O.1.4.2. Occasionaly
 
 Q.1.5. Number of seizures [pos::4$$field_type::number$$condition::__$('seizure_since_last_visit').value=="Yes"$$parent::Seizure since last visit?:Yes$$ tt_pageStyleClass :: Numeric NumbersOnly$$ min :: 0$$ max :: 20]
 

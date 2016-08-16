@@ -259,6 +259,16 @@
         "Patient is currently having an attack",
         "Attack triggered by",
         "Allergic to:",
-        "Asthma history in the past month?"
+        "Asthma history in the past month?",
+        "Family History of Convulsions?",
+        "Family History of Seizures?",
+        "History of Neonatal Infection?",
+        "History of Cerebral Malaria?",
+        "History of Meningitis?",
+        "Ever had cysticercosis?",
+        "Year of first seizure?",
+        "What triggered the seizure?",
+        "Patient in active seizure?",
+        "How often seizure occurrs"
     ]
 }

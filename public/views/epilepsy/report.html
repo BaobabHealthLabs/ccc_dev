@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Hypertension Master Card</title>
+    <link rel="stylesheet" href="/touchscreentoolkit/lib/stylesheets/touch-fancy.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
+    <script type="text/javascript" src="/javascripts/htn.js"></script>
+</head>
+<style type="text/css">
+    .card {
+        border: 2px solid black;
+    }
+    .card{
+        margin-top:2%;
+        border: 1px solid;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .card thead{
+        border: 1px solid;
+    }
+    .card th{
+        background: #6281a7;
+        color: #ffffff;
+
+
+    }
+    .card th, .card td  {
+        border: 1px solid;
+        font-size: 0.9em;
+        padding: 0.4em;
+        
+    }
+    .card td{
+        text-align: left;
+        width: 30%;
+    }
+</style>
+<body oncontextmenu="return false;" style="margin: 0px;">
+<div id="divMain" style="overflow: auto; height: calc(100vh - 80px); padding-left:1%; padding-right:1%">
+<table class="card">
+    <thead>
+        <tr>
+            <th>Registered</th>
+            <th>New Registered in Quarter</th>
+            <th>Ever Registered</th>
+        </tr>
+    </thead>
+    <tboby>
+        <tr>
+            <td>Total</td>
+            <td id="quartery"></td>
+            <td id="ever_registered"></td>
+        </tr>
+        <tr>
+            <td>Male</td>
+            <td id="quartery_registered_male"></td>
+            <td id="ever_registred_male"></td>
+        </tr>
+        <tr>
+            <td>Female</td>
+            <td id="quartery_registered_female"></td>
+            <td id="ever_registred_female"></td>
+        </tr>
+    </tboby>
+</table>
+
+<table class="card">
+    <thead>
+        <tr>
+            <th colspan="3">Confirmed Epilepsy</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Generalised Seizure</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Focal/Partial Seizure</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Not Confirmed</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="card">
+    <thead>
+        <tr>
+            <th colspan="3">Diagnosis of those epileptic</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Tonic Clonic</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Absence</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Chlonic</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Myclonic</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Atomic</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Simplex</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Complex</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="card">
+    <thead>
+        <tr>
+            <th colspan="3">Diagnosis of those non epileptic</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Syncope</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Febrile seizure</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Psychogenic</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbo
+
+<table class="card">
+    <thead>
+        <tr>
+            <th colspan="3">Complications of Those Who are Alive and on Treatment</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Burns</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Injuries</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Psychosis</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Hyperactivity</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Status Epilepictus</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Drug related</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="card">
+    <thead>
+        <tr>
+            <th colspan="3">TB Status of All Patients Registered</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>TB Status Known</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>TB Ever</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>TB Since Diabetes Diagnosis</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>No TB</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>TB Status Unknown</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<table class="card">
+    <thead>
+        <tr>
+            <th colspan="3">HIV Status of All Patient Registered</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Reactive Not on ART</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Reactive on ART</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Non Reactive</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Unknown</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="card">
+    <thead>
+        <tr>
+            <th colspan="3">Outcomes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Alive and on treatment</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Dead</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Defaulters</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Tranfer Out</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Stop Treatment</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+</div>
+</body>
+
+</html>
