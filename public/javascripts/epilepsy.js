@@ -693,7 +693,7 @@ function setAgeOnSet(date){
 
 function patientIsANC(){
 
-	var patient_is_female = false;
+	var patient_is_productive_female = false;
 
 	if(window.parent.dashboard && window.parent.dashboard.data && window.parent.dashboard.data.data) {
 
@@ -707,7 +707,7 @@ function patientIsANC(){
 
         	if(age >=13 && age <= 50){
 
-        		patient_is_female = true;
+        		patient_is_productive_female = true;
 
         	}
 
@@ -715,7 +715,7 @@ function patientIsANC(){
 
     }
 
-    return patient_is_female;
+    return patient_is_productive_female;
 
 }
 

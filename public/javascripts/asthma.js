@@ -134,6 +134,34 @@ function loadYears(id){
 
 }
 
+function patientIsANC(){
+
+    var patient_is_productive_female = false;
+
+    if(window.parent.dashboard && window.parent.dashboard.data && window.parent.dashboard.data.data) {
+
+        if(window.parent.dashboard.data.data.gender == "F") {
+            
+            var now = new Date();
+
+            var birthdate = new Date(window.parent.dashboard.data.data.birthdate);
+
+            var age = getAge(birthdate,now);
+
+            if(age >=13 && age <= 50){
+
+                patient_is_productive_female = true;
+
+            }
+
+        }
+
+    }
+
+    return patient_is_productive_female;
+
+}
+
 function loadCheckConditions(){
 
 	var opts = __$("touchscreenInput" + tstCurrentPage).value.split(";");
@@ -355,7 +383,7 @@ function patientOverview(encounter_data){
 
 					break;
 
-				case "Patient History and Exposures":
+				case "Exposures":
 
 					 var response =  encounter_data[concept_names[i]].response.value.split(",");
 
@@ -476,8 +504,14 @@ function asthmaVisits(encounter_data,visitDate){
 			continue;
 
 		}
+            console.log(concept[0]);
+            console.log( encounter_data[i][concept[0]].response.value);
+        if(visitRow[concept[0]]){
 
-		visitRow[concept[0]] = encounter_data[i][concept[0]].response.value;
+                visitRow[concept[0]] = encounter_data[i][concept[0]].response.value;
+
+        }
+	
 
 	}
 
@@ -615,6 +649,121 @@ function hivStatus(patient_programs){
 
 }
 
+function setExposureDate(field,dashboard){
+
+    if(dashboard.queryAnyExistingObs(field)){
+
+        dashboard.queryExistingObsArray(field,function(data){
+
+            var keys = Object.keys(data);
+
+            for(var i = 0; i < keys.length; i++){
+
+                var element_id = field.toLowerCase();
+
+                element_id= element_id.replace("/","_").replace(/\s+/g,"_");
+            
+                element_id = element_id.replace("/","").replace("__","_");
+
+                element_id = element_id.replace("/","").replace("__","_");
+
+                console.log(element_id);
+
+                if(element_id){
+                                        
+                __$(element_id).innerHTML = new Date(data[keys[i]]).format();
+
+                 }
+
+            }
+
+
+        });
+
+    }
+
+}
+
+function loadPatientOverView(dashboard){
+
+
+    if(dashboard.queryAnyExistingObs("Exposures")){
+
+        dashboard.queryExistingObsArray("Exposures",function(data){
+
+            var keys = Object.keys(data);
+
+
+            for(var i = 0; i < keys.length; i++){
+
+                    var responses = data[keys[i]].split(",");
+                    
+
+                    for(var j = 0 ; j < responses.length ; j++){
+
+                        var element_id = responses[j].toLowerCase();
+
+                        element_id= element_id.replace("/","_").replace(/\s+/g,"_");
+            
+                        element_id = element_id.replace("/","").replace("__","_");
+
+                        element_id = element_id.replace("/","").replace("__","_");
+
+                        if(__$(element_id)){
+
+                            var element = __$(element_id);
+
+                            if(element.getElementsByTagName("img").length > 0){
+
+
+                            }else{
+
+                                element.removeAttribute("class");
+
+                                element.style.float ="right";
+
+                                var img = document.createElement("img");
+
+                                img.style.height = "23px";
+
+                                img.style.width = "23px";
+
+                                img.src = checked_checkbox;
+
+                                element.appendChild(img);
+                            }  
+                        }
+
+                       if(responses[j]=="Smoking"){
+
+                            setExposureDate("Smoking Date",dashboard);
+
+                       }else if(responses[j]=="Indoor cooking"){
+
+
+                       }else if(responses[j]=="Occupational Exposure"){
+
+
+                       }else if(responses[j]=="TB Contact"){
+
+                        
+                       }else if(responses[j]=="Secondhand smoking"){
+
+                        
+                       }
+
+                    }
+
+            }
+
+
+        });
+
+
+    }
+
+}
+
 function loadCardDashboard(){
 	var data = window.parent.dashboard.data.data;
 
@@ -725,6 +874,11 @@ function loadCardDashboard(){
 
 	}
 
+    var dashboard = window.parent.dashboard;
+
+
+    loadPatientOverView(dashboard);
+
 
 	//Visits Table
 	for(var i = 0 ; i < visitRows.length; i++){
@@ -738,7 +892,6 @@ function loadCardDashboard(){
 
 		for(var j = 0 ; j < concept_keys.length ; j++){
 
-            console.log(concept_keys[j]);
 
 			if(concept_keys[j]=="Weight (kg)"){
 
