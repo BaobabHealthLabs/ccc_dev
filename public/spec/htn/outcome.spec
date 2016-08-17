@@ -5,7 +5,7 @@ O.1.1.1. Died
 O.1.1.2. Treatment stopped
 O.1.1.3. Transfer out
 
-Q.1.1.4.1. Refer to clinic [pos:: 1$$ ajaxURL:: /static_locations?search_string=$$ allowFreeText:: true]
+Q.1.1.4.1. Refer to clinic [pos:: 1$$ ajaxURL:: /facilities?name=$$ allowFreeText:: true]
 
 Q.1.2. Outcome Date [pos:: 2$$ field_type:: date]
 
