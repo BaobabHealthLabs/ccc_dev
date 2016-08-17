@@ -1,4 +1,4 @@
-P.1. PATIENT HISTORY AT ENROLMENT [program:: EPILEPSY PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;epilepsy]
+P.1. PATIENT HISTORY AT ENROLMENT [program:: EPILEPSY PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;epilepsy $$ includecss :: ccc]
 
 Q.1.1. Date of onset [id::date_on_field$$pos:: 0$$field_type::date]
 
