@@ -25,7 +25,7 @@ Q.1.4.1.1. Smoking Date [pos:: 5$$field_type::date$$ id:: smoking_date$$parent::
 
 Q.1.4.2.1. TB Contact Date [pos::6$$field_type::date$$ id::tb_contact_date$$parent::Exposures: TB Contact]
 
-Q.1.4.3.1. Secondhand smocking Date [pos:: 7$$field_type::date$$ id::secondhand_smoking_date$$parent::Exposures:Secondhand smoking]
+Q.1.4.3.1. Secondhand smoking Date [pos:: 7$$field_type::date$$ id::secondhand_smoking_date$$parent::Exposures:Secondhand smoking]
 
 Q.1.4.4.1. Indoor cooking date [pos:: 8$$field_type::date$$id::indoor_cooking_date$$parent::Exposures:Indoor cooking]
 
@@ -50,7 +50,7 @@ O.1.4.6.1.17. Student
 O.1.4.6.1.18. Teacher
 O.1.4.6.1.19. Other
 
-Q.1.4.6.2. Occupation Exposure Date[pos:: 10$$field_type::date$$id::occupational_exposure1$$parent::Patient History and Exposures:Occupational Exposure]
+Q.1.4.6.2. Occupation Exposure Date[pos:: 10$$field_type::date$$id::occupational_exposure1$$parent::Exposures:Occupational Exposure]
 
 Q.1.5. Asthma history in the past month? [pos:: 11$$tt_requirenextclick::false]
 O.1.5.1. Yes

@@ -540,18 +540,24 @@ function drawResponse(encounter,encounter_data,visit){
 
 	}
 
+
+
 	for(var i = 0 ; i < encounter_data.length ; i++){
 			
 			var concepts = Object.keys(encounter_data[i]);
 
-			console.log(encounter);
 			switch (encounter) {
 
-				case "ASTHMA PATIENT OVERVIEW":
+				case "ASTHMA MEDICAL HISTORY":
 
 					patientOverview(encounter_data[i]);
 
 					break;
+                case "ASTHMA FAMILY HISTORY":
+
+                    patientOverview(encounter_data[i]);
+                    
+                    break;
 				
 			}
 		
@@ -653,6 +659,8 @@ function setExposureDate(field,dashboard){
 
     if(dashboard.queryAnyExistingObs(field)){
 
+        console.log(field);
+
         dashboard.queryExistingObsArray(field,function(data){
 
             var keys = Object.keys(data);
@@ -667,7 +675,6 @@ function setExposureDate(field,dashboard){
 
                 element_id = element_id.replace("/","").replace("__","_");
 
-                console.log(element_id);
 
                 if(element_id){
                                         
@@ -686,6 +693,22 @@ function setExposureDate(field,dashboard){
 
 function loadPatientOverView(dashboard){
 
+    if (dashboard.queryAnyExistingObs("Diagnosis")) {
+
+        dashboard.queryExistingObsArray("Diagnosis", function(data){
+
+            var keys = Object.keys(data);
+
+            for(var i = 0 ; i < keys.length; i++){
+
+
+
+            }
+
+        });
+
+    }
+
 
     if(dashboard.queryAnyExistingObs("Exposures")){
 
@@ -700,6 +723,8 @@ function loadPatientOverView(dashboard){
                     
 
                     for(var j = 0 ; j < responses.length ; j++){
+
+                       
 
                         var element_id = responses[j].toLowerCase();
 
@@ -734,6 +759,8 @@ function loadPatientOverView(dashboard){
                             }  
                         }
 
+                       
+
                        if(responses[j]=="Smoking"){
 
                             setExposureDate("Smoking Date",dashboard);
@@ -741,15 +768,68 @@ function loadPatientOverView(dashboard){
                        }else if(responses[j]=="Indoor cooking"){
 
 
+                            setExposureDate("Indoor cooking date",dashboard);
+
+
                        }else if(responses[j]=="Occupational Exposure"){
+
+                            setExposureDate("Occupational Exposure Date",dashboard);
 
 
                        }else if(responses[j]=="TB Contact"){
 
-                        
+                            setExposureDate("TB Contact Date",dashboard);
+
+
                        }else if(responses[j]=="Secondhand smoking"){
 
-                        
+                            
+                            setExposureDate("Secondhand smoking Date",dashboard);
+
+
+                       }
+                       if(responses[j]=="Occupational Exposure"){
+
+                             console.log(responses[j]=="Occupational Exposure");
+
+                            if(dashboard.queryAnyExistingObs("Main activity")){
+
+
+                                dashboard.queryExistingObsArray("Main activity",function(data){
+
+                                    var keys = Object.keys(data);
+
+                                    for(var i = 0; i < keys.length; i++){
+
+                                        var element_id ="Main activity".toLowerCase();
+
+
+                                        element_id= element_id.replace("/","_").replace(/\s+/g,"_");
+                                    
+                                        element_id = element_id.replace("/","").replace("__","_");
+
+                                        element_id = element_id.replace("/","").replace("__","_");
+
+                                        
+
+                                        if(element_id){
+                                                                
+                                        __$(element_id).innerHTML = data[keys[i]];
+
+
+                                        }
+
+                                    }
+
+
+                                });
+
+
+                            }
+                            
+                            setExposureDate("Occupation Exposure Date",dashboard);
+
+
                        }
 
                     }
