@@ -216,7 +216,7 @@
         "Stress a trigger?",
         "Toungue bitting a silent marker?",
         "Incontinence bitting a silent marker?",
-        "Hospitalized since a last visit?",
+        "Hospitalized since the last visit?",
         "Is patient pregnant?",
         "On family planing?",
         "Seizure since last visit?",
@@ -273,6 +273,16 @@
         "History of TB in the Past Two Years?",
         "History of Stroke?",
         "Chest deformities at Birth?",
-        "Advice on life changes"
+        "Advice on life changes",
+        "Seizure duration",
+        "What patient experiences before seizure",
+        "What patient experiences after seizure",
+        "Witness available before/during/after seizure?",
+        "Seizure frequency since last visit",
+        "Has patient taken Clinical medicine for seizure before?",
+        "Has patient taken traditional medicine for seizure before?",
+        "Seizure remission",
+        "Confirm diagnosis of epilepsy?",
+        "Prescribe Epilepsy Drugs"
     ]
 }
