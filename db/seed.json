@@ -283,6 +283,7 @@
         "Has patient taken traditional medicine for seizure before?",
         "Seizure remission",
         "Confirm diagnosis of epilepsy?",
-        "Prescribe Epilepsy Drugs"
+        "Prescribe Epilepsy Drugs",
+        "Occupation Exposure Date"
     ]
 }
