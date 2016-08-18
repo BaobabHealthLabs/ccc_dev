@@ -7,15 +7,15 @@ O.1.2.1. Yes
 O.1.2.2. No
 
 
-Q.1.3. Patient is currently having an attack[pos::2$$tt_requirenextclick::false]
+Q.1.3. Patient is currently having an attack[pos::2$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.3.1. Yes
 O.1.3.2. No
 
-Q.1.4. Any triggers [pos::3$$tt_requirenextclick::false]
+Q.1.4. Any triggers [pos::3$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.4.1. Yes 
-O.1.4.2.  No
+O.1.4.2. No
 
-Q.1.5. Symptoms[pos::11$$tt_requirenextclick::false]
+Q.1.5. Symptoms[pos::4$$ multiple:: multiple$$parent::Visit Date]
 O.1.5.1. Chest tightiness
 O.1.5.2. Chronic cough
 O.1.5.3. Finger clubbing

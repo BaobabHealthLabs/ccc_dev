@@ -1095,7 +1095,6 @@ function loadCardDashboard(){
 
                 var td = document.createElement("td");
 
-                console.log(visitRows[i]["Visit Date"]);
 
                 var appointment = window.parent.dashboard.queryActiveObs("DIABETES PROGRAM",visitRows[i]["Visit Date"],"APPOINTMENT","Appointment date");
 

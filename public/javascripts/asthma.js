@@ -504,9 +504,9 @@ function asthmaVisits(encounter_data,visitDate){
 			continue;
 
 		}
-            console.log(concept[0]);
-            console.log( encounter_data[i][concept[0]].response.value);
-        if(visitRow[concept[0]]){
+
+
+        if(visitRow[concept[0]] !==undefined){
 
                 visitRow[concept[0]] = encounter_data[i][concept[0]].response.value;
 
@@ -556,7 +556,7 @@ function drawResponse(encounter,encounter_data,visit){
                 case "ASTHMA FAMILY HISTORY":
 
                     patientOverview(encounter_data[i]);
-                    
+
                     break;
 				
 			}
@@ -1429,7 +1429,14 @@ function loadCardDashboard(){
 
                 var td = document.createElement("td");
 
-                td.innerHTML =  window.parent.dashboard.queryActiveObs("ASTHMA PROGRAM",visitRows[i]["Visit Date"],"APPOINTMENT","Appointment date");
+                var appointment =  window.parent.dashboard.queryActiveObs("ASTHMA PROGRAM",visitRows[i]["Visit Date"],"APPOINTMENT","Appointment date");
+
+                if(appointment){
+
+                       td.innerHTML = appointment;
+
+                }
+              
                 
                 tr.appendChild(td);
 
