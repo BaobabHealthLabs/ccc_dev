@@ -213,6 +213,8 @@
 
             table.appendChild(td);
 
+            var message = 'Enroll patient in ' + dashboard.getCookie("currentProgram") + ' ' + 'Program?';
+
             var img = document.createElement("img");
             img.setAttribute("src", icoAdd);
             img.height = "32";
@@ -221,8 +223,9 @@
             img.style.cursor = "pointer";
 
             img.onclick = function () {
-
-                window.parent.dashboard.navPanel('/spec/epilepsy/initial_questions.spec')
+                dashboard.showConfirmMsg(message, "Confirm",
+                                "javascript:window.parent.dashboard.navPanel('/spec/epilepsy/initial_questions.spec')");
+                
 
             }
 
