@@ -69,6 +69,287 @@
 <script type="text/javascript">
 jQuery.noConflict();
 
+if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+
+    Object.defineProperty(Date.prototype, "format", {
+        value: function (format) {
+            var date = this;
+
+            var result = "";
+
+            if (!format) {
+
+                format = ""
+
+            }
+
+            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"];
+
+            if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+
+                result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
+                    window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
+
+            } else if (format.match(/YYYY\-mm\-dd/)) {
+
+                result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    window.parent.dashboard.padZeros(date.getDate(), 2);
+
+            } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+            } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+            } else {
+
+                result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            }
+
+            return result;
+        }
+    });
+
+}
+
+var dashboard = window.parent.dashboard;
+
+function getBloodSugar(){
+
+    var fasting = [];
+
+    var random = [];
+
+    var hbA1c = [];
+
+    if(dashboard.queryAnyExistingObs("Fasting Blood Sugar Value")){
+
+        dashboard.queryExistingObsArray("Fasting Blood Sugar Value", function(data){
+
+             var keys = Object.keys(data).sort(function (a, b) {
+                            return (new Date(b)) - (new Date(a))
+                        });
+
+
+             for(var i= 0 ;  i < keys.length; i++){
+
+                var fasting_unit  = dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(keys[i])).format("YYYY-mm-dd"),"LAB RESULTS","Fasting Blood Sugar Units");
+
+
+
+                var fasting_value = 0;
+
+                 if(fasting_unit =="mmol/l"){
+
+                    
+                    fasting_value = data[keys[i]] * 18;
+
+                }
+                else{
+
+                    fasting_value = data[keys[i]];
+
+                }
+
+                
+
+                fasting.push([new Date(keys[i]).getTime(), fasting_value])
+
+
+             }
+
+
+        });
+
+
+    }
+
+     if(dashboard.queryAnyExistingObs("Random Blood Sugar Value")){
+
+        dashboard.queryExistingObsArray("Random Blood Sugar Value", function(data){
+
+             var keys = Object.keys(data).sort(function (a, b) {
+                            return (new Date(b)) - (new Date(a))
+                        });
+
+             for(var i= 0 ;  i < keys.length; i++){
+
+                var random_unit  = dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(keys[i])).format("YYYY-mm-dd"),"LAB RESULTS","Random Blood Sugar Units");
+
+                var random_value = 0;
+
+                if(random_unit =="mmol/l"){
+
+                    
+                    random_value = data[keys[i]] * 18;
+
+                }
+                else{
+
+                    random_value = data[keys[i]];
+
+                }   
+
+                random.push([new Date(keys[i]).getTime(), random_value])
+
+
+             }
+
+
+        });
+
+
+    }
+
+    if(dashboard.queryAnyExistingObs("HbA1c Value")){
+
+            dashboard.queryExistingObsArray("HbA1c Value", function(data){
+
+                     var keys = Object.keys(data).sort(function (a, b) {
+                            return (new Date(b)) - (new Date(a))
+                        });
+
+                     for(var i= 0 ;  i < keys.length; i++){
+
+                            hbA1c.push([new Date(keys[i]).getTime(), data[keys[i]]])
+
+
+                     }                 
+
+            });
+
+
+    }
+
+    var sugar = {
+                    "random": random,
+                    "fasting": fasting,
+                    "hbA1c":hbA1c
+    }
+    
+    return sugar;
+
+}
+
+function getBP(){
+
+    var systolic = [];
+
+    var diastolic = [];
+
+    if(dashboard.queryAnyExistingObs("Systolic blood pressure")){
+
+            dashboard.queryExistingObsArray("Systolic blood pressure", function(data){
+
+                     var keys = Object.keys(data).sort(function (a, b) {
+                            return (new Date(b)) - (new Date(a))
+                        });
+
+                     for(var i= 0 ;  i < keys.length; i++){
+
+                       systolic.push([new Date(keys[i]).getTime(), data[keys[i]]])
+
+
+                     }                 
+
+            });
+
+
+    }
+
+     if(dashboard.queryAnyExistingObs("Diastolic blood pressure")){
+
+            dashboard.queryExistingObsArray("Diastolic blood pressure", function(data){
+
+                     var keys = Object.keys(data).sort(function (a, b) {
+                            return (new Date(b)) - (new Date(a))
+                        });
+
+                     for(var i= 0 ;  i < keys.length; i++){
+
+                       diastolic.push([new Date(keys[i]).getTime(), data[keys[i]]])
+
+
+                     }                 
+
+            });
+
+
+    }
+
+    return {
+                "systolic":systolic,
+                "diastolic":diastolic
+
+            }
+
+}
+
+function getBMIComponet(){
+
+    var weight = [];
+
+
+    if(dashboard.queryAnyExistingObs("Weight (kg)")){
+
+            dashboard.queryExistingObsArray("Weight (kg)", function(data){
+
+                     var keys = Object.keys(data).sort(function (a, b) {
+                            return (new Date(b)) - (new Date(a))
+                        });
+
+                     for(var i= 0 ;  i < keys.length; i++){
+
+                            weight.push([new Date(keys[i]).getTime(), data[keys[i]]])
+
+
+                     }                 
+
+            });
+
+
+    }
+
+
+    var height = [];
+
+
+    if(dashboard.queryAnyExistingObs("Height (cm)")){
+
+            dashboard.queryExistingObsArray("Height (cm)", function(data){
+
+                     var keys = Object.keys(data).sort(function (a, b) {
+                            return (new Date(b)) - (new Date(a))
+                        });
+
+                     for(var i= 0 ;  i < keys.length; i++){
+
+                           height.push([new Date(keys[i]).getTime(), data[keys[i]]])
+
+
+                     }                 
+
+            });
+
+
+    }
+
+    return {
+                "weight":weight,
+                "height":height
+
+            }
+
+
+}
+
 function setData() {
     var fixed = {};
 
@@ -119,27 +400,9 @@ function setData() {
         [max_x_axis, 200]
     ];
 
-    var patient_weight = [
+    var patient_weight =getBMIComponet().weight;
 
-        [1272359430000, /* multiply 1000 to convert time stamp to javascript mode*/
-            59.9],
-        [1272961352000, /* multiply 1000 to convert time stamp to javascript mode*/
-            59.3],
-        [1282635720000, /* multiply 1000 to convert time stamp to javascript mode*/
-            56.5],
-        [1290499223000, /* multiply 1000 to convert time stamp to javascript mode*/
-            55.3],
-        [1301052424000, /* multiply 1000 to convert time stamp to javascript mode*/
-            0.0],
-    ];
-
-    var patient_height = [
-
-        [1272359430000, /* multiply 1000 to convert time stamp to javascript mode*/
-            0.0],
-        [1301052424000, /* multiply 1000 to convert time stamp to javascript mode*/
-            0.0],
-    ];
+    var patient_height = getBMIComponet().height;
 
     var currentWeight = null;
     var currentHeight = null;
@@ -167,55 +430,18 @@ function setData() {
 
     var patientBMI = showBMI(currentHeight, currentWeight);
 
-    var systolic = [
 
-        [1272359430000, /* multiply 1000 to convert time stamp to javascript mode*/
-            140.0],
-        [1272961352000, /* multiply 1000 to convert time stamp to javascript mode*/
-            163.0],
-        [1282635720000, /* multiply 1000 to convert time stamp to javascript mode*/
-            140.0],
-        [1290499223000, /* multiply 1000 to convert time stamp to javascript mode*/
-            126.0],
-        [1301052424000, /* multiply 1000 to convert time stamp to javascript mode*/
-            110.0],
-    ];
 
-    var diastolic = [
 
-        [1272359430000, /* multiply 1000 to convert time stamp to javascript mode*/
-            90.0],
-        [1272961352000, /* multiply 1000 to convert time stamp to javascript mode*/
-            106.0],
-        [1282635720000, /* multiply 1000 to convert time stamp to javascript mode*/
-            80.0],
-        [1290499223000, /* multiply 1000 to convert time stamp to javascript mode*/
-            92.0],
-        [1301052424000, /* multiply 1000 to convert time stamp to javascript mode*/
-            68.0],
-    ];
+    var systolic = getBP().systolic;
 
-    var fasting = [
+    var diastolic = getBP().diastolic;
 
-        [1301052441000, /* multiply 1000 to convert time stamp to javascript mode*/
-            70.2],
-        [1443113949000, /* multiply 1000 to convert time stamp to javascript mode*/
-            300.0],
-        [1443113949000, /* multiply 1000 to convert time stamp to javascript mode*/
-        ],
-    ];
+    var fasting = getBloodSugar().fasting;
 
-    var random = [
+    var random =  getBloodSugar().random;
 
-        [1443113949000, /* multiply 1000 to convert time stamp to javascript mode*/
-            320.0],
-    ];
-
-    var glycated = [
-
-        [1443113949000, /* multiply 1000 to convert time stamp to javascript mode*/
-            5.0],
-    ];
+    var glycated = getBloodSugar().hbA1c;
 
     var bpGraphData = [
         { id: 'row2', data: fixed["bp2"], yaxis: 20, color: "yellow", points: {show: false},
@@ -294,7 +520,7 @@ function setPlotOptions(key) {
 
     switch (key) {
         case 0: /* blood sugar tab */
-            y_axis = { min: 40, max: 500, ticks: 8};
+            y_axis = { min: 50, max: 500, ticks: 8};
             break;
 
         case 1:/* BP tab */

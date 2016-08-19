@@ -284,6 +284,7 @@
         "Seizure remission",
         "Confirm diagnosis of epilepsy?",
         "Prescribe Epilepsy Drugs",
-        "Occupation Exposure Date"
+        "Occupation Exposure Date",
+        "HbA1c Value"
     ]
 }
