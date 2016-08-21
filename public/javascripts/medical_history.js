@@ -167,6 +167,50 @@
 
     function loadPage() {
 
+        if(dashboard.autoContinue){
+
+                var tasks = {
+
+                        "Initial Questions"    : "/spec/dm/diabetes_first_questions.spec",
+                        "Diabetes History"     : "/spec/dm/diabetes_history.spec",
+                        "Past Medical History" : "/spec/dm/past_medical_history.spec",
+                        'General Health'       : "/spec/dm/general_health.spec",
+                        "Family History"       : "/spec/dm/family_history.spec"
+
+                }
+
+                if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES INITIAL QUESTIONS")) {
+
+                         window.parent.dashboard.navPanel(tasks["Initial Questions"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES HISTORY")) {
+
+                         
+                         window.parent.dashboard.navPanel(tasks["Diabetes History"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "PAST DIABETES MEDICAL HISTORY")) {
+
+                        window.parent.dashboard.navPanel(tasks["Past Medical History"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "GENERAL HEALTH")) {
+
+                        window.parent.dashboard.navPanel(tasks["General Health"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES FAMILY HISTORY")) {
+
+                        window.parent.dashboard.navPanel(tasks["Family History"])
+
+                }
+                else{
+                        window.parent.dashboard.workflow.splice(0, 1);
+
+                        window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
+
+                }
+
+        }
+      
+
         if (__$__("details")) {
 
             __$__("details").innerHTML = "";

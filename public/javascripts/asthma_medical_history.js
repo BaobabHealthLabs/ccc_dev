@@ -167,6 +167,46 @@
 
     function loadPage() {
 
+        if(dashboard.autoContinue){
+
+                var tasks = {
+
+                        "Initial Questions"    : "/spec/asthma/initial_questions.spec",
+                        "Past Medical History" : "/spec/asthma/medical_history.spec",
+                        "Social History"       : "/spec/asthma/social_history.spec",
+                        "Family History"       : "/spec/htn/family_history.spec"
+
+                }
+
+                if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA INITIAL QUESTIONS")) {
+
+                         window.parent.dashboard.navPanel(tasks["Initial Questions"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA MEDICAL HISTORY")) {
+
+                        window.parent.dashboard.navPanel(tasks["Past Medical History"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA SOCIAL HISTORY")) {
+
+                         
+                         window.parent.dashboard.navPanel(tasks["Social History"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA FAMILY HISTORY")) {
+
+                        window.parent.dashboard.navPanel(tasks["Family History"])
+
+                }
+                else{
+
+                        window.parent.dashboard.workflow.splice(0, 1);
+
+                        window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
+
+
+                }
+
+        }
+
         if (__$__("details")) {
 
             __$__("details").innerHTML = "";
@@ -269,7 +309,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[3][0];
+            td.style.backgroundColor = colors[2][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -316,6 +356,67 @@
             td.appendChild(div);
 
             queryEncounter("ASTHMA MEDICAL HISTORY", "divPastMedicalHistory", function (data, id) {
+
+                if (__$__(id)) {
+
+                    loadDetails(__$__(id), data);
+
+                }
+
+            })
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td")
+            td.style.backgroundColor = colors[3][0];
+            td.style.color = "#fff";
+            td.style.fontWeight = "bold";
+            td.style.verticalAlign = "middle";
+            td.style.padding = "8px";
+            td.style.fontSize = "18px";
+            td.innerHTML = "Social History";
+
+            table.appendChild(td);
+
+            var img = document.createElement("img");
+            img.setAttribute("src", icoAdd);
+            img.height = "32";
+            img.style.cssFloat = "right";
+            img.style.margin = "-5px";
+            img.style.cursor = "pointer";
+
+            img.onclick = function () {
+
+                window.parent.dashboard.navPanel('/spec/htn/social_history.spec')
+
+            }
+
+            if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA SOCIAL HISTORY")) {
+
+                td.appendChild(img);
+
+            }
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            table.appendChild(td);
+
+            var div = document.createElement("div");
+            div.id = "divSocialHistory";
+            div.style.border = "1px solid " + colors[0][0];
+            div.style.minHeight = "30px";
+            div.style.backgroundColor = colors[0][1];
+            div.innerHTML = "&nbsp;";
+
+            td.appendChild(div);
+
+            queryEncounter("ASTHMA SOCIAL HISTORY", "divSocialHistory", function (data, id) {
 
                 if (__$__(id)) {
 
