@@ -27,14 +27,14 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
             if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
 
-                result = date.getFullYear() + "-" + dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                    dashboard.padZeros(date.getDate(), 2) + " " + dashboard.padZeros(date.getHours(), 2) + ":" +
-                    dashboard.padZeros(date.getMinutes(), 2) + ":" + dashboard.padZeros(date.getSeconds(), 2);
+                result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
+                    window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
 
             } else if (format.match(/YYYY\-mm\-dd/)) {
 
-                result = date.getFullYear() + "-" + dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                    dashboard.padZeros(date.getDate(), 2);
+                result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    window.parent.dashboard.padZeros(date.getDate(), 2);
 
             } else if (format.match(/mmm\/d\/YYYY/)) {
 
@@ -93,7 +93,66 @@ function ajaxRequest(url, callback) {
 
 }
 
+function executeTasks(){
+
+    if(window.parent.dashboard.autoContinue){
+
+        var visit_today = new Date().format("YYYY-mm-dd");
+
+        var tasks = {
+                        "Oedema"                : "/spec/htn/oedema.spec",
+                        "Shortness of breath"   : "/spec/htn/shortness_of_breath.spec",
+                        "Creatinine"            : "/spec/htn/creatinine.spec",
+                        "Visual Acuity"         : "/spec/htn/visual_acuity.spec",
+                        "Fundoscopy"            : "/spec/htn/fundoscopy.spec",
+                        "Macrovascular"         : "/spec/htn/macrovascular.spec"
+
+        }
+
+
+        if(window.parent.dashboard.queryActiveObs("HYPERTENSION PROGRAM",visit_today,"HYPERTENSION TEST","Oedema Test Date")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Oedema"])
+
+        }else if(window.parent.dashboard.queryActiveObs("HYPERTENSION PROGRAM",visit_today,"HYPERTENSION TEST","Shortness of breath Test Date")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Shortness of breath"])
+
+        }else if(window.parent.dashboard.queryActiveObs("HYPERTENSION PROGRAM",visit_today,"HYPERTENSION TEST","Creatinine Result")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Creatinine"])
+
+        }else if(window.parent.dashboard.queryActiveObs("HYPERTENSION PROGRAM",visit_today,"HYPERTENSION TEST","Visual Acuity Result Test Date")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Visual Acuity"])
+
+        }else if(window.parent.dashboard.queryActiveObs("HYPERTENSION PROGRAM",visit_today,"HYPERTENSION TEST","Fundoscopy Result Test Date")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Fundoscopy"])
+
+        }
+        else if(window.parent.dashboard.queryActiveObs("HYPERTENSION PROGRAM",visit_today,"HYPERTENSION TEST","Macrovascular Result Test Date")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Macrovascular"])
+
+        }
+        else{
+
+            window.parent.dashboard.autoContinue = true;
+
+             window.parent.dashboard.workflow.splice(0, 1);
+
+            window.parent.dashboard.exitNavPanel();
+
+        }
+
+     }
+
+}
+
 function loadPage() {
+
+    executeTasks();
 
      if(__$("oedema")){
 

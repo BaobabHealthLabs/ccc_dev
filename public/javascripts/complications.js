@@ -27,14 +27,14 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
             if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
 
-                result = date.getFullYear() + "-" + dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                    dashboard.padZeros(date.getDate(), 2) + " " + dashboard.padZeros(date.getHours(), 2) + ":" +
-                    dashboard.padZeros(date.getMinutes(), 2) + ":" + dashboard.padZeros(date.getSeconds(), 2);
+                result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
+                    window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
 
             } else if (format.match(/YYYY\-mm\-dd/)) {
 
-                result = date.getFullYear() + "-" + dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                    dashboard.padZeros(date.getDate(), 2);
+                result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    window.parent.dashboard.padZeros(date.getDate(), 2);
 
             } else if (format.match(/mmm\/d\/YYYY/)) {
 
@@ -55,6 +55,7 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
     });
 
 }
+
 
 function __$(id) {
 
@@ -93,7 +94,71 @@ function ajaxRequest(url, callback) {
 
 }
 
+function executeTasks(){
+
+    if(window.parent.dashboard.autoContinue){
+
+        var visit_today = new Date().format("YYYY-mm-dd");
+
+        var tasks = {
+
+                        "Creatinine"        : "/spec/dm/creatinine.spec",
+                        "Urine Protein"     : "/spec/dm/urine_protein.spec",
+                        "Visual Acuity"     : "/spec/dm/visual_acuity.spec",
+                        "Fundoscopy"        : "/spec/dm/fundoscopy.spec",
+                        "Foot Check"        : "/spec/dm/foot_check.spec",
+                        "Urea"              : "/spec/dm/urea.spec",
+                        "Macrovascular"     : "/spec/dm/macrovascular.spec"
+
+        }
+
+
+        if(window.parent.dashboard.queryActiveObs("DIABETES PROGRAM",visit_today,"DIABETES TEST","Creatinine Result")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Creatinine"])
+
+        }else if(window.parent.dashboard.queryActiveObs("DIABETES PROGRAM",visit_today,"DIABETES TEST","Urine Protein Result")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Urine Protein"])
+
+        }else if(window.parent.dashboard.queryActiveObs("DIABETES PROGRAM",visit_today,"DIABETES TEST","Visual Acuity Result Test Date")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Visual Acuity"])
+
+        }else if(window.parent.dashboard.queryActiveObs("DIABETES PROGRAM",visit_today,"DIABETES TEST","Fundoscopy Result Test Date")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Fundoscopy"])
+
+        }else if(window.parent.dashboard.queryActiveObs("DIABETES PROGRAM",visit_today,"DIABETES TEST","Foot Check Result Test Date")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Foot Check"])
+
+        }else if(window.parent.dashboard.queryActiveObs("DIABETES PROGRAM",visit_today,"DIABETES TEST","Urea Result Test Date")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Urea"])
+
+        }else if(window.parent.dashboard.queryActiveObs("DIABETES PROGRAM",visit_today,"DIABETES TEST","Macrovascular Result Test Date")===undefined){
+
+            window.parent.dashboard.exitNavPanel(tasks["Macrovascular"])
+
+        }
+        else{
+
+            window.parent.dashboard.autoContinue = true;
+
+            window.parent.dashboard.workflow.splice(0, 1);
+
+            window.parent.dashboard.exitNavPanel();
+
+        }
+
+     }
+
+}
+
 function loadPage() {
+
+    executeTasks();
 
     if (__$("creatinine")) {
 

@@ -202,6 +202,7 @@
 
                 }
                 else{
+                    
                         window.parent.dashboard.workflow.splice(0, 1);
 
                         window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
