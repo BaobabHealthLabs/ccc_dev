@@ -4026,6 +4026,8 @@ app.post("/save_patient", function (req, res) {
 
 app.post("/updateUser", function (req, res) {
 
+    console.log("///////////////////////////////////////////");
+
     console.log(req.body);
 
     var data = req.body;
@@ -4046,7 +4048,7 @@ app.post("/updateUser", function (req, res) {
 
         var person_id;
 
-        sql = "SELECT user_id FROM users WHERE username = \"" + data.username + "\"";
+        var sql = "SELECT user_id FROM users WHERE username = \"" + data.username + "\"";
 
         queryRaw(sql, function (verification) {
 
