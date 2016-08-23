@@ -20,7 +20,7 @@
         var done1 = false;
         var done2 = false;
 
-        if(user.$("user")) {
+        if (user.$("user")) {
 
             user.$("user").innerHTML = user.getCookie("username");
 
@@ -28,7 +28,7 @@
 
         }
 
-        if(user.$("location")) {
+        if (user.$("location")) {
 
             user.$("location").innerHTML = user.getCookie("location");
 
@@ -36,9 +36,9 @@
 
         }
 
-        if(!done1 || !done2) {
+        if (!done1 || !done2) {
 
-            tmrInterval = setInterval(function(){
+            tmrInterval = setInterval(function () {
 
                 loadInfo();
 
@@ -61,11 +61,29 @@
 
     stock.init("/modules/config/stock.settings.json", user.getCookie("username"));
 
-    var tmrInterval = setInterval(function(){
+    var tmrInterval = setInterval(function () {
 
         loadInfo();
 
     }, 10);
+
+    var tmr_interval = setInterval(function () {
+
+        if (landing.getCookie("currentProgram") != "") {
+
+            clearInterval(tmr_interval);
+
+            if (document.getElementsByClassName("gray old").length > 0)
+                document.getElementsByClassName("gray old")[0].className = "green";
+
+        } else {
+
+            if (document.getElementsByClassName("green").length > 0)
+                document.getElementsByClassName("green")[0].className = "gray old";
+
+        }
+
+    }, 100);
 
 </script>
 </body>

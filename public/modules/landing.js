@@ -686,6 +686,9 @@ var landing = ({
         btnFinish.innerHTML = "Find or Register Patient";
         btnFinish.onmousedown = function () {
 
+            if (this.className.match(/gray/i))
+                return;
+
             if (patient != undefined) {
 
                 patient.buildSearchPage();
@@ -696,7 +699,7 @@ var landing = ({
 
         td3_1.appendChild(btnFinish);
 
-        if(landing.settings.useStartSessionButton === undefined ||
+        if (landing.settings.useStartSessionButton === undefined ||
             (landing.settings.useStartSessionButton !== undefined && landing.settings.useStartSessionButton)) {
 
             var btnStart = document.createElement("button");
@@ -721,7 +724,7 @@ var landing = ({
 
         landing.loadPrograms(landing['modules'], landing.$("programs"));
 
-        if(callback) {
+        if (callback) {
 
             callback();
 
@@ -1444,11 +1447,11 @@ var landing = ({
 
                 landing['modules'] = modules;
 
-                landing.buildPage(function() {
+                landing.buildPage(function () {
 
                     landing.ajaxRequest(landing.settings.facilityPath, function (response) {
 
-                        if(landing.$("facility")) {
+                        if (landing.$("facility")) {
 
                             landing.$("facility").innerHTML = response.facility;
 
