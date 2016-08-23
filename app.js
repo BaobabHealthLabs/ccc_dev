@@ -5417,7 +5417,7 @@ app.get("/roles/:id", function (req, res) {
 
 app.get("/roles", function (req, res) {
 
-    var sql = "SELECT role FROM role WHERE description LIKE \"HTS%\"";
+    var sql = "SELECT role FROM role WHERE role IN ('Admin','Clinician','Nurse','Registration Clerk')";
 
     var roles = [];
 
