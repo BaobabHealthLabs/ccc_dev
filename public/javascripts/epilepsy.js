@@ -306,33 +306,76 @@ function familyHistory(concept_data){
 			var element_id_prefix = concept_names[i].replace("Family History of"," ").replace("?","").trim().toLowerCase().replace("/","_").replace(/\s+/g,"_");
 
 			if (concept_data[concept_names[i]].response.value =="Yes"){
-				__$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
 
-				__$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+                if(__$(element_id_prefix+"_unk")){
 
-				__$(element_id_prefix+"_yes").style.border ="2px solid #99ff99";
+                    __$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
 
-				__$(element_id_prefix+"_yes").style.border ="2px solid red";
+                }
+                if(__$(element_id_prefix+"_no")){
+
+                    __$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+
+                }
+                if(__$(element_id_prefix+"_yes")){
+
+                    __$(element_id_prefix+"_yes").style.border ="2px solid #99ff99";
+
+                }
+                if(__$(element_id_prefix+"_yes")){
+
+                    __$(element_id_prefix+"_yes").style.border ="2px solid red";
+
+                }
+
+				
 			}
 			if (concept_data[concept_names[i]].response.value =="No"){
 
-				__$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
+                if(__$(element_id_prefix+"_unk")){
 
-				__$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+                    __$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
 
-				__$(element_id_prefix+"_yes").style.border ="2px solid #99ff99";
+                }
+                if(__$(element_id_prefix+"_no")){
 
-				__$(element_id_prefix+"_no").style.border ="2px solid red";
+                    __$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+
+                }
+                if(__$(element_id_prefix+"_yes")){
+
+                    __$(element_id_prefix+"_yes").style.border ="2px solid #99ff99";
+
+                }
+                if(__$(element_id_prefix+"_no")){
+
+                    __$(element_id_prefix+"_no").style.border ="2px solid red";
+
+                }
+
 			}
 			if (concept_data[concept_names[i]].response.value =="Unknown"){
 
-				__$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
+                 if(__$(element_id_prefix+"_unk")){
 
-				__$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+                    __$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
 
-				__$(element_id_prefix+"_yes").style.border ="2px solid #99ff99";
+                }
+                if(__$(element_id_prefix+"_no")){
 
-				__$(element_id_prefix+"_unk").style.border ="2px solid red";
+                    __$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+
+                }
+                if(__$(element_id_prefix+"_yes")){
+
+                    __$(element_id_prefix+"_yes").style.border ="2px solid #99ff99";
+
+                }
+                if(__$(element_id_prefix+"_unk")){
+
+                    __$(element_id_prefix+"_unk").style.border ="2px solid red";
+
+                }
 			}
 	}
 
@@ -925,6 +968,7 @@ function drawResponse(encounter,encounter_data,visit){
 					break;
 				case "FAMILY HISTORY":
 
+
 					familyHistory(encounter_data[i]);
 
 					break;
@@ -1096,9 +1140,13 @@ function loadCardDashboard(){
 
 	var id_keys = Object.keys(data.identifiers)
 
-	__$("ncd_reg_no").innerHTML = data.identifiers["AST Number"].identifier;
+	__$("ncd_reg_no").innerHTML = data.identifiers["EPL Number"].identifier;
+
+    if(__$("year")){
 
      __$("year").innerHTML= (new Date()).getFullYear();
+ }
+
 
      //Transfer in Date
      if(window.parent.dashboard.queryAnyExistingObs("Epilepsy Transfer-In Date")){
