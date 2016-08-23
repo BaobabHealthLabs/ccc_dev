@@ -4395,6 +4395,10 @@ var dashboard = ({
 
                         dashboard.data.data.addresses = json.addresses;
 
+                    } else if (json.attributes) {
+
+                        dashboard.data.data.attributes = json.attributes;
+
                     } else if (json.gender) {
 
                         dashboard.data.data.gender = json.gender;
@@ -4519,7 +4523,7 @@ var dashboard = ({
 
             });
 
-        }, 100);
+        }, 200);
 
     },
 
