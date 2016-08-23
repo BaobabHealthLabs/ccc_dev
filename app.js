@@ -1757,7 +1757,8 @@ function updateUserView(data) {
                                         birthdate: null,
                                         birthdate_estimated: null,
                                         UUID: null,
-                                        relationships: []
+                                        relationships: [],
+                                        attributes: []
                                     }
                                 };
 
@@ -1828,7 +1829,8 @@ function updateUserView(data) {
                                 birthdate: null,
                                 birthdate_estimated: null,
                                 UUID: null,
-                                relationships: []
+                                relationships: [],
+                                attributes: []
                             }
                         };
 
@@ -1865,7 +1867,8 @@ function updateUserView(data) {
                                 birthdate: null,
                                 birthdate_estimated: null,
                                 UUID: null,
-                                relationships: []
+                                relationships: [],
+                                attributes: []
                             }
                         };
 
@@ -1927,7 +1930,8 @@ function updateUserView(data) {
                                     birthdate: null,
                                     birthdate_estimated: null,
                                     UUID: null,
-                                    relationships: []
+                                    relationships: [],
+                                    attributes: []
                                 }
                             };
 
@@ -2090,7 +2094,8 @@ function updateUserView(data) {
                                         birthdate: null,
                                         birthdate_estimated: null,
                                         UUID: null,
-                                        relationships: []
+                                        relationships: [],
+                                        attributes: []
                                     }
                                 };
 
@@ -2170,7 +2175,8 @@ function updateUserView(data) {
                                 birthdate: null,
                                 birthdate_estimated: null,
                                 UUID: null,
-                                relationships: []
+                                relationships: [],
+                                attributes: []
                             }
                         };
 
@@ -2196,6 +2202,79 @@ function updateUserView(data) {
 
                 nsp[data.id].emit("demographics",
                     JSON.stringify({relationships: people[data.id].data.relationships }));
+
+                callback();
+
+            }
+
+        },
+
+        function (callback) {
+
+            if (Object.keys(people[data.id].data.attributes).length <= 0 || isDirty[data.id]) {
+
+                var sql = "SELECT value, person_attribute.uuid AS uuid, name AS attribute FROM person_attribute LEFT " +
+                    "OUTER JOIN person_attribute_type ON person_attribute_type.person_attribute_type_id = " +
+                    "person_attribute.person_attribute_type_id WHERE person_id = \"" + patient_id + "\"";
+
+                console.log(sql)
+
+                queryRaw(sql, function (attributes) {
+
+                    var collection = [];
+
+                    for (var i = 0; i < attributes[0].length; i++) {
+
+                        var attribute = {
+                            attribute: attributes[0][i].attribute,
+                            value: attributes[0][i].value,
+                            UUID: attributes[0][i].uuid
+                        }
+
+                        collection.push(attribute);
+
+                    }
+
+                    if (!people[data.id]) {
+
+                        people[data.id] = {
+                            data: {
+                                patient_id: patient_id,
+                                names: [],
+                                addresses: [],
+                                identifiers: {},
+                                programs: {},
+                                gender: null,
+                                birthdate: null,
+                                birthdate_estimated: null,
+                                UUID: null,
+                                relationships: [],
+                                attributes: []
+                            }
+                        };
+
+                    }
+
+                    console.log(collection);
+
+                    console.log("First time attributes query.");
+
+                    people[data.id].data.attributes = collection;
+
+                    nsp[data.id].emit("demographics",
+                        JSON.stringify({attributes: people[data.id].data.attributes }));
+
+                    callback();
+
+                });
+
+            }
+            else {
+
+                console.log("Sent existing attributes data");
+
+                nsp[data.id].emit("demographics",
+                    JSON.stringify({attributes: people[data.id].data.attributes }));
 
                 callback();
 
@@ -4026,6 +4105,8 @@ app.post("/save_patient", function (req, res) {
 
 app.post("/updateUser", function (req, res) {
 
+    console.log("///////////////////////////////////////////");
+
     console.log(req.body);
 
     var data = req.body;
@@ -4046,7 +4127,7 @@ app.post("/updateUser", function (req, res) {
 
         var person_id;
 
-        sql = "SELECT user_id FROM users WHERE username = \"" + data.username + "\"";
+        var sql = "SELECT user_id FROM users WHERE username = \"" + data.username + "\"";
 
         queryRaw(sql, function (verification) {
 
@@ -5415,7 +5496,7 @@ app.get("/roles/:id", function (req, res) {
 
 app.get("/roles", function (req, res) {
 
-    var sql = "SELECT role FROM role WHERE description LIKE \"HTS%\"";
+    var sql = "SELECT role FROM role WHERE role IN ('Admin','Clinician','Nurse','Registration Clerk')";
 
     var roles = [];
 

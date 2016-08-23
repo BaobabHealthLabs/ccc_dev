@@ -38,7 +38,8 @@
         ["HYPERTENSION TEST","Hypertension Test encounter"],
         ["PAST HYPERTENSION MEDICAL HISTORY","Hypertension Past Medical History"],
         ["ASTHMA MEDICAL HISTORY","Asthma Medical History"],
-        ["ASTHMA FAMILY HISTORY","Asthma Family History"]
+        ["ASTHMA FAMILY HISTORY","Asthma Family History"],
+        ["ASTHMA SOCIAL HISTORY","Asthma Social History"]
 
     ],
     "patient_identifier_types": [
@@ -284,6 +285,11 @@
         "Seizure remission",
         "Confirm diagnosis of epilepsy?",
         "Prescribe Epilepsy Drugs",
-        "Occupation Exposure Date"
+        "Occupation Exposure Date",
+        "HbA1c Value",
+        "Do you currently smoke?",
+        "Patient mode of cooking?",
+        "Patient exposed to pollution?",
+        "Patient lives or works near?"
     ]
 }

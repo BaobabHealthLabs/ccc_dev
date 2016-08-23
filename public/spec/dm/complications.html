@@ -141,7 +141,12 @@
             onclick="window.parent.dashboard.activeTask = null; window.parent.dashboard.exitNavPanel();">
         Finish
     </button>
-    <button class="blue" style="float: right; margin: 10px 0px 15px; min-width: 140px;" id="printButton"
+    <button class="blue" style="float: right; margin: 10px 0px 15px; min-width: 140px;" id="btnContinue"
+            onclick="window.parent.dashboard.autoContinue = true;executeTasks();">
+        Continue
+    </button>
+
+    <button class="orange" style="float: right; margin: 10px 10px 15px; min-width: 140px;" id="printButton"
             onclick="">
         Print Complications Label
     </button>

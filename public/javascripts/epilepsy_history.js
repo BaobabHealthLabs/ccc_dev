@@ -167,6 +167,46 @@
 
     function loadPage() {
 
+        if(dashboard.autoContinue){
+
+                var tasks = {
+
+                        "Initial Questions"            : "/spec/epilepsy/initial_questions.spec",
+                        "Patient History at Enrolment" : "/spec/epilepsy/enrolment_history.spec",
+                        "Medical and Surgical History" : "/spec/epilepsy/medical_history.spec",
+                        "Family History"               : "/spec/epilepsy/family_history.spec"
+
+                }
+
+                if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "EPILEPSY INITIAL QUESTIONS")) {
+
+                         window.parent.dashboard.navPanel(tasks["Initial Questions"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "PATIENT HISTORY AT ENROLMENT")) {
+
+                        window.parent.dashboard.navPanel(tasks["Patient History at Enrolment"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "MEDICAL AND SURGICAL HISTORY")) {
+
+                         
+                         window.parent.dashboard.navPanel(tasks["Medical and Surgical History"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "FAMILY HISTORY")) {
+
+                        window.parent.dashboard.navPanel(tasks["Family History"])
+
+                }
+                else{
+
+                        window.parent.dashboard.workflow.splice(0, 1);
+
+                        window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
+
+
+                }
+
+        }
+
         if (__$__("details")) {
 
             __$__("details").innerHTML = "";

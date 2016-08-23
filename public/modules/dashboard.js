@@ -2463,7 +2463,7 @@ var dashboard = ({
 
             li.setAttribute("details", "<table cellpadding='5'><tr><td><b>Name:</b></td><td>" + sourceData[i].relative_name +
                 "</td></tr><tr><td><b>Phone Number:</b></td><td>" + (sourceData[i].phone_number || "") +
-                "</td></tr></table>" );
+                "</td></tr></table>");
 
             li.onmouseover = function () {
 
@@ -3048,7 +3048,7 @@ var dashboard = ({
 
             dashboard.__$("details").innerHTML = "";
 
-            if(dashboard.modules[dashboard.selectedProgram].landing_page) {
+            if (dashboard.modules[dashboard.selectedProgram].landing_page) {
 
                 var ifrm = document.createElement("iframe");
                 ifrm.style.width = "100%";
@@ -4344,7 +4344,7 @@ var dashboard = ({
 
                     dashboard.createWebSocket();
 
-                }, 10000);
+                }, 5000);
             });
 
             dashboard.socket.on('newConnection', function (data) {
@@ -4394,6 +4394,10 @@ var dashboard = ({
                     } else if (json.addresses) {
 
                         dashboard.data.data.addresses = json.addresses;
+
+                    } else if (json.attributes) {
+
+                        dashboard.data.data.attributes = json.attributes;
 
                     } else if (json.gender) {
 
@@ -4519,7 +4523,7 @@ var dashboard = ({
 
             });
 
-        }, 100);
+        }, 500);
 
     },
 

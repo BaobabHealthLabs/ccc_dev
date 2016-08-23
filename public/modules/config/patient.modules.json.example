@@ -53,11 +53,10 @@
             }
         },
         "workflow": [
-            "Diabetes Initial Questions",
+            "Patient History",
             "Vitals",
             "Lab Results",
             "HIV/ART Status",
-            "Medical History",
             "Complications",
             "Treatments",
             "Outcome",
@@ -117,11 +116,10 @@
             }
         },
         "workflow": [
-            "Hypertension Initial Questions",
+            "Patient History",
             "Vitals",
             "Lab Results",
             "HIV Status",
-            "Medical History",
             "Complications",
             "Treatments",
             "Outcome",
@@ -168,7 +166,7 @@
                 "scope": "TODAY",
                 "program": "CROSS-CUTTING PROGRAM"
             },
-            "Asthma Visit": {
+            "Visit": {
                 "encounter": "ASTHMA VISIT"
             },
             "Next Appointment" :{
@@ -176,8 +174,7 @@
             }
         },
         "workflow": [
-            "Asthma Initial Questions",
-            "Patient Overview",
+            "Patient History",
             "HIV Status",
             "Visit",
             "Treatments",
@@ -251,11 +248,10 @@
             }
         },
         "workflow": [
-            "Epilepsy Initial Questions",
+            "Patient History",
             "Vitals",
             "HIV Status",
             "VDRL Status",
-            "Patient History",
             "Patient Overview",
             "Epilepsy visit",
             "Treatments",
