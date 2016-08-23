@@ -4105,6 +4105,8 @@ app.post("/save_patient", function (req, res) {
 
 app.post("/updateUser", function (req, res) {
 
+    console.log("///////////////////////////////////////////");
+
     console.log(req.body);
 
     var data = req.body;
@@ -4125,7 +4127,7 @@ app.post("/updateUser", function (req, res) {
 
         var person_id;
 
-        sql = "SELECT user_id FROM users WHERE username = \"" + data.username + "\"";
+        var sql = "SELECT user_id FROM users WHERE username = \"" + data.username + "\"";
 
         queryRaw(sql, function (verification) {
 
@@ -5494,7 +5496,7 @@ app.get("/roles/:id", function (req, res) {
 
 app.get("/roles", function (req, res) {
 
-    var sql = "SELECT role FROM role WHERE description LIKE \"HTS%\"";
+    var sql = "SELECT role FROM role WHERE role IN ('Admin','Clinician','Nurse','Registration Clerk')";
 
     var roles = [];
 
@@ -7151,6 +7153,32 @@ app.post("/test", function (req, res) {
     })
 
 });
+
+app.get("/facilities", function(req, res){
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var facilities = require(__dirname + "/public/data/facilities.json");
+
+    var results = [];
+
+    for(var i = 0; i < facilities.length; i++) {
+
+        var facility = facilities[i];
+
+        if(facility.toLowerCase().match("^" + query.name.toLowerCase())) {
+
+            results.push(facility);
+
+        }
+
+    }
+
+    res.send("<li>" + results.join("</li><li>") + "</li>");
+
+})
 
 app.get("/patient/:id", function (req, res) {
     res.sendFile(__dirname + "/public/views/patient.html");

@@ -1649,11 +1649,14 @@ var user = ({
 
             var keys = Object.keys(user.users[usernames[i]].attributes);
 
-            for (var j = 0; j < keys.length; j++) {
+            if (user.settings['hts.provider.id']){
 
-                attrs += "<b>" + keys[j] + "</b>" + ": " + (user.users[usernames[i]].attributes[keys[j]] ?
-                    user.users[usernames[i]].attributes[keys[j]] : "") + "<br/>";
+                for (var j = 0; j < keys.length; j++) {
 
+                    attrs += "<b>" + keys[j] + "</b>" + ": " + (user.users[usernames[i]].attributes[keys[j]] ?
+                        user.users[usernames[i]].attributes[keys[j]] : "") + "<br/>";
+
+                }
             }
 
             var values = [pos, user.users[usernames[i]].given_name + " " + user.users[usernames[i]].family_name,

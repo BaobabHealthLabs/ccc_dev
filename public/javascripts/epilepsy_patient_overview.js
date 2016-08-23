@@ -167,14 +167,56 @@
 
     function loadPage() {
 
+        if(dashboard.autoContinue){
+
+                var tasks = {
+
+                        "Seizure Type"                 : "/spec/epilepsy/initial_questions.spec",
+                        "Triggers"                     : "/spec/epilepsy/enrolment_history.spec",
+                        "Pre-ictal Warning"            : "/spec/epilepsy/medical_history.spec",
+                        "Post-ictal Features"          : "/spec/epilepsy/family_history.spec",
+                        "Exposures and Complications"  : "/spec/epilepsy/family_history.spec"
+
+                }
+
+                if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "SEIZURE TYPE")) {
+
+                         window.parent.dashboard.navPanel(tasks["Seizure Type"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "TRIGGERS")) {
+
+                        window.parent.dashboard.navPanel(tasks["Triggers"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "PRE-ICTAL WARNING")) {
+   
+                         window.parent.dashboard.navPanel(tasks["Pre-ictal Warning"])
+
+                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "POST-ICTAL FEATURES")) {
+
+                        window.parent.dashboard.navPanel(tasks["Post-ictal Features"])
+
+                }
+                else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "EPILEPSY PATIENT OVERVIEW")) {
+
+                        window.parent.dashboard.navPanel(tasks["Exposures and Complications"])
+
+                }
+                else{
+
+                        window.parent.dashboard.workflow.splice(0, 1);
+
+                        window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
+
+
+                }
+
+        }
+
         if (__$__("details")) {
 
             __$__("details").innerHTML = "";
 
             var colors = [
-                ["#9966cc", "rgba(153,102,204,0.05)", "#ffffff"],
-                ["#669900", "rgba(102,153,0,0.05)", "#ffffff"],
-                ["#ff420e", "rgba(255,66,14,0.05)", "#ffffff"],
                 ["#6a8ac9", "rgba(106,138,201,0.05)", "#ffffff"],
                 ["#c99414", "rgba(201,148,20,0.05)", "#ffffff"],
                 ["#3870f1", "rgba(56,112,241,0.05)", "#ffffff"],
@@ -193,8 +235,6 @@
                 ["#ab065f", "rgba(171,6,95,0.05)", "#ffffff"],
                 ["#068aab", "rgba(6,138,171,0.05)", "#ffffff"]
             ];
-
-            colors = colors.shuffle();
 
             var table = document.createElement("table");
             table.width = "100%";
@@ -329,7 +369,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[1][0];
+            td.style.backgroundColor = colors[3][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -390,7 +430,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[1][0];
+            td.style.backgroundColor = colors[4][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
@@ -452,7 +492,7 @@
             table.appendChild(tr);
 
             var td = document.createElement("td")
-            td.style.backgroundColor = colors[1][0];
+            td.style.backgroundColor = colors[5][0];
             td.style.color = "#fff";
             td.style.fontWeight = "bold";
             td.style.verticalAlign = "middle";
