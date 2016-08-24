@@ -414,11 +414,19 @@ function vdrlStatus(encounter_data){
 	}
 }
 
+
 function medicalSurgicalHistory(encounter_data){
 
 	var concept_names = Object.keys(encounter_data);
 
+
 	for(var i = 0; i < concept_names.length ; i++){
+
+            if(concept_names[i]=="Year of first seizure?" || concept_names[i]=="What triggered the seizure?"){
+
+                continue;
+
+            }
 
 			var element_id_prefix = concept_names[i].replace("History of"," ");
 
@@ -427,33 +435,80 @@ function medicalSurgicalHistory(encounter_data){
 			element_id_prefix= element_id_prefix.replace("/","_").replace(/\s+/g,"_");
 
 			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
+
 			
 			if (encounter_data[concept_names[i]].response.value=="Yes"){
 
-				__$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
+				if(__$(element_id_prefix+"_unk")){
 
-				__$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+                    __$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
+
+                }
+
+				if(__$(element_id_prefix+"_no")){
+
+                    __$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+
+                }
+                if(__$(element_id_prefix+"_yes")){
 
 				__$(element_id_prefix+"_yes").style.border ="2px solid red";
+
+                }
+
 			}
+
 			if (encounter_data[concept_names[i]].response.value =="No"){
-				__$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
 
-				__$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+                if(__$(element_id_prefix+"_unk")){
 
-				__$(element_id_prefix+"_yes").style.border ="2px solid #99ff99";
+				    __$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
 
-				__$(element_id_prefix+"_no").style.border ="2px solid red";
+                }
+
+				if(__$(element_id_prefix+"_no")){
+
+                    __$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+                }
+
+                if(__$(element_id_prefix+"_yes")){
+
+				    __$(element_id_prefix+"_yes").style.border ="2px solid #99ff99";
+
+                }
+
+                if(__$(element_id_prefix+"_no")){
+
+				    __$(element_id_prefix+"_no").style.border ="2px solid red";
+
+                }
 			}
+
+
 			if (encounter_data[concept_names[i]].response.value =="Unknown"){
 
-				__$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
+				if(__$(element_id_prefix+"_unk")){
 
-				__$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+                    __$(element_id_prefix+"_unk").style.border ="2px solid #99ff99";
 
-				__$(element_id_prefix+"_yes").style.border ="2px solid #99ff99";
+                }
 
-				__$(element_id_prefix+"_unk").style.border ="2px solid red";
+				if(__$(element_id_prefix+"_no")){
+
+                    __$(element_id_prefix+"_no").style.border ="2px solid #99ff99";
+
+                }
+
+				if(__$(element_id_prefix+"_yes")){
+
+                    __$(element_id_prefix+"_yes").style.border ="2px solid #99ff99";
+                }
+
+                if(__$(element_id_prefix+"_unk")){
+
+				    __$(element_id_prefix+"_unk").style.border ="2px solid red";
+
+                }
 			}
 			
 		}
@@ -787,6 +842,7 @@ function patientHistoryAtEnrollment(encounter_data){
 	}
 
 }
+
 
 function epilepsyOutCome(encounter_data){
 
