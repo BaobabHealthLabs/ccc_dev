@@ -38,6 +38,143 @@
         }
 
     });
+    if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+
+        Object.defineProperty(Date.prototype, "format", {
+            value: function (format) {
+                var date = this;
+
+                var result = "";
+
+                if (!format) {
+
+                    format = ""
+
+                }
+
+                var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+                var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                    "October", "November", "December"];
+
+                if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+
+                    result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                        window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
+                        window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
+
+                } else if (format.match(/YYYY\-mm\-dd/)) {
+
+                    result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                        window.parent.dashboard.padZeros(date.getDate(), 2);
+
+                } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                    result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+                } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                    result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+                } else {
+
+                    result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+                }
+
+                return result;
+            }
+        });
+
+    }
+
+    function printSummary(data,callback){
+
+        dashboard.ajaxRequest(dashboard.settings.patientBarcodeDataPath + dashboard.getCookie("token") + "&npid=",
+            function (data) {
+
+                var intial_drug_postion = 90;
+
+                var data = dashboard.data.data;
+
+                var programs = {
+                                            "Diabetes" : "DIABETES PROGRAM",
+                                            "HTN"      : "HYPERTENSION PROGRAM",
+                                            "Asthma"   : "ASTHMA PROGRAM",
+                                            "Epilepsy" : "EPILEPSY PROGRAM"
+                }
+
+                var patient_programs = data.programs[programs[dashboard.getCookie("currentProgram")]].patient_programs;
+
+    
+
+                var patient_program_keys = Object.keys(patient_programs);
+
+                var date = new Date();
+
+                var treaments = "";
+
+                for(var i = 0; i < patient_program_keys.length; i++){
+
+                        var visit = date.format("YYYY-mm-dd");
+                        var encounter_data =patient_programs[patient_program_keys[i]]["visits"][visit]["TREATMENTS"];
+
+                        for(var j = 0 ; j < encounter_data.length ; j++){
+
+                            var concepts = Object.keys(encounter_data[j]);
+
+                            for(var k = 0 ; k < concepts.length ; k++){
+
+                                console.log(encounter_data[concepts[k]]);
+
+
+                                var current_drug_position = intial_drug_postion + 20 * j + 1;
+
+                                treaments = treaments +"A25,"+current_drug_position+",0,2,1,1,N,\""+encounter_data[j][concepts[k]].response.value+"\"\n"
+
+                            }
+                        }
+
+
+                }
+
+                var text =  "\nN\n"+
+                            "q801\n"+
+                            "Q329,026\n"+
+                            "ZT\n"+
+                            "A25,10,0,3,1,1,N,\"Dorothy Banda(F)\"\n"+
+                            "A25,35,0,2,1,1,N,\"   67.6 kg  BMI:Infinity  BP :0/0\"\n"+
+                            "A25,55,0,3,1,1,N,\"Drug(s) Prescribed\"\n"+
+                            "LO25,80,800,5\n"+ treaments +
+                            "LO25,210,800,5\n"+
+                            "A25,220,0,1,1,1,N,\"Life Style Given: Yes\"\n"+
+                            "A597,220,0,1,1,1,N,\"Recorded by: admin\"\n"+
+                            "A597,240,0,1,1,1,N,\"Printed: Aug 23 2016\"\n"+
+                            "P1";
+
+                dashboard.saveAs(text, callback);
+
+            });
+
+
+
+    }
+
+    var tmrInterval = setInterval(function () {
+
+        if(dashboard.workflow.length == 1 && dashboard.workflow[0]=="Mastercard"){
+
+            printSummary(null,function(){
+
+                clearInterval(tmrInterval);
+
+                dashboard.workflow.push("printed");
+
+            });
+
+        }
+
+    }, 100);
 
 </script>
 
