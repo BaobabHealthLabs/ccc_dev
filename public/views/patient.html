@@ -130,7 +130,9 @@
 
                                 var current_drug_position = intial_drug_postion + 20 * j + 1;
 
-                                treaments = treaments +"A25,"+current_drug_position+",0,2,1,1,N,\""+encounter_data[j][concepts[k]].response.value+"\"\n"
+                                treaments = treaments +"A25,"+current_drug_position+",0,2,1,1,N,\""+
+                                            encounter_data[j][concepts[k]].response.value.replace("Once a day","(OD)").replace("at night","NOCTE").replace("from",":").replace("\sto\s","-")
+                                            +"\"\n"
 
                             }
                         }
@@ -138,18 +140,73 @@
 
                 }
 
+                var name = data.names[0]["First Name"]+" "+ data.names[0]["Family Name"]+ "("+data.gender+")";
+
+
+                var arr = Object.keys(dashboard.weightsArray).sort();
+
+                var latestWeight = (arr.length > 0 ? dashboard.weightsArray[arr[arr.length - 1]] : "?");
+
+                var bmi ="?";
+
+                dashboard.queryExistingObsArray("Height (cm)", function (data) {
+
+                    var heightArray = data;
+
+                    var keys = Object.keys(heightArray).sort();
+
+                    var height = (keys.length > 0 ? heightArray[keys[keys.length - 1]] : 0);
+
+                    dashboard.queryExistingObsArray("Weight (kg)", function (data) {
+
+                        var weightArray = data;
+
+                        var keys = Object.keys(weightArray).sort();
+
+                        var weight = (keys.length > 0 ? weightArray[keys[keys.length - 1]] : 0);
+
+                        bmi = (weight > 0 && height > 0 ? (weight / ((height / 100) * (height / 100))).toFixed(1) : "?");
+
+                        
+
+                    })
+
+                });
+
+                var bp ="?/?";
+
+                dashboard.queryExistingObsArray("Systolic blood pressure", function (data) {
+
+                    var systolic = data;
+
+                    dashboard.queryExistingObsArray("Diastolic blood pressure", function (data) {
+
+                        var diastolic = data;
+
+                        var today = (new Date()).format("YYYY-mm-dd");
+
+                        bp = (systolic[today] ? systolic[today] : "?") + "/" + (diastolic[today] ? diastolic[today] : "?");
+
+
+                    })
+
+                });
+
+                var life_style = "";
+
+
                 var text =  "\nN\n"+
                             "q801\n"+
                             "Q329,026\n"+
                             "ZT\n"+
-                            "A25,10,0,3,1,1,N,\"Dorothy Banda(F)\"\n"+
-                            "A25,35,0,2,1,1,N,\"   67.6 kg  BMI:Infinity  BP :0/0\"\n"+
+                            "A25,10,0,3,1,1,N,\""+name+"\"\n"+
+                            "A25,35,0,2,1,1,N,\"   "+latestWeight+"kg  BMI:"+bmi+"  BP :"+bp+"\"\n"+
                             "A25,55,0,3,1,1,N,\"Drug(s) Prescribed\"\n"+
                             "LO25,80,800,5\n"+ treaments +
                             "LO25,210,800,5\n"+
-                            "A25,220,0,1,1,1,N,\"Life Style Given: Yes\"\n"+
-                            "A597,220,0,1,1,1,N,\"Recorded by: admin\"\n"+
-                            "A597,240,0,1,1,1,N,\"Printed: Aug 23 2016\"\n"+
+                            "A25,220,0,1,1,1,N,\"Life Style Given: "+life_style+"\"\n"+
+                            "A597,220,0,1,1,1,N,\"Recorded by:"+dashboard.getCookie("username")+"\"\n"+
+                            "A597,240,0,1,1,1,N,\"Printed: "+new Date().format()+"\"\n"+
                             "P1";
 
                 dashboard.saveAs(text, callback);
