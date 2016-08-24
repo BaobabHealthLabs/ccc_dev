@@ -117,6 +117,7 @@
                 for(var i = 0; i < patient_program_keys.length; i++){
 
                         var visit = date.format("YYYY-mm-dd");
+
                         var encounter_data =patient_programs[patient_program_keys[i]]["visits"][visit]["TREATMENTS"];
 
                         for(var j = 0 ; j < encounter_data.length ; j++){
@@ -125,13 +126,35 @@
 
                             for(var k = 0 ; k < concepts.length ; k++){
 
-                                console.log(encounter_data[concepts[k]]);
-
 
                                 var current_drug_position = intial_drug_postion + 20 * j + 1;
 
+                                var days = "";
+
+                                var start_date = new Date(encounter_data[j][concepts[k]].start_date);
+
+                                var end_date = new Date(encounter_data[j][concepts[k]].response.value.split("to")[1]);
+
+
+                                if(end_date){
+
+                                    days = ((end_date - start_date)/(1000*60*60*24)).toFixed(0);
+
+                                    if(days == 1){
+
+                                        days = days +" day";
+
+                                    }
+                                    else{
+
+                                        days = days + " days";
+                                    }
+
+                                }
+
                                 treaments = treaments +"A25,"+current_drug_position+",0,2,1,1,N,\""+
-                                            encounter_data[j][concepts[k]].response.value.replace("Once a day","(OD)").replace("at night","NOCTE").replace("from",":").replace("\sto\s","-")
+                                            encounter_data[j][concepts[k]].quantity+" tab(s). "+
+                                            encounter_data[j][concepts[k]].instructions.replace("Once a day","(OD)").replace("at night","NOCTE")+" "+days
                                             +"\"\n"
 
                             }
