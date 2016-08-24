@@ -778,6 +778,29 @@ var patient = ({
 
         div.appendChild(nextButton);
 
+        var printButton = document.createElement("button");
+        printButton.className = "blue";
+        printButton.style.cssFloat = "right";
+        printButton.id = "printButton";
+        printButton.innerHTML = "Print Barcode";
+        printButton.style.margin = "15px";
+        printButton.style.marginRight = "0px";
+        printButton.style.marginTop = "10px";
+        printButton.style.minWidth = "140px";
+        printButton.setAttribute("patient_id", patient_id);
+
+        printButton.onclick = function () {
+
+            if (patient) {
+
+                patient.printBarcode(this.getAttribute("patient_id"), function () {
+                });
+
+            }
+
+        }
+
+        div.appendChild(printButton);
 
         var table = document.createElement("table");
         table.border = 0;
@@ -1846,7 +1869,7 @@ var patient = ({
 
                         input.setAttribute("ajaxURL", patient.settings.firstNamesPath + "?name=");
 
-                        input.setAttribute("allowFreeText",true);
+                        input.setAttribute("allowFreeText", true);
 
                         break;
 
@@ -2299,6 +2322,49 @@ var patient = ({
         }
 
         tdf.appendChild(btn);
+
+    },
+
+    saveAs: function (data, callback) {
+
+        var uri = 'data:application/label; charset=utf-8; filename=test.lbl; disposition=inline,' + encodeURIComponent(data);
+
+        var ifrm = document.createElement("iframe");
+
+        ifrm.setAttribute("src", uri);
+
+        document.body.appendChild(ifrm);
+
+        setTimeout(function () {
+
+            document.body.removeChild(ifrm);
+
+        }, 100);
+
+        callback();
+
+    },
+
+    /*
+     * This method expects person_id NOT npid like the method in dashboard
+     */
+    printBarcode: function (person_id, callback) {
+
+        patient.ajaxRequest(patient.settings.patientBarcodeDataPath + patient.getCookie("token") + "&person_id=" + person_id,
+            function (data) {
+
+                if (typeof(data) == typeof(String()))
+                    data = JSON.parse(data);
+
+                var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + data.npid + "\"\nA40,50,0,2,2,2,N,\"" +
+                    data.first_name + " " + data.family_name + "\"\nA40,96,0,2,2,2,N,\"" +
+                    data.npid.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
+                    (parseInt(data.date_of_birth_estimated) == 1 ? "~" : "") + (new Date(data.date_of_birth)).format("dd/mmm/YYYY") +
+                    "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + data.residence + "\"\nP1\n";
+
+                patient.saveAs(text, callback);
+
+            });
 
     },
 
