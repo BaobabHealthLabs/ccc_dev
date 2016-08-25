@@ -4206,38 +4206,21 @@ var dashboard = ({
 
     saveAs: function (data, callback) {
 
-        var randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
+        var uri = 'data:application/label; charset=utf-8; filename=test.lbl; disposition=inline,' + encodeURIComponent(data);
 
-        var uri = 'data:application/label;charset=utf-8;disposition=inline,' + escape(data);
+        var ifrm = document.createElement("iframe");
 
-        var filename = randomString + ".lbl";
+        ifrm.setAttribute("src", uri);
 
-        var link = document.createElement('a');
+        document.body.appendChild(ifrm);
 
-        if (typeof link.download === 'string') {
+        setTimeout(function () {
 
-            link.href = uri;
+            document.body.removeChild(ifrm);
 
-            link.download = filename;
+        }, 100);
 
-            //Firefox requires the link to be in the body
-            document.body.appendChild(link);
-
-            //simulate click
-            link.click();
-
-            //remove the link when done
-            document.body.removeChild(link);
-
-            callback();
-
-        } else {
-
-            window.open(uri);
-
-            callback();
-
-        }
+        callback();
 
     },
 
@@ -4523,7 +4506,7 @@ var dashboard = ({
 
             });
 
-        }, 500);
+        }, 900);
 
     },
 

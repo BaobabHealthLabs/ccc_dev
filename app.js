@@ -7039,7 +7039,8 @@ app.get("/patient_barcode_data", function (req, res) {
             "o.patient_id LIMIT 1)) AS npid, given_name, family_name, birthdate, birthdate_estimated, gender, city_village " +
             "FROM patient_identifier o LEFT OUTER JOIN person_name ON person_name.person_id = o.patient_id LEFT OUTER " +
             "JOIN person ON person.person_id = o.patient_id LEFT OUTER JOIN person_address ON person_address.person_id " +
-            "= o.patient_id WHERE identifier = \"" + data.npid + "\" LIMIT 1";
+            "= o.patient_id WHERE " + (data.person_id ? " o.patient_id = \"" + data.person_id :
+            " identifier = \"" + data.npid) + "\" LIMIT 1";
 
         console.log(sql);
 
