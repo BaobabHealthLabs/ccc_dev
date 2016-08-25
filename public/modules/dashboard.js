@@ -4329,7 +4329,7 @@ var dashboard = ({
 
                     dashboard.createWebSocket();
 
-                }, 5000);
+                }, 1000);
             });
 
             dashboard.socket.on('newConnection', function (data) {
