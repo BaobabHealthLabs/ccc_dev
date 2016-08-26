@@ -2,12 +2,12 @@ P.1. PATIENT HISTORY AT ENROLMENT [program:: EPILEPSY PROGRAM$$ scope:: EXISTS$$
 
 Q.1.1. Date of onset [id::date_on_field$$pos:: 0$$field_type::date]
 
-Q.1.3. Marital Status [pos:: 2]
+Q.1.3. Marital Status [pos:: 2$$parent::Date of onset]
 O.1.3.1. Single
 O.1.3.2. Married
 O.1.3.3. Widowed
 
-Q.1.4. Occupation [pos:: 3$$ id:: occupation$$allowFreeText:: true]
+Q.1.4. Occupation [pos:: 3$$ id:: occupation$$allowFreeText:: true$$parent::Date of onset]
 O.1.4.1. Business
 O.1.4.2. Craftsman
 O.1.4.3. Driver
@@ -28,11 +28,11 @@ O.1.4.17. Student
 O.1.4.18. Teacher
 O.1.4.19. Other
 
-Q.1.5. Education level [pos:: 4]
+Q.1.5. Education level [pos:: 4$$parent::Date of onset]
 O.1.5.1. None
 O.1.5.2. Primary
 O.1.5.3. Secondary
 O.1.5.4. Tertiary
 
-Q.1.6. Medication History [pos::5$$field_type::text]
+Q.1.6. Medication History [pos::5$$field_type::text$$parent::Date of onset]
 

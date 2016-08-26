@@ -909,7 +909,7 @@ function epilepsyVisits(encounter_data,visitDate){
         "On family planing?":"",
         "Treatment":"",
         "Next Appointment Date" :"",
-        "Comments" :""
+        "Clinician notes" :""
 
 	}	
 	var weight,height;
@@ -924,7 +924,13 @@ function epilepsyVisits(encounter_data,visitDate){
 
 		var concept = Object.keys(encounter_data[i]);
 
-		visitRow[concept[0]] = encounter_data[i][concept[0]].response.value;
+
+         if(visitRow[concept[0]] !==undefined){
+
+                visitRow[concept[0]] = encounter_data[i][concept[0]].response.value;
+
+        }
+
 
 	}
 
@@ -1367,6 +1373,26 @@ function loadCardDashboard(){
 
 
 			}
+
+
+            if(concept_keys[j]=="Next Appointment Date"){
+
+                var td = document.createElement("td");
+
+                var appointment =  window.parent.dashboard.queryActiveObs("EPILEPSY PROGRAM",visitRows[i]["Visit Date"],"APPOINTMENT","Appointment date");
+
+                console.log(appointment)
+
+                if(appointment){
+
+                       td.innerHTML = appointment;
+
+                }
+                tr.appendChild(td);
+
+                continue;
+
+            }
 
 			td.innerHTML = visitRows[i][concept_keys[j]];
 			

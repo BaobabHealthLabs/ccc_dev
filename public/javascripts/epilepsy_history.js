@@ -374,7 +374,7 @@
             td.style.verticalAlign = "middle";
             td.style.padding = "8px";
             td.style.fontSize = "18px";
-            td.innerHTML = "Medical and Surgical Histroy";
+            td.innerHTML = "Medical and Surgical History";
 
             table.appendChild(td);
 
