@@ -111,8 +111,19 @@
                 "scope": "TODAY",
                 "program": "CROSS-CUTTING PROGRAM"
             },
+            "Treatments": {
+                "encounter": "TREATMENTS",
+                "scope": "TODAY",
+                "program": "HYPERTENSION PROGRAM"
+            },
             "Outcome": {
                 "encounter": "UPDATE OUTCOME"
+            },
+            "Bookings":{
+                "encounter":"APPOINTMENT",
+                "scope": "TODAY",
+                "program": "DIABETES PROGRAM"
+
             }
         },
         "workflow": [
@@ -169,8 +180,16 @@
             "Visit": {
                 "encounter": "ASTHMA VISIT"
             },
-            "Next Appointment" :{
-                "encounter":"APPOINTMENT"
+            "Treatments": {
+                "encounter": "TREATMENTS",
+                "scope": "TODAY",
+                "program": "ASTHMA PROGRAM"
+            },
+            "Bookings":{
+                "encounter":"APPOINTMENT",
+                "scope": "TODAY",
+                "program": "ASTHMA PROGRAM"
+
             }
         },
         "workflow": [

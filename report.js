@@ -361,11 +361,37 @@ app.get("/card/:id/:program",function(req,res){
 
 
 
-app.get("/overview/:program",function(req, res){
+app.get("/overview/:program/:username",function(req, res){
 
-      
+      var result = {
+                    "Female"          :   {"today":   0, "month" :  0, "ever":   0},
+
+                    "Male"            :   {"today":   0, "month" :  0, "ever":   0},
+
+                    "Total"           :   {"today":   0, "month" :  0, "ever":   0}
+
+
+      }
+
+
+
+      res.send(result);
 
 });
+
+app.get("/overview",function(req,res){
+
+        var program     = req.params["program"];
+
+        var start_date  = req.params["start_date"];
+
+        var end_date    = req.params["end_date"];
+
+        var gender      = req.params["gender"];
+
+});
+
+
 portfinder.basePort = 3016;
 
 portfinder.getPort(function (err, port) {
