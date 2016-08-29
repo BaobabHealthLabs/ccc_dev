@@ -12,13 +12,13 @@ Q.1.4. Have You Ever Had TB? [pos:: 3$$ tt_onUnLoad:: loadYears("year_of_tb_diag
 O.1.4.1. No
 O.1.4.2. Yes
 
-Q.1.4.2.1. Year(s) of TB Diagnosis [pos:: 4$$ multiple:: multiple$$ tt_pageStyleClass:: longSelectList$$ id:: year_of_tb_diagnosis$$ disabled:: true $$ parent :: Have You Ever Had TB?]
+Q.1.4.2.1. Year(s) of TB Diagnosis [pos:: 4$$ multiple:: multiple$$ tt_pageStyleClass:: longSelectList$$ id:: year_of_tb_diagnosis$$ disabled:: true $$ parent :: Have You Ever Had TB?$$ parent :: TYPE OF PATIENT]
 O.1.4.2.1.1. 1950
 
-Q.1.5. Is patient pregnant? [pos::5$$tt_requirenextclick::false$$condition::patientIsANC()]
+Q.1.5. Is patient pregnant? [pos::5$$tt_requirenextclick::false$$condition::patientIsANC()$$ parent :: TYPE OF PATIENT]
 O.1.5.1. No
 O.1.5.2. Yes
 
-Q.1.6. Is patient breastfeeding? [pos::5$$condition::patientIsANC()]
+Q.1.6. Is patient breastfeeding? [pos::5$$condition::patientIsANC()$$ parent :: TYPE OF PATIENT]
 O.1.6.1. No
 O.1.6.2. Yes
