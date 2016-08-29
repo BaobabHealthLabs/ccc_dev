@@ -4,7 +4,7 @@ Q.1.1. Any triggers [pos::0$$id::triggers]
 O.1.1.1. Yes
 O.1.1.2. No
 
-Q.1.2. Sound /Light /Touch  a trigger?[pos:: 1$$tt_requirenextclick::false$$condition::__$("triggers").value == "Yes"$$parent::Any triggers]
+Q.1.2. Sound /Light /Touch  a trigger?[pos:: 1$$tt_requirenextclick::false$$condition::__$("triggers").value == "Yes"$$parent::Any triggers$$parent::Any triggers]
 O.1.2.1. Yes
 O.1.2.2. No
 O.1.2.3. Unknown
