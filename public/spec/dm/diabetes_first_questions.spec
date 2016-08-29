@@ -16,9 +16,9 @@ O.1.4.2. Yes
 Q.1.4.2.1. Year(s) of TB Diagnosis [pos :: 4 $$ multiple:: multiple $$ tt_pageStyleClass :: longSelectList $$ id :: year_of_tb_diagnosis $$ disabled :: true $$ parent :: TYPE OF PATIENT]
 O.1.4.2.1.1. 1950
 
-Q.1.5. Have you been diagnosed with TB since your LAST clinic visit? [pos:: 5$$ tt_onUnLoad:: loadYears("year_of_tb_diagnosis2")$$ condition:: existingDiabetesPatient()$$ concept:: Have You Ever Had TB?]
+Q.1.5. Have you been diagnosed with TB since your LAST clinic visit? [pos:: 5$$ tt_onUnLoad:: loadYears("year_of_tb_diagnosis2")$$ condition:: existingDiabetesPatient()$$ concept:: Have You Ever Had TB?$$ parent :: TYPE OF PATIENT]
 O.1.5.1. No
 O.1.5.2. Yes
 
-Q.1.5.2.1. Year(s) of TB Diagnosis [pos:: 6$$ multiple:: multiple$$ tt_pageStyleClass:: longSelectList$$ id:: year_of_tb_diagnosis2$$ disabled:: true $$ parent :: Have You Ever Had TB?]
+Q.1.5.2.1. Year(s) of TB Diagnosis [pos:: 6$$ multiple:: multiple$$ tt_pageStyleClass:: longSelectList$$ id:: year_of_tb_diagnosis2$$ disabled:: true $$ parent :: Have You Ever Had TB?$$ parent :: TYPE OF PATIENT]
 O.1.5.2.1.1. 1950

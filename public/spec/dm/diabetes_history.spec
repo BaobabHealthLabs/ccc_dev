@@ -18,7 +18,7 @@ O.1.3.2.1.3. Other
 
 Q.1.3.2.1.3.1. Specify Other Cause of Diabetes [pos:: 4 $$ parent :: Cause of Secondary Diabetes]
 
-Q.1.4. Family History (blood relatives only) [pos:: 5]
+Q.1.4. Family History (blood relatives only) [pos:: 5 $$ parent :: Type of diabetes]
 O.1.4.1. Positive
 O.1.4.2. Negative
 O.1.4.3. Unknown
