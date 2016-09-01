@@ -4,16 +4,16 @@ Q.1.1. Diagnosis [pos:: 0$$id:: diagnosis$$ multiple:: multiple$$tt_beforeUnLoad
 O.1.1.1. Asthma
 O.1.1.2. COPD
 
-Q.1.1.1.1. Asthma diagnosis date [pos:: 1$$field_type::date$$ id:: asthma_date$$condition::false]
+Q.1.1.1.1. Asthma diagnosis date [pos:: 1$$field_type::date$$ id:: asthma_date$$condition::false$$parent::Diagnosis]
 
-Q.1.1.2.1. COPD diagnosis date [pos:: 2$$field_type::date$$ id:: copd_date$$condition::false]
+Q.1.1.2.1. COPD diagnosis date [pos:: 2$$field_type::date$$ id:: copd_date$$condition::false$$parent::Diagnosis]
 
-Q.1.3. Allergic to:[pos::3$$tt_pageStyleClass::MultiSelectList]
+Q.1.3. Allergic to:[pos::3$$tt_pageStyleClass::MultiSelectList$$parent::Diagnosis]
 O.1.3.1. Exposure to cold water or cold weather
 O.1.3.2. Exposure to pollen, dust or strong smell
 O.1.3.3. Change of soap
 
-Q.1.4.  Attack triggered by [pos::4$$concept::Exposures$$id::complications$$multiple:: multiple$$tt_beforeUnLoad::loadCheckConditions()$$tt_pageStyleClass::NoKeyboard$$parent::Any triggers:Yes]
+Q.1.4.  Attack triggered by [pos::4$$concept::Exposures$$id::complications$$multiple:: multiple$$tt_beforeUnLoad::loadCheckConditions()$$tt_pageStyleClass::NoKeyboard$$parent::Any triggers:Yes$$parent::Diagnosis]
 O.1.4.1. Smoking
 O.1.4.2. TB Contact
 O.1.4.3. Secondhand smoking
@@ -52,24 +52,24 @@ O.1.4.6.1.19. Other
 
 Q.1.4.6.2. Occupation Exposure Date[pos:: 10$$field_type::date$$id::occupational_exposure1$$parent::Exposures:Occupational Exposure]
 
-Q.1.5. Asthma history in the past month? [pos:: 11$$tt_requirenextclick::false]
+Q.1.5. Asthma history in the past month? [pos:: 11$$tt_requirenextclick::false$$parent::Diagnosis]
 O.1.5.1. Yes
 O.1.5.2. No
 O.1.5.3. Unknown
 
-Q.1.6. History of TB in the Past Two Years? [pos:: 12$$tt_requirenextclick::false]
+Q.1.6. History of TB in the Past Two Years? [pos:: 12$$tt_requirenextclick::false$$parent::Diagnosis]
 O.1.6.1. Yes
 O.1.6.2. No
 
-Q.1.7. History of Stroke? [pos:: 13$$tt_requirenextclick::false]
+Q.1.7. History of Stroke? [pos:: 13$$tt_requirenextclick::false$$parent::Diagnosis]
 O.1.7.1. Yes
 O.1.7.2. No
 
-Q.1.8. Chest deformities at Birth? [pos:: 14$$tt_requirenextclick::false]
+Q.1.8. Chest deformities at Birth? [pos:: 14$$tt_requirenextclick::false$$parent::Diagnosis]
 O.1.8.1. Yes
 O.1.8.2. No
 
-Q.1.9. Complication [pos:: 15$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$ helpText :: Does the patient have any of these complications ]
+Q.1.9. Complication [pos:: 15$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$ helpText :: Does the patient have any of these complications$$parent::Diagnosis ]
 O.1.9.1. Amputation
 O.1.9.2. Stroke
 O.1.9.3. Ulcers
@@ -80,7 +80,7 @@ O.1.9.6. Foot Ulcers
 O.1.9.7. Peripheral nueropathy
 0.1.9.8. CVA
 
-Q.1.10. Advice on life changes [pos:: 16$$multiple::multiple$$tt_pageStyleClass::NoKeyboard]
+Q.1.10. Advice on life changes [pos:: 16$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$parent::Diagnosis]
 O.1.10.1. Cigarette or smoke free enviroment
 O.1.10.2. Correct use of inhaler
 O.1.10.3. Weight loss

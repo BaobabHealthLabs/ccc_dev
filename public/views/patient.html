@@ -117,6 +117,7 @@
                 for(var i = 0; i < patient_program_keys.length; i++){
 
                         var visit = date.format("YYYY-mm-dd");
+
                         var encounter_data =patient_programs[patient_program_keys[i]]["visits"][visit]["TREATMENTS"];
 
                         for(var j = 0 ; j < encounter_data.length ; j++){
@@ -125,13 +126,40 @@
 
                             for(var k = 0 ; k < concepts.length ; k++){
 
-                                console.log(encounter_data[concepts[k]]);
-
 
                                 var current_drug_position = intial_drug_postion + 20 * j + 1;
 
+                                var days = "";
+
+                                var start_date = new Date(encounter_data[j][concepts[k]].start_date);
+
+                                var end_date = new Date(encounter_data[j][concepts[k]].auto_expire_date);
+
+
+                                if(end_date){
+
+                                    days = parseInt(((end_date - start_date)/(1000*60*60*24)).toFixed(0));
+
+                                    if(days == 1){
+
+                                        days = days +" day";
+
+                                    }
+                                    else{
+
+                                        days = days + " days";
+                                    }
+                                    if(k < concepts.length - 2){
+
+                                        days = days +",";
+
+                                    }
+
+                                }
+
                                 treaments = treaments +"A25,"+current_drug_position+",0,2,1,1,N,\""+
-                                            encounter_data[j][concepts[k]].response.value.replace("Once a day","(OD)").replace("at night","NOCTE").replace("from",":").replace("\sto\s","-")
+                                            encounter_data[j][concepts[k]].quantity+" tab(s). "+
+                                            encounter_data[j][concepts[k]].instructions+" "+days
                                             +"\"\n"
 
                             }
@@ -221,17 +249,60 @@
 
         if(dashboard.workflow.length == 1 && dashboard.workflow[0]=="Mastercard"){
 
-            printSummary(null,function(){
+             //clearInterval(tmrInterval);
 
-                clearInterval(tmrInterval);
+            var btn = dashboard.__$("btnContinue");
 
-                dashboard.workflow.push("printed");
+            btn.innerHTML = "Print prescription label";
 
-            });
+            btn.removeAttribute("onmousedown");
+
+            btn.removeAttribute("onclick");
+
+            btn.onmousedown = function(){
+
+                        printSummary(null,function(){
+
+                                dashboard.workflow.push("printed");
+
+                        });
+            }
 
         }
 
-    }, 100);
+    }, 200);
+
+
+    var currentProgram = dashboard.getCookie("currentProgram");
+
+    var programInterval = setInterval(function(){
+
+            if(dashboard.getCookie("currentProgram") != currentProgram){
+
+                currentProgram = dashboard.getCookie("currentProgram");
+
+                var btnContinue = dashboard.__$("btnContinue");
+
+                btnContinue.innerHTML = "Continue";
+
+                btnContinue.onmousedown = function () {
+
+                    if (this.className.match(/gray/))
+                        return;
+
+                    if (dashboard.workflow.length > 0) {
+
+                        dashboard.autoContinue = true;
+
+                        dashboard.$(dashboard.workflow[0]).click();
+
+                    }
+
+                }
+
+            }
+
+    },50);
 
 </script>
 

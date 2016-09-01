@@ -1415,7 +1415,7 @@ var dashboard = ({
         tdDiv2_1_2.style.width = "200px";
         tdDiv2_1_2.style.borderRight = "1px solid #fff";
         tdDiv2_1_2.style.color = "#fff";
-        tdDiv2_1_2.style.backgroundColor = "green";
+        tdDiv2_1_2.style.backgroundColor = "blue";
         tdDiv2_1_2.style.textAlign = "center";
         tdDiv2_1_2.style.fontWeight = "bold";
         tdDiv2_1_2.innerHTML = "Visit History";
@@ -1436,7 +1436,6 @@ var dashboard = ({
         tdDiv2_1_4.style.width = "200px";
         tdDiv2_1_4.style.borderRight = "1px solid #fff";
         tdDiv2_1_4.style.color = "#fff";
-        tdDiv2_1_4.style.backgroundColor = "green";
         tdDiv2_1_4.style.textAlign = "left";
         tdDiv2_1_4.style.fontWeight = "bold";
         tdDiv2_1_4.style.paddingLeft = "10px";
@@ -4329,7 +4328,7 @@ var dashboard = ({
 
                     dashboard.createWebSocket();
 
-                }, 5000);
+                }, 1000);
             });
 
             dashboard.socket.on('newConnection', function (data) {

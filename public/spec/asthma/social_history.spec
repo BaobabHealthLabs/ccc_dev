@@ -4,7 +4,7 @@ Q.1.1. Ever smoked?[pos::0$$tt_requirenextclick::false]
 O.1.1.1. Yes
 O.1.1.2. No
 
-Q.1.2. 	Do you currently smoke? [pos::1$$id::smoke$$tt_requirenextclick::false]
+Q.1.2. 	Do you currently smoke? [pos::1$$id::smoke$$tt_requirenextclick::false$$parent:: Ever smoked?]
 O.1.2.1. Yes
 O.1.2.2. No
 
@@ -18,27 +18,27 @@ Q.1.5. 	Are you a heavy alcohol drinker? [pos::4$$condition::__$("alcohol").valu
 O.1.5.1. Yes
 O.1.5.2. No
 
-Q.1.6. 	Do you do Exercises? [pos::5$$tt_requirenextclick::false]
+Q.1.6. 	Do you do Exercises? [pos::5$$tt_requirenextclick::false$$parent:: Ever smoked?]
 O.1.6.1. Yes
 O.1.6.2. No
 
-Q.1.7. Patient mode of cooking? [pos::6$$tt_requirenextclick::false]
+Q.1.7. Patient mode of cooking? [pos::6$$tt_requirenextclick::false$$parent:: Ever smoked?]
 O.1.7.1. Gas
 O.1.7.2. Electricity
 O.1.7.3. Charcoal
 O.1.7.4. None
 
-Q.1.8. Patient exposed to pollution?[pos ::7$$tt_requirenextclick::false]
+Q.1.8. Patient exposed to pollution?[pos ::7$$tt_requirenextclick::false$$parent:: Ever smoked?]
 O.1.8.1. Yes
 O.1.8.2. No
 
-Q.1.9. Patient lives or works near? [pos::8$$tt_requirenextclick::false]
+Q.1.9. Patient lives or works near? [pos::8$$tt_requirenextclick::false$$parent:: Ever smoked?]
 O.1.9.1. Near factory
 O.1.9.2. Near hospital
 O.1.9.1. None
 
 
-Q.1.10. Occupation [pos:: 9$$optional::true]
+Q.1.10. Occupation [pos:: 9$$optional::true$$parent:: Ever smoked?]
 O.1.10.1. Business
 O.1.10.2. Craftsman
 O.1.10.3. Driver

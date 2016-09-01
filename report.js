@@ -41,6 +41,58 @@ var people = {};
 
 var isDirty = {};
 
+Object.defineProperty(Date.prototype, "format", {
+    value: function (format) {
+        var date = this;
+
+        var result = "";
+
+        if (!format) {
+
+            format = ""
+
+        }
+
+        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+            "October", "November", "December"];
+
+        if (format.match(/YYYY\-mm\-dd/)) {
+
+            result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" + padZeros(date.getDate(), 2);
+
+        } else if (format.match(/mmm\/d\/YYYY/)) {
+
+            result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+        } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+            result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+        } else {
+
+            result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+        }
+
+        return result;
+    }
+});
+
+function padZeros(number, positions) {
+    var zeros = parseInt(positions) - String(number).length;
+    var padded = "";
+
+    for (var i = 0; i < zeros; i++) {
+        padded += "0";
+    }
+
+    padded += String(number);
+
+    return padded;
+}
+
 function queryRaw(sql, callback) {
 
     var config = require(__dirname + "/config/database.json");
@@ -286,6 +338,8 @@ app.get("/card_epilepsy_patient_overvew/:id/:concept",function(req,res){
 
     var pid = req.params["id"];
 
+    console.log("hello")
+
     var concept = req.params["concept"];
 
     var sql = " SELECT distinct concept.name , obs.person_id, obs.value_text,obs.encounter_id FROM obs "+
@@ -359,13 +413,148 @@ app.get("/card/:id/:program",function(req,res){
 
 });
 
+app.get("/overview",function(req,res){
 
+  var url_parts = url.parse(req.url, true);
 
-app.get("/overview/:program",function(req, res){
+  var query = url_parts.query;
 
-      
+  var today = (query.date ? (new Date(query.date)) : (new Date())).format("YYYY-mm-dd");
+
+  console.log(today);
+
+  var results = {
+    today: {},
+    month: {},
+    year: {}
+  };
+
+  async.series([
+
+    function(callback) {
+
+      var sql = "SELECT encounter.patient_id, count(distinct date(encounter_datetime)) AS total, " + 
+            "date(encounter_datetime) AS encounter_datetime, program.program_id, gender FROM " + 
+            "encounter LEFT OUTER JOIN patient_program ON patient_program.patient_program_id = " + 
+            "encounter.patient_program_id LEFT OUTER JOIN program ON program.program_id = " + 
+            "patient_program.program_id LEFT OUTER JOIN person ON person.person_id = " + 
+            "encounter.patient_id GROUP BY program.program_id, date(encounter_datetime), " + 
+            "encounter.patient_id HAVING encounter_datetime = DATE('" + today + "')";
+
+      console.log(sql);
+
+      queryRaw(sql, function(data) {
+
+        console.log(data);
+
+        if(data && data[0].length > 0) {
+
+          for(var i = 0; i < data[0].length; i++) {
+
+            var row = data[0][i];
+
+            if(!results.today[row.gender])
+              results.today[row.gender] = [];
+
+            results.today[row.gender].push(row.patient_id);
+
+          }
+
+        }
+
+        callback();
+
+      })
+
+    },
+
+    function(callback) {
+
+      var sql = "SELECT encounter.patient_id, count(distinct date(encounter_datetime)) AS total, " + 
+          "date(encounter_datetime) AS encounter_datetime, program.program_id, gender FROM " + 
+          "encounter LEFT OUTER JOIN patient_program ON patient_program.patient_program_id = " + 
+          "encounter.patient_program_id LEFT OUTER JOIN program ON program.program_id = " + 
+          "patient_program.program_id LEFT OUTER JOIN person ON person.person_id = " + 
+          "encounter.patient_id GROUP BY program.program_id, date(encounter_datetime), " + 
+          "encounter.patient_id HAVING month(encounter_datetime) = month('" + today + 
+            "') AND year(encounter_datetime) = year('" + today + "')";
+
+      console.log(sql);
+
+      queryRaw(sql, function(data) {
+
+        console.log(data);
+
+        if(data && data[0].length > 0) {
+
+          for(var i = 0; i < data[0].length; i++) {
+
+            var row = data[0][i];
+
+            if(!results.month[row.gender])
+              results.month[row.gender] = [];
+
+            results.month[row.gender].push(row.patient_id);
+
+          }
+
+        }
+
+        callback();
+
+      })
+
+    },
+
+    function(callback) {
+
+      var sql = "SELECT encounter.patient_id, count(distinct date(encounter_datetime)) AS total, " + 
+          "date(encounter_datetime) AS encounter_datetime, program.program_id, gender FROM " + 
+          "encounter LEFT OUTER JOIN patient_program ON patient_program.patient_program_id = " + 
+          "encounter.patient_program_id LEFT OUTER JOIN program ON program.program_id = " + 
+          "patient_program.program_id LEFT OUTER JOIN person ON person.person_id = " + 
+          "encounter.patient_id GROUP BY program.program_id, date(encounter_datetime), " + 
+          "encounter.patient_id HAVING year(encounter_datetime) = year('" + today + "')";
+
+      console.log(sql);
+
+      queryRaw(sql, function(data) {
+
+        console.log(data);
+
+        if(data && data[0].length > 0) {
+
+          for(var i = 0; i < data[0].length; i++) {
+
+            var row = data[0][i];
+
+            if(!results.year[row.gender])
+              results.year[row.gender] = [];
+
+            results.year[row.gender].push(row.patient_id);
+
+          }
+
+        }
+
+        callback();
+
+      })
+
+    }
+
+  ], function(err) {
+
+    if(err)
+      console.log(err);
+
+    res.status(200).json(results);
+
+  })
 
 });
+
+
 portfinder.basePort = 3016;
 
 portfinder.getPort(function (err, port) {
