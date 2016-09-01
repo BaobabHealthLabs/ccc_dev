@@ -1415,6 +1415,7 @@ var dashboard = ({
         tdDiv2_1_2.style.width = "200px";
         tdDiv2_1_2.style.borderRight = "1px solid #fff";
         tdDiv2_1_2.style.color = "#fff";
+        tdDiv2_1_2.style.backgroundColor = "blue";
         tdDiv2_1_2.style.textAlign = "center";
         tdDiv2_1_2.style.fontWeight = "bold";
         tdDiv2_1_2.innerHTML = "Visit History";
