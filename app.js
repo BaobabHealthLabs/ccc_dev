@@ -14,6 +14,8 @@ var Mutex = require("Mutex");
 var md5 = require("md5");
 var randomstring = require("randomstring");
 
+var router = express.Router();
+
 var ip = require("ip");
 var fs = require("fs");
 
@@ -7186,6 +7188,8 @@ app.get("/patient/:id", function (req, res) {
 });
 
 var plugins = fs.readdirSync(__dirname + "/routes");
+
+console.log(plugins);
 
 for (var i in plugins) {
 
