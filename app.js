@@ -7185,10 +7185,21 @@ app.get("/patient/:id", function (req, res) {
     res.sendFile(__dirname + "/public/views/patient.html");
 });
 
+var plugins = fs.readdirSync(__dirname + "/routes");
+
+for (var i in plugins) {
+
+    var plugin = plugins[i];
+
+    var root = plugin.replace(/\.js$/, "");
+
+    app.use('/' + root, require(__dirname + "/routes/" + plugin)(router));
+
+}
+
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/public/views/index.html");
 });
-
 
 portfinder.basePort = 3015;
 
