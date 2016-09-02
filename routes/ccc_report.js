@@ -417,7 +417,9 @@ module.exports = function (router) {
                     "encounter.patient_program_id LEFT OUTER JOIN program ON program.program_id = " +
                     "patient_program.program_id LEFT OUTER JOIN person ON person.person_id = " +
                     "encounter.patient_id GROUP BY program.program_id, date(encounter_datetime), " +
-                    "encounter.patient_id HAVING encounter_datetime = DATE('" + today + "')";
+                    "encounter.patient_id HAVING DATE(encounter_datetime) = DATE('" + today + "')" + (query.program ? 
+                        " AND program.program_id = (SELECT program_id FROM program WHERE name = \"" + 
+                            query.program + "\")" : "");
 
                 console.log(sql);
 
@@ -438,6 +440,7 @@ module.exports = function (router) {
 
                         }
 
+
                     }
 
                     callback();
@@ -455,7 +458,9 @@ module.exports = function (router) {
                     "patient_program.program_id LEFT OUTER JOIN person ON person.person_id = " +
                     "encounter.patient_id GROUP BY program.program_id, date(encounter_datetime), " +
                     "encounter.patient_id HAVING month(encounter_datetime) = month('" + today +
-                    "') AND year(encounter_datetime) = year('" + today + "')";
+                    "') AND year(encounter_datetime) = year('" + today + "')" + (query.program ? 
+                        " AND program.program_id = (SELECT program_id FROM program WHERE name = \"" + 
+                            query.program + "\")" : "");
 
                 console.log(sql);
 
@@ -492,7 +497,9 @@ module.exports = function (router) {
                     "encounter.patient_program_id LEFT OUTER JOIN program ON program.program_id = " +
                     "patient_program.program_id LEFT OUTER JOIN person ON person.person_id = " +
                     "encounter.patient_id GROUP BY program.program_id, date(encounter_datetime), " +
-                    "encounter.patient_id HAVING year(encounter_datetime) = year('" + today + "')";
+                    "encounter.patient_id HAVING year(encounter_datetime) = year('" + today + "')" + (query.program ? 
+                        " AND program.program_id = (SELECT program_id FROM program WHERE name = \"" + 
+                            query.program + "\")" : "");
 
                 console.log(sql);
 
