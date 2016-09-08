@@ -222,7 +222,24 @@ function loadCheckConditions(){
 	}
 }
 
+function diagonosidAndTransfer(){
 
+    var transfer_in_date = __$("transfer_in_date").value;
+
+    var diagnosis_date = __$('touchscreenInput' + tstCurrentPage).value;
+
+    if((new Date(diagnosis_date)) >= (new Date(transfer_in_date))){
+
+        setTimeout(
+            function(){
+            gotoPage(tstCurrentPage - 1, false, true); 
+            window.parent.dashboard.showMsg("Diagnosis Date should be less than or equal "+
+            transfer_in_date)},10);
+
+    }
+
+
+}
 
 function existingPatient() {
 
