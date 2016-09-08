@@ -181,7 +181,23 @@
 
                 if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES INITIAL QUESTIONS")) {
 
-                         window.parent.dashboard.navPanel(tasks["Initial Questions"])
+                        if(window.parent.dashboard.data.data.identifiers["DTM Number"] && window.parent.dashboard.data.data.identifiers["DTM Number"].identifier){
+
+                        
+                                window.parent.dashboard.navPanel(tasks["Initial Questions"]);
+
+
+                        }else{
+
+                            var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
+
+                            window.parent.dashboard.showConfirmMsg(message, "Confirm",
+                                    "javascript:window.parent.dashboard.navPanel('/spec/dm/diabetes_first_questions.spec')");
+
+
+                        }
+
+                         
 
                 }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES HISTORY")) {
 

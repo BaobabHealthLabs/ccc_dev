@@ -24,3 +24,5 @@ O.1.5.2. Yes
 Q.1.6. Is patient breastfeeding? [pos::7$$condition::patientIsANC()$$ parent :: TYPE OF PATIENT]
 O.1.6.1. No
 O.1.6.2. Yes
+
+Q.1.7. Summary [pos :: 8 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]

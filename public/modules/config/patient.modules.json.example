@@ -161,11 +161,15 @@
         "program": "ASTHMA PROGRAM",
         "identifiers": ["National id", "AST Number"],
         "tabs": {
-            "Asthma Initial Questions": {
+            "Initial Questions": {
                 "encounter": "ASTHMA INITIAL QUESTIONS"
             },
-            "Patient Overview": {
-                "encounter": "ASTHMA PATIENT OVERVIEW"
+            "Social History": {
+                "encounter": "ASTHMA SOCIAL HISTORY"
+            }
+            ,
+            "Family History": {
+                "encounter": "ASTHMA FAMILY HISTORY"
             },
             "HIV Status": {
                 "encounter": "HIV/ART STATUS",

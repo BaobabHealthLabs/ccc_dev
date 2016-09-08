@@ -88,7 +88,7 @@ O.1.10.4. Breathing exercises
 O.1.10.5. Allergen avoidance
 O.1.10.6. Acid reflux
 
-
+Q.1.11. Summary [pos :: 17 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
      
      
      

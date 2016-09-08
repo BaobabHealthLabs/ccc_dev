@@ -42,3 +42,5 @@ Q.1.11. Cholesterol Not Fasting Value [pos:: 10$$ field_type:: number$$ validati
 Q.1.12. Cholesterol Not Fasting Value [pos:: 11$$ id:: cnf_value$$ concept:: Cholesterol Not Fasting Lo/Hi Value$$ condition:: __$("test_types").selectedOptions.map().indexOf("Cholesterol Not Fasting") >= 0 && __$("cnf_unit").value == "Lo/Hi"]
 O.1.12.1. Lo
 O.1.12.2. Hi
+
+Q.1.13. Summary [pos :: 12 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
