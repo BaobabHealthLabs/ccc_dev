@@ -237,7 +237,12 @@
             "Family Histroy": {
                 "encounter": "FAMILY HISTORY"
             },
-            "HIV/ART Status": {
+            "Vitals": {
+                "encounter": "VITALS",
+                "scope": "TODAY",
+                "program": "CROSS-CUTTING PROGRAM"
+            },
+           "HIV Status": {
                 "encounter": "HIV/ART STATUS",
                 "scope": "TODAY",
                 "program": "CROSS-CUTTING PROGRAM"

@@ -174,7 +174,7 @@
                         "Initial Questions"    : "/spec/asthma/initial_questions.spec",
                         "Past Medical History" : "/spec/asthma/medical_history.spec",
                         "Social History"       : "/spec/asthma/social_history.spec",
-                        "Family History"       : "/spec/htn/family_history.spec"
+                        "Family History"       : "/spec/asthma/family_history.spec"
 
                 }
 
@@ -271,7 +271,7 @@
             table.appendChild(td);
 
             var message = 'Enroll patient in ' + dashboard.getCookie("currentProgram") + ' ' + 'Program?';
-
+0
             var img = document.createElement("img");
             img.setAttribute("src", icoAdd);
             img.height = "32";
@@ -405,7 +405,7 @@
 
             img.onclick = function () {
 
-                window.parent.dashboard.navPanel('/spec/htn/social_history.spec')
+                window.parent.dashboard.navPanel('/spec/asthma/social_history.spec')
 
             }
 
