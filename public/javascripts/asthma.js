@@ -98,6 +98,175 @@ function setDate(element){
 	__$(element).value = date;
 
 }
+
+function diagonosidAndTransfer(){
+
+    var transfer_in_date = __$("transfer_in_date").value;
+
+    var diagnosis_date = __$('touchscreenInput' + tstCurrentPage).value;
+
+    if((new Date(diagnosis_date)) > (new Date(transfer_in_date))){
+
+        setTimeout(
+            function(){
+            gotoPage(tstCurrentPage - 1, false, true); 
+            window.parent.dashboard.showMsg("Diagnosis Date should be less than or equal "+
+            transfer_in_date)},10);
+
+    }
+
+
+}
+
+//Add beautify() method to String Class
+    if (Object.getOwnPropertyNames(String.prototype).indexOf("beautify") < 0) {
+
+        Object.defineProperty(String.prototype, "beautify", {
+
+            value: function (size1, size2) {
+
+                var parts = this.split(" ");
+
+                var result = "";
+
+                for (var i = 0; i < parts.length; i++) {
+
+                    var part = parts[i];
+
+                    var root = part.substring(0, 1).toUpperCase();
+
+                    var stem = part.substring(1, part.trim().length).toUpperCase();
+
+                    result += (result.trim().length > 0 ? " " : "") + "<span style='font-size: " + size1 + "'>" + root +
+                            "</span><span style='font-size: " + size2 + "'>" + stem + "</span>";
+
+                }
+
+                return result;
+
+            }
+
+        });
+
+    }
+
+function showSummary() {
+
+        if (__$("keyboard")) {
+
+            __$("keyboard").style.display = "none";
+
+        }
+
+        if (__$("tt_page_summary")) {
+
+            __$("tt_page_summary").innerHTML = "";
+
+            var table = document.createElement("table");
+            table.style.width = "100%";
+            table.style.borderCollapse = "collapse";
+
+            __$("tt_page_summary").appendChild(table);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var th = document.createElement("th");
+            th.style.fontSize = "2em";
+            th.style.textAlign = "left";
+            th.style.padding = "20px";
+            th.style.borderBottom = "1px solid #ccc";
+            th.innerHTML = "Encounter Summary";
+
+            tr.appendChild(th);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            tr.appendChild(td);
+
+            var div = document.createElement("div");
+            div.style.width = "100%";
+            div.style.height = "calc(100vh - 180px)";
+            div.style.overflow = "auto";
+
+            td.appendChild(div);
+
+            var tableContent = document.createElement("table");
+            tableContent.style.width = "100%";
+            tableContent.style.borderCollapse = "collapse";
+            tableContent.cellPadding = "10";
+            tableContent.style.fontSize = "2em";
+
+            div.appendChild(tableContent);
+
+            var k = 0;
+
+            for (var i = 0; i < tstFormElements.length; i++) {
+
+                if (tstFormElements[i].value.trim().length <= 0)
+                    continue;
+
+                if (tstFormElements[i].type == "password")
+                    continue;
+
+                var tr = document.createElement("tr");
+
+                if (k % 2 > 0)
+                    tr.style.backgroundColor = "#eee";
+
+                tableContent.appendChild(tr);
+
+                var td = document.createElement("td");
+                td.style.width = "40%";
+                td.style.textAlign = "right";
+                td.style.borderRight = "1px dotted #ccc";
+                td.style.borderBottom = "1px dotted #ccc";
+                td.style.color = "#333";
+                td.style.verticalAlign = "top";
+                td.innerHTML = tstFormElements[i].getAttribute("helpText").beautify("0.9em", "0.55em");
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.textAlign = "left";
+                td.style.borderBottom = "1px dotted #ccc";
+                td.style.verticalAlign = "top";
+
+                if(tstFormElements[i].tagName.toLowerCase() == "select") {
+
+                    var opts = tstFormElements[i].selectedOptions;
+
+                    var arr = [];
+
+                    for(var j = 0; j < opts.length; j++) {
+
+                        arr.push(opts[j].innerHTML);
+
+                    }
+
+                    td.innerHTML = arr.join(",");
+
+                } else {
+
+                    td.innerHTML = tstFormElements[i].value;
+
+                }
+
+                tr.appendChild(td);
+
+                k++;
+
+            }
+
+        }
+
+}
+
 function loadYears(id){
 
     if(__$(id)) {
@@ -146,7 +315,7 @@ function patientIsANC(){
 
             var birthdate = new Date(window.parent.dashboard.data.data.birthdate);
 
-            var age = getAge(birthdate,now);
+            var age = window.parent.dashboard.getAge(birthdate,now);
 
             if(age >=13 && age <= 50){
 

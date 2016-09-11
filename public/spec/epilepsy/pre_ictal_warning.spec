@@ -3,3 +3,5 @@ Q.1.1. Pre-ictal Warning? [pos:: 0]
 O.1.1.1. Yes
 O.1.1.2. No
 O.1.1.3. Unknown
+
+Q.1.2. Summary [pos :: 1 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]

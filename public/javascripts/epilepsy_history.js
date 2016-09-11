@@ -180,7 +180,23 @@
 
                 if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "EPILEPSY INITIAL QUESTIONS")) {
 
-                         window.parent.dashboard.navPanel(tasks["Initial Questions"])
+                        if(window.parent.dashboard.data.data.identifiers["EPL Number"] && window.parent.dashboard.data.data.identifiers["EPL Number"].identifier){
+
+                        
+                               window.parent.dashboard.navPanel(tasks["Initial Questions"]);
+
+
+                        }else{
+
+                            var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
+
+                            window.parent.dashboard.showConfirmMsg(message, "Confirm",
+                                    "javascript:window.parent.dashboard.navPanel('/spec/epilepsy/initial_questions.spec')");
+
+
+                        }
+
+                         
 
                 }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "PATIENT HISTORY AT ENROLMENT")) {
 

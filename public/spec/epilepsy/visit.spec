@@ -108,3 +108,5 @@ O.1.24.1. Yes
 O.1.24.2. No
 
 Q.1.25. Comments [pos::24$$field_type::text$$parent::Visit Date]
+
+Q.1.26. Summary [pos :: 25 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]

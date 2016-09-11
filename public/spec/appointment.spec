@@ -1,5 +1,7 @@
-P.1. APPOINTMENT [program:: CROSS-CUTTING PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;load_balancer]
+P.1. APPOINTMENT [program:: CROSS-CUTTING PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;load_balancer;dm]
 
 Q.1.1. Appointment [pos :: 0 $$ tt_onLoad :: generateBalancer(); __$("nextButton").className = __$("nextButton").className.replace(/green/i, "gray") $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard $$ disabled :: true]
 
 Q.1.2. Appointment date [pos :: 1 $$ id :: appointment_date $$ field_type :: hidden$$parent::Appointment]
+
+Q.1.3. Summary [pos :: 2 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]

@@ -171,11 +171,11 @@
 
                 var tasks = {
 
-                        "Seizure Type"                 : "/spec/epilepsy/initial_questions.spec",
-                        "Triggers"                     : "/spec/epilepsy/enrolment_history.spec",
-                        "Pre-ictal Warning"            : "/spec/epilepsy/medical_history.spec",
-                        "Post-ictal Features"          : "/spec/epilepsy/family_history.spec",
-                        "Exposures and Complications"  : "/spec/epilepsy/family_history.spec"
+                        "Seizure Type"                 : "/spec/epilepsy/seizure_type.spec",
+                        "Triggers"                     : "/spec/epilepsy/triggers.spec",
+                        "Pre-ictal Warning"            : "/spec/epilepsy/pre_ictal_warning.spec",
+                        "Post-ictal Features"          : "/spec/epilepsy/post_ictal_features.spec",
+                        "Exposures and Complications"  : "/spec/epilepsy/patient_overview.spec"
 
                 }
 

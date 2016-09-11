@@ -39,3 +39,5 @@ Q.1.13. Drug Related Date[pos:: 12$$field_type::date$$ id:: drug_related_date$$p
 Q.1.15. Other Date [pos:: 14$$field_type::date$$ id:: other2$$parent::Complications:Other]
 
 Q.1.14. Other Complications Specify [pos:: 13$$id:: other3$$parent::Complications:Other]
+
+Q.1.16. Summary [pos :: 15 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
