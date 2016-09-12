@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Complications</title>
+    <link rel="stylesheet" href="/touchscreentoolkit/lib/stylesheets/touch-fancy.css" type="text/css">
+    <style id="styles">
+        td {
+            border-color: #eee;
+            -moz-user-select: none;
+        }
+
+        .link {
+            text-decoration: underline;
+            color: #333;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .link:hover {
+            color: #fb9d23;
+            text-decoration: overline;
+        }
+
+        .collapsible-creatinine {
+            display: table-cell;
+        }
+
+        #complications{
+
+            width: 25%;
+
+            height: auto;
+            float:left;
+
+        }
+       
+        #complication_content{
+
+            width: 70%;
+            background: red;
+            height: 100px;
+            float:right;
+
+        }
+        input[type=checkbox]:not(old){
+
+              width     : 4em;
+              margin    : 0;
+              padding   : 0;
+              font-size : 2em;
+
+        }
+
+        .square{
+
+            width: 3em;
+            height: 3em;
+            border: 2px solid black;
+
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" style="margin: 0px;">
+<div style="font-size: 27px; background-color: #6281a7; color: #eee; padding:0.5em; width:100%;text-align:center;">
+    Diabetes Clinic
+</div>
+<div style="width:100%;margin-top:0.5%">
+
+        <div id="complications">
+
+            <table>
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Creatinine</a></td>
+                    <td><input type="checkbox" name=""></td></tr>
+                <tr><td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Urine Protein</a></td><td><input type="checkbox" name=""></td></tr>
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Visual Acuity</a></td>
+                    <td><input type="checkbox" name=""></td></tr>
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Fundoscopy</a></td>
+                    <td><input type="checkbox" name=""></td></tr>
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Foot Check</a></td>
+                    <td><input type="checkbox" name=""></td></tr>
+                <tr>
+                    <td style="vertical-align: top; width: 150px;padding:0.7em" align="right" class="link"><a href="#">Urea</a></td>
+                    <td><input type="checkbox" name=""></td></tr>
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Macrovascular</a></td>
+                    <td><input type="checkbox" name=""></td>
+                </tr>
+            </table>
+            
+        </div>
+        <div id="complication_content">
+            
+        </div>
+    
+</div>
+<div style="background: #303030; position: absolute; bottom:5px;width:100%">
+    <button class="green" style="float: right; margin: 10px 15px 15px; min-width: 140px;" id="nextButton"
+            onclick="window.parent.dashboard.activeTask = null; window.parent.dashboard.exitNavPanel();">
+        Finish
+    </button>
+    <button class="blue" style="float: right; margin: 10px 0px 15px; min-width: 140px;" id="btnContinue"
+            onclick="window.parent.dashboard.autoContinue = true;executeTasks();">
+        Continue
+    </button>
+</div>
+</body>
+</html>

@@ -1,7 +1,17 @@
 P.1. APPOINTMENT [program:: CROSS-CUTTING PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;load_balancer;dm]
 
-Q.1.1. Appointment [pos :: 0 $$ tt_onLoad :: generateBalancer(); __$("nextButton").className = __$("nextButton").className.replace(/green/i, "gray") $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard $$ disabled :: true]
+Q.1.1.  Book Appointment in next [pos :: 0 $$ id :: book_in $$ tt_pageStyleClass::NoKeyboard $$ tt_onUnLoad :: setAppointmentCalendar("book_in", "appointment_calendar")]
+O.1.1.1. 1 week
+O.1.1.2. 2 weeks
+O.1.1.3. 3 weeks
+O.1.1.4. 4 weeks
+O.1.1.5. 5 weeks
+O.1.1.6. 6 weeks
+O.1.1.7. 7 weeks
+O.1.1.8. 8 weeks
 
-Q.1.2. Appointment date [pos :: 1 $$ id :: appointment_date $$ field_type :: hidden$$parent::Appointment]
+Q.1.2. Appointment [pos :: 1 $$ concept ::Appointment date $$ id :: appointment_calendar $$ field_type :: calendar $$ optional :: true $$ tt_onLoad::setControlDimesion()]
 
-Q.1.3. Summary [pos :: 2 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.3. Appointment date [pos :: 2 $$ id :: appointment_date $$ field_type :: hidden$$parent::Appointment $$condition::false]
+
+Q.1.4. Summary [pos :: 3 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
