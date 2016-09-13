@@ -18,8 +18,26 @@
         }
 
         .link:hover {
-            color: #fb9d23;
+            color: #ffffff;
+
+            text-decoration: none;
+
+            background: #6281a7;
+        }
+
+        .show {
+            text-decoration: underline;
+            color: #333;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .show:hover {
+
+            color: #6281a7;
+
             text-decoration: overline;
+
         }
 
         .collapsible-creatinine {
@@ -29,34 +47,86 @@
         #complications{
 
             width: 25%;
-
             height: auto;
             float:left;
+            margin-left: 0.5%;
+            border-left: 1px dotted #000;
+
+        }
+
+        #complication_name{
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color :#94bdd3;
+
+            width: 95%;
+
+            text-align: left;
+
+            margin-right: 5%;
+
+            margin-top: 1%;
+
+            margin-bottom: 1.5%;
 
         }
        
         #complication_content{
 
             width: 70%;
-            background: red;
-            height: 100px;
+            
+
             float:right;
 
-        }
-        input[type=checkbox]:not(old){
+            margin-right: 2%;
 
-              width     : 4em;
-              margin    : 0;
-              padding   : 0;
-              font-size : 2em;
+            border-right: 1px dotted #000;
+
 
         }
+        input[type=checkbox].css-checkbox {
+            position:absolute; z-index:-1000; 
+            left:-1000px; overflow: hidden; 
+            clip: rect(0 0 0 0); 
+            height:1px; 
+            width:1px; 
+            margin:-1px; 
+            padding:0; border:0;
+        }
 
-        .square{
+        input[type=checkbox].css-checkbox + label.css-label {
+                            padding-left:35px;
+                            height:30px; 
+                            display:inline-block;
+                            line-height:30px;
+                            background-repeat:no-repeat;
+                            background-position: 0 0;
+                            font-size:30px;
+                            vertical-align:middle;
+                            cursor:pointer;
 
-            width: 3em;
-            height: 3em;
-            border: 2px solid black;
+        }
+
+        input[type=checkbox].css-checkbox:checked + label.css-label {
+                            background-position: 0 -30px;
+        }
+        label.css-label {
+
+                background-image:url(/images/check_box1.png);
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+        }
+
+        label {
+
+                margin-left:20px;
 
         }
     </style>
@@ -69,32 +139,44 @@
 
         <div id="complications">
 
-            <table>
+            <table id="complications_table">
                 <tr>
-                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Creatinine</a></td>
-                    <td><input type="checkbox" name=""></td></tr>
-                <tr><td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Urine Protein</a></td><td><input type="checkbox" name=""></td></tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link" onclick="loadPage('creatinine',this)" >Creatinine</td>
+                    <td><input type="checkbox" name="creatinine" id="creatinine" class="css-checkbox" onchange="addToComplicationWorkFlow(this)" /><label for="creatinine" class="css-label"></label></td></tr>
                 <tr>
-                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Visual Acuity</a></td>
-                    <td><input type="checkbox" name=""></td></tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link" onclick="loadPage('urine_protein',this)">Urine Protein</td>
+                    <td><input type="checkbox" name="urine_protein" id="urine_protein" class="css-checkbox" onchange="addToComplicationWorkFlow(this)"  /><label for="urine_protein" class="css-label"></label></td>
+                </tr>
                 <tr>
-                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Fundoscopy</a></td>
-                    <td><input type="checkbox" name=""></td></tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link" onclick="loadPage('visual_acuity',this)">Visual Acuity</td>
+                    <td><input type="checkbox" name="visual_actuity" id="visual_acuity" class="css-checkbox" onchange="addToComplicationWorkFlow(this)" /><label for="visual_acuity" class="css-label"></label></td>
+                </tr>
                 <tr>
-                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Foot Check</a></td>
-                    <td><input type="checkbox" name=""></td></tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link" onclick="loadPage('fundoscopy',this)">Fundoscopy</td>
+                    <td><input type="checkbox" name="fundoscopy" id="fundoscopy" class="css-checkbox" onchange="addToComplicationWorkFlow(this)" /><label for="fundoscopy" class="css-label"></label></td></tr>
                 <tr>
-                    <td style="vertical-align: top; width: 150px;padding:0.7em" align="right" class="link"><a href="#">Urea</a></td>
-                    <td><input type="checkbox" name=""></td></tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link" onclick="loadPage('foot_check',this)">Foot Check</td>
+                    <td><input type="checkbox" name="foot_check" id="foot_check" class="css-checkbox" onchange="addToComplicationWorkFlow(this)" /><label for="foot_check" class="css-label"></label></td></tr>
                 <tr>
-                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link"><a href="#">Macrovascular</a></td>
-                    <td><input type="checkbox" name=""></td>
+                    <td style="vertical-align: top; width: 150px;padding:0.7em" align="right" class="link" onclick="loadPage('urea',this)">Urea</td>
+                    <td><input type="checkbox" name="urea" id="urea" class="css-checkbox" onchange="addToComplicationWorkFlow(this)" /><label for="urea" class="css-label"></label></td></tr>
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em" align="right" class="link" onclick="loadPage('macrovascular',this)">Macrovascular</td>
+                    <td><input type="checkbox" name="macrovascular" id="macrovascular" class="css-checkbox" onchange="addToComplicationWorkFlow(this)" /><label for="macrovascular" class="css-label"></label></td>
                 </tr>
             </table>
             
         </div>
         <div id="complication_content">
             
+            <div id="complication_name"> Complication Name</div>
+
+            <div id="complication_data">
+                
+
+            </div>
+
+
         </div>
     
 </div>
@@ -108,5 +190,27 @@
         Continue
     </button>
 </div>
+<script src="/javascripts/complications2.js"></script>
+
+<script type="text/javascript">
+    
+    var windowHeight = window.innerHeight;
+
+    var height = (0.6 * windowHeight) + "px";
+
+    var list_table_height = __$("complications_table").clientHeight+"px";
+    
+
+    if(list_table_height > height){
+
+        __$("complications").style.height = height;
+
+        __$("complications").style.overflowY = "scroll";
+
+    }
+
+   
+
+</script>
 </body>
 </html>
