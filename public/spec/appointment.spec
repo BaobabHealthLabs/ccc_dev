@@ -1,4 +1,4 @@
-P.1. APPOINTMENT [program:: CROSS-CUTTING PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;load_balancer;dm]
+P.1. APPOINTMENT [program:: CROSS-CUTTING PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;load_balancer;dm$$includecss::calendar]
 
 Q.1.1.  Book Appointment in next [pos :: 0 $$ id :: book_in $$ tt_pageStyleClass::NoKeyboard $$ tt_onUnLoad :: setAppointmentCalendar("book_in", "appointment_calendar")]
 O.1.1.1. 1 week

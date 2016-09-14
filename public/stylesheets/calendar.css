@@ -1,0 +1,18 @@
+.touchscreenTextInput,
+  .tt_controls_time_until_next_appointment #keyboard,
+  .tt_controls_next_appointment_date #num,
+  .tt_controls_next_appointment_date #Unknown {
+    /*display:none;*/
+  }
+  .tt_controls_next_appointment_date #keyboard{
+    /*top:80px;*/
+  }
+
+  .cTable {
+    width: 96%;
+    margin: auto;
+  }
+
+  .cRow {
+    line-height: 30px;
+  }
