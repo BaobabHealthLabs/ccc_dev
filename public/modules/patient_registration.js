@@ -1751,7 +1751,7 @@ var patient = ({
         var fields = ["First Name", "Last Name", "Gender", "Middle Name", "Maiden Name", "Date of birth", "Nationality",
             "Current Region", "Current District", "Current T/A", "Current Village", "Region of Origin", "Home District",
             "Home T/A", "Home Village", "Closest Landmark", "Cellphone Number", "Home Phone Number",
-            "Office Phone Number", "Occupation", "Nationality"];
+            "Office Phone Number", "Occupation"];
 
         for (var i = 0; i < fields.length; i++) {
 
