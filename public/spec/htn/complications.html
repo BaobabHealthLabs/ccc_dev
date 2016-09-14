@@ -18,127 +18,179 @@
         }
 
         .link:hover {
-            color: #fb9d23;
+            color: #ffffff;
+
+            text-decoration: none;
+
+            background: #6281a7;
+        }
+
+        .show {
+            text-decoration: underline;
+            color: #333;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .show:hover {
+
+            color: #6281a7;
+
             text-decoration: overline;
+
         }
 
         .collapsible-creatinine {
             display: table-cell;
         }
+
+
+        #container {
+
+            width: 96%;
+
+            margin: auto;
+
+            height: 450px;
+
+            border: 1px solid #6180a6;
+
+            margin-top: 1%;
+
+
+        }
+
+        #complications{
+
+            width: 25%;
+            height: auto;
+            float:left;
+            border-left: 1px solid #6180a6;
+
+        }
+
+        #complication_name{
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color :#94bdd3;
+
+            width: 95%;
+
+            text-align: left;
+
+            margin-right: 5%;
+
+            margin-top: 1%;
+
+            margin-bottom: 1.5%;
+
+        }
+       
+        #complication_content{
+
+            width: 70%;
+            
+
+            float:right;
+
+            margin-right: 2%;
+
+
+        }
+        input[type=checkbox].css-checkbox {
+            position:absolute; z-index:-1000; 
+            left:-1000px; overflow: hidden; 
+            clip: rect(0 0 0 0); 
+            height:1px; 
+            width:1px; 
+            margin:-1px; 
+            padding:0; border:0;
+        }
+
+        input[type=checkbox].css-checkbox + label.css-label {
+                            padding-left:35px;
+                            height:30px; 
+                            display:inline-block;
+                            line-height:30px;
+                            background-repeat:no-repeat;
+                            background-position: 0 0;
+                            font-size:30px;
+                            vertical-align:middle;
+                            cursor:pointer;
+
+        }
+
+        input[type=checkbox].css-checkbox:checked + label.css-label {
+                            background-position: 0 -30px;
+        }
+        label.css-label {
+
+                background-image:url(/images/check_box1.png);
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+        }
+
+        label {
+
+                margin-left:20px;
+
+        }
     </style>
 </head>
-<body oncontextmenu="return false;" style="margin: 0px;">
+<body oncontextmenu="return false;" style="margin: 0px;" onresize="adjastDimesions()">
+<div style="font-size: 27px; background-color: #6281a7; color: #eee; padding:0.5em; width:100%;text-align:center;">
+    Hypertension Clinic
+</div>
+<div id="container">
 
-<table width="100%" style="border-collapse: collapse; border-color: #eee;" cellpadding="0">
-    <tr>
-        <td align="center" style="font-size: 24px; background-color: #6281a7; color: #eee; padding-top: 10px;">
-            Hypertension Clinic
-        </td>
-    </tr>
-    <tr>
-        <td align="center" style="background-color: #6281a7; color: #eee; padding-bottom: 5px;">
-            <a class="link" style="font-size: 12px; color: #eee; " href="#oedema">Oedema</a> |
-            <a class="link" style="font-size: 12px; color: #eee; " href="#shortness_of_breath">Shortness of breath</a> |
-            <a class="link" style="font-size: 12px; color: #eee; " href="#creatinine">Creatinine</a> |
-            <a class="link" style="font-size: 12px; color: #eee; " href="#visual_acuity">Visual Acuity</a> |
-            <a class="link" style="font-size: 12px; color: #eee; " href="#fundoscopy">Fundoscopy</a> |
-            <a class="link" style="font-size: 12px; color: #eee; " href="#macrovascular">Macrovascular</a> <!-- | 
-            <a class="link" style="font-size: 12px; color: #eee; " href="#amputation"> Amputation</a-->
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div id="divMain" style="background-color: rgb(255, 255, 255); overflow: auto; height: calc(100vh - 145px);">
-                <table width="100%" border="1" style="border-collapse: collapse; border-color: #eee;" cellpadding="10">
-                    <tr>
-                        <td style="vertical-align: top; width: 150px;" align="right">
-                            &nbsp;
-                        </td>
-                        <td>
+        <div id="complications">
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/htn/oedema.spec');">
-                             Oedema
-                        </td>
-                        <td id="oedema">
+            <table id="complications_table">
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em ; border-right: 2px solid #6180a6" align="right" class="link" onclick="loadPage('oedema',this)" >Oedama</td>
+                    <td><input type="checkbox" name="oedema" id="oedema" class="css-checkbox" onchange="addToComplicationWorkFlow(this)" /><label for="oedema" class="css-label"></label></td></tr>
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em; border-right: 2px solid #6180a6" align="right" class="link" onclick="loadPage('shortness_of_breath',this)">Shortness of Breath</td>
+                    <td><input type="checkbox" name="shortness_of_breath" id="shortness_of_breath" class="css-checkbox" onchange="addToComplicationWorkFlow(this)"  /><label for="shortness_of_breath" class="css-label"></label></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em ; border-right: 2px solid #6180a6" align="right" class="link" onclick="loadPage('creatinine',this)" >Creatinine</td>
+                    <td><input type="checkbox" name="creatinine" id="creatinine" class="css-checkbox" onchange="addToComplicationWorkFlow(this)" /><label for="creatinine" class="css-label"></label></td></tr>
+                <tr>
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em; border-right: 2px solid #6180a6" align="right" class="link" onclick="loadPage('visual_acuity',this)">Visual Acuity</td>
+                    <td><input type="checkbox" name="visual_actuity" id="visual_acuity" class="css-checkbox" onchange="addToComplicationWorkFlow(this)" /><label for="visual_acuity" class="css-label"></label></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em; border-right: 2px solid #6180a6" align="right" class="link" onclick="loadPage('fundoscopy',this)">Fundoscopy</td>
+                    <td><input type="checkbox" name="fundoscopy" id="fundoscopy" class="css-checkbox" onchange="addToComplicationWorkFlow(this)" /><label for="fundoscopy" class="css-label"></label></td>
+                </tr>
 
-                        </td>
-                    </tr>
-                     <tr>
-                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/htn/shortness_of_breath.spec');">
-                             Shortness of breath
-                        </td>
-                        <td id="shortness_of_breath">
+                <tr>
+                    <td style="vertical-align: top; width: 150px; padding:0.7em; border-right: 2px solid #6180a6" align="right" class="link" onclick="loadPage('macrovascular',this)">Macrovascular</td>
+                    <td><input type="checkbox" name="macrovascular" id="macrovascular" class="css-checkbox" onchange="addToComplicationWorkFlow(this)" /><label for="macrovascular" class="css-label"></label></td>
+                </tr>
+            </table>
+            
+        </div>
+        <div id="complication_content">
+            
+            <div id="complication_name"> Complication Name</div>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/htn/creatinine.spec');">
-                            Creatinine
-                        </td>
-                        <td id="creatinine">
+            <div id="complication_data"></div>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/htn/visual_acuity.spec');">
-                            Visual Acuity
-                        </td>
-                        <td id="visual_acuity">
 
-                        </td>
-                    </tr>
-                    <tr style="background-color: rgba(238,238,238, 0.3);">
-                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/htn/fundoscopy.spec');">
-                            Fundoscopy
-                        </td>
-                        <td id="fundoscopy">
-
-                        </td>
-                    </tr>
-                   
-        
-                    <tr>
-                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/htn/macrovascular.spec');">
-                            Macrovascular
-                        </td>
-                        <td id="macrovascular">
-
-                        </td>
-                    </tr>
-                    <!--tr>
-                        <td style="vertical-align: top; width: 150px;" align="right" class="link"
-                            onclick="window.parent.dashboard.exitNavPanel('/spec/htn/amputation.spec');">
-                              Amputation
-                        </td>
-                        <td id="amputation">
-
-                        </td>
-                    </tr-->
-                    <tr>
-                        <td style="vertical-align: top; width: 150px;" align="right">
-                            &nbsp;
-                        </td>
-                        <td>
-
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-        </td>
-    </tr>
-</table>
-
-<div style="background-color: rgb(51, 51, 51); height: 80px; overflow: hidden; padding: 0px;">
+        </div>
+    
+</div>
+<div style="background: #303030; position: absolute; bottom:5px;width:100%">
     <button class="green" style="float: right; margin: 10px 15px 15px; min-width: 140px;" id="nextButton"
             onclick="window.parent.dashboard.activeTask = null; window.parent.dashboard.exitNavPanel();">
         Finish
@@ -147,12 +199,37 @@
             onclick="window.parent.dashboard.autoContinue = true;executeTasks();">
         Continue
     </button>
-
-    <!--button class="orange" style="float: right; margin: 10px 10px 15px; min-width: 140px;" id="printButton"
-            onclick="">
-        Print Complications Label
-    </button-->
 </div>
 <script src="/javascripts/htncomplications.js"></script>
+
+<script type="text/javascript">
+    
+    function adjastDimesions(){
+
+        var windowHeight = window.innerHeight;
+
+        var height = (0.64 * windowHeight) + "px";
+
+        __$("container").style.height = height;
+
+        __$("complications").style.minHeight = height;
+
+        var list_table_height = __$("complications_table").clientHeight+"px";
+        
+        if(list_table_height > height){
+
+            __$("complications").style.height = height;
+
+            __$("complications").style.overflowY = "auto";
+
+        }
+
+        
+
+    }
+
+   adjastDimesions();
+
+</script>
 </body>
 </html>

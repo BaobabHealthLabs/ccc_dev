@@ -179,51 +179,59 @@
 
                 }
 
-                if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES INITIAL QUESTIONS")) {
-
-                        if(window.parent.dashboard.data.data.identifiers["DTM Number"] && window.parent.dashboard.data.data.identifiers["DTM Number"].identifier){
-
-                        
-                                window.parent.dashboard.navPanel(tasks["Initial Questions"]);
+                var interval = setInterval(function(){
 
 
-                        }else{
+                         if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES INITIAL QUESTIONS")) {
 
-                            var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
+                            if(window.parent.dashboard.data.data.identifiers["DTM Number"] && window.parent.dashboard.data.data.identifiers["DTM Number"].identifier){
 
-                            window.parent.dashboard.showConfirmMsg(message, "Confirm",
-                                    "javascript:window.parent.dashboard.navPanel('/spec/dm/diabetes_first_questions.spec')");
+                            
+                                    window.parent.dashboard.navPanel(tasks["Initial Questions"]);
 
+
+                            }else{
+
+                                var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
+
+                                window.parent.dashboard.showConfirmMsg(message, "Confirm",
+                                        "javascript:window.parent.dashboard.navPanel('/spec/dm/diabetes_first_questions.spec')");
+
+
+                            }
+
+                             
+
+                        }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES HISTORY")) {
+
+                                 
+                                 window.parent.dashboard.navPanel(tasks["Diabetes History"])
+
+                        }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "PAST DIABETES MEDICAL HISTORY")) {
+
+                                window.parent.dashboard.navPanel(tasks["Past Medical History"])
+
+                        }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "GENERAL HEALTH")) {
+
+                                window.parent.dashboard.navPanel(tasks["General Health"])
+
+                        }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES FAMILY HISTORY")) {
+
+                                window.parent.dashboard.navPanel(tasks["Family History"])
+
+                        }
+                        else{
+                            
+                                window.parent.dashboard.workflow.splice(0, 1);
+
+                               // window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
 
                         }
 
-                         
 
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES HISTORY")) {
+                }, 1000);
 
-                         
-                         window.parent.dashboard.navPanel(tasks["Diabetes History"])
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "PAST DIABETES MEDICAL HISTORY")) {
-
-                        window.parent.dashboard.navPanel(tasks["Past Medical History"])
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "GENERAL HEALTH")) {
-
-                        window.parent.dashboard.navPanel(tasks["General Health"])
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES FAMILY HISTORY")) {
-
-                        window.parent.dashboard.navPanel(tasks["Family History"])
-
-                }
-                else{
-                    
-                        window.parent.dashboard.workflow.splice(0, 1);
-
-                        window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
-
-                }
+               
 
         }
       

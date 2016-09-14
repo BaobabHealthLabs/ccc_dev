@@ -7118,8 +7118,7 @@ app.get("/bookings", function (req, res) {
         'FROM obs LEFT OUTER JOIN person ON person.person_id = obs.person_id LEFT OUTER JOIN patient_identifier ON ' +
         'patient_identifier.patient_id = obs.person_id WHERE concept_id = (SELECT concept_id FROM concept_name WHERE ' +
         'name = "Appointment date" AND voided = 0 LIMIT 1) AND DATE(value_text) >= DATE("' + query.start_date + '") ' +
-        'AND DATE(value_text) <= DATE("' + query.end_date + '") AND obs.voided = 0 AND patient_identifier.identifier_type = ' +
-        '(SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = "National id" LIMIT 1)';
+        'AND DATE(value_text) <= DATE("' + query.end_date + '") AND obs.voided = 0';
 
     queryRaw(sql, function (resp) {
 
@@ -7140,6 +7139,38 @@ app.get("/bookings", function (req, res) {
         res.status(200).json({error: false, data: data});
 
     })
+
+});
+
+app.get("/bookings_count", function(req,res){
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = 'SELECT obs.value_text AS appointment_date, count(obs.value_text) as count ' +
+        'FROM obs LEFT OUTER JOIN person ON person.person_id = obs.person_id LEFT OUTER JOIN patient_identifier ON ' +
+        'patient_identifier.patient_id = obs.person_id WHERE concept_id = (SELECT concept_id FROM concept_name WHERE ' +
+        'name = "Appointment date" AND voided = 0 LIMIT 1) AND DATE(value_text) >= DATE("' + query.start_date + '") ' +
+        'AND DATE(value_text) <= DATE("' + query.end_date + '") AND obs.voided = 0 GROUP BY obs.value_text';
+
+        console.log(sql);
+
+        queryRaw(sql, function (resp) {
+
+            var data = {};
+
+            console.log(resp);
+
+            for (var i = 0; i < resp[0].length; i++) {
+
+                data[resp[0][i].appointment_date]= resp[0][i].count;
+
+            }
+
+            res.status(200).json(data);
+
+        })
 
 });
 

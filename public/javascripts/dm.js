@@ -312,6 +312,107 @@ function existingDiabetesPatient() {
 
 }
 
+function addDay(date,days){
+
+    var result = new Date(date);
+
+    result.setDate(result.getDate() + days);
+
+    return result;
+
+}
+
+function setAppointmentCalendar(source, target){
+
+        if(__$(target)){
+
+            var date_today = new Date();
+
+            var week = parseInt(__$(source).value.replace("weeeks","").replace("week","").trim());
+
+            var days = 7 * (week? week : 1) ;
+
+            var date_selected = addDay(date_today,days).format("YYYY-mm-dd");
+
+            __$(target).value = date_selected;
+
+            var date_splitted = date_selected.split("-")
+
+            start_date = date_splitted[0].trim() + "-" + date_splitted[1] + "-" + "01";
+
+            var next_month;
+
+            switch (parseInt(date_splitted[1])) {
+
+                case 0:
+                    next_month = 2;
+                    break;
+                case 1:
+                    next_month = 3;
+                    break;
+                case 2:
+                    next_month = 4;
+                    break;
+                case 3:
+                    next_month = 5;
+                    break;
+                case 4:
+                    next_month = 6;
+                    break;
+                case 5:
+                    next_month = 7;
+                    break;
+                case 6:
+                    next_month = 8;
+                    break;
+                case 7:
+                    next_month = 9;
+                    break;
+                case 8:
+                    next_month = 10;
+                    break;
+                case 9:
+                    next_month = 11;
+                    break;
+                case 10:
+                    next_month = 12;
+                    break;
+                case 11:
+                    next_month = 1;
+                    break;
+            }
+
+            var last_date = new Date(date_splitted[0] + "-" + padZeros(next_month, 2) + "-" + "01");
+
+
+            end_date = (new Date(last_date.getFullYear(), last_date.getMonth()-1, 0)).format("YYYY-mm-dd");
+
+            console.log(end_date);
+
+            var ajaxurl = "/bookings_count?start_date=" + start_date + "&end_date=" + end_date + "&date=";
+
+            __$(target).setAttribute("ajaxCalendarUrl", ajaxurl);
+
+        }
+
+}
+
+function setControlDimesion(){
+
+    var element = document.getElementsByClassName("cTable");
+
+    for(var i = 0 ; i++ ; i < element.length){
+
+        element[i].style.width = "1000px";
+
+        element[i].style.height = "78%"
+
+    }
+
+
+
+}
+
 function loadMultipleYears(years) {
 
     var collection = years.split(";");
