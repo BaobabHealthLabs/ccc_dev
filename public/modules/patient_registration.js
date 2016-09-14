@@ -1800,6 +1800,9 @@ var patient = ({
 
                         input.setAttribute("tt_requireNextClick", false);
 
+                        if (patient.settings.demographics.Nationality && fields[i] == "Home District")
+                            input.setAttribute("condition", "__$('data.nationality').value.trim().toLowerCase() == 'malawian'");
+
                         break;
 
                     case "Home T/A":
@@ -1818,6 +1821,9 @@ var patient = ({
 
                         input.setAttribute("tt_requireNextClick", false);
 
+                        if (patient.settings.demographics.Nationality && fields[i] == "Home T/A")
+                            input.setAttribute("condition", "__$('data.nationality').value.trim().toLowerCase() == 'malawian'");
+
                         break;
 
                     case "Home Village":
@@ -1827,6 +1833,9 @@ var patient = ({
                         input.setAttribute("ajaxURL", patient.settings.villageQueryPath + "?district=&ta=&village=");
 
                         input.setAttribute("tt_requireNextClick", false);
+
+                        if (patient.settings.demographics.Nationality && fields[i] == "Home Village")
+                            input.setAttribute("condition", "__$('data.nationality').value.trim().toLowerCase() == 'malawian'");
 
                         break;
 
