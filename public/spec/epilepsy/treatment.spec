@@ -1,4 +1,4 @@
-P.1. TREATMENTS [program ::EPILEPSY PROGRAM$$ scope:: TODAY $$ includejs :: touchScreenToolkit;treatment;epilepsydrugs;epilepsydrugsdata $$ includecss :: treatment]
+P.1. TREATMENTS [program ::EPILEPSY PROGRAM$$ scope:: TODAY $$ includejs :: touchScreenToolkit;generics;dispense $$ includecss :: dispense]
 
 Q.1.1. Has patient taken Clinical medicine for seizure before? [pos :: 0$$tt_requirenextclick::false]
 O.1.1.1. Yes
@@ -21,7 +21,7 @@ Q.1.5. Prescribe Epilepsy Drugs [pos :: 4$$id:: prescribe_epilepsy_drugs$$condit
 O.1.5.1. Yes
 O.1.5.2. No
 
-Q.1.6. Drugs [pos :: 5$$condition::__$('confirm_diagnosis_of_epilepsy').value=="Yes"&& __$('prescribe_epilepsy_drugs').value=="Yes"$$ disabled :: true $$ tt_onLoad :: generateDrugs(); __$("patient_id").value = getCookie("patient_id"); __$("selfDispenseDrugs").value = window.parent.dashboard.modules[getCookie("currentProgram")].selfDispenseDrugs; $$ tt_onUnLoad :: removeDrugs() $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true$$parent::Confirm diagnosis of epilepsy?:Yes]
+Q.1.6. Drugs [pos :: 5$$condition::__$('confirm_diagnosis_of_epilepsy').value=="Yes"&& __$('prescribe_epilepsy_drugs').value=="Yes"$$ disabled :: true $$ tt_onLoad :: generateGenerics(); __$("patient_id").value = getCookie("patient_id"); __$("selfDispenseDrugs").value = window.parent.dashboard.modules[getCookie("currentProgram")].selfDispenseDrugs; $$ tt_onUnLoad :: removeGenerics() $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true$$parent::Confirm diagnosis of epilepsy?:Yes]
 
 Q.1.7. Patient ID [pos :: 6 $$ id :: patient_id $$ name :: patient_id $$ disabled :: true $$ field_type :: hidden]
 

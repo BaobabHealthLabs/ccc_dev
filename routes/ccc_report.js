@@ -539,6 +539,17 @@ module.exports = function (router) {
 
     });
 
+    router.route("/quarters")
+        .get(function (req, res) {
+
+            var list = [];
+
+            var year = (new Date()).getFullYear();
+
+            res.send("<li>" + list.join("</li><li>") + "</li>");
+
+        });
+
     return router;
 
 }
