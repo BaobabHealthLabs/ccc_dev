@@ -41,3 +41,5 @@ O.1.5.10. November
 O.1.5.11. December
 
 Q.1.6. Specify Other Type Medical Condition(s) [pos:: 8$$ concept:: Other Medical Conditions$$ condition:: __$("medical_history").selectedOptions.map().indexOf("Other Medical Conditions") >= 0$$parent:: Past medical history]
+
+Q.1.7. Summary [pos :: 9 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary ]

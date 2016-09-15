@@ -5,47 +5,96 @@
     <title>Reports</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
 </head>
-<body style="text-align: center; margin-top: 20px;" oncontextmenu="return false;">
-<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/dm/report_shell.html';">
+<script type="text/javascript">
+    
+    function loadReports(){
+        var dm_report = document.getElementById("diabetes");
+
+        var htn_report = document.getElementById("htn");
+
+        var asthma_report = document.getElementById("asthma");
+
+        var epilepsy_report = document.getElementById("epilepsy");
+
+        var integrated_report = document.getElementById("integrated");
+
+        var cohort_report = document.getElementById("cohort");
+
+            if(window.parent.landing.getCookie("currentProgram") == "Diabetes") {
+
+                dm_report.style.display="inline-block";
+
+                integrated_report.style.display="inline-block";
+
+                cohort_report.style.display="inline-block";
+            }
+
+            else if(window.parent.landing.getCookie("currentProgram") == "HTN") {
+
+                htn_report.style.display="inline-block";
+            }
+
+            else if(window.parent.landing.getCookie("currentProgram") == "Asthma") {
+
+                asthma_report.style.display="inline-block";
+            } 
+
+            else if(window.parent.landing.getCookie("currentProgram") == "Epilepsy") {
+                
+                epilepsy_report.style.display="inline-block";
+            }
+
+    }
+
+</script>
+<body style="text-align: center; margin-top: 20px;" onLoad= "loadReports();" oncontextmenu="return false;">
+<div style="display: none; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
+            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/dm/report_shell.html';" id = 'diabetes'>
     <img src="/images/report.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     <span id="program_report">DM Report</span>
 </div>
 
-<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/htn/report_shell.html';">
+<div style="display: none; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
+            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/htn/report_shell.html';" id = 'htn'>
     <img src="/images/report.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     <span id="program_report">HTN Report</span>
 </div>
 
-<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/asthma/report_shell.html';">
+<div style="display: none; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
+            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/asthma/report_shell.html';" id = 'asthma'>
     <img src="/images/report.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     <span id="program_report">Asthma Report</span>
 </div>
 
-<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/epilepsy/report_shell.html';">
+<div style="display: none; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
+            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/epilepsy/report_shell.html';" id = 'epilepsy'>
     <img src="/images/report.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     <span id="program_report">Epilepsy Report</span>
 </div>
 
-<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/report_shell.html';">
+<div style="display: none; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
+            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/report_shell.html';" id = 'integrated'>
     <img src="/images/report.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     Integrated Report
 </div>
 
-<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/report_shell.html';">
+<div style="display: none; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
+            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/report_shell.html';" id = 'cohort'>
     <img src="/images/report.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     Cohort Report
+</div>
+
+<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
+            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/epilepsy/report_shell.html';" id = 'epilepsy'>
+    <img src="/images/report.png" height="80" style="margin-bottom: 10px;"/>
+    <br/>
+    Defaulters Report
 </div>
 
 </body>

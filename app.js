@@ -3384,15 +3384,39 @@ app.get("/data/modules.json", function (req, res) {
     res.sendFile(__dirname + "/data/modules.json");
 });
 
-app.get("/nationality_query", function (req, res) {
+/**
+ * @api {get} /nationality_query/:id Query Nationalities List
+ * @apiVersion 1.0.0
+ * @apiName QueryNationality
+ * @apiGroup Utils
+ * @apiPermission none
+ *
+ * @apiParam (Parameter) {String} nationality Target nationality
+ *
+ * @apiDescription Query for nationalities list or filter by parsed parameters. The method expects that you also specify
+ *                  the feedback format by specifying the path attribute <code>:id</code> which can either be
+ *                  <code>json</code> for JSON return values or <code>html</code> for HTML return code type.
+ *
+ * @apiSuccessExample {json} Success-Response (:id == json):
+ *     HTTP/1.1 200 OK
+ *     {
+ *       ["Nationality 1",...]
+ *     }
+ *
+ * @apiSuccessExample {json} Success-Response (:id == html):
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "&lt;li&gt;Nationality 1&lt;/li&gt;..."
+ *     }
+ *
+ */
+app.get("/nationality_query/:id", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT DISTINCT value FROM person_attribute WHERE person_attribute_type_id = " +
-        "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = \"Citizenship\" LIMIT 1) AND value LIKE \"" +
-        (query.nationality ? query.nationality : "") + "%\"";
+    var sql = "SELECT name FROM nationality WHERE name LIKE \"" + (query.nationality ? query.nationality : "") + "%\"";
 
     queryRaw(sql, function (data) {
 
@@ -3402,13 +3426,21 @@ app.get("/nationality_query", function (req, res) {
 
             var nationality = data[0][i];
 
-            collection.push(nationality.value);
+            collection.push(nationality.name);
 
         }
 
-        var result = "<li>" + collection.join("</li><li>") + "</li>";
+        if (req.params.id.trim().toLowerCase() == "json") {
 
-        res.send(result);
+            res.status(200).json(collection);
+
+        } else {
+
+            var result = "<li>" + collection.join("</li><li>") + "</li>";
+
+            res.send(result);
+
+        }
 
     })
 
@@ -7118,8 +7150,7 @@ app.get("/bookings", function (req, res) {
         'FROM obs LEFT OUTER JOIN person ON person.person_id = obs.person_id LEFT OUTER JOIN patient_identifier ON ' +
         'patient_identifier.patient_id = obs.person_id WHERE concept_id = (SELECT concept_id FROM concept_name WHERE ' +
         'name = "Appointment date" AND voided = 0 LIMIT 1) AND DATE(value_text) >= DATE("' + query.start_date + '") ' +
-        'AND DATE(value_text) <= DATE("' + query.end_date + '") AND obs.voided = 0 AND patient_identifier.identifier_type = ' +
-        '(SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = "National id" LIMIT 1)';
+        'AND DATE(value_text) <= DATE("' + query.end_date + '") AND obs.voided = 0';
 
     queryRaw(sql, function (resp) {
 
@@ -7140,6 +7171,38 @@ app.get("/bookings", function (req, res) {
         res.status(200).json({error: false, data: data});
 
     })
+
+});
+
+app.get("/bookings_count", function(req,res){
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = 'SELECT obs.value_text AS appointment_date, count(obs.value_text) as count ' +
+        'FROM obs LEFT OUTER JOIN person ON person.person_id = obs.person_id LEFT OUTER JOIN patient_identifier ON ' +
+        'patient_identifier.patient_id = obs.person_id WHERE concept_id = (SELECT concept_id FROM concept_name WHERE ' +
+        'name = "Appointment date" AND voided = 0 LIMIT 1) AND DATE(value_text) >= DATE("' + query.start_date + '") ' +
+        'AND DATE(value_text) <= DATE("' + query.end_date + '") AND obs.voided = 0 GROUP BY obs.value_text';
+
+        console.log(sql);
+
+        queryRaw(sql, function (resp) {
+
+            var data = {};
+
+            console.log(resp);
+
+            for (var i = 0; i < resp[0].length; i++) {
+
+                data[resp[0][i].appointment_date]= resp[0][i].count;
+
+            }
+
+            res.status(200).json(data);
+
+        })
 
 });
 

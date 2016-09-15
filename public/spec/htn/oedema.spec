@@ -1,4 +1,4 @@
-P.1. HYPERTENSION TEST [program:: HYPERTENSION PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit]
+P.1. HYPERTENSION TEST [program:: HYPERTENSION PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;htn]
 
 Q.1.1. Hypertension Test Type [pos :: 0$$ value :: Oedema$$ field_type :: hidden]
 
@@ -12,3 +12,5 @@ O.1.2.1.1.2. Moderate
 O.1.2.1.1.3. Severe
 
 Q.1.2.1.2. Oedema Test Date [pos :: 4 $$ field_type:: date $$ estimate_label :: Year(s) ago $$ parent :: Hypertension Test Type:Oedema]
+
+Q.1.3. Summary [pos :: 5 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]

@@ -84,6 +84,155 @@ function __$(id) {
 
 }
 
+ //Add beautify() method to String Class
+    if (Object.getOwnPropertyNames(String.prototype).indexOf("beautify") < 0) {
+
+        Object.defineProperty(String.prototype, "beautify", {
+
+            value: function (size1, size2) {
+
+                var parts = this.split(" ");
+
+                var result = "";
+
+                for (var i = 0; i < parts.length; i++) {
+
+                    var part = parts[i];
+
+                    var root = part.substring(0, 1).toUpperCase();
+
+                    var stem = part.substring(1, part.trim().length).toUpperCase();
+
+                    result += (result.trim().length > 0 ? " " : "") + "<span style='font-size: " + size1 + "'>" + root +
+                            "</span><span style='font-size: " + size2 + "'>" + stem + "</span>";
+
+                }
+
+                return result;
+
+            }
+
+        });
+
+    }
+
+function showSummary() {
+
+        if (__$("keyboard")) {
+
+            __$("keyboard").style.display = "none";
+
+        }
+
+        if (__$("tt_page_summary")) {
+
+            __$("tt_page_summary").innerHTML = "";
+
+            var table = document.createElement("table");
+            table.style.width = "100%";
+            table.style.borderCollapse = "collapse";
+
+            __$("tt_page_summary").appendChild(table);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var th = document.createElement("th");
+            th.style.fontSize = "2em";
+            th.style.textAlign = "left";
+            th.style.padding = "20px";
+            th.style.borderBottom = "1px solid #ccc";
+            th.innerHTML = "Encounter Summary";
+
+            tr.appendChild(th);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            tr.appendChild(td);
+
+            var div = document.createElement("div");
+            div.style.width = "100%";
+            div.style.height = "calc(100vh - 180px)";
+            div.style.overflow = "auto";
+
+            td.appendChild(div);
+
+            var tableContent = document.createElement("table");
+            tableContent.style.width = "100%";
+            tableContent.style.borderCollapse = "collapse";
+            tableContent.cellPadding = "10";
+            tableContent.style.fontSize = "2em";
+
+            div.appendChild(tableContent);
+
+            var k = 0;
+
+            for (var i = 0; i < tstFormElements.length; i++) {
+
+                if (tstFormElements[i].value.trim().length <= 0)
+                    continue;
+
+                if (tstFormElements[i].type == "password")
+                    continue;
+
+                var tr = document.createElement("tr");
+
+                if (k % 2 > 0)
+                    tr.style.backgroundColor = "#eee";
+
+                tableContent.appendChild(tr);
+
+                var td = document.createElement("td");
+                td.style.width = "40%";
+                td.style.textAlign = "right";
+                td.style.borderRight = "1px dotted #ccc";
+                td.style.borderBottom = "1px dotted #ccc";
+                td.style.color = "#333";
+                td.style.verticalAlign = "top";
+                td.innerHTML = tstFormElements[i].getAttribute("helpText").beautify("0.9em", "0.55em");
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.textAlign = "left";
+                td.style.borderBottom = "1px dotted #ccc";
+                td.style.verticalAlign = "top";
+
+                if(tstFormElements[i].tagName.toLowerCase() == "select") {
+
+                    var opts = tstFormElements[i].selectedOptions;
+
+                    var arr = [];
+
+                    for(var j = 0; j < opts.length; j++) {
+
+                        arr.push(opts[j].innerHTML);
+
+                    }
+
+                    td.innerHTML = arr.join(",");
+
+                } else {
+
+                    td.innerHTML = tstFormElements[i].value;
+
+                }
+
+                tr.appendChild(td);
+
+                k++;
+
+            }
+
+        }
+
+}
+
 function loadYears(id){
 
     if(__$(id)) {
@@ -163,6 +312,180 @@ function existingDiabetesPatient() {
 
 }
 
+function addDay(date,days){
+
+    var result = new Date(date);
+
+    result.setDate(result.getDate() + days);
+
+    return result;
+
+}
+
+function setAppointmentCalendar(source, target){
+
+        if(__$(target)){
+
+            var date_today = new Date();
+
+            var week = parseInt(__$(source).value.replace("weeeks","").replace("week","").trim());
+
+            var days = 7 * (week? week : 1) ;
+
+            var date_selected = addDay(date_today,days).format("YYYY-mm-dd");
+
+            __$(target).value = date_selected;
+
+            var date_splitted = date_selected.split("-")
+
+            start_date = date_splitted[0].trim() + "-" + date_splitted[1] + "-" + "01";
+
+            var next_month;
+
+            switch (parseInt(date_splitted[1])) {
+
+                case 0:
+                    next_month = 2;
+                    break;
+                case 1:
+                    next_month = 3;
+                    break;
+                case 2:
+                    next_month = 4;
+                    break;
+                case 3:
+                    next_month = 5;
+                    break;
+                case 4:
+                    next_month = 6;
+                    break;
+                case 5:
+                    next_month = 7;
+                    break;
+                case 6:
+                    next_month = 8;
+                    break;
+                case 7:
+                    next_month = 9;
+                    break;
+                case 8:
+                    next_month = 10;
+                    break;
+                case 9:
+                    next_month = 11;
+                    break;
+                case 10:
+                    next_month = 12;
+                    break;
+                case 11:
+                    next_month = 1;
+                    break;
+            }
+
+            var last_date = new Date(date_splitted[0] + "-" + padZeros(next_month, 2) + "-" + "01");
+
+
+            end_date = (new Date(last_date.getFullYear(), last_date.getMonth()-1, 0)).format("YYYY-mm-dd");
+
+            console.log(end_date);
+
+            var ajaxurl = "/bookings_count?start_date=" + start_date + "&end_date=" + end_date + "&date=";
+
+            __$(target).setAttribute("ajaxCalendarUrl", ajaxurl);
+
+        }
+
+}
+
+function setControlDimesion(){
+
+    var element = document.getElementsByClassName("cTable");
+
+    for(var i = 0 ; i++ ; i < element.length){
+
+        element[i].style.width = "1000px";
+
+        element[i].style.height = "78%"
+
+    }
+
+
+
+}
+
+function validateAppointment(){
+
+
+    var appointment  = __$("appointment_calendar").value;
+
+    var date_today = new Date();
+
+    if(appointment < date_today.format("YYYY-mm-dd")){
+
+        gotoPage(tstCurrentPage - 1, false, true); 
+
+        window.parent.dashboard.showMsg("The date booked is behind today","Invalide Date");
+
+    }
+                
+
+    var appointment_url = "/bookings_count?start_date=" + date_today.format("YYYY-mm-dd") + "&end_date=" + appointment;
+
+     var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+
+            var appointment_data =  JSON.parse(this.responseText);
+
+            if(appointment_data[appointment]){
+
+                var count = parseInt(appointment_data[appointment]);
+
+                var booked = new Date(appointment);
+
+                var weeks = Math.round((booked-date_today)/ 604800000);
+
+                if(weeks > 4){
+
+                        var recommended = new Date(appointment);
+
+                        recommended  = new Date(recommended.setDate(recommended.getDate()+7));
+
+                        gotoPage(tstCurrentPage - 1, false, true);
+
+                        __$("appointment_calendar").value = recommended.format("YYYY-mm-dd");
+
+
+                        window.parent.dashboard.showMsg("The date booked is has "+ count+ "patient , recommend "+ recommended.format(),"Date tightly booked");
+
+                }else{
+
+                     if(count > 100  && count <=110){
+
+                        window.parent.dashboard.showMsg("The date booked is has "+ count +" patients","Date already Booked");
+
+                    }
+
+                }
+
+               
+
+            }
+
+
+        }
+
+      };
+
+      xhttp.open("GET", appointment_url, true);
+
+      xhttp.send();
+
+      
+
+}
+
 function loadMultipleYears(years) {
 
     var collection = years.split(";");
@@ -180,7 +503,24 @@ function loadMultipleYears(years) {
     }
 
 }
+function diagonosidAndTransfer(){
 
+    var transfer_in_date = __$("transfer_in_date").value;
+
+    var diagnosis_date = __$('touchscreenInput' + tstCurrentPage).value;
+
+    if((new Date(diagnosis_date)) > (new Date(transfer_in_date))){
+
+        setTimeout(
+            function(){
+            gotoPage(tstCurrentPage - 1, false, true); 
+            window.parent.dashboard.showMsg("Diagnosis Date should be less than or equal "+
+            transfer_in_date)},10);
+
+    }
+
+
+}
 function showBloodPressureGraphs() {
 
     var displayTextBP;

@@ -30,3 +30,5 @@ O.1.5.4. Other drugs
 O.1.5.5. None
 
 Q.1.6. Specify other drugs allergic to [pos:: 5$$ condition:: ["Aspirin + other drugs", "Other drugs"].indexOf(__$("drug_allergy").value.trim()) >= 0$$ concept:: Other Drug Allergies$$parent:: Smoking?]
+
+Q.1.7. Summary [pos :: 6 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]

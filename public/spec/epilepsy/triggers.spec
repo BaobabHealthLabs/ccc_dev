@@ -38,3 +38,5 @@ Q.1.8. Fever a trigger? [pos::7$$condition::__$("triggers").value == "Yes"$$pare
 O.1.8.1. Yes
 O.1.8.2. No
 O.1.8.3. Unknown
+
+Q.1.9. Summary [pos :: 7 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]

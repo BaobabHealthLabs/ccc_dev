@@ -290,6 +290,7 @@
         "Do you currently smoke?",
         "Patient mode of cooking?",
         "Patient exposed to pollution?",
-        "Patient lives or works near?"
+        "Patient lives or works near?",
+        "Tranfered from"
     ]
 }

@@ -1,4 +1,4 @@
-P.1. HTS VISIT [program:: HTS PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;hts]
+P.1. HTS VISIT [program:: HTS PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 Q.1.1. HTS Access Type [pos:: 0$$ id:: htc_acc_type]
 O.1.1.1. Routine HTS within Health Service
 O.1.1.2. Comes with HTS Family Reference Slip
@@ -15,4 +15,5 @@ Q.1.5. Time Since Last Test [pos:: 4$$ concept:: Time Since Last Test Display$$ 
 Q.1.6. Partner Present at this Session? [pos:: 5$$ id:: partner_present$$ tt_onLoad:: updateTimeSinceLastTest()]
 O.1.6.1. Yes
 O.1.6.2. No
-Q.1.7. Client Registration Summary [pos:: 7$$ tt_onLoad:: showHTSVisitSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+
+Q.1.7. Summary [pos :: 6 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]

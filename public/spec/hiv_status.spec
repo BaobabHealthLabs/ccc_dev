@@ -14,3 +14,6 @@ O.1.3.2. No
 O.1.3.3. Unknown
 
 Q.1.3.1.1. ART Start Date [pos :: 3 $$ field_type :: date $$ parent :: HIV Status]
+
+
+Q.1.4. Summary [pos :: 4 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
