@@ -547,6 +547,25 @@ module.exports = function (router) {
 
             var year = (new Date()).getFullYear();
 
+            for (var i = 0; i < 4; i++) {
+
+                var thisYr = year - i;
+
+                var quarterGroups = ["Q1", "Q2", "Q3", "Q4"];
+
+                for (var j = 3; j >= 0; j--) {
+
+                    if (thisYr == year && Math.floor((new Date()).getMonth() / 3) < j)
+                        continue;
+
+                    var thisQtr = thisYr + " " + quarterGroups[j];
+
+                    list.push(thisQtr);
+
+                }
+
+            }
+
             res.send("<li>" + list.join("</li><li>") + "</li>");
 
         });
