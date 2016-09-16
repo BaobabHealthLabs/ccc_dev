@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Integrated Report</title>
+</head>
+<body>
+<table style="border-collapse: collapse;" border="1" cellpadding="10" width="100%">
+    <tr>
+        <th colspan="4">
+            Integrated CCC Report
+        </th>
+    </tr>
+    <tr>
+        <th>
+            Patient Registered
+        </th>
+        <th>
+            Gender
+        </th>
+        <th>
+            New
+        </th>
+        <th>
+            Cumulative
+        </th>
+    </tr>
+    <tr>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            Male
+        </td>
+        <td id="new_registered_male" align="center">
+
+        </td>
+        <td id="cumulative_registered_male" align="center">
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            Male
+        </td>
+        <td id="new_registered_female" align="center">
+
+        </td>
+        <td id="cumulative_registered_female" align="center">
+
+        </td>
+    </tr>
+</table>
+
+<script>
+
+    var path = window.location.href;
+
+    var startDate = (path.match(/start_date\=(\d{4}\-\d{2}\-\d{2})/) ? path.match(/start_date\=(\d{4}\-\d{2}\-\d{2})/)[1] : "");
+
+    var endDate = (path.match(/end_date\=(\d{4}\-\d{2}\-\d{2})/) ? path.match(/end_date\=(\d{4}\-\d{2}\-\d{2})/)[1] : "");
+
+    function __$(id) {
+
+        return document.getElementById(id);
+
+    }
+
+    function ajaxRequest(url, id, callback) {
+
+        var httpRequest = new XMLHttpRequest();
+
+        httpRequest.onreadystatechange = function () {
+
+            if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                    httpRequest.status == 304)) {
+
+                if (httpRequest.responseText.trim().length > 0) {
+                    var result = JSON.parse(httpRequest.responseText);
+
+                    callback(result, id);
+
+                } else {
+
+                    callback(undefined);
+
+                }
+
+            }
+
+        };
+        try {
+            httpRequest.open("GET", url, true);
+            httpRequest.send(null);
+        } catch (e) {
+        }
+
+    }
+
+    function loadData() {
+
+        var links = {
+            "new_registered_male": "/integrated_reports/new_registered_male?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_registered_male": "/integrated_reports/cumulative_registered_male?start_date=" + startDate + "&end_date=" + endDate,
+            "new_registered_female": "/integrated_reports/new_registered_female?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_registered_female": "/integrated_reports/cumulative_registered_female?start_date=" + startDate + "&end_date=" + endDate
+        }
+
+        var keys = Object.keys(links);
+
+        for(var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            ajaxRequest(links[key], key, function(data, id) {
+
+                if(__$(id)) {
+
+                    __$(id).innerHTML = data;
+
+                }
+
+            })
+
+        }
+
+    }
+
+    loadData();
+
+</script>
+</body>
+</html>
