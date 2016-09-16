@@ -413,6 +413,79 @@ function setControlDimesion(){
 
 }
 
+function validateAppointment(){
+
+
+    var appointment  = __$("appointment_calendar").value;
+
+    var date_today = new Date();
+
+    if(appointment < date_today.format("YYYY-mm-dd")){
+
+        gotoPage(tstCurrentPage - 1, false, true); 
+
+        window.parent.dashboard.showMsg("The date booked is behind today","Invalide Date");
+
+    }
+                
+
+    var appointment_url = "/bookings_count?start_date=" + date_today.format("YYYY-mm-dd") + "&end_date=" + appointment;
+
+     var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+
+            var appointment_data =  JSON.parse(this.responseText);
+
+            if(appointment_data[appointment]){
+
+                var count = parseInt(appointment_data[appointment]);
+
+                var booked = new Date(appointment);
+
+                var weeks = Math.round((booked-date_today)/ 604800000);
+
+                if(weeks > 4){
+
+                        var recommended = new Date(appointment);
+
+                        recommended  = new Date(recommended.setDate(recommended.getDate()+7));
+
+                        gotoPage(tstCurrentPage - 1, false, true);
+
+                        __$("appointment_calendar").value = recommended.format("YYYY-mm-dd");
+
+
+                        window.parent.dashboard.showMsg("The date booked is has "+ count+ "patient , recommend "+ recommended.format(),"Date tightly booked");
+
+                }else{
+
+                     if(count > 100  && count <=110){
+
+                        window.parent.dashboard.showMsg("The date booked is has "+ count +" patients","Date already Booked");
+
+                    }
+
+                }
+
+               
+
+            }
+
+
+        }
+
+      };
+
+      xhttp.open("GET", appointment_url, true);
+
+      xhttp.send();
+
+      
+
+}
+
 function loadMultipleYears(years) {
 
     var collection = years.split(";");

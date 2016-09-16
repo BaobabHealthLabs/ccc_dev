@@ -3384,15 +3384,39 @@ app.get("/data/modules.json", function (req, res) {
     res.sendFile(__dirname + "/data/modules.json");
 });
 
-app.get("/nationality_query", function (req, res) {
+/**
+ * @api {get} /nationality_query/:id Query Nationalities List
+ * @apiVersion 1.0.0
+ * @apiName QueryNationality
+ * @apiGroup Utils
+ * @apiPermission none
+ *
+ * @apiParam (Parameter) {String} nationality Target nationality
+ *
+ * @apiDescription Query for nationalities list or filter by parsed parameters. The method expects that you also specify
+ *                  the feedback format by specifying the path attribute <code>:id</code> which can either be
+ *                  <code>json</code> for JSON return values or <code>html</code> for HTML return code type.
+ *
+ * @apiSuccessExample {json} Success-Response (:id == json):
+ *     HTTP/1.1 200 OK
+ *     {
+ *       ["Nationality 1",...]
+ *     }
+ *
+ * @apiSuccessExample {json} Success-Response (:id == html):
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "&lt;li&gt;Nationality 1&lt;/li&gt;..."
+ *     }
+ *
+ */
+app.get("/nationality_query/:id", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT DISTINCT value FROM person_attribute WHERE person_attribute_type_id = " +
-        "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = \"Citizenship\" LIMIT 1) AND value LIKE \"" +
-        (query.nationality ? query.nationality : "") + "%\"";
+    var sql = "SELECT name FROM nationality WHERE name LIKE \"" + (query.nationality ? query.nationality : "") + "%\"";
 
     queryRaw(sql, function (data) {
 
@@ -3402,13 +3426,21 @@ app.get("/nationality_query", function (req, res) {
 
             var nationality = data[0][i];
 
-            collection.push(nationality.value);
+            collection.push(nationality.name);
 
         }
 
-        var result = "<li>" + collection.join("</li><li>") + "</li>";
+        if (req.params.id.trim().toLowerCase() == "json") {
 
-        res.send(result);
+            res.status(200).json(collection);
+
+        } else {
+
+            var result = "<li>" + collection.join("</li><li>") + "</li>";
+
+            res.send(result);
+
+        }
 
     })
 

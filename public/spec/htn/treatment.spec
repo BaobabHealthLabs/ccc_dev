@@ -1,6 +1,6 @@
-P.1. TREATMENTS [program :: HYPERTENSION PROGRAM $$ scope:: TODAY $$ includejs :: touchScreenToolkit;treatment;htndrugs;drugsdata $$ includecss :: treatment]
+P.1. TREATMENTS [program :: HYPERTENSION PROGRAM $$ scope:: TODAY $$ includejs :: touchScreenToolkit;generics;dispense $$ includecss :: dispense]
 
-Q.1.1. Drugs [pos :: 0 $$ disabled :: true $$ tt_onLoad :: generateDrugs(); __$("patient_id").value = getCookie("patient_id"); __$("selfDispenseDrugs").value = window.parent.dashboard.modules[getCookie("currentProgram")].selfDispenseDrugs; $$ tt_onUnLoad :: removeDrugs() $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true]
+Q.1.1. Drugs [pos :: 0 $$ disabled :: true $$ tt_onLoad :: generateGenerics(); __$("patient_id").value = getCookie("patient_id"); __$("selfDispenseDrugs").value = window.parent.dashboard.modules[getCookie("currentProgram")].selfDispenseDrugs; $$ tt_onUnLoad :: removeGenerics() $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true]
 
 Q.1.2. Patient ID [pos :: 1 $$ id :: patient_id $$ name :: patient_id $$ disabled :: true $$ field_type :: hidden]
 

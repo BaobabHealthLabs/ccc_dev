@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports Query</title>
+</head>
+<body>
+<div id='content'></div>
+<script type='text/javascript' language='javascript' src='/modules/protocol_analyzer.js' defer></script>
+
+<script>
+
+    tt_cancel_destination = "javascript:window.parent.document.exitNavPanel()";
+
+    tt_cancel_show = "javascript:window.parent.document.exitNavPanel()";
+
+    function submitCustomData() {
+
+        alert("in");
+
+    }
+
+    document.body.onload = function() {
+
+        var path = "/spec/report_query.spec";
+
+        protocol.init(path, undefined, undefined, undefined, undefined);
+
+    }
+
+</script>
+</body>
+</html>
