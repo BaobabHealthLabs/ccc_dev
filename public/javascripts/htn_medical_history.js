@@ -167,7 +167,52 @@
 
     function loadPage() {
 
+         var tasks = {
+
+                        "Initial Questions"    : ["HYPERTENSION INITIAL QUESTIONS","/spec/htn/initial_questions.spec"],
+                        "Social History"     : ["HYPERTENSION SOCIAL HISTORY","/spec/htn/social_history.spec"],
+                        "Past Medical History" : ["PAST HYPERTENSION MEDICAL HISTORY","/spec/htn/past_medical_history.spec"],
+                        "Family History"       : ["HYPERTENSION FAMILY HISTORY","/spec/htn/family_history.spec"]
+
+        }
+
+        if(!dashboard.medicalHistoryWorkflow){
+
+                 dashboard.medicalHistoryWorkflow = ["Initial Questions","Diabetes History", "Past Medical History", "General Health", "Family History"]
+
+        }
+               
         if(dashboard.autoContinue){
+
+            var task_keys = Object.keys(tasks);
+
+            for(var i = 0 ;  i < task_keys.length ; i++){
+
+                    if (dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM", tasks[task_keys[i]][0])) {
+
+                            var index =  dashboard.medicalHistoryWorkflow.indexOf(task_keys[i]);
+
+                            dashboard.medicalHistoryWorkflow.splice(index, 1);
+
+                    }else{
+
+
+                            dashboard.navPanel(tasks[task_keys[i]][1]);                        
+
+                    }
+
+            }
+
+            if(dashboard.medicalHistoryWorkflow.length == 0){
+
+                dashboard.workflow.splice(0,1);
+
+            }
+
+
+        }
+
+        /*if(dashboard.autoContinue){
 
                 var tasks = {
 
@@ -221,7 +266,7 @@
 
                 }
 
-        }
+        }*/
 
 
         if (__$__("details")) {

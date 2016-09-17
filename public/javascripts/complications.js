@@ -1274,11 +1274,20 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
         }
 
+if(!dashboard.finished)
+    dashboard.finished = [];
+
 function executeTasks(){
 
     if(dashboard.complicationWorkFlow && dashboard.complicationWorkFlow.length == 0){
 
-        window.parent.dashboard.workflow.splice(0, 1);
+        window.parent.dashboard.autoContinue = true;
+
+        var index =  window.parent.dashboard.workflow.indexOf("Complications");
+
+        window.parent.dashboard.workflow.splice(index, 1);
+
+        window.parent.dashboard.exitNavPanel();
 
     }else{
         if(dashboard.complicationWorkFlow){
@@ -1286,7 +1295,7 @@ function executeTasks(){
             window.parent.dashboard.exitNavPanel(tasks[dashboard.complicationWorkFlow[0]][1])
 
         }
-        else{
+        else if(dashboard.finished.length == 0){
 
             dashboard.showMsg("Please select complications");
 
@@ -1308,7 +1317,7 @@ function addToComplicationWorkFlow(element){
 
     }
 
-    if(!element.disabled && element.checked){
+    if(element.disabled || element.checked){
 
         dashboard.complicationWorkFlow.push(element.id);
 
@@ -1324,6 +1333,12 @@ function addToComplicationWorkFlow(element){
 }
 function executeAutoConitnue(){
 
+    if(!dashboard.complicationWorkFlow){
+
+         dashboard.complicationWorkFlow = [];
+
+    }
+
     var tasks_keys = Object.keys(tasks);
 
     for(var h = 0 ;h < tasks_keys.length; h++){
@@ -1334,6 +1349,8 @@ function executeAutoConitnue(){
                 __$(tasks_keys[h]).checked = true;
 
                 __$(tasks_keys[h]).setAttribute("disabled","disabled");
+
+                dashboard.finished.push(tasks_keys[h]);
 
         }
 
