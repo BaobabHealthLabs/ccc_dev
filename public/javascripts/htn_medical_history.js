@@ -196,8 +196,18 @@
 
                     }else{
 
+                            if(dashboard.data.data.identifiers["HTN Number"] && dashboard.data.data.identifiers["HTN Number"].identifier){
 
-                            dashboard.navPanel(tasks[task_keys[i]][1]);                        
+                                dashboard.navPanel(tasks[task_keys[i]][1]); 
+
+                            }else{
+
+                                var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
+
+                                window.parent.dashboard.showConfirmMsg(message, "Confirm",
+                                        "javascript:window.parent.dashboard.navPanel('"+ tasks[task_keys[i]][1] +"')");
+
+                            }                       
 
                     }
 
@@ -212,7 +222,26 @@
 
         }
 
-        /*if(dashboard.autoContinue){
+
+        /*
+
+         if(window.parent.dashboard.data.data.identifiers["AST Number"] && window.parent.dashboard.data.data.identifiers["AST Number"].identifier){
+
+                        
+                         window.parent.dashboard.navPanel(tasks["Initial Questions"])
+
+
+                    }else{
+
+                        var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
+
+                        window.parent.dashboard.showConfirmMsg(message, "Confirm",
+                                "javascript:window.parent.dashboard.navPanel('/spec/asthma/initial_questions.spec')");
+
+
+                    }
+
+        if(dashboard.autoContinue){
 
                 var tasks = {
 
