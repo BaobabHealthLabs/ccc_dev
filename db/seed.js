@@ -18,6 +18,40 @@ var existingPersonAttributeTypes = require("./person_attribute_types.json");
 
 var fs = require("fs");
 
+function queryRaw(sql, callback) {
+
+    var config = require("../config/database.json");
+
+    var knex = require("knex")({
+        client: "mysql",
+        connection: {
+            host: config.host,
+            user: config.user,
+            password: config.password,
+            database: config.database
+        },
+        pool: {
+            min: 0,
+            max: 500
+        }
+    });
+
+    knex.raw(sql)
+        .then(function (result) {
+
+            callback(result);
+
+        })
+        .catch(function (err) {
+
+            console.log(err.message);
+
+            callback(err);
+
+        });
+
+}
+
 function runCmd(cmd, callBack) {
     var exec = require('child_process').exec;
 
@@ -101,21 +135,6 @@ function loadSeedData(eCallback) {
                                     encounter_type[0] + "', '" + encounter_type[1] + "', 1, NOW(), 0, '" + uuid.v1() + "')")
                                     .then(function (record) {
 
-                                        /*if (!existingEncounterTypes.includes(encounter_type[0]))
-                                            existingEncounterTypes.push(encounter_type[0]);
-
-                                        fs.writeFile("./encounter_types.json", JSON.stringify(existingEncounterTypes), function (err) {
-                                            if (err) {
-
-                                                console.log("Encounter types had ERROR!");
-
-                                                return callback(console.log(err));
-                                            }
-
-                                            callback();
-
-                                        });*/
-
                                         callback();
 
                                     })
@@ -173,22 +192,6 @@ function loadSeedData(eCallback) {
                                     patient_identifier_type[0] + "', '" + patient_identifier_type[1] + "', 1, NOW(), 0, '" + uuid.v1() + "')")
                                     .then(function (record) {
 
-                                        /*if (!existingPatientIdentifierTypes.includes(patient_identifier_type[0]))
-                                            existingPatientIdentifierTypes.push(patient_identifier_type[0]);
-
-                                        fs.writeFile("./patient_identifier_types.json", JSON.stringify(existingPatientIdentifierTypes), function (err) {
-                                            if (err) {
-
-                                                console.log("patient_identifier_types had ERROR!");
-
-                                                return callback(console.log(err));
-
-                                            }
-
-                                            callback();
-
-                                        });*/
-
                                         callback();
 
                                     })
@@ -243,22 +246,6 @@ function loadSeedData(eCallback) {
                                 knex.raw("INSERT INTO person_attribute_type (name, description, creator, date_created, retired, uuid) VALUES ('" +
                                     person_attribute_type[0] + "', '" + person_attribute_type[1] + "', 1, NOW(), 0, '" + uuid.v1() + "')")
                                     .then(function (record) {
-
-                                        /*if (!existingPersonAttributeTypes.includes(person_attribute_type[0]))
-                                            existingPersonAttributeTypes.push(person_attribute_type[0]);
-
-                                        fs.writeFile("./person_attribute_types.json", JSON.stringify(existingPersonAttributeTypes), function (err) {
-                                            if (err) {
-
-                                                console.log("person_attribute_types had an ERROR!");
-
-                                                return callback(console.log(err));
-
-                                            }
-
-                                            callback();
-
-                                        });*/
 
                                         callback();
 
@@ -429,22 +416,6 @@ function loadSeedData(eCallback) {
                                             concept_id + ", '" + concept + "', 'en', 1, NOW(), 0, '" + uuid.v1() + "', 'FULLY_SPECIFIED')")
                                             .then(function (name) {
 
-                                                /*if (!existingConcepts.includes(concept))
-                                                    existingConcepts.push(concept);
-
-                                                fs.writeFile("./concepts.json", JSON.stringify(existingConcepts), function (err) {
-                                                    if (err) {
-
-                                                        console.log("concepts had an ERROR!");
-
-                                                        return callback(console.log(err));
-
-                                                    }
-
-                                                    callback();
-
-                                                });*/
-
                                                 callback();
 
                                             })
@@ -574,18 +545,6 @@ async.each(commands, function (cmd, callback) {
 
         function (callback) {
 
-            console.log("Loading seed data...");
-
-            loadSeedData(function () {
-
-                callback();
-
-            });
-
-        },
-
-        function (callback) {
-
             if (process.argv.indexOf("-o") < 0 && process.argv.indexOf("-c") < 0) {
 
                 console.log("Loading '" + connection.stockDatabase + "' Triggers...");
@@ -634,31 +593,28 @@ async.each(commands, function (cmd, callback) {
                 });
 
                 commands.push({
-                    message: "Loading 'HTS Locations' seed data...",
+                    message: "Loading '" + connection.database + "' Extra Metadata...",
                     cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
-                        " " + connection.database + " < locations.sql"
+                    " " + connection.database + " < ccc_data.sql"
                 });
 
                 commands.push({
+
                     message: "Loading 'Nationalities' seed data...",
                     cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
                         " " + connection.database + " < nationalities.sql"
                 });
 
                 commands.push({
-                    message: "Initializing user admin...",
+                    message: "Initializing HTC triggers...",
                     cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
-                        " " + connection.database + " -e 'DELETE FROM person_attribute WHERE person_id = 1; " +
-                        "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) " +
-                        "VALUES((SELECT person_id FROM person LIMIT 1), \"HTS-0001\", (SELECT person_attribute_type_id FROM " +
-                        "person_attribute_type WHERE name = \"HTS Provider ID\"), (SELECT user_id FROM users LIMIT 1), " +
-                        "NOW(), \"" + uuid.v1() + "\")'"
+                        " " + connection.database + " < htc_triggers.sql"
                 });
 
                 commands.push({
-                    message: "Creating 'HTS Reporting Table' ...",
+                    message: "Loading 'Locations' seed data...",
                     cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
-                        " " + connection.database + " < htc_triggers.sql"
+                    " " + connection.database + " < locations.sql"
                 });
 
             }
@@ -692,6 +648,118 @@ async.each(commands, function (cmd, callback) {
                 iCallback();
 
             });
+
+        },
+
+        function (callback) {
+
+            console.log("Loading seed data...");
+
+            loadSeedData(function () {
+
+                callback();
+
+            });
+
+        },
+
+        function (iCallback) {
+
+            var commands = [];
+
+            commands.push({
+                message: "Initializing user admin...",
+                cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                " " + connection.database + " -e 'DELETE FROM person_attribute WHERE person_id = 1; " +
+                "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) " +
+                "VALUES((SELECT person_id FROM person LIMIT 1), \"HTS-0001\", (SELECT person_attribute_type_id FROM " +
+                "person_attribute_type WHERE name = \"HTS Provider ID\"), (SELECT user_id FROM users LIMIT 1), " +
+                "NOW(), \"" + uuid.v1() + "\")'"
+            });
+
+            async.each(commands, function (cmd, callback) {
+
+                console.log(cmd.message);
+
+                runCmd(cmd.cmd, function (error, stdout, stderr) {
+
+                    if (error) {
+
+                        console.log(error);
+
+                    } else if (stderr) {
+
+                        console.log(stderr);
+
+                    } else if (stdout) {
+
+                        console.log(stdout);
+
+                    }
+
+                    callback();
+
+                });
+
+            }, function () {
+
+                iCallback();
+
+            });
+
+        },
+
+        function (iCallback) {
+
+            console.log("Generating drugs list...");
+
+            var sql = "SELECT drug.concept_id AS conceptId, concept_name.name AS conceptName, dose_strength, units, drug.name AS " +
+                "drugName FROM drug LEFT OUTER JOIN concept_name ON concept_name.concept_id = drug.concept_id";
+
+            queryRaw(sql, function (data) {
+
+                if(data && data[0].length > 0) {
+
+                    var generic_drugs = [];
+
+                    var drug_dosages = {};
+
+                    var drugs = {};
+
+                    var json = data[0];
+
+                    for(var i = 0; i < json.length; i++) {
+
+                        var row = json[i];
+
+                        if (generic_drugs.indexOf([row.conceptName, row.conceptId]) < 0)
+                            generic_drugs.push([row.conceptName, row.conceptId]);
+
+                        if(!drug_dosages[row.conceptId])
+                            drug_dosages[row.conceptId] = {};
+
+                        var leaf = (row.dose_strength ? row.dose_strength : "") + (row.units ? row.units : "");
+
+                        drug_dosages[row.conceptId][leaf] = [row.dose_strength, (row.units ? String(row.units).toUpperCase() :
+                            row.units), row.dose_strength];
+
+                        if(!drugs[row.conceptId])
+                            drugs[row.conceptId] = {};
+
+                        drugs[row.conceptId][row.drugName] = [row.dose_strength, row.units];
+
+                    }
+
+                    var writeString = "var generic_drugs = " + JSON.stringify(generic_drugs) + ";\n\nvar drug_dosages = " +
+                        JSON.stringify(drug_dosages) + ";\n\nvar drugs = " + JSON.stringify(drugs) + "\n\n";
+
+                    fs.writeFileSync(__dirname + "/../public/javascripts/generics.js", writeString);
+
+                }
+
+                iCallback();
+
+            })
 
         }
 
