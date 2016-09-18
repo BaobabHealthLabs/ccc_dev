@@ -169,53 +169,6 @@
 
 
 
-         var tasks = {
-
-                        "Initial Questions"    : ["DIABETES INITIAL QUESTIONS","/spec/dm/diabetes_first_questions.spec"],
-                        "Diabetes History"     : ["DIABETES HISTORY","/spec/dm/diabetes_history.spec"],
-                        "Past Medical History" : ["PAST DIABETES MEDICAL HISTORY","/spec/dm/past_medical_history.spec"],
-                        'General Health'       : ["GENERAL HEALTH","/spec/dm/general_health.spec"],
-                        "Family History"       : ["DIABETES FAMILY HISTORY","/spec/dm/family_history.spec"]
-
-        }
-
-        if(!dashboard.medicalHistoryWorkflow){
-
-                 dashboard.medicalHistoryWorkflow = ["Initial Questions","Diabetes History", "Past Medical History", "General Health", "Family History"]
-
-        }
-               
-        if(dashboard.autoContinue){
-
-            var task_keys = Object.keys(tasks);
-
-            for(var i = 0 ;  i < task_keys.length ; i++){
-
-                    if (dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", tasks[task_keys[i]][0])) {
-
-                            var index =  dashboard.medicalHistoryWorkflow.indexOf(task_keys[i]);
-
-                            dashboard.medicalHistoryWorkflow.splice(index, 1);
-
-                    }else{
-
-
-                            dashboard.navPanel(tasks[task_keys[i]][1]);                        
-
-                    }
-
-            }
-
-            if(dashboard.medicalHistoryWorkflow.length == 0){
-
-                dashboard.workflow.splice(0,1);
-
-            }
-
-
-        }
-      
-
         if (__$__("details")) {
 
             __$__("details").innerHTML = "";
@@ -560,6 +513,52 @@
     }
 
     loadPage();
+
+    var tasks = {
+
+                        "Initial Questions"    : ["DIABETES INITIAL QUESTIONS","/spec/dm/diabetes_first_questions.spec"],
+                        "Diabetes History"     : ["DIABETES HISTORY","/spec/dm/diabetes_history.spec"],
+                        "Past Medical History" : ["PAST DIABETES MEDICAL HISTORY","/spec/dm/past_medical_history.spec"],
+                        'General Health'       : ["GENERAL HEALTH","/spec/dm/general_health.spec"],
+                        "Family History"       : ["DIABETES FAMILY HISTORY","/spec/dm/family_history.spec"]
+
+    }
+
+    if(!dashboard.medicalHistoryWorkflow){
+
+                 dashboard.medicalHistoryWorkflow = ["Initial Questions","Diabetes History", "Past Medical History", "General Health", "Family History"]
+
+    }
+               
+    if(dashboard.autoContinue){
+
+            var task_keys = Object.keys(tasks);
+
+            for(var i = 0 ;  i < task_keys.length ; i++){
+
+                    if (dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", tasks[task_keys[i]][0])) {
+
+                            var index =  dashboard.medicalHistoryWorkflow.indexOf(task_keys[i]);
+
+                            dashboard.medicalHistoryWorkflow.splice(index, 1);
+
+                    }else{
+
+
+                            dashboard.navPanel(tasks[task_keys[i]][1]);                        
+
+                    }
+
+            }
+
+            if(dashboard.medicalHistoryWorkflow.length == 0){
+
+                dashboard.workflow.splice(0,1);
+
+            }
+
+
+    }
 
     dashboard.subscription.addEventlistener("done", function(){
 

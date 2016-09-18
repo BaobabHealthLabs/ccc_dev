@@ -304,6 +304,17 @@
 
     },50);
 
+    /*Handling complication Magically appearing in workfol*/
+    if(dashboard.complicationWorkFlow && dashboard.complicationWorkFlow.length == 0){
+
+        window.parent.dashboard.autoContinue = true;
+
+        var index =  window.parent.dashboard.workflow.indexOf("Complications");
+
+        window.parent.dashboard.workflow.splice(index, 1);
+
+    }
+
 </script>
 
 </body>

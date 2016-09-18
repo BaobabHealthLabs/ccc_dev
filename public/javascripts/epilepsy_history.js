@@ -167,61 +167,7 @@
 
     function loadPage() {
 
-        if(dashboard.autoContinue){
-
-                var tasks = {
-
-                        "Initial Questions"            : "/spec/epilepsy/initial_questions.spec",
-                        "Patient History at Enrolment" : "/spec/epilepsy/enrolment_history.spec",
-                        "Medical and Surgical History" : "/spec/epilepsy/medical_history.spec",
-                        "Family History"               : "/spec/epilepsy/family_history.spec"
-
-                }
-
-                if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "EPILEPSY INITIAL QUESTIONS")) {
-
-                        if(window.parent.dashboard.data.data.identifiers["EPL Number"] && window.parent.dashboard.data.data.identifiers["EPL Number"].identifier){
-
-                        
-                               window.parent.dashboard.navPanel(tasks["Initial Questions"]);
-
-
-                        }else{
-
-                            var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
-
-                            window.parent.dashboard.showConfirmMsg(message, "Confirm",
-                                    "javascript:window.parent.dashboard.navPanel('/spec/epilepsy/initial_questions.spec')");
-
-
-                        }
-
-                         
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "PATIENT HISTORY AT ENROLMENT")) {
-
-                        window.parent.dashboard.navPanel(tasks["Patient History at Enrolment"])
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "MEDICAL AND SURGICAL HISTORY")) {
-
-                         
-                         window.parent.dashboard.navPanel(tasks["Medical and Surgical History"])
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "FAMILY HISTORY")) {
-
-                        window.parent.dashboard.navPanel(tasks["Family History"])
-
-                }
-                else{
-
-                        window.parent.dashboard.workflow.splice(0, 1);
-
-                        window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
-
-
-                }
-
-        }
+        
 
         if (__$__("details")) {
 
@@ -491,7 +437,7 @@
 
             td.appendChild(div);
 
-            queryEncounter("FAMILY HISTORY", "divFamilyHistory", function (data, id) {
+            queryEncounter("EPILEPSY FAMILY HISTORY", "divFamilyHistory", function (data, id) {
 
                 if (__$__(id)) {
 
@@ -506,6 +452,51 @@
     }
 
     loadPage();
+
+    var tasks = {
+
+                        "Initial Questions"                : ["EPILEPSY INITIAL QUESTIONS","/spec/epilepsy/initial_questions.spec"],
+                        "Patient History at Enrolment"     : ["PATIENT HISTORY AT ENROLMENT","/spec/epilepsy/enrolment_history.spec"],
+                        "Medical and Surgical History"     : ["MEDICAL AND SURGICAL HISTORY","/spec/epilepsy/medical_history.spec"],
+                        "Family History"                   : ["EPILEPSY FAMILY HISTORY","/spec/epilepsy/family_history.spec"]
+
+    }
+
+    if(!dashboard.medicalHistoryWorkflow){
+
+                 dashboard.medicalHistoryWorkflow = ["Initial Questions","Patient History at Enrolment", "Medical and Surgical History", "Family History"]
+
+    }
+               
+    if(dashboard.autoContinue){
+
+            var task_keys = Object.keys(tasks);
+
+            for(var i = 0 ;  i < task_keys.length ; i++){
+
+                    if (dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", tasks[task_keys[i]][0])) {
+
+                            var index =  dashboard.medicalHistoryWorkflow.indexOf(task_keys[i]);
+
+                            dashboard.medicalHistoryWorkflow.splice(index, 1);
+
+                    }else{
+
+
+                            dashboard.navPanel(tasks[task_keys[i]][1]);                        
+
+                    }
+
+            }
+
+            if(dashboard.medicalHistoryWorkflow.length == 0){
+
+                dashboard.workflow.splice(0,1);
+
+            }
+
+
+    }
 
     dashboard.subscription.addEventlistener("done", function(){
 

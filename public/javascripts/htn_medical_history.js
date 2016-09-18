@@ -167,137 +167,7 @@
 
     function loadPage() {
 
-         var tasks = {
-
-                        "Initial Questions"    : ["HYPERTENSION INITIAL QUESTIONS","/spec/htn/initial_questions.spec"],
-                        "Social History"     : ["HYPERTENSION SOCIAL HISTORY","/spec/htn/social_history.spec"],
-                        "Past Medical History" : ["PAST HYPERTENSION MEDICAL HISTORY","/spec/htn/past_medical_history.spec"],
-                        "Family History"       : ["HYPERTENSION FAMILY HISTORY","/spec/htn/family_history.spec"]
-
-        }
-
-        if(!dashboard.medicalHistoryWorkflow){
-
-                 dashboard.medicalHistoryWorkflow = ["Initial Questions","Diabetes History", "Past Medical History", "General Health", "Family History"]
-
-        }
-               
-        if(dashboard.autoContinue){
-
-            var task_keys = Object.keys(tasks);
-
-            for(var i = 0 ;  i < task_keys.length ; i++){
-
-                    if (dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM", tasks[task_keys[i]][0])) {
-
-                            var index =  dashboard.medicalHistoryWorkflow.indexOf(task_keys[i]);
-
-                            dashboard.medicalHistoryWorkflow.splice(index, 1);
-
-                    }else{
-
-                            if(dashboard.data.data.identifiers["HTN Number"] && dashboard.data.data.identifiers["HTN Number"].identifier){
-
-                                dashboard.navPanel(tasks[task_keys[i]][1]); 
-
-                            }else{
-
-                                var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
-
-                                window.parent.dashboard.showConfirmMsg(message, "Confirm",
-                                        "javascript:window.parent.dashboard.navPanel('"+ tasks[task_keys[i]][1] +"')");
-
-                            }                       
-
-                    }
-
-            }
-
-            if(dashboard.medicalHistoryWorkflow.length == 0){
-
-                dashboard.workflow.splice(0,1);
-
-            }
-
-
-        }
-
-
-        /*
-
-         if(window.parent.dashboard.data.data.identifiers["AST Number"] && window.parent.dashboard.data.data.identifiers["AST Number"].identifier){
-
-                        
-                         window.parent.dashboard.navPanel(tasks["Initial Questions"])
-
-
-                    }else{
-
-                        var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
-
-                        window.parent.dashboard.showConfirmMsg(message, "Confirm",
-                                "javascript:window.parent.dashboard.navPanel('/spec/asthma/initial_questions.spec')");
-
-
-                    }
-
-        if(dashboard.autoContinue){
-
-                var tasks = {
-
-                        "Initial Questions"    : "/spec/htn/initial_questions.spec",
-                        "Social History"     : "/spec/htn/social_history.spec",
-                        "Past Medical History" : "/spec/htn/past_medical_history.spec",
-                        "Family History"       : "/spec/htn/family_history.spec"
-
-                }
-
-                if (!window.parent.dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM", "HYPERTENSION INITIAL QUESTIONS")) {
-
-                        if(window.parent.dashboard.data.data.identifiers["HTN Number"] && window.parent.dashboard.data.data.identifiers["HTN Number"].identifier){
-
-                        
-                                window.parent.dashboard.navPanel(tasks["Initial Questions"])
-
-
-                        }else{
-
-                            var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
-
-                            window.parent.dashboard.showConfirmMsg(message, "Confirm",
-                                    "javascript:window.parent.dashboard.navPanel('/spec/htn/initial_questions.spec')");
-
-
-                        }
-
-                        
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM", "HYPERTENSION SOCIAL HISTORY")) {
-
-                         
-                         window.parent.dashboard.navPanel(tasks["Social History"])
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM", "PAST HYPERTENSION MEDICAL HISTORY")) {
-
-                        window.parent.dashboard.navPanel(tasks["Past Medical History"])
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM", "HYPERTENSION FAMILY HISTORY")) {
-
-                        window.parent.dashboard.navPanel(tasks["Family History"])
-
-                }
-                else{
-
-                        window.parent.dashboard.workflow.splice(0, 1);
-
-                        window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
-
-
-                }
-
-        }*/
-
-
+       
         if (__$__("details")) {
 
             __$__("details").innerHTML = "";
@@ -583,6 +453,52 @@
     }
 
     loadPage();
+
+      var tasks = {
+
+                        "Initial Questions"    : ["HYPERTENSION INITIAL QUESTIONS","/spec/htn/initial_questions.spec"],
+                        "Social History"     : ["HYPERTENSION SOCIAL HISTORY","/spec/htn/social_history.spec"],
+                        "Past Medical History" : ["PAST HYPERTENSION MEDICAL HISTORY","/spec/htn/past_medical_history.spec"],
+                        "Family History"       : ["HYPERTENSION FAMILY HISTORY","/spec/htn/family_history.spec"]
+
+        }
+
+        if(!dashboard.medicalHistoryWorkflow){
+
+                 dashboard.medicalHistoryWorkflow = ["Initial Questions","Social History", "Past Medical History", "Family History"]
+
+        }
+               
+        if(dashboard.autoContinue){
+
+            var task_keys = Object.keys(tasks);
+
+            for(var i = 0 ;  i < task_keys.length ; i++){
+
+                    if (dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM", tasks[task_keys[i]][0])) {
+
+                            var index =  dashboard.medicalHistoryWorkflow.indexOf(task_keys[i]);
+
+                            dashboard.medicalHistoryWorkflow.splice(index, 1);
+
+                    }else{
+
+
+                            dashboard.navPanel(tasks[task_keys[i]][1]);                        
+
+                    }
+
+            }
+
+            if(dashboard.medicalHistoryWorkflow.length == 0){
+
+                dashboard.workflow.splice(0,1);
+
+            }
+
+
+        }
+
 
     dashboard.subscription.addEventlistener("done", function(){
 

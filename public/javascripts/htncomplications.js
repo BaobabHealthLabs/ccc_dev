@@ -1607,8 +1607,8 @@ function loadPage(id,element) {
 
  var tasks = {
 
-                        "oedema"       			 :  ["Oedema measure", "/spec/htn/oedema.spec"],
-                        "shortness_of_breath"    :  ["Shortness of breath measure" , "/spec/htn/shortness_of_breath.spec"],
+                        "oedema"       			 :  ["Any sign of Oedema?", "/spec/htn/oedema.spec"],
+                        "shortness_of_breath"    :  ["Any shortness breath?" , "/spec/htn/shortness_of_breath.spec"],
                         "creatinine"    		 :  ["Creatinine Test Date" ,"/spec/htn/creatinine.spec"],
                         "visual_acuity"       	 :  ["Visual Acuity Result Test Date" ,"/spec/htn/visual_acuity.spec"],
                         "fundoscopy"           	 :  ["Fundoscopy Result Test Date" ,"/spec/htn/fundoscopy.spec"],
