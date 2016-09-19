@@ -30,9 +30,9 @@ Q.1.5.2.1. Chronic dry cough duration [pos:: 11$$field_type::number$$id::chronic
 
 Q.1.5.2.2. Chronic dry cough Age onset   [pos::12$$field_type::number$$ id::chronic_dry_cough1$$parent::Visit Date]
 
-Q.1.6. Day sx [pos::13$$field_type::number$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal]
+Q.1.6. Day sx [pos::13$$field_type::number$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal$$condition::false]
 
-Q.1.7. Night sx [pos::14$$field_type::number$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal]
+Q.1.7. Night sx [pos::14$$field_type::number$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal$$condition::false]
 
 
 Q.1.8. Beta-agonist inhaler use: frequency [pos::15$$tt_requirenextclick::false$$parent::Visit Date]

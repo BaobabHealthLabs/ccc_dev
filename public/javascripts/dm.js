@@ -438,13 +438,14 @@ function validateAppointment(){
 
             var appointment_data =  JSON.parse(this.responseText);
 
-            if(appointment_data[appointment]){
+            if(appointment_data[appointment] && parseInt(appointment_data[appointment]) > 100){
 
                 var count = parseInt(appointment_data[appointment]);
 
                 var booked = new Date(appointment);
 
                 var weeks = Math.round((booked-date_today)/ 604800000);
+
 
                 if(weeks > 4){
 
@@ -468,7 +469,6 @@ function validateAppointment(){
                     }
 
                 }
-
                
 
             }
