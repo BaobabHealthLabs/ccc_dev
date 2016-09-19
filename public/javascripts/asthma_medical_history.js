@@ -260,7 +260,7 @@
             table.appendChild(td);
 
             var message = 'Enroll patient in ' + dashboard.getCookie("currentProgram") + ' ' + 'Program?';
-0
+
             var img = document.createElement("img");
             img.setAttribute("src", icoAdd);
             img.height = "32";
@@ -497,6 +497,51 @@
     }
 
     loadPage();
+
+    var tasks = {
+
+                        "Initial Questions"    : ["ASTHMA INITIAL QUESTIONS","/spec/asthma/initial_questions.spec"],
+                        "Past Medical History" : ["ASTHMA MEDICAL HISTORY","/spec/asthma/medical_history.spec"],
+                        "Social History"       : ["ASTHMA SOCIAL HISTORY","/spec/asthma/social_history.spec"],
+                        "Family History"       : ["ASTHMA FAMILY HISTORY","/spec/asthma/family_history.spec"]
+
+    }
+
+    if(!dashboard.medicalHistoryWorkflow){
+
+                 dashboard.medicalHistoryWorkflow = ["Initial Questions","Past Medical History", "Social History", "Family History"]
+
+    }
+               
+    if(dashboard.autoContinue){
+
+            var task_keys = Object.keys(tasks);
+
+            for(var i = 0 ;  i < task_keys.length ; i++){
+
+                    if (dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", tasks[task_keys[i]][0])) {
+
+                            var index =  dashboard.medicalHistoryWorkflow.indexOf(task_keys[i]);
+
+                            dashboard.medicalHistoryWorkflow.splice(index, 1);
+
+                    }else{
+
+
+                            dashboard.navPanel(tasks[task_keys[i]][1]);                        
+
+                    }
+
+            }
+
+            if(dashboard.medicalHistoryWorkflow.length == 0){
+
+                dashboard.workflow.splice(0,1);
+
+            }
+
+
+    }
 
     dashboard.subscription.addEventlistener("done", function(){
 
