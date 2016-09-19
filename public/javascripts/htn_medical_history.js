@@ -454,10 +454,10 @@
 
     loadPage();
 
-      var tasks = {
+    var tasks = {
 
                         "Initial Questions"    : ["HYPERTENSION INITIAL QUESTIONS","/spec/htn/initial_questions.spec"],
-                        "Social History"     : ["HYPERTENSION SOCIAL HISTORY","/spec/htn/social_history.spec"],
+                        "Social History"       : ["HYPERTENSION SOCIAL HISTORY","/spec/htn/social_history.spec"],
                         "Past Medical History" : ["PAST HYPERTENSION MEDICAL HISTORY","/spec/htn/past_medical_history.spec"],
                         "Family History"       : ["HYPERTENSION FAMILY HISTORY","/spec/htn/family_history.spec"]
 

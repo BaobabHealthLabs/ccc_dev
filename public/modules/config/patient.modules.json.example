@@ -7,8 +7,8 @@
             "Lab Results": "javascript:dashboard.navPanel('/spec/lab_results.spec')",
             "HIV/ART Status": "javascript:dashboard.navPanel('/spec/hiv_status.spec')",
             "Complications": "javascript:dashboard.navURLPanel('/spec/dm/complications.html')",
-            "Treatments": "javascript:dashboard.navPanel('/spec/dm/treatment.spec')",
             "Outcome": "javascript:dashboard.navPanel('/spec/dm/outcome.spec')",
+            "Treatments": "javascript:dashboard.navPanel('/spec/dm/treatment.spec')",
             "Bookings": "javascript:dashboard.navPanel('/spec/appointment.spec')",
             "Mastercard": "javascript:dashboard.navURLPanel('/views/dm/card.html')"
         },
@@ -58,8 +58,8 @@
             "Lab Results",
             "HIV/ART Status",
             "Complications",
-            "Treatments",
             "Outcome",
+            "Treatments",
             "Bookings",
             "Mastercard"
 
@@ -80,8 +80,8 @@
             "Lab Results": "javascript:dashboard.navPanel('/spec/lab_results.spec')",
             "HIV Status": "javascript:dashboard.navPanel('/spec/hiv_status.spec')",
             "Complications": "javascript:dashboard.navURLPanel('/spec/htn/complications.html')",
-            "Treatments": "javascript:dashboard.navPanel('/spec/htn/treatment.spec')",
             "Outcome": "javascript:dashboard.navPanel('/spec/htn/outcome.spec')",
+            "Treatments": "javascript:dashboard.navPanel('/spec/htn/treatment.spec')",
             "Bookings": "javascript:dashboard.navPanel('/spec/appointment.spec')",
             "Mastercard" :"javascript:dashboard.navURLPanel('/views/htn/card.html')"
         },
@@ -132,8 +132,8 @@
             "Lab Results",
             "HIV Status",
             "Complications",
-            "Treatments",
             "Outcome",
+            "Treatments",
             "Bookings",
             "Mastercard"
 
@@ -153,6 +153,7 @@
             "Vitals": "javascript:dashboard.navPanel('/spec/vitals.spec')",
             "Visit": "javascript:dashboard.navPanel('/spec/asthma/visit.spec')",
             "HIV Status" :"javascript:dashboard.navPanel('/spec/hiv_status.spec')",
+            "Outcome": "javascript:dashboard.navPanel('/spec/asthma/outcome.spec')",
             "Treatments": "javascript:dashboard.navPanel('/spec/asthma/treatment.spec')",
             "Bookings": "javascript:dashboard.navPanel('/spec/appointment.spec')",
             "Mastercard" :"javascript:dashboard.navURLPanel('/views/asthma/card.html')"
@@ -200,6 +201,7 @@
             "Patient History",
             "HIV Status",
             "Visit",
+            "Outcome",
             "Treatments",
             "Bookings",
             "Mastercard"
@@ -220,8 +222,8 @@
             "VDRL Status" :"javascript:dashboard.navPanel('/spec/epilepsy/vdrl_status.spec')",
             "Patient Overview": "javascript:dashboard.loadCustomScript('/javascripts/epilepsy_patient_overview.js', 'details')",
             "Epilepsy visit": "javascript:dashboard.navPanel('/spec/epilepsy/visit.spec')",
-            "Treatments": "javascript:dashboard.navPanel('/spec/epilepsy/treatment.spec')",
             "Outcome": "javascript:dashboard.navPanel('/spec/epilepsy/outcome.spec')",
+            "Treatments": "javascript:dashboard.navPanel('/spec/epilepsy/treatment.spec')",
             "Bookings": "javascript:dashboard.navPanel('/spec/appointment.spec')",
             "Mastercard" :"javascript:dashboard.navURLPanel('/views/epilepsy/card.html')"
         },
@@ -282,8 +284,8 @@
             "VDRL Status",
             "Patient Overview",
             "Epilepsy visit",
-            "Treatments",
             "Outcome",
+            "Treatments",
             "Bookings",
             "Mastercard"
         ],
