@@ -304,6 +304,66 @@
 
     },50);
 
+    var changeTreatmentInterval = setInterval(function(){
+
+        var programs = {
+                                            "Diabetes" : "DIABETES PROGRAM",
+                                            "HTN"      : "HYPERTENSION PROGRAM",
+                                            "Asthma"   : "ASTHMA PROGRAM",
+                                            "Epilepsy" : "EPILEPSY PROGRAM"
+                }
+
+        if(!dashboard.treatmentChanged)
+            dashboard.treatmentChanged = {}
+
+        var date = new Date();
+
+        var program = dashboard.getCookie("currentProgram");
+
+        if(!dashboard.treatmentChanged[program] && dashboard.queryActiveObs(programs[program],date.format("YYYY-mm-dd"),"UPDATE OUTCOME","Outcome") && dashboard.queryActiveObs(programs[program],date.format("YYYY-mm-dd"),"UPDATE OUTCOME","Outcome")=="Treatment changed"){
+
+                dashboard.treatmentChanged[program] = true;
+
+                switch(program) {
+                    case "Diabetes":
+
+                        dashboard.navPanel('/spec/dm/treatment.spec');
+
+                        break;
+                    case "HTN":
+                    
+                        dashboard.navPanel('/spec/htn/treatment.spec');
+
+                        break;
+
+                    case "Asthma":
+                    
+                        dashboard.navPanel('/spec/asthma/treatment.spec');
+
+                        break;
+
+                    case "Epilepsy":
+                    
+                        dashboard.navPanel('/spec/epilepsy/treatment.spec');
+
+                        break;
+                }
+
+        }
+
+    },200)
+
+    /*Handling complication Magically appearing in workfol*/
+    if(dashboard.complicationWorkFlow && dashboard.complicationWorkFlow.length == 0){
+
+        window.parent.dashboard.autoContinue = true;
+
+        var index =  window.parent.dashboard.workflow.indexOf("Complications");
+
+        window.parent.dashboard.workflow.splice(index, 1);
+
+    }
+
 </script>
 
 </body>

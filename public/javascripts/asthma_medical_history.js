@@ -167,59 +167,48 @@
 
     function loadPage() {
 
+           var tasks = {
+
+                        "Initial Questions"    : ["ASTHMA INITIAL QUESTIONS","/spec/asthma/initial_questions.spec"],
+                        "Past Medical History" : ["ASTHMA MEDICAL HISTORY","/spec/asthma/medical_history.spec"],
+                        "Social History"       : ["ASTHMA SOCIAL HISTORY","/spec/asthma/social_history.spec"],
+                        "Family History"       : ["ASTHMA FAMILY HISTORY","/spec/asthma/family_history.spec"]
+
+        }
+
+        if(!dashboard.medicalHistoryWorkflow){
+
+                 dashboard.medicalHistoryWorkflow = ["Initial Questions","Past Medical History", "Social History", "Family History"]
+
+        }
+               
         if(dashboard.autoContinue){
 
-                var tasks = {
+            var task_keys = Object.keys(tasks);
 
-                        "Initial Questions"    : "/spec/asthma/initial_questions.spec",
-                        "Past Medical History" : "/spec/asthma/medical_history.spec",
-                        "Social History"       : "/spec/asthma/social_history.spec",
-                        "Family History"       : "/spec/asthma/family_history.spec"
+            for(var i = 0 ;  i < task_keys.length ; i++){
 
-                }
+                    if (dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", tasks[task_keys[i]][0])) {
 
-                if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA INITIAL QUESTIONS")) {
+                            var index =  dashboard.medicalHistoryWorkflow.indexOf(task_keys[i]);
 
-                    if(window.parent.dashboard.data.data.identifiers["AST Number"] && window.parent.dashboard.data.data.identifiers["AST Number"].identifier){
-
-                        
-                         window.parent.dashboard.navPanel(tasks["Initial Questions"])
-
+                            dashboard.medicalHistoryWorkflow.splice(index, 1);
 
                     }else{
 
-                        var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
 
-                        window.parent.dashboard.showConfirmMsg(message, "Confirm",
-                                "javascript:window.parent.dashboard.navPanel('/spec/asthma/initial_questions.spec')");
-
+                            dashboard.navPanel(tasks[task_keys[i]][1]);                        
 
                     }
 
-                       
+            }
 
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA MEDICAL HISTORY")) {
+            if(dashboard.medicalHistoryWorkflow.length == 0){
 
-                        window.parent.dashboard.navPanel(tasks["Past Medical History"])
+                dashboard.workflow.splice(0,1);
 
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA SOCIAL HISTORY")) {
+            }
 
-                         
-                         window.parent.dashboard.navPanel(tasks["Social History"])
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", "ASTHMA FAMILY HISTORY")) {
-
-                        window.parent.dashboard.navPanel(tasks["Family History"])
-
-                }
-                else{
-
-                        window.parent.dashboard.workflow.splice(0, 1);
-
-                        window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
-
-
-                }
 
         }
 
@@ -271,7 +260,7 @@
             table.appendChild(td);
 
             var message = 'Enroll patient in ' + dashboard.getCookie("currentProgram") + ' ' + 'Program?';
-0
+
             var img = document.createElement("img");
             img.setAttribute("src", icoAdd);
             img.height = "32";
@@ -508,6 +497,51 @@
     }
 
     loadPage();
+
+    var tasks = {
+
+                        "Initial Questions"    : ["ASTHMA INITIAL QUESTIONS","/spec/asthma/initial_questions.spec"],
+                        "Past Medical History" : ["ASTHMA MEDICAL HISTORY","/spec/asthma/medical_history.spec"],
+                        "Social History"       : ["ASTHMA SOCIAL HISTORY","/spec/asthma/social_history.spec"],
+                        "Family History"       : ["ASTHMA FAMILY HISTORY","/spec/asthma/family_history.spec"]
+
+    }
+
+    if(!dashboard.medicalHistoryWorkflow){
+
+                 dashboard.medicalHistoryWorkflow = ["Initial Questions","Past Medical History", "Social History", "Family History"]
+
+    }
+               
+    if(dashboard.autoContinue){
+
+            var task_keys = Object.keys(tasks);
+
+            for(var i = 0 ;  i < task_keys.length ; i++){
+
+                    if (dashboard.queryAnyExistingEncounters("ASTHMA PROGRAM", tasks[task_keys[i]][0])) {
+
+                            var index =  dashboard.medicalHistoryWorkflow.indexOf(task_keys[i]);
+
+                            dashboard.medicalHistoryWorkflow.splice(index, 1);
+
+                    }else{
+
+
+                            dashboard.navPanel(tasks[task_keys[i]][1]);                        
+
+                    }
+
+            }
+
+            if(dashboard.medicalHistoryWorkflow.length == 0){
+
+                dashboard.workflow.splice(0,1);
+
+            }
+
+
+    }
 
     dashboard.subscription.addEventlistener("done", function(){
 

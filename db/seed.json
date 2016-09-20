@@ -3,7 +3,7 @@
         ["APPOINTMENT", "Appointment encounter"],
         ["COMMENTS", "Clinical comments encounter"],
         ["SEIZURE TYPE","Epilepsy Seizure encounter"],
-        ["FAMILY HISTORY","Epilepsy Family History encounter"],
+        ["EPILEPSY FAMILY HISTORY","Epilepsy Family History encounter"],
         ["PATIENT HISTORY AT ENROLMENT","Epilepsy Patient History at enrolment encounter"],
         ["EPILEPSY PATIENT OVERVIEW","Epilepsy patient overview encounter"],
         ["MEDICAL AND SURGICAL HISTORY","Epilepsy Patient Medical and Surgical History encounter"],

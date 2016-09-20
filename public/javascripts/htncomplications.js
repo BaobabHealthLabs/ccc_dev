@@ -1607,8 +1607,8 @@ function loadPage(id,element) {
 
  var tasks = {
 
-                        "oedema"       			 :  ["Oedema measure", "/spec/htn/oedema.spec"],
-                        "shortness_of_breath"    :  ["Shortness of breath measure" , "/spec/htn/shortness_of_breath.spec"],
+                        "oedema"       			 :  ["Any sign of Oedema?", "/spec/htn/oedema.spec"],
+                        "shortness_of_breath"    :  ["Any shortness breath?" , "/spec/htn/shortness_of_breath.spec"],
                         "creatinine"    		 :  ["Creatinine Test Date" ,"/spec/htn/creatinine.spec"],
                         "visual_acuity"       	 :  ["Visual Acuity Result Test Date" ,"/spec/htn/visual_acuity.spec"],
                         "fundoscopy"           	 :  ["Fundoscopy Result Test Date" ,"/spec/htn/fundoscopy.spec"],
@@ -1616,11 +1616,20 @@ function loadPage(id,element) {
 
         }
 
+ if(!dashboard.finished)
+    dashboard.finished = [];
+
 function executeTasks(){
 
     if(dashboard.complicationWorkFlow && dashboard.complicationWorkFlow.length == 0){
 
-        window.parent.dashboard.workflow.splice(0, 1);
+        window.parent.dashboard.autoContinue = true;
+
+        var index =  window.parent.dashboard.workflow.indexOf("Complications");
+
+        window.parent.dashboard.workflow.splice(index, 1);
+
+        window.parent.dashboard.exitNavPanel();
 
     }else{
         if(dashboard.complicationWorkFlow){
@@ -1628,7 +1637,7 @@ function executeTasks(){
             window.parent.dashboard.exitNavPanel(tasks[dashboard.complicationWorkFlow[0]][1])
 
         }
-        else{
+        else if(dashboard.finished.length == 0){
 
             dashboard.showMsg("Please select complications");
 
@@ -1665,6 +1674,9 @@ function addToComplicationWorkFlow(element){
 
 }
 function executeAutoConitnue(){
+
+	if(!dashboard.finished)
+    		dashboard.finished = [];
 
     var tasks_keys = Object.keys(tasks);
 

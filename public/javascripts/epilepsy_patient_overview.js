@@ -167,51 +167,6 @@
 
     function loadPage() {
 
-        if(dashboard.autoContinue){
-
-                var tasks = {
-
-                        "Seizure Type"                 : "/spec/epilepsy/seizure_type.spec",
-                        "Triggers"                     : "/spec/epilepsy/triggers.spec",
-                        "Pre-ictal Warning"            : "/spec/epilepsy/pre_ictal_warning.spec",
-                        "Post-ictal Features"          : "/spec/epilepsy/post_ictal_features.spec",
-                        "Exposures and Complications"  : "/spec/epilepsy/patient_overview.spec"
-
-                }
-
-                if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "SEIZURE TYPE")) {
-
-                         window.parent.dashboard.navPanel(tasks["Seizure Type"])
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "TRIGGERS")) {
-
-                        window.parent.dashboard.navPanel(tasks["Triggers"])
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "PRE-ICTAL WARNING")) {
-   
-                         window.parent.dashboard.navPanel(tasks["Pre-ictal Warning"])
-
-                }else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "POST-ICTAL FEATURES")) {
-
-                        window.parent.dashboard.navPanel(tasks["Post-ictal Features"])
-
-                }
-                else if (!window.parent.dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", "EPILEPSY PATIENT OVERVIEW")) {
-
-                        window.parent.dashboard.navPanel(tasks["Exposures and Complications"])
-
-                }
-                else{
-
-                        window.parent.dashboard.workflow.splice(0, 1);
-
-                        window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
-
-
-                }
-
-        }
-
         if (__$__("details")) {
 
             __$__("details").innerHTML = "";
@@ -553,6 +508,52 @@
     }
 
     loadPage();
+
+     var tasks = {
+
+                            "Seizure Type"                     : ["SEIZURE TYPE","/spec/epilepsy/seizure_type.spec"],
+                            "Triggers"                         : ["TRIGGERS","/spec/epilepsy/triggers.spec"],
+                            "Pre-ictal Warning"                : ["PRE-ICTAL WARNING","/spec/epilepsy/pre_ictal_warning.spec"],
+                            "Post-ictal Features"              : ["POST-ICTAL FEATURES","/spec/epilepsy/post_ictal_features.spec"],
+                            "Exposures and Complications"      : ["EPILEPSY PATIENT OVERVIEW","/spec/epilepsy/patient_overview.spec"]
+
+    }
+
+    if(!dashboard.medicalHistoryWorkflow){
+
+            dashboard.medicalHistoryWorkflow = ["Initial Questions","Patient History at Enrolment", "Medical and Surgical History", "Family History"]
+
+    }
+                   
+    if(dashboard.autoContinue){
+
+                var task_keys = Object.keys(tasks);
+
+                for(var i = 0 ;  i < task_keys.length ; i++){
+
+                        if (dashboard.queryAnyExistingEncounters("EPILEPSY PROGRAM", tasks[task_keys[i]][0])) {
+
+                                var index =  dashboard.medicalHistoryWorkflow.indexOf(task_keys[i]);
+
+                                dashboard.medicalHistoryWorkflow.splice(index, 1);
+
+                        }else{
+
+
+                                dashboard.navPanel(tasks[task_keys[i]][1]);                        
+
+                        }
+
+                }
+
+                if(dashboard.medicalHistoryWorkflow.length == 0){
+
+                    dashboard.workflow.splice(0,1);
+
+                }
+
+
+    }
 
     dashboard.subscription.addEventlistener("done", function(){
 

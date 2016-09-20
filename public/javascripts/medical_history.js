@@ -167,74 +167,7 @@
 
     function loadPage() {
 
-        if(dashboard.autoContinue){
 
-                var tasks = {
-
-                        "Initial Questions"    : "/spec/dm/diabetes_first_questions.spec",
-                        "Diabetes History"     : "/spec/dm/diabetes_history.spec",
-                        "Past Medical History" : "/spec/dm/past_medical_history.spec",
-                        'General Health'       : "/spec/dm/general_health.spec",
-                        "Family History"       : "/spec/dm/family_history.spec"
-
-                }
-
-                var interval = setInterval(function(){
-
-
-                         if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES INITIAL QUESTIONS")) {
-
-                            if(window.parent.dashboard.data.data.identifiers["DTM Number"] && window.parent.dashboard.data.data.identifiers["DTM Number"].identifier){
-
-                            
-                                    window.parent.dashboard.navPanel(tasks["Initial Questions"]);
-
-
-                            }else{
-
-                                var message = 'Enroll patient in ' + window.parent.dashboard.getCookie("currentProgram") + ' ' + 'Program?';
-
-                                window.parent.dashboard.showConfirmMsg(message, "Confirm",
-                                        "javascript:window.parent.dashboard.navPanel('/spec/dm/diabetes_first_questions.spec')");
-
-
-                            }
-
-                             
-
-                        }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES HISTORY")) {
-
-                                 
-                                 window.parent.dashboard.navPanel(tasks["Diabetes History"])
-
-                        }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "PAST DIABETES MEDICAL HISTORY")) {
-
-                                window.parent.dashboard.navPanel(tasks["Past Medical History"])
-
-                        }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "GENERAL HEALTH")) {
-
-                                window.parent.dashboard.navPanel(tasks["General Health"])
-
-                        }else if (!window.parent.dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", "DIABETES FAMILY HISTORY")) {
-
-                                window.parent.dashboard.navPanel(tasks["Family History"])
-
-                        }
-                        else{
-                            
-                                window.parent.dashboard.workflow.splice(0, 1);
-
-                               // window.parent.dashboard.$(window.parent.dashboard.workflow[0]).click();
-
-                        }
-
-
-                }, 1000);
-
-               
-
-        }
-      
 
         if (__$__("details")) {
 
@@ -580,6 +513,52 @@
     }
 
     loadPage();
+
+    var tasks = {
+
+                        "Initial Questions"    : ["DIABETES INITIAL QUESTIONS","/spec/dm/diabetes_first_questions.spec"],
+                        "Diabetes History"     : ["DIABETES HISTORY","/spec/dm/diabetes_history.spec"],
+                        "Past Medical History" : ["PAST DIABETES MEDICAL HISTORY","/spec/dm/past_medical_history.spec"],
+                        'General Health'       : ["GENERAL HEALTH","/spec/dm/general_health.spec"],
+                        "Family History"       : ["DIABETES FAMILY HISTORY","/spec/dm/family_history.spec"]
+
+    }
+
+    if(!dashboard.medicalHistoryWorkflow){
+
+                 dashboard.medicalHistoryWorkflow = ["Initial Questions","Diabetes History", "Past Medical History", "General Health", "Family History"]
+
+    }
+               
+    if(dashboard.autoContinue){
+
+            var task_keys = Object.keys(tasks);
+
+            for(var i = 0 ;  i < task_keys.length ; i++){
+
+                    if (dashboard.queryAnyExistingEncounters("DIABETES PROGRAM", tasks[task_keys[i]][0])) {
+
+                            var index =  dashboard.medicalHistoryWorkflow.indexOf(task_keys[i]);
+
+                            dashboard.medicalHistoryWorkflow.splice(index, 1);
+
+                    }else{
+
+
+                            dashboard.navPanel(tasks[task_keys[i]][1]);                        
+
+                    }
+
+            }
+
+            if(dashboard.medicalHistoryWorkflow.length == 0){
+
+                dashboard.workflow.splice(0,1);
+
+            }
+
+
+    }
 
     dashboard.subscription.addEventlistener("done", function(){
 
