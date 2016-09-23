@@ -15,4 +15,4 @@ O.1.3.1. Yes
 O.1.3.2. No
 O.1.3.3. Unknown
 
-Q.1.4. Summary [pos :: 3 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.4. Summary [pos :: 3 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Asmatha Family History Summary $$condition::true]

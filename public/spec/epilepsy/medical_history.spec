@@ -62,4 +62,4 @@ O.1.10.1. Yes
 O.1.10.2. No
 O.1.10.3. Unknown
 
-Q.1.11. Summary [pos :: 10 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.11. Summary [pos :: 10 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Medical and Surgical History Summary $$condition::true]

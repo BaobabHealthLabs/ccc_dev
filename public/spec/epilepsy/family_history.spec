@@ -24,4 +24,4 @@ O.1.5.1. Yes
 O.1.5.2. No
 O.1.5.3. Unknown
 
-Q.1.6. Summary [pos :: 5 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.6. Summary [pos :: 5 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Epilepsy Family History Summary $$condition::true]

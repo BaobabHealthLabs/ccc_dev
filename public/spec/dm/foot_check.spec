@@ -6,4 +6,4 @@ Q.1.2. Foot Check Control [pos:: 1$$ tt_onLoad:: createQuestionare("Footcheck")$
 
 Q.1.3. Foot Check Result Test Date [pos:: 2$$ field_type:: date $$ estimate_label:: Year(s) ago $$ parent :: Diabetes Test Type:Foot Check]
 
-Q.1.4. Summary [pos :: 4 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.4. Summary [pos :: 4 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Foot Check Summary $$condition::true]

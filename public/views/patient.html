@@ -354,15 +354,21 @@
     },200)
 
     /*Handling complication Magically appearing in workfol*/
-    if(dashboard.complicationWorkFlow && dashboard.complicationWorkFlow.length == 0){
 
-        window.parent.dashboard.autoContinue = true;
+    setInterval(function(){
 
-        var index =  window.parent.dashboard.workflow.indexOf("Complications");
+         if(dashboard.complicationWorkFlow && dashboard.complicationWorkFlow.length == 0){
 
-        window.parent.dashboard.workflow.splice(index, 1);
+            window.parent.dashboard.autoContinue = true;
 
-    }
+            var index =  window.parent.dashboard.workflow.indexOf("Complications");
+
+            window.parent.dashboard.workflow.splice(index, 1);
+
+        }
+
+    },100);
+   
 
 </script>
 

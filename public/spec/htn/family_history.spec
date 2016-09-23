@@ -20,4 +20,4 @@ O.1.4.1. Yes
 O.1.4.2. No
 O.1.4.3. Unknown
 
-Q.1.5. Summary [pos :: 4 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.5. Summary [pos :: 4 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Hypertension Family History $$condition::true]

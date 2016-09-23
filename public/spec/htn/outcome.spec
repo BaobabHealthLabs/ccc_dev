@@ -13,4 +13,4 @@ Q.1.2. Outcome Date [pos:: 2$$ field_type:: date]
 
 Q.1.3. Notes [pos:: 3]
 
-Q.1.4. Summary [pos :: 4 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.4. Summary [pos :: 4 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Outcome Summary $$condition::true]

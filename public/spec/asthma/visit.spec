@@ -82,4 +82,4 @@ Q.1.16. Other Treatment Specify [pos::24$$condition::__$('visit_treament').value
 
 Q.1.17. Comment [pos::25$$optional::true$$parent::Visit Date]
 
-Q.1.18. Summary [pos :: 26 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.18. Summary [pos :: 26 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Asthma Visit Summary $$condition::true]

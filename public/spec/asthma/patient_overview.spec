@@ -43,4 +43,6 @@ O.1.7.3.1.19. Other
 
 Q.1.7.3.2. Occupation Exposure Date[pos:: 13$$field_type::date$$id::occupational_exposure1$$parent::Patient History and Exposures:Occupational Exposure]
 
+Q.1.8. Summary [pos :: 3 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Patient Overview Summary $$condition::true]
+
 

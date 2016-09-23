@@ -11,4 +11,4 @@ O.1.2.5. Cerebrovascular accident
 
 Q.1.3. Macrovascular Result Test Date [pos:: 2$$ field_type:: date $$ estimate_label:: Year(s) ago $$ parent :: Hypertension Test Type:Macrovascular]
 
-Q.1.4. Summary [pos :: 3 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.4. Summary [pos :: 3 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Macrovascular Test Summary $$condition::true]

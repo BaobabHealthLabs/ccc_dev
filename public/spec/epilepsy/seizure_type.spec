@@ -16,5 +16,5 @@ O.1.3.1. Simple
 O.1.3.2. Complex
 O.1.3.3. Unclassfied
 
-Q.1.4. Summary [pos :: 3 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.4. Summary [pos :: 3 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Seizure Type Summary $$condition::true]
 
