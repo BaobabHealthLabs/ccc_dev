@@ -1,14 +1,14 @@
 P.1. HYPERTENSION SOCIAL HISTORY [program:: HYPERTENSION PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;htn]
 
-Q.1.1. Ever smoked?[pos::0$$tt_requirenextclick::false]
+Q.1.1. Ever smoked?[pos::0$$id::smoke$$tt_requirenextclick::false]
 O.1.1.1. Yes
 O.1.1.2. No
 
-Q.1.2. 	Do you currently smoke? [pos::1$$id::smoke$$tt_requirenextclick::false]
+Q.1.2. 	Do you currently smoke? [pos::1$$condition::__$("smoke").value == "Yes"$$parent::Ever smoked?$$id::current_smoke$$tt_requirenextclick::false]
 O.1.2.1. Yes
 O.1.2.2. No
 
-Q.1.3. 	Number of cigarettes per day? [pos::2$$condition::__$("smoke").value == "Yes"$$parent::Do you currently smoke?$$field_type::number$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal$$min::0max::100]
+Q.1.3. 	Number of cigarettes per day? [pos::2$$condition::__$("current_smoke").value.trim().toLowerCase() == "Yes"$$parent::Do you currently smoke?$$field_type::number$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal$$min::0max::100]
 
 Q.1.4. 	Do you drink alcohol? [pos::3$$id::alcohol$$tt_requirenextclick::false]
 O.1.4.1. Yes
