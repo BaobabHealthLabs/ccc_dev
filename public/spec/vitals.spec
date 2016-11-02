@@ -12,4 +12,4 @@ Q.1.5. Weight (kg) [pos:: 4$$ field_type:: number$$ absoluteMin:: 0$$ validation
 
 Q.1.6. Height (cm) [pos:: 5$$ field_type:: number$$ absoluteMin:: 10$$ absoluteMax:: 228$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter numbers only (for example 157)$$ tt_pageStyleClass:: Numeric NumbersOnly$$ condition:: !window.parent.dashboard.queryAnyExistingObs("Height (cm)") || (window.parent.dashboard.queryAnyExistingObs("Height (cm)") && window.parent.dashboard.age <= 14)]
 
-Q.1.6. Summary [pos :: 6 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.7. Summary [pos :: 6 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]

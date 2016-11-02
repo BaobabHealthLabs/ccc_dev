@@ -25,4 +25,4 @@ O.1.5.2. Yes
 Q.1.5.2.1. Year(s) of TB Diagnosis [pos:: 7$$ multiple:: multiple$$ tt_pageStyleClass:: longSelectList$$ id:: year_of_tb_diagnosis2$$ disabled:: true $$ parent :: Have You Ever Had TB?]
 O.1.5.2.1.1. 1950
 
-Q.1.6. Summary [pos :: 8 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.6. Summary [pos :: 8 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Initial Questions Summary$$condition::true]

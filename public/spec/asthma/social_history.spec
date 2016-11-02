@@ -59,5 +59,5 @@ O.1.10.17. Student
 O.1.10.18. Teacher
 O.1.10.19. Other
 
-Q.1.11. Summary [pos :: 10 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.11. Summary [pos :: 10 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Asmatha Social History Summary $$condition::true]
 

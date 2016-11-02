@@ -56,7 +56,6 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
     var dashboard = window.parent.dashboard;
 
-
     var visit_today = new Date().format("YYYY-mm-dd");
 
     function __$(id){
@@ -1356,6 +1355,8 @@ function executeAutoConitnue(){
 
     }
 
+
+
     if(dashboard.complicationWorkFlow && dashboard.complicationWorkFlow.length > 0){
 
         for(var i = 0 ; i < dashboard.complicationWorkFlow.length; i++){
@@ -1385,6 +1386,7 @@ function executeAutoConitnue(){
         
 
     }
+
 }
 
 

@@ -40,4 +40,4 @@ Q.1.15. Other Date [pos:: 14$$field_type::date$$ id:: other2$$parent::Complicati
 
 Q.1.14. Other Complications Specify [pos:: 13$$id:: other3$$parent::Complications:Other]
 
-Q.1.16. Summary [pos :: 15 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.16. Summary [pos :: 15 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Patient Overvie Summary $$condition::true]

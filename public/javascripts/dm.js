@@ -124,28 +124,29 @@ function showSummary() {
 
         }
 
-        if (__$("tt_page_summary")) {
 
-            __$("tt_page_summary").innerHTML = "";
+
+        if (__$("inputFrame"+tstCurrentPage)) {
+
+            var control = __$("inputFrame"+tstCurrentPage);
+
+            control.innerHTML = "";
+
+            control.style.backgroundColor = "#ffffff";
+
+            control.style.height = "calc(100vh - 180px)";
+
+            if(__$("helpText"+tstCurrentPage)){
+
+                __$("helpText"+tstCurrentPage).innerHTML = __$("helpText"+tstCurrentPage).innerHTML.beautify("1.2em", "0.8em");
+
+            }
 
             var table = document.createElement("table");
             table.style.width = "100%";
             table.style.borderCollapse = "collapse";
 
-            __$("tt_page_summary").appendChild(table);
-
-            var tr = document.createElement("tr");
-
-            table.appendChild(tr);
-
-            var th = document.createElement("th");
-            th.style.fontSize = "2em";
-            th.style.textAlign = "left";
-            th.style.padding = "20px";
-            th.style.borderBottom = "1px solid #ccc";
-            th.innerHTML = "Encounter Summary";
-
-            tr.appendChild(th);
+            control.appendChild(table);
 
             var tr = document.createElement("tr");
 
@@ -157,7 +158,7 @@ function showSummary() {
 
             var div = document.createElement("div");
             div.style.width = "100%";
-            div.style.height = "calc(100vh - 180px)";
+            div.style.height = "calc(100vh - 200px)";
             div.style.overflow = "auto";
 
             td.appendChild(div);

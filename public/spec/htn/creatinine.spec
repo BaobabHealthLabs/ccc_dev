@@ -12,4 +12,4 @@ Q.1.2.2.1. Creatinine Result [pos :: 3$$ min:: 45$$ max:: 330$$ field_type:: num
 
 Q.1.3. Creatinine Test Date [pos :: 4 $$ field_type:: date $$ estimate_label :: Year(s) ago $$ parent :: Hypertension Test Type:Creatinine]
 
-Q.1.4. Summary [pos :: 5 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.4. Summary [pos :: 5 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Creatinine Test Summary $$condition::true]
