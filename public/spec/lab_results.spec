@@ -1,6 +1,6 @@
 P.1. LAB RESULTS [program:: CROSS-CUTTING PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm;lab]
 
-Q.1.1. Select the type of test taken: [pos :: 0 $$ id :: test_types$$ tt_pageStyleClass :: MultiSelectList $$ optional :: true $$ concept :: Blood Sugar Test Type]
+Q.1.1. Select the type of test taken: [pos :: 0 $$ id :: test_types$$ tt_pageStyleClass :: MultiSelectList NoKeyboard$$ optional :: true $$ concept :: Blood Sugar Test Type]
 O.1.1.1. Fasting Blood Sugar
 O.1.1.2. Random Blood Sugar
 O.1.1.3. Cholesterol Fasting

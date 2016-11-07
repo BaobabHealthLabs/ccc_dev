@@ -1,6 +1,6 @@
 P.1. UPDATE OUTCOME [program:: HYPERTENSION PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;htn]
 
-Q.1.1. Outcome [pos:: 0$$ concept:: OUTCOME$$tt_requirenextclick::false]
+Q.1.1. Outcome [pos:: 0$$ concept:: OUTCOME$$tt_requirenextclick::false$$tt_pageStyleClass :: NoKeyboard]
 O.1.1.1. Alive
 O.1.1.2. Dead
 O.1.1.3. Treatment changed

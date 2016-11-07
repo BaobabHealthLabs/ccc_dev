@@ -1,6 +1,6 @@
 P.1. HIV/ART STATUS [program :: CROSS-CUTTING PROGRAM $$ scope :: TODAY $$ includejs :: touchScreenToolkit;dm]
 
-Q.1.1. HIV Status [pos:: 0 $$ tt_requireNextClick :: false]
+Q.1.1. HIV Status [pos:: 0 $$ tt_requireNextClick :: false$$ tt_pageStyleClass :: NoKeyboard]
 O.1.1.1. Reactive
 O.1.1.2. Non-Reactive
 O.1.1.3. Unknown

@@ -1,6 +1,6 @@
 P.1. PAST DIABETES MEDICAL HISTORY [program:: DIABETES PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 
-Q.1.1. Select past medical history [pos:: 0$$ concept:: Past medical history$$ id:: medical_history$$ multiple:: multiple$$ tt_pageStyleClass:: MultiSelectList$$ optional:: true$$ tt_beforeUnLoad:: loadMultipleYears(__$("touchscreenInput" + tstCurrentPage).value.trim())]
+Q.1.1. Select past medical history [pos:: 0$$ concept:: Past medical history$$ id:: medical_history$$ multiple:: multiple$$ tt_pageStyleClass:: MultiSelectList NoKeyboard$$ optional:: true$$ tt_beforeUnLoad:: loadMultipleYears(__$("touchscreenInput" + tstCurrentPage).value.trim())]
 O.1.1.1. Strokes
 O.1.1.2. Serious Cardiac Problems
 O.1.1.3. Hypertension
