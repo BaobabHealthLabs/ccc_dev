@@ -25,15 +25,14 @@
             }, 200);
 
         }
-         if (dashboard.activeTask == "Complications" && dashboard.getCookie("currentProgram")=="HTN") {
+         if (dashboard.activeTask == "Patient History" && dashboard.getCookie("currentProgram")=="HTN") {
 
-            dashboard.navURLPanel('/spec/htn/complications.html');
+            dashboard.loadCustomScript('/javascripts/htn_medical_history.js', 'details');
 
-            setTimeout(function () {
+        }
+        if (dashboard.activeTask == "Patient History" && dashboard.getCookie("currentProgram")=="Asthma") {
 
-                dashboard.$("ifrMain").contentWindow.location = '/spec/htn/complications.html';
-
-            }, 200);
+            dashboard.loadCustomScript('/javascripts/asthma_medical_history.js', 'details');
 
         }
 
