@@ -25,6 +25,19 @@
             }, 200);
 
         }
+
+        if (dashboard.activeTask == "Complications" && dashboard.getCookie("currentProgram")=="HTN") {
+
+            dashboard.navURLPanel('/spec/htn/complications.html');
+
+            setTimeout(function () {
+
+                dashboard.$("ifrMain").contentWindow.location = '/spec/htn/complications.html';
+
+            }, 200);
+
+        }
+
          if (dashboard.activeTask == "Patient History" && dashboard.getCookie("currentProgram")=="HTN") {
 
             dashboard.loadCustomScript('/javascripts/htn_medical_history.js', 'details');
