@@ -106,8 +106,6 @@ function loadPage(id,element) {
 
         __$("complication_data").appendChild(table);
 
-        console.log(nodes);
-
         var data = {};
 
         for (var i = 0; i < visits.length; i++) {
@@ -261,8 +259,6 @@ function loadPage(id,element) {
         table.cellPadding = 10;
 
          __$("complication_data").appendChild(table);
-
-        console.log(nodes);
 
         var data = {};
 

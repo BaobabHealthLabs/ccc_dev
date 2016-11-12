@@ -117,7 +117,7 @@ function loadYears(id){
         for(var i = (new Date()).getFullYear(); i > endYear; i--) {
 
             var opt = document.createElement("option");
-            
+
             opt.innerHTML = i;
 
             __$(id).appendChild(opt);
@@ -168,7 +168,7 @@ function diagonosidAndTransfer(){
 
         setTimeout(
             function(){
-            gotoPage(tstCurrentPage - 1, false, true); 
+            gotoPage(tstCurrentPage - 1, false, true);
             window.parent.dashboard.showMsg("Diagnosis Date should be less than or equal "+
             transfer_in_date)},10);
 
@@ -257,7 +257,9 @@ function showSummary() {
                 td.style.borderBottom = "1px dotted #ccc";
                 td.style.color = "#333";
                 td.style.verticalAlign = "top";
-                td.innerHTML = tstFormElements[i].getAttribute("helpText").beautify("0.9em", "0.55em");
+
+                if(tstFormElements[i] && tstFormElements[i].getAttribute("helpText"))
+                    td.innerHTML = tstFormElements[i].getAttribute("helpText").beautify("0.9em", "0.55em");
 
                 tr.appendChild(td);
 
@@ -303,14 +305,14 @@ function loadCheckConditions(){
 	var all_page_options = ["Asthma","COPD","Chronic dry cough",
 							"Indoor cooking","Occupational Exposure",
 							"TB Contact","Smoking","Secondhand smoking"];
-							
+
 
 	for(var i = 0; i < all_page_options.length; i++){
 
 		var element_id = all_page_options[i].trim().toLowerCase().replace(/\s+/g,"_");
 
 
-		if(opts.indexOf(all_page_options[i]) >= 0){	
+		if(opts.indexOf(all_page_options[i]) >= 0){
 
 
 			if (__$(element_id +"_date") !=null && __$(element_id +"_date") !== 'undefined'){
@@ -331,7 +333,7 @@ function loadCheckConditions(){
 			}
 		}
 		else{
-			
+
 			if (__$(element_id +"_date") !=null && __$(element_id +"_date") !== 'undefined'){
 
 				__$(element_id +"_date").setAttribute("condition", false)
@@ -393,7 +395,7 @@ function existingPatient() {
 }
 
 function hivStatus(patient_programs){
-        
+
 
         var patient_program_keys = Object.keys(patient_programs);
 
@@ -403,8 +405,8 @@ function hivStatus(patient_programs){
             var visits = Object.keys(patient_programs[patient_program_keys[i]]["visits"]).sort(function (a, b) {
                         return (new Date(b)) - (new Date(a))
                     });
-            
-        
+
+
                 for (var j = visits.length - 1; j >= 0; j--) {
 
                     var encounters = Object.keys(patient_programs[patient_program_keys[i]]["visits"][visits[j]]);
@@ -420,7 +422,7 @@ function hivStatus(patient_programs){
                                 var element_id = Object.keys(concepts[l])[0].toLowerCase();
 
                                 element_id= element_id.replace("/","_").replace(/\s+/g,"_");
-            
+
                                 element_id = element_id.replace("/","").replace("__","_");
 
                                 element_id = element_id.replace("/","").replace("__","_");
@@ -429,8 +431,6 @@ function hivStatus(patient_programs){
                                 if(element_id == "hiv_status"){
 
                                     var status = concepts[l][Object.keys(concepts[l])[0]].response.value;
-
-                                    console.log(status);
 
                                     if(status=="Reactive"){
 
@@ -448,7 +448,7 @@ function hivStatus(patient_programs){
                                         __$("nr").style.border ="2px solid #ffff4d";
 
                                         __$("nr").style.border ="2px solid red";
-    
+
                                     }
 
                                 }
@@ -456,7 +456,7 @@ function hivStatus(patient_programs){
                                 if(__$(element_id)){
 
                                     if(element_id =="date_antiretrovirals_started"){
-                                        
+
                                         __$(element_id).innerHTML = new Date(concepts[l][Object.keys(concepts[l])[0]].response.value).format();
 
                                     }
@@ -468,7 +468,7 @@ function hivStatus(patient_programs){
                                     }
 
                                 }
-                                    
+
                             }
 
                         }
@@ -476,9 +476,9 @@ function hivStatus(patient_programs){
                     }
 
                 }
-        
+
         }
-    
+
 
 }
 
@@ -524,7 +524,7 @@ function loadVisits(visit_dates){
             visit_row["Weight (kg)"] = weight;
 
             var height = window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visit_dates[i])).format("YYYY-mm-dd"),"VITALS","Height (cm)");
-            
+
             if(weight && height) {
 
                 var bmi = (weight / ((height / 100) * (height / 100))).toFixed(1);
@@ -536,13 +536,13 @@ function loadVisits(visit_dates){
             var sp = dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visit_dates[i])).format("YYYY-mm-dd"),"VITALS","Systolic blood pressure");
 
             var dp = dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visit_dates[i])).format("YYYY-mm-dd"),"VITALS","Diastolic blood pressure");
-           
+
             if(sp && dp ){
 
                  visit_row["BP"] = sp+"/"+dp;
 
             }
-           
+
 
             var fasting = dashboard.queryActiveObs("CROSS-CUTTING PROGRAM",(new Date(visit_dates[i])).format("YYYY-mm-dd"),"LAB RESULTS","Fasting Blood Sugar Value");
 
@@ -559,10 +559,10 @@ function loadVisits(visit_dates){
                 visit_row["Random"] = random;
 
             }
-         
+
 
             visitRows.push(visit_row);
-        
+
 
     }
 
@@ -586,8 +586,8 @@ function loadPatientOverView(dashboard){
 
     if(dashboard.queryAnyExistingObs("Type of diabetes")){
 
-        dashboard.queryExistingObsArray("Type of diabetes",function(data){ 
-           
+        dashboard.queryExistingObsArray("Type of diabetes",function(data){
+
             var keys = Object.keys(data).sort(function (a, b) {
                         return (new Date(b)) - (new Date(a))
                     });
@@ -625,7 +625,7 @@ function loadPatientOverView(dashboard){
                         }
 
                  }
-                   
+
                 break;
 
                 case "Type 2 Diabetes":
@@ -653,7 +653,7 @@ function loadPatientOverView(dashboard){
                         }
 
                     }
-                   
+
                     break;
 
             }
@@ -820,7 +820,7 @@ function loadPatientOverView(dashboard){
 
     if(dashboard.queryAnyExistingObs("Diabetes diagnosis date")){
 
-        dashboard.queryExistingObsArray("Diabetes diagnosis date",function(data){ 
+        dashboard.queryExistingObsArray("Diabetes diagnosis date",function(data){
 
             var keys = Object.keys(data).sort(function (a, b) {
                         return (new Date(b)) - (new Date(a))
@@ -837,7 +837,7 @@ function loadPatientOverView(dashboard){
 
 
     }
-    
+
 
     if(dashboard.queryAnyExistingObs("Have you ever had TB?")){
 
@@ -885,7 +885,7 @@ function loadPatientOverView(dashboard){
         });
 
 
-        dashboard.queryExistingObsArray("Year(s) of TB Diagnosis",function(data){ 
+        dashboard.queryExistingObsArray("Year(s) of TB Diagnosis",function(data){
 
             var keys = Object.keys(data).sort(function (a, b) {
                         return (new Date(b)) - (new Date(a))
@@ -907,7 +907,7 @@ function loadPatientOverView(dashboard){
     if(dashboard.queryAnyExistingObs("Macrovascular Result")){
 
 
-        dashboard.queryExistingObsArray("Macrovascular Result",function(data){ 
+        dashboard.queryExistingObsArray("Macrovascular Result",function(data){
 
             var keys = Object.keys(data).sort(function (a, b) {
                         return (new Date(b)) - (new Date(a))
@@ -941,12 +941,12 @@ function loadPatientOverView(dashboard){
 
                         img.src = checked_checkbox;
 
-                        element.appendChild(img);   
+                        element.appendChild(img);
 
                         __$(element_id+"_date").innerHTML = new Date( dashboard.queryActiveObs("DIABETES PROGRAM",keys[i],"DIABETES TEST","Macrovascular Result Test Date")).format();
 
                     }
-                  
+
                 }
 
 
@@ -998,7 +998,7 @@ function loadPatientOverView(dashboard){
 
                             img.src = checked_checkbox;
 
-                            element.appendChild(img);   
+                            element.appendChild(img);
                     }
 
 
@@ -1046,7 +1046,7 @@ function loadPatientOverView(dashboard){
 
                             img.src = checked_checkbox;
 
-                            element.appendChild(img);   
+                            element.appendChild(img);
                     }
 
 
@@ -1071,7 +1071,7 @@ function loadPatientOverView(dashboard){
 
     if(dashboard.queryAnyExistingObs("Outcome")){
 
-        dashboard.queryExistingObsArray("Outcome",function(data){ 
+        dashboard.queryExistingObsArray("Outcome",function(data){
 
             var keys = Object.keys(data).sort(function (a, b) {
                         return (new Date(a)) - (new Date(b))
@@ -1080,7 +1080,7 @@ function loadPatientOverView(dashboard){
 
 
            for(var i = 0 ; i <  keys.length; i++){
-            
+
 
                 __$("alive").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
 
@@ -1095,7 +1095,7 @@ function loadPatientOverView(dashboard){
                 element_id = element_id.toLowerCase();
 
                 element_id= element_id.replace("/","_").replace(/\s+/g,"_");
-            
+
                 element_id = element_id.replace("/","").replace("__","_");
 
                 element_id = element_id.replace("/","").replace("__","_");
@@ -1128,7 +1128,7 @@ function loadCardDashboard(){
 
     //Setting Demographics
     var name_keys = Object.keys(data["names"][0]);
-    
+
     var patient_name = data["names"][0][name_keys[0]] + "\t" + data["names"][0][name_keys[2]] +"\t" +data["names"][0][name_keys[1]];
 
     __$("patient_name").innerHTML = patient_name;
@@ -1149,18 +1149,18 @@ function loadCardDashboard(){
             }
     }
 
-   
+
 
 
     /*Address*/
     var address = data.addresses[0]["Current District"] +"\tDistrict, TA\t"
                 +data.addresses[0]["Current T/A"]+",\t"+data.addresses[0]["Current Village"]+"\tvillage";
 
-    __$("address").innerHTML = address;     
+    __$("address").innerHTML = address;
 
     //HIV ART Status
     if(window.parent.dashboard.queryAnyExistingObs("HIV status")){
-        
+
          hivStatus(data.programs["CROSS-CUTTING PROGRAM"].patient_programs);
 
     }
@@ -1169,12 +1169,12 @@ function loadCardDashboard(){
     //Gardian Data
 
     var guardain = data.relationships;
-    
+
     if(guardain.length > 0){
 
         if(guardain[guardain.length-1].relative_name){
 
-            __$("guardian_name").innerHTML = guardain[guardain.length-1].relative_name; 
+            __$("guardian_name").innerHTML = guardain[guardain.length-1].relative_name;
 
         }
 
@@ -1190,7 +1190,7 @@ function loadCardDashboard(){
 
         }
 
-        
+
     }
 
 
@@ -1216,7 +1216,7 @@ function loadCardDashboard(){
 
         }
 
-        
+
 
     }
 
@@ -1296,7 +1296,7 @@ function loadCardDashboard(){
 
 
                 var appointment =  window.parent.dashboard.queryActiveObs("HYPERTENSION PROGRAM",visitRows[i]["Visit Date"],"APPOINTMENT","Appointment date");
-                
+
 
                 if(appointment){
 
@@ -1304,7 +1304,7 @@ function loadCardDashboard(){
 
                 }
 
-                
+
                 tr.appendChild(td);
 
                 continue;
@@ -1314,7 +1314,7 @@ function loadCardDashboard(){
             var td = document.createElement("td");
 
             td.innerHTML = visitRows[i][concept_keys[j]];
-            
+
             tr.appendChild(td);
 
         }

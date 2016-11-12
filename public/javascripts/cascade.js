@@ -1031,7 +1031,6 @@ function createQuestionare(ctrl){
                 var gi = ctrls[x].getAttribute("group_id");
 
                 if(gi){
-                    //console.log(ctrls[x].id + " : " + gi);
 
                     var index = gi.match("^(" + g_id + "_\\d+)_\\d+_(\\d+)");
 

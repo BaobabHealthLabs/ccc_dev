@@ -388,8 +388,6 @@ function setAppointmentCalendar(source, target){
 
             end_date = (new Date(last_date.getFullYear(), last_date.getMonth()-1, 0)).format("YYYY-mm-dd");
 
-            console.log(end_date);
-
             var ajaxurl = "/bookings_count?start_date=" + start_date + "&end_date=" + end_date + "&date=";
 
             __$(target).setAttribute("ajaxCalendarUrl", ajaxurl);

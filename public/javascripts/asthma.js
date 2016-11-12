@@ -772,8 +772,6 @@ function hivStatus(patient_programs){
 
 									var status = concepts[l][Object.keys(concepts[l])[0]].response.value;
 
-									console.log(status);
-
 									if(status=="Reactive"){
 
 										__$("r").style.border ="2px solid #ffffff";
@@ -827,8 +825,6 @@ function hivStatus(patient_programs){
 function setExposureDate(field,dashboard){
 
     if(dashboard.queryAnyExistingObs(field)){
-
-        console.log(field);
 
         dashboard.queryExistingObsArray(field,function(data){
 
@@ -958,8 +954,6 @@ function loadPatientOverView(dashboard){
 
                        }
                        if(responses[j]=="Occupational Exposure"){
-
-                             console.log(responses[j]=="Occupational Exposure");
 
                             if(dashboard.queryAnyExistingObs("Main activity")){
 
@@ -1145,8 +1139,6 @@ function loadCardDashboard(){
 			if(concept_keys[j]=="Weight (kg)"){
 
 				var td = document.createElement("td");
-
-				console.log(visitRows[i]["Visit Date"]);
 
 				td.innerHTML =  window.parent.dashboard.queryActiveObs("CROSS-CUTTING PROGRAM", visitRows[i]["Visit Date"],"VITALS","Weight (kg)");
 				

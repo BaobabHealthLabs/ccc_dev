@@ -170,8 +170,6 @@ function loadPage() {
 
         __$("oedema").appendChild(table);
 
-        console.log(nodes);
-
         var data = {};
 
         for (var i = 0; i < visits.length; i++) {
@@ -362,8 +360,6 @@ function loadPage() {
         table.cellPadding = 10;
 
         __$("shortness_of_breath").appendChild(table);
-
-        console.log(nodes);
 
         var data = {};
 

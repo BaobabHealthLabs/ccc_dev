@@ -275,5 +275,3 @@ for(var i = 0; i < visitRows.length; i++) {
     }
 
 }
-
-// console.log(visitRows);
