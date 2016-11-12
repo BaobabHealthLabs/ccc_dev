@@ -25,6 +25,36 @@ var url = require("url");
 
 var site = require(__dirname + "/config/site.json");
 
+var config = require(__dirname + "/config/database.json");
+
+var knex = require("knex")({
+    client: "mysql",
+    connection: {
+        host: config.host,
+        user: config.user,
+        password: config.password,
+        database: config.database
+    },
+    pool: {
+        min: 0,
+        max: 1000
+    }
+});
+
+var knexRawStock = require("knex")({
+    client: "mysql",
+    connection: {
+        host: config.host,
+        user: config.user,
+        password: config.password,
+        database: config.stockDatabase
+    },
+    pool: {
+        min: 0,
+        max: 1000
+    }
+});
+
 app.set("views", __dirname + "/views");
 app.use(express.static(__dirname + "/public"));
 
@@ -2418,22 +2448,6 @@ function buildTreatments(encounter, oCallback) {
 
 function queryRaw(sql, callback) {
 
-    var config = require(__dirname + "/config/database.json");
-
-    var knex = require("knex")({
-        client: "mysql",
-        connection: {
-            host: config.host,
-            user: config.user,
-            password: config.password,
-            database: config.database
-        },
-        pool: {
-            min: 0,
-            max: 500
-        }
-    });
-
     knex.raw(sql)
         .then(function (result) {
 
@@ -2451,22 +2465,6 @@ function queryRaw(sql, callback) {
 }
 
 function queryJoinData(table, jointTable, srcField, jointField, fields, condition, callback, orderByField) {
-
-    var config = require(__dirname + "/config/database.json");
-
-    var knex = require("knex")({
-        client: "mysql",
-        connection: {
-            host: config.host,
-            user: config.user,
-            password: config.password,
-            database: config.database
-        },
-        pool: {
-            min: 0,
-            max: 500
-        }
-    });
 
     if (condition) {
 
@@ -2561,22 +2559,6 @@ function queryJoinData(table, jointTable, srcField, jointField, fields, conditio
 
 function queryData(table, fields, condition, callback) {
 
-    var config = require(__dirname + "/config/database.json");
-
-    var knex = require("knex")({
-        client: "mysql",
-        connection: {
-            host: config.host,
-            user: config.user,
-            password: config.password,
-            database: config.database
-        },
-        pool: {
-            min: 0,
-            max: 500
-        }
-    });
-
     if (condition) {
 
         // console.log(knex(table).where(condition)
@@ -2638,23 +2620,7 @@ function queryData(table, fields, condition, callback) {
 
 function queryRawStock(sql, callback) {
 
-    var config = require(__dirname + "/config/database.json");
-
-    var knex = require("knex")({
-        client: "mysql",
-        connection: {
-            host: config.host,
-            user: config.user,
-            password: config.password,
-            database: config.stockDatabase
-        },
-        pool: {
-            min: 0,
-            max: 500
-        }
-    });
-
-    knex.raw(sql)
+    knexRawStock.raw(sql)
         .then(function (result) {
 
             callback(result);
