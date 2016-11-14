@@ -14,7 +14,7 @@
 
     dashboard.subscription.addEventlistener("done", function () {
 
-        if (dashboard.activeTask == "Complications" && dashboard.getCookie("currentProgram")=="Diabetes") {
+        if (dashboard.activeTask == "Complications" && dashboard.getCookie("currentProgram") == "Diabetes") {
 
             dashboard.navURLPanel('/spec/dm/complications.html');
 
@@ -26,7 +26,7 @@
 
         }
 
-        if (dashboard.activeTask == "Complications" && dashboard.getCookie("currentProgram")=="HTN") {
+        if (dashboard.activeTask == "Complications" && dashboard.getCookie("currentProgram") == "HTN") {
 
             dashboard.navURLPanel('/spec/htn/complications.html');
 
@@ -38,12 +38,12 @@
 
         }
 
-         if (dashboard.activeTask == "Patient History" && dashboard.getCookie("currentProgram")=="HTN") {
+        if (dashboard.activeTask == "Patient History" && dashboard.getCookie("currentProgram") == "HTN") {
 
             dashboard.loadCustomScript('/javascripts/htn_medical_history.js', 'details');
 
         }
-        if (dashboard.activeTask == "Patient History" && dashboard.getCookie("currentProgram")=="Asthma") {
+        if (dashboard.activeTask == "Patient History" && dashboard.getCookie("currentProgram") == "Asthma") {
 
             dashboard.loadCustomScript('/javascripts/asthma_medical_history.js', 'details');
 
@@ -72,13 +72,13 @@
                 if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
 
                     result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                        window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
-                        window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
+                            window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
+                            window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
 
                 } else if (format.match(/YYYY\-mm\-dd/)) {
 
                     result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                        window.parent.dashboard.padZeros(date.getDate(), 2);
+                            window.parent.dashboard.padZeros(date.getDate(), 2);
 
                 } else if (format.match(/mmm\/d\/YYYY/)) {
 
@@ -100,43 +100,42 @@
 
     }
 
-    function printSummary(data,callback){
+    function printSummary(data, callback) {
 
         dashboard.ajaxRequest(dashboard.settings.patientBarcodeDataPath + dashboard.getCookie("token") + "&npid=",
-            function (data) {
+                function (data) {
 
-                var intial_drug_postion = 90;
+                    var intial_drug_postion = 90;
 
-                var data = dashboard.data.data;
+                    var data = dashboard.data.data;
 
-                var programs = {
-                                            "Diabetes" : "DIABETES PROGRAM",
-                                            "HTN"      : "HYPERTENSION PROGRAM",
-                                            "Asthma"   : "ASTHMA PROGRAM",
-                                            "Epilepsy" : "EPILEPSY PROGRAM"
-                }
+                    var programs = {
+                        "Diabetes": "DIABETES PROGRAM",
+                        "HTN": "HYPERTENSION PROGRAM",
+                        "Asthma": "ASTHMA PROGRAM",
+                        "Epilepsy": "EPILEPSY PROGRAM"
+                    }
 
-                var patient_programs = data.programs[programs[dashboard.getCookie("currentProgram")]].patient_programs;
+                    var patient_programs = data.programs[programs[dashboard.getCookie("currentProgram")]].patient_programs;
 
-    
 
-                var patient_program_keys = Object.keys(patient_programs);
+                    var patient_program_keys = Object.keys(patient_programs);
 
-                var date = new Date();
+                    var date = new Date();
 
-                var treaments = "";
+                    var treaments = "";
 
-                for(var i = 0; i < patient_program_keys.length; i++){
+                    for (var i = 0; i < patient_program_keys.length; i++) {
 
                         var visit = date.format("YYYY-mm-dd");
 
-                        var encounter_data =patient_programs[patient_program_keys[i]]["visits"][visit]["TREATMENTS"];
+                        var encounter_data = patient_programs[patient_program_keys[i]]["visits"][visit]["TREATMENTS"];
 
-                        for(var j = 0 ; j < encounter_data.length ; j++){
+                        for (var j = 0; j < encounter_data.length; j++) {
 
                             var concepts = Object.keys(encounter_data[j]);
 
-                            for(var k = 0 ; k < concepts.length ; k++){
+                            for (var k = 0; k < concepts.length; k++) {
 
 
                                 var current_drug_position = intial_drug_postion + 20 * j + 1;
@@ -148,120 +147,118 @@
                                 var end_date = new Date(encounter_data[j][concepts[k]].auto_expire_date);
 
 
-                                if(end_date){
+                                if (end_date) {
 
-                                    days = parseInt(((end_date - start_date)/(1000*60*60*24)).toFixed(0));
+                                    days = parseInt(((end_date - start_date) / (1000 * 60 * 60 * 24)).toFixed(0));
 
-                                    if(days == 1){
+                                    if (days == 1) {
 
-                                        days = days +" day";
+                                        days = days + " day";
 
                                     }
-                                    else{
+                                    else {
 
                                         days = days + " days";
                                     }
-                                    if(k < concepts.length - 2){
+                                    if (k < concepts.length - 2) {
 
-                                        days = days +",";
+                                        days = days + ",";
 
                                     }
 
                                 }
 
-                                treaments = treaments +"A25,"+current_drug_position+",0,2,1,1,N,\""+
-                                            encounter_data[j][concepts[k]].quantity+" tab(s). "+
-                                            encounter_data[j][concepts[k]].instructions+" "+days
-                                            +"\"\n"
+                                treaments = treaments + "A25," + current_drug_position + ",0,2,1,1,N,\"" +
+                                        encounter_data[j][concepts[k]].quantity + " tab(s). " +
+                                        encounter_data[j][concepts[k]].instructions + " " + days
+                                        + "\"\n"
 
                             }
                         }
 
 
-                }
+                    }
 
-                var name = data.names[0]["First Name"]+" "+ data.names[0]["Family Name"]+ "("+data.gender+")";
-
-
-                var arr = Object.keys(dashboard.weightsArray).sort();
-
-                var latestWeight = (arr.length > 0 ? dashboard.weightsArray[arr[arr.length - 1]] : "?");
-
-                var bmi ="?";
-
-                dashboard.queryExistingObsArray("Height (cm)", function (data) {
-
-                    var heightArray = data;
-
-                    var keys = Object.keys(heightArray).sort();
-
-                    var height = (keys.length > 0 ? heightArray[keys[keys.length - 1]] : 0);
-
-                    dashboard.queryExistingObsArray("Weight (kg)", function (data) {
-
-                        var weightArray = data;
-
-                        var keys = Object.keys(weightArray).sort();
-
-                        var weight = (keys.length > 0 ? weightArray[keys[keys.length - 1]] : 0);
-
-                        bmi = (weight > 0 && height > 0 ? (weight / ((height / 100) * (height / 100))).toFixed(1) : "?");
-
-                        
-
-                    })
-
-                });
-
-                var bp ="?/?";
-
-                dashboard.queryExistingObsArray("Systolic blood pressure", function (data) {
-
-                    var systolic = data;
-
-                    dashboard.queryExistingObsArray("Diastolic blood pressure", function (data) {
-
-                        var diastolic = data;
-
-                        var today = (new Date()).format("YYYY-mm-dd");
-
-                        bp = (systolic[today] ? systolic[today] : "?") + "/" + (diastolic[today] ? diastolic[today] : "?");
+                    var name = data.names[0]["First Name"] + " " + data.names[0]["Family Name"] + "(" + data.gender + ")";
 
 
-                    })
+                    var arr = Object.keys(dashboard.weightsArray).sort();
 
-                });
+                    var latestWeight = (arr.length > 0 ? dashboard.weightsArray[arr[arr.length - 1]] : "?");
 
-                var life_style = "";
+                    var bmi = "?";
+
+                    dashboard.queryExistingObsArray("Height (cm)", function (data) {
+
+                        var heightArray = data;
+
+                        var keys = Object.keys(heightArray).sort();
+
+                        var height = (keys.length > 0 ? heightArray[keys[keys.length - 1]] : 0);
+
+                        dashboard.queryExistingObsArray("Weight (kg)", function (data) {
+
+                            var weightArray = data;
+
+                            var keys = Object.keys(weightArray).sort();
+
+                            var weight = (keys.length > 0 ? weightArray[keys[keys.length - 1]] : 0);
+
+                            bmi = (weight > 0 && height > 0 ? (weight / ((height / 100) * (height / 100))).toFixed(1) : "?");
 
 
-                var text =  "\nN\n"+
-                            "q801\n"+
-                            "Q329,026\n"+
-                            "ZT\n"+
-                            "A25,10,0,3,1,1,N,\""+name+"\"\n"+
-                            "A25,35,0,2,1,1,N,\"   "+latestWeight+"kg  BMI:"+bmi+"  BP :"+bp+"\"\n"+
-                            "A25,55,0,3,1,1,N,\"Drug(s) Prescribed\"\n"+
-                            "LO25,80,800,5\n"+ treaments +
-                            "LO25,210,800,5\n"+
-                            "A25,220,0,1,1,1,N,\"Life Style Given: "+life_style+"\"\n"+
-                            "A597,220,0,1,1,1,N,\"Recorded by:"+dashboard.getCookie("username")+"\"\n"+
-                            "A597,240,0,1,1,1,N,\"Printed: "+new Date().format()+"\"\n"+
+                        })
+
+                    });
+
+                    var bp = "?/?";
+
+                    dashboard.queryExistingObsArray("Systolic blood pressure", function (data) {
+
+                        var systolic = data;
+
+                        dashboard.queryExistingObsArray("Diastolic blood pressure", function (data) {
+
+                            var diastolic = data;
+
+                            var today = (new Date()).format("YYYY-mm-dd");
+
+                            bp = (systolic[today] ? systolic[today] : "?") + "/" + (diastolic[today] ? diastolic[today] : "?");
+
+
+                        })
+
+                    });
+
+                    var life_style = "";
+
+
+                    var text = "\nN\n" +
+                            "q801\n" +
+                            "Q329,026\n" +
+                            "ZT\n" +
+                            "A25,10,0,3,1,1,N,\"" + name + "\"\n" +
+                            "A25,35,0,2,1,1,N,\"   " + latestWeight + "kg  BMI:" + bmi + "  BP :" + bp + "\"\n" +
+                            "A25,55,0,3,1,1,N,\"Drug(s) Prescribed\"\n" +
+                            "LO25,80,800,5\n" + treaments +
+                            "LO25,210,800,5\n" +
+                            "A25,220,0,1,1,1,N,\"Life Style Given: " + life_style + "\"\n" +
+                            "A597,220,0,1,1,1,N,\"Recorded by:" + dashboard.getCookie("username") + "\"\n" +
+                            "A597,240,0,1,1,1,N,\"Printed: " + new Date().format() + "\"\n" +
                             "P1";
 
-                dashboard.saveAs(text, callback);
+                    dashboard.saveAs(text, callback);
 
-            });
-
+                });
 
 
     }
 
     var tmrInterval = setInterval(function () {
 
-        if(dashboard.workflow.length == 1 && dashboard.workflow[0]=="Mastercard"){
+        if (dashboard.workflow.length == 1 && dashboard.workflow[0] == "Mastercard") {
 
-             //clearInterval(tmrInterval);
+            //clearInterval(tmrInterval);
 
             var btn = dashboard.__$("btnContinue");
 
@@ -271,13 +268,13 @@
 
             btn.removeAttribute("onclick");
 
-            btn.onmousedown = function(){
+            btn.onmousedown = function () {
 
-                        printSummary(null,function(){
+                printSummary(null, function () {
 
-                                dashboard.workflow.push("printed");
+                    dashboard.workflow.push("printed");
 
-                        });
+                });
             }
 
         }
@@ -287,100 +284,103 @@
 
     var currentProgram = dashboard.getCookie("currentProgram");
 
-    var programInterval = setInterval(function(){
+    var programInterval = setInterval(function () {
 
-            if(dashboard.getCookie("currentProgram") != currentProgram){
+        if (dashboard.getCookie("currentProgram") != currentProgram) {
 
-                currentProgram = dashboard.getCookie("currentProgram");
+            currentProgram = dashboard.getCookie("currentProgram");
 
-                var btnContinue = dashboard.__$("btnContinue");
+            var btnContinue = dashboard.__$("btnContinue");
 
-                btnContinue.innerHTML = "Continue";
+            btnContinue.innerHTML = "Continue";
 
-                btnContinue.onmousedown = function () {
+            btnContinue.onmousedown = function () {
 
-                    if (this.className.match(/gray/))
-                        return;
+                if (this.className.match(/gray/))
+                    return;
 
-                    if (dashboard.workflow.length > 0) {
+                if (dashboard.workflow.length > 0) {
 
-                        dashboard.autoContinue = true;
+                    dashboard.autoContinue = true;
 
-                        dashboard.$(dashboard.workflow[0]).click();
-
-                    }
+                    dashboard.$(dashboard.workflow[0]).click();
 
                 }
 
             }
 
-    },50);
+        }
 
-    var changeTreatmentInterval = setInterval(function(){
+    }, 50);
+
+    var changeTreatmentInterval = setInterval(function () {
 
         var programs = {
-                                            "Diabetes" : "DIABETES PROGRAM",
-                                            "HTN"      : "HYPERTENSION PROGRAM",
-                                            "Asthma"   : "ASTHMA PROGRAM",
-                                            "Epilepsy" : "EPILEPSY PROGRAM"
-                }
+            "Diabetes": "DIABETES PROGRAM",
+            "HTN": "HYPERTENSION PROGRAM",
+            "Asthma": "ASTHMA PROGRAM",
+            "Epilepsy": "EPILEPSY PROGRAM"
+        }
 
-        if(!dashboard.treatmentChanged)
+        if (!dashboard.treatmentChanged)
             dashboard.treatmentChanged = {}
 
         var date = new Date();
 
         var program = dashboard.getCookie("currentProgram");
 
-        if(!dashboard.treatmentChanged[program] && dashboard.queryActiveObs(programs[program],date.format("YYYY-mm-dd"),"UPDATE OUTCOME","Outcome") && dashboard.queryActiveObs(programs[program],date.format("YYYY-mm-dd"),"UPDATE OUTCOME","Outcome")=="Treatment changed"){
+        if (!dashboard.treatmentChanged[program] && dashboard.queryActiveObs(programs[program], date.format("YYYY-mm-dd"), "UPDATE OUTCOME", "Outcome") && dashboard.queryActiveObs(programs[program], date.format("YYYY-mm-dd"), "UPDATE OUTCOME", "Outcome") == "Treatment changed") {
 
-                dashboard.treatmentChanged[program] = true;
+            dashboard.treatmentChanged[program] = true;
 
-                switch(program) {
-                    case "Diabetes":
+            switch (program) {
+                case "Diabetes":
 
-                        dashboard.navPanel('/spec/dm/treatment.spec');
+                    dashboard.navPanel('/spec/dm/treatment.spec');
 
-                        break;
-                    case "HTN":
-                    
-                        dashboard.navPanel('/spec/htn/treatment.spec');
+                    break;
+                case "HTN":
 
-                        break;
+                    dashboard.navPanel('/spec/htn/treatment.spec');
 
-                    case "Asthma":
-                    
-                        dashboard.navPanel('/spec/asthma/treatment.spec');
+                    break;
 
-                        break;
+                case "Asthma":
 
-                    case "Epilepsy":
-                    
-                        dashboard.navPanel('/spec/epilepsy/treatment.spec');
+                    dashboard.navPanel('/spec/asthma/treatment.spec');
 
-                        break;
-                }
+                    break;
+
+                case "Epilepsy":
+
+                    dashboard.navPanel('/spec/epilepsy/treatment.spec');
+
+                    break;
+            }
 
         }
 
-    },200)
+    }, 200)
 
     /*Handling complication Magically appearing in workfol*/
 
-    setInterval(function(){
+    var tmrWorkflow = setInterval(function () {
 
-         if(dashboard.complicationWorkFlow && dashboard.complicationWorkFlow.length == 0){
+        if (dashboard.complicationWorkFlow && dashboard.complicationWorkFlow.length == 0) {
+
+            clearInterval(tmrWorkflow);
 
             window.parent.dashboard.autoContinue = true;
 
-            var index =  window.parent.dashboard.workflow.indexOf("Complications");
+            var index = window.parent.dashboard.workflow.indexOf("Complications");
 
-            window.parent.dashboard.workflow.splice(index, 1);
+            if (index >= 0)
+                window.parent.dashboard.workflow.splice(index, 1);
 
         }
 
-    },100);
-   
+    }, 100);
+
 
 </script>
 

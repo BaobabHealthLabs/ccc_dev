@@ -195,7 +195,9 @@ function showSummary() {
                 td.style.borderBottom = "1px dotted #ccc";
                 td.style.color = "#333";
                 td.style.verticalAlign = "top";
-                td.innerHTML = tstFormElements[i].getAttribute("helpText").beautify("0.9em", "0.55em");
+
+                if(tstFormElements[i] && tstFormElements[i].getAttribute("helpText"))
+                    td.innerHTML = tstFormElements[i].getAttribute("helpText").beautify("0.9em", "0.55em");
 
                 tr.appendChild(td);
 
