@@ -6,11 +6,11 @@
 <script src="/modules/patient_registration.js"></script>
 <script>
 
-    user.init("/modules/config/user.settings.json");
+    user.init("/config/user.settings.json");
 
-    patient.init("/modules/config/patient.settings.json", user.getCookie("username"), "/modules/config/patient.modules.json");
+    patient.init("/config/patient.settings.json", user.getCookie("username"), "/config/patient.modules.json");
 
-    dashboard.init("/data/person.json", "/modules/config/patient.modules.json", "/modules/config/dashboard.settings.json");
+    dashboard.init("/data/person.json", "/config/patient.modules.json", "/config/dashboard.settings.json");
 
     dashboard.subscription.addEventlistener("done", function () {
 

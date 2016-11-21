@@ -53,13 +53,13 @@
 
     }
 
-    user.init("/modules/config/user.settings.json");
+    user.init("/config/user.settings.json");
 
-    landing.init("/modules/config/landing.settings.json");
+    landing.init("/config/landing.settings.json");
 
-    patient.init("/modules/config/patient.settings.json", user.getCookie("username"), "/modules/config/patient.modules.json");
+    patient.init("/config/patient.settings.json", user.getCookie("username"), "/config/patient.modules.json");
 
-    stock.init("/modules/config/stock.settings.json", user.getCookie("username"));
+    stock.init("/config/stock.settings.json", user.getCookie("username"));
 
     var tmrInterval = setInterval(function () {
 

@@ -1,7 +1,19 @@
+/*
+ * =================================================== WARNING! ==================================================
+ *
+ *                          DON'T EDIT THIS FILE. YOUR CHANGES WILL BE OVERWRITTEN!
+ *
+ * ===============================================================================================================
+ *
+ */
+
 "use strict"
+
+require('events').EventEmitter.prototype._maxListeners = 0;
 
 // var app = require("express")();
 var express = require("express");
+var cors = require('cors');
 var cookieParser = require("cookie-parser");
 var app = express();
 var server = require("http").Server(app);
@@ -14,6 +26,9 @@ var Mutex = require("Mutex");
 var md5 = require("md5");
 var randomstring = require("randomstring");
 
+var client = require('node-rest-client').Client;
+var couchdb = require(__dirname + "/config/couchdb.json")[(process.env.NODE_ENV || "development").toLowerCase()];
+
 var router = express.Router();
 
 var ip = require("ip");
@@ -25,35 +40,14 @@ var url = require("url");
 
 var site = require(__dirname + "/config/site.json");
 
-var config = require(__dirname + "/config/database.json");
-
-var knex = require("knex")({
-    client: "mysql",
-    connection: {
-        host: config.host,
-        user: config.user,
-        password: config.password,
-        database: config.database
-    },
-    pool: {
-        min: 0,
-        max: 1000
-    }
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Origin", "*");
+    next();
 });
 
-var knexRawStock = require("knex")({
-    client: "mysql",
-    connection: {
-        host: config.host,
-        user: config.user,
-        password: config.password,
-        database: config.stockDatabase
-    },
-    pool: {
-        min: 0,
-        max: 1000
-    }
-});
+app.options('*', cors());
 
 app.set("views", __dirname + "/views");
 app.use(express.static(__dirname + "/public"));
@@ -77,6 +71,36 @@ var nsp = {};
 var people = {};
 
 var isDirty = {};
+
+var config = require(__dirname + "/config/database.json");
+
+var knex = require("knex")({
+    client: "mysql",
+    connection: {
+        host: config.host,
+        user: config.user,
+        password: config.password,
+        database: config.database
+    },
+    pool: {
+        min: 0,
+        max: 500
+    }
+});
+
+var knexStock = require("knex")({
+    client: "mysql",
+    connection: {
+        host: config.host,
+        user: config.user,
+        password: config.password,
+        database: config.stockDatabase
+    },
+    pool: {
+        min: 0,
+        max: 500
+    }
+});
 
 Object.defineProperty(Date.prototype, "format", {
     value: function (format) {
@@ -167,7 +191,81 @@ function encrypt(password, salt) {
 
 }
 
-function generateId(patientId, username, location, prefix, suffix, callback) {
+function addIdentifierToDDERecord(patientId, otherId, json, iCallback) {
+
+    console.log(json);
+
+    if (patientId && typeof otherId == typeof {} && Object.keys(otherId).length > 0 && json) {
+
+        var args = {
+            data: json,
+            headers: {"Content-Type": "application/json"}
+        };
+
+        var options_auth = {user: couchdb.username, password: couchdb.password};
+
+        var path = couchdb.protocol + "://" + couchdb.host + ":" + couchdb.port + "/";
+
+        console.log(path);
+
+        console.log(JSON.stringify(args));
+
+        (new client(options_auth)).post(path, args, function (data, res) {
+
+            console.log(data);
+
+            if (data.length == 1) {
+
+                data[0].status = "SELECTED";
+
+                data[0].action = "UPDATE";
+
+                data[0].npid = data[0]._id;
+
+                var keys = Object.keys(otherId);
+
+                for (var i = 0; i < keys.length; i++) {
+
+                    var key = keys[i];
+
+                    var value = otherId[key];
+
+                    data[0].patient.identifiers[key] = value;
+
+                }
+
+                var args = {
+                    data: data[0],
+                    headers: {"Content-Type": "application/json"}
+                };
+
+                console.log(JSON.stringify(args));
+
+                (new client(options_auth)).post(path, args, function (data, res) {
+
+                    console.log(data);
+
+                    iCallback();
+
+                })
+
+            } else {
+
+                iCallback();
+
+            }
+
+        })
+
+    } else {
+
+        iCallback();
+
+    }
+
+}
+
+function generateId(patientId, username, location, prefix, suffix, callback, json) {
 
     if (mutex.isLocked()) {
 
@@ -196,7 +294,7 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
         var yr = ((new Date()).getMonth() < months[site["reset month"].toLowerCase()] ? (new Date()).getFullYear() - 1 :
             ((new Date()).getFullYear()));
 
-        var sql = "SELECT property_value FROM global_property WHERE property = \"" + prefix.trim().toLowerCase() +
+        var sql = "SELECT property_value FROM global_property WHERE property = \"" + (prefix ? prefix : "DMY").trim().toLowerCase() +
             (suffix ? "." + suffix.trim().toLowerCase() : "") + ".id.counter." + yr + "\"";
 
         queryRaw(sql, function (res) {
@@ -210,6 +308,8 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
                 sql = "UPDATE global_property SET property_value = \"" + nextId + "\" WHERE property = \"" +
                     prefix.trim().toLowerCase() + (suffix ? "." + suffix.trim().toLowerCase() : "") + ".id.counter." + yr + "\"";
 
+                console.log(sql);
+
                 queryRaw(sql, function (res) {
 
                     var id = prefix.trim().toUpperCase() + "-" + nextId + "-" + yr + (suffix ? "-" + suffix.trim().toUpperCase() : "");
@@ -217,8 +317,11 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
                     var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
                         "creator, date_created, uuid) VALUES (\"" + patientId + "\", \"" + id +
                         "\", (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = \"" +
-                        prefix.trim() + " Number\"), (SELECT location_id FROM location WHERE name = \"" + location +
+                        (!prefix || (prefix && prefix == "DMY") ? "Dummy ID" : prefix.trim() + " Number") +
+                        "\"), (SELECT location_id FROM location WHERE name = \"" + location +
                         "\"), (SELECT user_id FROM users WHERE username = \"" + username + "\"), NOW(), \"" + uuid.v1() + "\")";
+
+                    console.log(sql);
 
                     queryRaw(sql, function (res) {
 
@@ -226,7 +329,23 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
 
                         var cid = id;
 
-                        callback(cid);
+                        if (json) {
+
+                            var otherId = {};
+
+                            otherId[prefix.trim() + " Number"] = cid;
+
+                            addIdentifierToDDERecord(patientId, otherId, json, function () {
+
+                                callback(cid);
+
+                            })
+
+                        } else {
+
+                            callback(cid);
+
+                        }
 
                     });
 
@@ -238,6 +357,8 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
                     prefix.trim().toLowerCase() + (suffix ? "." + suffix.trim().toLowerCase() : "") + ".id.counter." +
                     yr + "\", \"" + nextId + "\", \"" + uuid.v1() + "\")";
 
+                console.log(sql);
+
                 queryRaw(sql, function (res) {
 
                     var id = prefix.trim().toUpperCase() + "-" + nextId + "-" + yr + (suffix ? "-" + suffix.trim().toUpperCase() : "");
@@ -245,16 +366,37 @@ function generateId(patientId, username, location, prefix, suffix, callback) {
                     var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
                         "creator, date_created, uuid) VALUES (\"" + patientId + "\", \"" + id +
                         "\", (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = \"" +
-                        prefix.trim() + " Number\"), (SELECT location_id FROM location WHERE name = \"" + location +
+                        (!prefix || (prefix && prefix == "DMY") ? "Dummy ID" : prefix.trim() + " Number") +
+                        "\"), (SELECT location_id FROM location WHERE name = \"" + location +
                         "\"), (SELECT user_id FROM users  WHERE username = \"" + username + "\"), NOW(), \"" + uuid.v1() + "\")";
 
+                    console.log(sql);
+
                     queryRaw(sql, function (res) {
+
+                        console.log(sql);
 
                         mutex.unlock();
 
                         var cid = id;
 
-                        callback(cid);
+                        if (json) {
+
+                            var otherId = {};
+
+                            otherId[prefix.trim() + " Number"] = cid;
+
+                            addIdentifierToDDERecord(patientId, otherId, json, function () {
+
+                                callback(cid);
+
+                            })
+
+                        } else {
+
+                            callback(cid);
+
+                        }
 
                     });
 
@@ -281,14 +423,18 @@ function padZeros(number, positions) {
     return padded;
 }
 
+var intervalTimerHandles = {};
+
+var temporaryData = {};
+
 io.on("connection", function (socket) {
     numClients++;
-    io.emit("stats", { numClients: numClients, id: "ALL" });
+    io.emit("stats", {numClients: numClients, id: "ALL"});
 
     socket.on("disconnect", function (me) {
 
         numClients--;
-        io.emit("stats", { numClients: numClients, id: "ALL" });
+        io.emit("stats", {numClients: numClients, id: "ALL"});
 
     });
 
@@ -317,11 +463,139 @@ io.on("connection", function (socket) {
 
             });
 
+            socket.on("saveTemporaryData", function (data) {
+
+                if (!temporaryData[data.id])
+                    temporaryData[data.id] = {};
+
+                temporaryData[data.id][data.category] = data.data;
+
+                updateUserView(data);
+
+            });
+
+            socket.on("deleteTemporaryData", function (data) {
+
+                if (temporaryData[data.id] && temporaryData[data.id][data.category])
+                    delete temporaryData[data.id][data.category];
+
+                updateUserView(data);
+
+            });
+
             socket.on("demographics", function (data) {
 
                 updateUserView(data);
 
             });
+
+            socket.on("savePatient", function (data) {
+
+                doSavePatient(data, function (msg) {
+
+                    isDirty[data.id] = true;
+
+                    console.log(JSON.stringify(data));
+
+                    updateUserView(data);
+
+                })
+
+            });
+
+            socket.on("startTimer", function (data) {
+
+                if (!data.id || !data.handle)
+                    return;
+
+                if (!intervalTimerHandles[data.id]) {
+
+                    intervalTimerHandles[data.id] = {};
+
+                }
+
+                if (!intervalTimerHandles[data.id][data.handle]) {
+
+                    intervalTimerHandles[data.id][data.handle] = {
+                        handle: null,
+                        count: 0,
+                        startTime: (new Date()),
+                        active: true
+                    }
+
+                    intervalTimerHandles[data.id][data.handle].handle = setInterval(function (id, hnd) {
+
+                        intervalTimerHandles[id][hnd].count++;
+
+                    }, 1000, data.id, data.handle);
+
+                } else if (!intervalTimerHandles[data.id][data.handle].active) {
+
+                    intervalTimerHandles[data.id][data.handle].active = true;
+
+                    intervalTimerHandles[data.id][data.handle].handle = setInterval(function (id, hnd) {
+
+                        intervalTimerHandles[id][hnd].count++;
+
+                    }, 1000, data.id, data.handle);
+
+                }
+
+                nsp[data.id].emit("timer", JSON.stringify({
+                    handle: data.handle,
+                    count: intervalTimerHandles[data.id][data.handle].count,
+                    startTime: intervalTimerHandles[data.id][data.handle].startTime,
+                    timeStamp: (new Date()),
+                    running: true
+                }));
+
+                isDirty[data.id] = true;
+
+                updateUserView({id: data.id});
+
+            })
+
+            socket.on("stopTimer", function (data) {
+
+                if (!data.id || !data.handle)
+                    return;
+
+                if (intervalTimerHandles[data.id] && intervalTimerHandles[data.id][data.handle]) {
+
+                    clearInterval(intervalTimerHandles[data.id][data.handle].handle);
+
+                    intervalTimerHandles[data.id][data.handle].active = false;
+
+                    nsp[data.id].emit("timer", JSON.stringify({
+                        handle: data.handle,
+                        count: intervalTimerHandles[data.id][data.handle].count,
+                        startTime: intervalTimerHandles[data.id][data.handle].startTime,
+                        timeStamp: (new Date()),
+                        running: false
+                    }));
+
+                }
+
+            })
+
+            socket.on("clearTimer", function (data) {
+
+                if (!data.id || !data.handle)
+                    return;
+
+                if (intervalTimerHandles[data.id] && intervalTimerHandles[data.id][data.handle]) {
+
+                    clearInterval(intervalTimerHandles[data.id][data.handle].handle);
+
+                    delete intervalTimerHandles[data.id][data.handle];
+
+                    nsp[data.id].emit("clear timer", JSON.stringify({
+                        handle: data.handle
+                    }));
+
+                }
+
+            })
 
             socket.on("click", function (data) {
 
@@ -563,7 +837,7 @@ function savePrescriptions(params, callback) {
 
             function (icallback) {
 
-                async.mapSeries(data.data.prescriptions, function(prescription, mCallback) {
+                async.mapSeries(data.data.prescriptions, function (prescription, mCallback) {
 
                     console.log(prescription);
 
@@ -593,7 +867,7 @@ function savePrescriptions(params, callback) {
 
                     var times = 1;
 
-                    switch(prescription.frequency) {
+                    switch (prescription.frequency) {
 
                         case "QWK":
 
@@ -633,7 +907,7 @@ function savePrescriptions(params, callback) {
 
                     }
 
-                    if(prescription.type_of_prescription == "variable") {
+                    if (prescription.type_of_prescription == "variable") {
 
                         instructions = prescription.generic + " (" + (prescription.morning_dose ?
                             prescription.morning_dose + " In the morning; " : "") + (prescription.afternoon_dose ?
@@ -656,7 +930,7 @@ function savePrescriptions(params, callback) {
 
                     console.log(sql);
 
-                    queryRaw(sql, function(order) {
+                    queryRaw(sql, function (order) {
 
                         console.log(order[0].insertId);
 
@@ -671,7 +945,7 @@ function savePrescriptions(params, callback) {
 
                         console.log(sql);
 
-                        queryRaw(sql, function(order) {
+                        queryRaw(sql, function (order) {
 
                             console.log(order[0].insertId);
 
@@ -685,11 +959,11 @@ function savePrescriptions(params, callback) {
 
                             console.log(sql);
 
-                            queryRaw(sql, function(obs) {
+                            queryRaw(sql, function (obs) {
 
                                 console.log(data.data.obs.text.selfDispenseDrugs);
 
-                                if(data.data.obs.text.selfDispenseDrugs && data.data.obs.text.selfDispenseDrugs[0] == "true") {
+                                if (data.data.obs.text.selfDispenseDrugs && data.data.obs.text.selfDispenseDrugs[0] == "true") {
 
                                     var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, order_id, obs_datetime, " +
                                         "location_id, obs_group_id, value_numeric, creator, date_created, uuid) VALUES (\"" +
@@ -719,7 +993,7 @@ function savePrescriptions(params, callback) {
 
                     })
 
-                }, function(){
+                }, function () {
 
                     icallback();
 
@@ -727,7 +1001,7 @@ function savePrescriptions(params, callback) {
 
             }
 
-        ], function() {
+        ], function () {
 
             callback();
 
@@ -840,7 +1114,7 @@ function saveRelationship(params, callback) {
                                     console.log(relation_id);
 
                                     generateId(relation_id, data.userId, (data.location != undefined ? data.location :
-                                        "Unknown"), (data.prefix ? data.prefix : "HTC"), undefined, function (response) {
+                                        "Unknown"), (data.prefix ? data.prefix : site.facility_code), undefined, function (response) {
 
                                         var npid = response;
 
@@ -972,10 +1246,10 @@ function saveRelationship(params, callback) {
 
             function (iCallback) {
 
-                if (relation_id != person_id) {
+                if ((!data.relation_id || (data.relation_id && data.relation_id.trim().length <= 0)) && relation_id != person_id) {
 
                     generateId(relation_id, username, (data.location != undefined ? data.location : "Unknown"),
-                        "GDN", undefined, function (response) {
+                        "GDN", site.facility_code, function (response) {
 
                             var npid = response;
 
@@ -1078,17 +1352,15 @@ function saveData(data, callback) {
 
         }
 
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$");
-
         console.log(JSON.stringify(data));
-
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
         var patient_program_id;
 
         var patient_id;
 
         var encounter_id;
+
+        var nationalPID;
 
         async.series([
 
@@ -1102,6 +1374,23 @@ function saveData(data, callback) {
 
                     if (res[0].length > 0)
                         patient_id = res[0][0].patient_id;
+
+                    icallback();
+
+                });
+
+            },
+
+            function (icallback) {
+
+                var sql = "SELECT identifier FROM patient_identifier WHERE patient_id = \"" + patient_id + "\" AND " +
+                    "identifier_type = (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = " +
+                    "\"National id\") AND voided = 0";
+
+                queryRaw(sql, function (res) {
+
+                    if (res[0].length > 0)
+                        nationalPID = res[0][0].identifier;
 
                     icallback();
 
@@ -1304,6 +1593,43 @@ function saveData(data, callback) {
 
                 if (data.data.create_clinic_number) {
 
+                    var json;
+
+                    if (nationalPID) {
+
+                        json = {
+                            "npid": nationalPID,
+                            "application": (data.data.program ? data.data.program.toLowerCase() : data.data.program),
+                            "site_code": couchdb.siteCode,
+                            "names": {
+                                "family_name": null,
+                                "given_name": null,
+                                "middle_name": null
+                            },
+                            "gender": null,
+                            "attributes": {
+                                "occupation": null,
+                                "cell_phone_number": null
+                            },
+                            "birthdate": null,
+                            "patient": {
+                                "identifiers": {}
+                            },
+                            "birthdate_estimated": null,
+                            "addresses": {
+                                "current_residence": null,
+                                "current_village": null,
+                                "current_ta": null,
+                                "current_district": null,
+                                "home_village": null,
+                                "home_ta": null,
+                                "home_district": null
+                            },
+                            "action": "SEARCH"
+                        }
+
+                    }
+
                     generateId(patient_id, data.data.userId, (data.data.location != undefined ? data.data.location : "Unknown"),
                         data.data.create_clinic_number, site.facility_code, function (response) {
 
@@ -1313,7 +1639,7 @@ function saveData(data, callback) {
 
                             icallback();
 
-                        });
+                        }, json);
 
                 } else {
 
@@ -1367,7 +1693,7 @@ function processObs(obj, iICallback) {
         " creator, date_created, uuid) VALUES (\"" + obj.patient_id + "\", (SELECT concept_id FROM concept_name " +
         "WHERE name = \"" + obj.concept + "\" AND voided = 0 LIMIT 1), \"" + obj.encounter_id + "\", NOW(), " +
         "(SELECT location_id FROM location WHERE name = \"" + (obj.data.data.location ? obj.data.data.location :
-        "Unknown") + "\"), \"" + (group_id ? group_id + "\", \"" : "") + obj.value +
+            "Unknown") + "\"), \"" + (group_id ? group_id + "\", \"" : "") + obj.value +
         "\", (SELECT user_id FROM users WHERE username = \"" + obj.data.data.userId + "\"), NOW(), \"" +
         uuid.v1() + "\")";
 
@@ -1588,7 +1914,7 @@ function processObs(obj, iICallback) {
 
                 var currentVillage = String(obj.value).trim();
 
-                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
+                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + obj.patient_id + "\"";
 
                 queryRaw(sql, function (address) {
 
@@ -1608,7 +1934,7 @@ function processObs(obj, iICallback) {
 
                 var closestLandmark = String(obj.value).trim();
 
-                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + patient_id + "\"";
+                var sql = "SELECT person_address_id FROM person_address WHERE person_id = \"" + obj.patient_id + "\"";
 
                 queryRaw(sql, function (address) {
 
@@ -1782,7 +2108,7 @@ function updateUserView(data) {
                                     data: {
                                         patient_id: patient_id,
                                         names: [],
-                                        addresses: [],
+                                        addresses: {},
                                         identifiers: {},
                                         programs: {},
                                         gender: null,
@@ -1790,7 +2116,9 @@ function updateUserView(data) {
                                         birthdate_estimated: null,
                                         UUID: null,
                                         relationships: [],
-                                        attributes: []
+                                        attributes: {},
+                                        timers: [],
+                                        temporaryData: {}
                                     }
                                 };
 
@@ -1800,11 +2128,13 @@ function updateUserView(data) {
 
                             people[data.id].data.names = collection;
 
-                            nsp[data.id].emit("demographics",
-                                JSON.stringify({names: people[data.id].data.names }));
+                            console.log(JSON.stringify(people[data.id].data));
 
                             nsp[data.id].emit("demographics",
-                                JSON.stringify({patient_id: people[data.id].data.patient_id }));
+                                JSON.stringify({names: people[data.id].data.names}));
+
+                            nsp[data.id].emit("demographics",
+                                JSON.stringify({patient_id: people[data.id].data.patient_id}));
 
                             callback();
 
@@ -1818,33 +2148,137 @@ function updateUserView(data) {
 
         function (callback) {
 
+            if (!people[data.id]) {
+
+                people[data.id] = {
+                    data: {
+                        patient_id: patient_id,
+                        names: [],
+                        addresses: {},
+                        identifiers: {},
+                        programs: {},
+                        gender: null,
+                        birthdate: null,
+                        birthdate_estimated: null,
+                        UUID: null,
+                        relationships: [],
+                        attributes: {},
+                        timers: [],
+                        temporaryData: {}
+                    }
+                };
+
+            }
+
+            if (temporaryData[data.id]) {
+
+                people[data.id].data.temporaryData = temporaryData[data.id];
+
+                nsp[data.id].emit("demographics", JSON.stringify({temporaryData: people[data.id].data.temporaryData}));
+
+            }
+
+            callback();
+
+        },
+
+        function (callback) {
+
+            if (!people[data.id]) {
+
+                people[data.id] = {
+                    data: {
+                        patient_id: patient_id,
+                        names: [],
+                        addresses: {},
+                        identifiers: {},
+                        programs: {},
+                        gender: null,
+                        birthdate: null,
+                        birthdate_estimated: null,
+                        UUID: null,
+                        relationships: [],
+                        attributes: {},
+                        timers: [],
+                        temporaryData: {}
+                    }
+                };
+
+            }
+
+            if (intervalTimerHandles[data.id]) {
+
+                var timers = Object.keys(intervalTimerHandles[data.id]);
+
+                console.log(timers);
+
+                people[data.id].data.timers = [];
+
+                for (var t = 0; t < timers.length; t++) {
+
+                    console.log(intervalTimerHandles[data.id][timers[t]].active);
+
+                    if (intervalTimerHandles[data.id][timers[t]].active) {
+
+                        var timer = {
+                            handle: timers[t],
+                            count: Math.ceil(((new Date()) - (new Date(intervalTimerHandles[data.id][timers[t]].startTime))) / 1000),
+                            startTime: intervalTimerHandles[data.id][timers[t]].startTime,
+                            timeStamp: (new Date()),
+                            running: intervalTimerHandles[data.id][timers[t]].active
+                        }
+
+                        people[data.id].data.timers.push(timer);
+
+                    } else {
+
+                        var timer = {
+                            handle: timers[t],
+                            count: Math.ceil(((new Date()) - (new Date(intervalTimerHandles[data.id][timers[t]].startTime))) / 1000),
+                            startTime: intervalTimerHandles[data.id][timers[t]].startTime,
+                            timeStamp: (new Date()),
+                            running: intervalTimerHandles[data.id][timers[t]].active
+                        }
+
+                        people[data.id].data.timers.push(timer);
+
+                    }
+
+                }
+
+                nsp[data.id].emit("demographics", JSON.stringify({timers: people[data.id].data.timers}));
+
+            }
+
+            callback();
+
+        },
+
+        function (callback) {
+
             queryData("person_address", ["address1", "address2", "city_village", "state_province",
                     "county_district", "neighborhood_cell", "township_division", "uuid"],
                 {person_id: patient_id}, function (addresses) {
 
-                    var collection = [];
+                    var collection = {};
 
                     for (var i = 0; i < addresses.length; i++) {
 
-                        var address = {};
+                        collection["Current District"] = addresses[i].state_province;
 
-                        address["Current District"] = addresses[i].state_province;
+                        collection["Current T/A"] = addresses[i].township_division;
 
-                        address["Current T/A"] = addresses[i].township_division;
+                        collection["Current Village"] = addresses[i].city_village;
 
-                        address["Current Village"] = addresses[i].city_village;
+                        collection["Closest Landmark"] = addresses[i].address1;
 
-                        address["Closest Landmark"] = addresses[i].address1;
+                        collection["Home District"] = addresses[i].address2;
 
-                        address["Home District"] = addresses[i].address2;
+                        collection["Home T/A"] = addresses[i].county_district;
 
-                        address["Home T/A"] = addresses[i].county_district;
+                        collection["Home Village"] = addresses[i].neigborhood_cell;
 
-                        address["Home Village"] = addresses[i].neigborhood_cell;
-
-                        address["UUID"] = addresses[i].uuid;
-
-                        collection.push(address);
+                        collection["UUID"] = addresses[i].uuid;
 
                     }
 
@@ -1854,7 +2288,7 @@ function updateUserView(data) {
                             data: {
                                 patient_id: patient_id,
                                 names: [],
-                                addresses: [],
+                                addresses: {},
                                 identifiers: {},
                                 programs: {},
                                 gender: null,
@@ -1862,7 +2296,9 @@ function updateUserView(data) {
                                 birthdate_estimated: null,
                                 UUID: null,
                                 relationships: [],
-                                attributes: []
+                                attributes: {},
+                                timers: [],
+                                temporaryData: {}
                             }
                         };
 
@@ -1873,7 +2309,7 @@ function updateUserView(data) {
                     people[data.id].data.addresses = collection;
 
                     nsp[data.id].emit("demographics",
-                        JSON.stringify({addresses: people[data.id].data.addresses }));
+                        JSON.stringify({addresses: people[data.id].data.addresses}));
 
                     callback();
 
@@ -1892,7 +2328,7 @@ function updateUserView(data) {
                             data: {
                                 patient_id: patient_id,
                                 names: [],
-                                addresses: [],
+                                addresses: {},
                                 identifiers: {},
                                 programs: {},
                                 gender: null,
@@ -1900,7 +2336,9 @@ function updateUserView(data) {
                                 birthdate_estimated: null,
                                 UUID: null,
                                 relationships: [],
-                                attributes: []
+                                attributes: {},
+                                timers: [],
+                                temporaryData: {}
                             }
                         };
 
@@ -1913,13 +2351,13 @@ function updateUserView(data) {
                     people[data.id].data.birthdate_estimated = person[0].birthdate_estimated;
 
                     nsp[data.id].emit("demographics",
-                        JSON.stringify({ gender: people[data.id].data.gender }));
+                        JSON.stringify({gender: people[data.id].data.gender}));
 
                     nsp[data.id].emit("demographics",
-                        JSON.stringify({ birthdate: people[data.id].data.birthdate }));
+                        JSON.stringify({birthdate: people[data.id].data.birthdate}));
 
                     nsp[data.id].emit("demographics",
-                        JSON.stringify({ birthdate_estimated: people[data.id].data.birthdate_estimated }));
+                        JSON.stringify({birthdate_estimated: people[data.id].data.birthdate_estimated}));
 
                     console.log("Sent first basic data");
 
@@ -1955,7 +2393,7 @@ function updateUserView(data) {
                                 data: {
                                     patient_id: patient_id,
                                     names: [],
-                                    addresses: [],
+                                    addresses: {},
                                     identifiers: {},
                                     programs: {},
                                     gender: null,
@@ -1963,7 +2401,9 @@ function updateUserView(data) {
                                     birthdate_estimated: null,
                                     UUID: null,
                                     relationships: [],
-                                    attributes: []
+                                    attributes: {},
+                                    timers: [],
+                                    temporaryData: {}
                                 }
                             };
 
@@ -1974,7 +2414,7 @@ function updateUserView(data) {
                         people[data.id].data.identifiers = collection;
 
                         nsp[data.id].emit("demographics",
-                            JSON.stringify({identifiers: people[data.id].data.identifiers }));
+                            JSON.stringify({identifiers: people[data.id].data.identifiers}));
 
                         callback();
 
@@ -1986,7 +2426,7 @@ function updateUserView(data) {
                 console.log("Sent existing identifiers data");
 
                 nsp[data.id].emit("demographics",
-                    JSON.stringify({identifiers: people[data.id].data.identifiers }));
+                    JSON.stringify({identifiers: people[data.id].data.identifiers}));
 
                 callback();
 
@@ -2071,7 +2511,7 @@ function updateUserView(data) {
 
                                         }
 
-                                        if(encounter.name.trim().toUpperCase() != "TREATMENTS") {
+                                        if (encounter.name.trim().toUpperCase() != "TREATMENTS") {
 
                                             buildObs(encounter, function (data) {
 
@@ -2119,7 +2559,7 @@ function updateUserView(data) {
                                     data: {
                                         patient_id: patient_id,
                                         names: [],
-                                        addresses: [],
+                                        addresses: {},
                                         identifiers: {},
                                         programs: {},
                                         gender: null,
@@ -2127,7 +2567,9 @@ function updateUserView(data) {
                                         birthdate_estimated: null,
                                         UUID: null,
                                         relationships: [],
-                                        attributes: []
+                                        attributes: {},
+                                        timers: [],
+                                        temporaryData: {}
                                     }
                                 };
 
@@ -2138,7 +2580,7 @@ function updateUserView(data) {
                             console.log("Sent new programs data");
 
                             nsp[data.id].emit("demographics",
-                                JSON.stringify({programs: people[data.id].data.programs }));
+                                JSON.stringify({programs: people[data.id].data.programs}));
 
                             callback();
 
@@ -2152,7 +2594,7 @@ function updateUserView(data) {
                 console.log("Sent existing programs data");
 
                 nsp[data.id].emit("demographics",
-                    JSON.stringify({programs: people[data.id].data.programs }));
+                    JSON.stringify({programs: people[data.id].data.programs}));
 
                 callback();
 
@@ -2162,82 +2604,124 @@ function updateUserView(data) {
 
         function (callback) {
 
-            if (Object.keys(people[data.id].data.relationships).length <= 0 || isDirty[data.id]) {
+            // if (Object.keys(people[data.id].data.relationships).length <= 0 || isDirty[data.id]) {
 
-                var sql = "SELECT CONCAT(given_name, \" \", family_name) AS relative_name, (SELECT identifier FROM " +
-                    "patient_identifier WHERE patient_id = person_b LIMIT 1) AS relative_id, b_is_to_a, gender, " +
-                    "relationship.uuid AS uuid, (SELECT person_attribute.value FROM person_attribute WHERE person_id = " +
-                    "relationship.person_b AND person_attribute_type_id = (SELECT person_attribute_type_id FROM " +
-                    "person_attribute_type WHERE name = 'Cell Phone Number' LIMIT 1)) AS phone_number FROM relationship LEFT OUTER " +
-                    "JOIN person_name ON person_name.person_id = relationship.person_b LEFT OUTER JOIN relationship_type " +
-                    "ON relationship_type.relationship_type_id = relationship.relationship LEFT OUTER JOIN person ON " +
-                    " person.person_id = relationship. person_b WHERE person_a = \"" + patient_id + "\"";
+            var sql = "SELECT CONCAT(given_name, \" \", family_name) AS relative_name, (SELECT identifier FROM " +
+                "patient_identifier WHERE patient_id = person_b LIMIT 1) AS relative_id, b_is_to_a, gender, " +
+                "relationship.uuid AS uuid, (SELECT person_attribute.value FROM person_attribute WHERE person_id = " +
+                "relationship.person_b AND person_attribute_type_id = (SELECT person_attribute_type_id FROM " +
+                "person_attribute_type WHERE name = 'Cell Phone Number' LIMIT 1) LIMIT 1) AS phone_number FROM relationship LEFT OUTER " +
+                "JOIN person_name ON person_name.person_id = relationship.person_b LEFT OUTER JOIN relationship_type " +
+                "ON relationship_type.relationship_type_id = relationship.relationship LEFT OUTER JOIN person ON " +
+                " person.person_id = relationship. person_b WHERE person_a = \"" + patient_id + "\"";
 
-                console.log(sql)
+            console.log(sql)
 
-                queryRaw(sql, function (relationships) {
+            queryRaw(sql, function (relationships) {
 
-                    var collection = [];
+                var collection = [];
 
-                    for (var i = 0; i < relationships[0].length; i++) {
+                for (var i = 0; i < relationships[0].length; i++) {
 
-                        var relationship = {
-                            relative_name: relationships[0][i].relative_name,
-                            relative_id: relationships[0][i].relative_id,
-                            relative_type: relationships[0][i].b_is_to_a,
-                            phone_number: relationships[0][i].phone_number,
-                            gender: relationships[0][i].gender,
-                            UUID: relationships[0][i].uuid
+                    var relationship = {
+                        relative_name: relationships[0][i].relative_name,
+                        relative_id: relationships[0][i].relative_id,
+                        relative_type: relationships[0][i].b_is_to_a,
+                        phone_number: relationships[0][i].phone_number,
+                        gender: relationships[0][i].gender,
+                        UUID: relationships[0][i].uuid
+                    }
+
+                    if (intervalTimerHandles[relationships[0][i].relative_id]) {
+
+                        var timers = Object.keys(intervalTimerHandles[relationships[0][i].relative_id]);
+
+                        console.log(timers);
+
+                        relationship.timers = [];
+
+                        for (var t = 0; t < timers.length; t++) {
+
+                            console.log(intervalTimerHandles[relationships[0][i].relative_id][timers[t]].active);
+
+                            if (intervalTimerHandles[relationships[0][i].relative_id][timers[t]].active) {
+
+                                var timer = {
+                                    handle: timers[t],
+                                    count: Math.ceil(((new Date()) - (new Date(intervalTimerHandles[relationships[0][i].relative_id][timers[t]].startTime))) / 1000),
+                                    startTime: intervalTimerHandles[relationships[0][i].relative_id][timers[t]].startTime,
+                                    timeStamp: (new Date()),
+                                    running: intervalTimerHandles[relationships[0][i].relative_id][timers[t]].active
+                                }
+
+                                relationship.timers.push(timer);
+
+                            } else {
+
+                                var timer = {
+                                    handle: timers[t],
+                                    count: Math.ceil(((new Date()) - (new Date(intervalTimerHandles[relationships[0][i].relative_id][timers[t]].startTime))) / 1000),
+                                    startTime: intervalTimerHandles[relationships[0][i].relative_id][timers[t]].startTime,
+                                    timeStamp: (new Date()),
+                                    running: intervalTimerHandles[relationships[0][i].relative_id][timers[t]].active
+                                }
+
+                                relationship.timers.push(timer);
+
+                            }
+
                         }
 
-                        collection.push(relationship);
-
                     }
 
-                    if (!people[data.id]) {
+                    collection.push(relationship);
 
-                        people[data.id] = {
-                            data: {
-                                patient_id: patient_id,
-                                names: [],
-                                addresses: [],
-                                identifiers: {},
-                                programs: {},
-                                gender: null,
-                                birthdate: null,
-                                birthdate_estimated: null,
-                                UUID: null,
-                                relationships: [],
-                                attributes: []
-                            }
-                        };
+                }
 
-                    }
+                if (!people[data.id]) {
 
-                    console.log(collection);
+                    people[data.id] = {
+                        data: {
+                            patient_id: patient_id,
+                            names: [],
+                            addresses: {},
+                            identifiers: {},
+                            programs: {},
+                            gender: null,
+                            birthdate: null,
+                            birthdate_estimated: null,
+                            UUID: null,
+                            relationships: [],
+                            attributes: {},
+                            timers: [],
+                            temporaryData: {}
+                        }
+                    };
 
-                    console.log("First time relationships query.");
+                }
 
-                    people[data.id].data.relationships = collection;
+                console.log("First time relationships query.");
 
-                    nsp[data.id].emit("demographics",
-                        JSON.stringify({relationships: people[data.id].data.relationships }));
-
-                    callback();
-
-                });
-
-            }
-            else {
-
-                console.log("Sent existing relationships data");
+                people[data.id].data.relationships = collection;
 
                 nsp[data.id].emit("demographics",
-                    JSON.stringify({relationships: people[data.id].data.relationships }));
+                    JSON.stringify({relationships: people[data.id].data.relationships}));
 
                 callback();
 
-            }
+            });
+
+            /*}
+             else {
+
+             console.log("Sent existing relationships data");
+
+             nsp[data.id].emit("demographics",
+             JSON.stringify({relationships: people[data.id].data.relationships}));
+
+             callback();
+
+             }*/
 
         },
 
@@ -2253,17 +2737,11 @@ function updateUserView(data) {
 
                 queryRaw(sql, function (attributes) {
 
-                    var collection = [];
+                    var collection = {};
 
                     for (var i = 0; i < attributes[0].length; i++) {
 
-                        var attribute = {
-                            attribute: attributes[0][i].attribute,
-                            value: attributes[0][i].value,
-                            UUID: attributes[0][i].uuid
-                        }
-
-                        collection.push(attribute);
+                        collection[attributes[0][i].attribute] = attributes[0][i].value;
 
                     }
 
@@ -2273,7 +2751,7 @@ function updateUserView(data) {
                             data: {
                                 patient_id: patient_id,
                                 names: [],
-                                addresses: [],
+                                addresses: {},
                                 identifiers: {},
                                 programs: {},
                                 gender: null,
@@ -2281,7 +2759,9 @@ function updateUserView(data) {
                                 birthdate_estimated: null,
                                 UUID: null,
                                 relationships: [],
-                                attributes: []
+                                attributes: {},
+                                timers: [],
+                                temporaryData: {}
                             }
                         };
 
@@ -2294,7 +2774,7 @@ function updateUserView(data) {
                     people[data.id].data.attributes = collection;
 
                     nsp[data.id].emit("demographics",
-                        JSON.stringify({attributes: people[data.id].data.attributes }));
+                        JSON.stringify({attributes: people[data.id].data.attributes}));
 
                     callback();
 
@@ -2306,7 +2786,7 @@ function updateUserView(data) {
                 console.log("Sent existing attributes data");
 
                 nsp[data.id].emit("demographics",
-                    JSON.stringify({attributes: people[data.id].data.attributes }));
+                    JSON.stringify({attributes: people[data.id].data.attributes}));
 
                 callback();
 
@@ -2325,7 +2805,7 @@ function updateUserView(data) {
         } else {
 
             nsp[data.id].emit("demographics",
-                JSON.stringify({done: true }));
+                JSON.stringify({done: true}));
 
         }
 
@@ -2404,7 +2884,7 @@ function buildTreatments(encounter, oCallback) {
 
         var collection = [];
 
-        if(data && data[0]) {
+        if (data && data[0]) {
 
             for (var i = 0; i < data[0].length; i++) {
 
@@ -2430,7 +2910,7 @@ function buildTreatments(encounter, oCallback) {
                     },
                     response: {
                         value: result.instructions + " from " + (new Date(result.start_date)).format() + " to " +
-                            (new Date(result.auto_expire_date)).format()
+                        (new Date(result.auto_expire_date)).format()
                     }
                 }
 
@@ -2456,7 +2936,7 @@ function queryRaw(sql, callback) {
         })
         .catch(function (err) {
 
-            console.log(err.message);
+            console.log("$: " + err.message);
 
             callback(err);
 
@@ -2620,7 +3100,7 @@ function queryData(table, fields, condition, callback) {
 
 function queryRawStock(sql, callback) {
 
-    knexRawStock.raw(sql)
+    knexStock.raw(sql)
         .then(function (result) {
 
             callback(result);
@@ -2687,9 +3167,9 @@ function transferStock(data, res) {
                     "dispatch_who_dispatched, dispatch_who_received, dispatch_who_authorised, dispatch_destination) " +
                     "VALUES(\"" + stock_id + "\", \"" + data.batch_number + "\", \"" + data.transfer_quantity + "\", \"" +
                     data.transfer_datetime + "\", \"" + data.userId + "\", \"" + (data.transfer_who_received ?
-                    data.transfer_who_received : "") + "\", \"" + (data.transfer_who_authorised ?
-                    data.transfer_who_authorised : "") + "\", \"" + (data.transfer_location ?
-                    data.transfer_location : "") + "\")";
+                        data.transfer_who_received : "") + "\", \"" + (data.transfer_who_authorised ?
+                        data.transfer_who_authorised : "") + "\", \"" + (data.transfer_location ?
+                        data.transfer_location : "") + "\")";
 
                 console.log(sql);
 
@@ -2725,9 +3205,9 @@ function dispatchStock(data, res) {
         var sql = "UPDATE dispatch SET stock_id = \"" + data.stock_id + "\", batch_number = \"" + data.batch_number +
             "\", dispatch_quantity = \"" + data.dispatch_quantity + "\", dispatch_datetime = \"" + data.dispatch_datetime +
             "\", dispatch_who_dispatched = \"" + data.userId + "dispatch_who_received = \"" + (data.dispatch_who_received ?
-            data.dispatch_who_received : "") + "\", dispatch_who_authorised = \"" + (data.dispatch_who_authorised ?
-            data.dispatch_who_authorised : "") + "\", dispatch_destination = \"" + (data.dispatch_destination ?
-            data.dispatch_destination : "") + "\" WHERE " + "dispatch_id = \"" + data.dispatch_id;
+                data.dispatch_who_received : "") + "\", dispatch_who_authorised = \"" + (data.dispatch_who_authorised ?
+                data.dispatch_who_authorised : "") + "\", dispatch_destination = \"" + (data.dispatch_destination ?
+                data.dispatch_destination : "") + "\" WHERE " + "dispatch_id = \"" + data.dispatch_id;
 
         console.log(sql);
 
@@ -2746,8 +3226,8 @@ function dispatchStock(data, res) {
             " dispatch_who_received, dispatch_who_authorised, dispatch_destination) VALUES(\"" +
             data.stock_id + "\", \"" + data.batch_number + "\", \"" + data.dispatch_quantity + "\", \"" +
             data.dispatch_datetime + "\", \"" + data.userId + "\", \"" + (data.dispatch_who_received ?
-            data.dispatch_who_received : "") + "\", \"" + (data.dispatch_who_authorised ? data.dispatch_who_authorised :
-            "") + "\", \"" + (data.dispatch_destination ? data.dispatch_destination : "") + "\")";
+                data.dispatch_who_received : "") + "\", \"" + (data.dispatch_who_authorised ? data.dispatch_who_authorised :
+                "") + "\", \"" + (data.dispatch_destination ? data.dispatch_destination : "") + "\")";
 
         console.log(sql);
 
@@ -3152,7 +3632,7 @@ function loggedIn(token, callback) {
 
     queryRaw(sql, function (user) {
 
-        if (user[0].length > 0) {
+        if (user && user[0].length > 0) {
 
             callback(true, user[0][0].user_id, user[0][0].username);
 
@@ -3161,6 +3641,746 @@ function loggedIn(token, callback) {
             callback(false);
 
         }
+
+    });
+
+}
+
+function doSavePatient(data, callback) {
+
+    loggedIn(data.token, function (authentic, user_id, username) {
+
+        if (!authentic) {
+
+            return callback({message: "Unauthorized access!"});
+
+        }
+
+        console.log(JSON.stringify(data));
+
+        var npid = (data.npid ? data.npid : (data.national_id ? data.national_id : undefined));
+
+        var person_id;
+
+        var patient_id;
+
+        var otherId = [];
+
+        var gender = (data["Gender"] ? data["Gender"] : (data.gender ? data.gender : ""));
+
+        var birthdate = (data["Date of birth"] ? data["Date of birth"] : (data.birthdate ? data.birthdate : ""));
+
+        var birthdate_estimated = (data["Birthdate Estimated"] ? data["Birthdate Estimated"] :
+            (data.birthdate_estimated ? data.birthdate_estimated : ""));
+
+        var closestLandmark = (data["Closest Landmark"] ? data["Closest Landmark"] : (data.addresses.closest_landmark ?
+            data.addresses.closest_landmark : ""));
+
+        var homeDistrict = (data["Home District"] ? data["Home District"] : (data.addresses.home_district ?
+            data.addresses.home_district : ""));
+
+        var currentVillage = (data["Current Village"] ? data["Current Village"] : (data.addresses.current_village ?
+            data.addresses.current_village : ""));
+
+        var currentDistrict = (data["Current District"] ? data["Current District"] : (data.addresses.current_district ?
+            data.addresses.current_district : ""))
+
+        var homeTA = (data["Home T/A"] ? data["Home T/A"] : (data.addresses.home_ta ? data.addresses.home_ta : ""));
+
+        var homeVillage = (data["Home Village"] ? data["Home Village"] : (data.addresses.home_village ?
+            data.addresses.home_village : ""));
+
+        var currentTA = (data["Current T/A"] ? data["Current T/A"] : (data.addresses.current_ta ?
+            data.addresses.current_ta : ""));
+
+        var firstName = (data["First Name"] ? data["First Name"] : (data.names.given_name ? data.names.given_name : ""));
+
+        var middleName = (data["Middle Name"] ? data["Middle Name"] : (data.names.middle_name ? data.names.middle_name : ""));
+
+        var familyName = (data["Last Name"] ? data["Last Name"] : (data.names.family_name ? data.names.family_name : ""));
+
+        if (data.currentProgram)
+            data.prefix = require(__dirname + "/public/config/patient.modules.json")[data.currentProgram].clinicPrefix;
+
+        async.series([
+
+            function (iCallback) {
+
+                if (data.patient_id) {
+
+                    var sql = "SELECT patient_id FROM patient WHERE patient_id = \"" + data.patient_id + "\"";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (result) {
+
+                        if (result && result[0].length > 0) {
+
+                            patient_id = result[0][0].patient_id;
+
+                            person_id = patient_id;
+
+                            iCallback();
+
+                        } else {
+
+                            iCallback();
+
+                        }
+
+                    })
+
+                } else if (npid) {
+
+                    var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = \"" + npid + "\"";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (result) {
+
+                        console.log(result);
+
+                        if (result && result[0].length > 0) {
+
+                            patient_id = result[0][0].patient_id;
+
+                            person_id = patient_id;
+
+                            iCallback();
+
+                        } else {
+
+                            iCallback();
+
+                        }
+
+                    })
+
+                } else {
+
+                    callback({message: "Nothing done! No main processing category found."});
+
+                }
+
+            },
+
+            function (iCallback) {
+
+                if (!person_id) {
+
+                    var sql = "INSERT INTO person (gender, birthdate, birthdate_estimated, creator, date_created, uuid) VALUES (\"" +
+                        gender + "\", \"" + birthdate + "\", \"" + birthdate_estimated + "\", \"" +
+                        user_id + "\", NOW(), \"" + uuid.v1() + "\")";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (person) {
+
+                        person_id = person[0].insertId;
+
+                        console.log(person[0].insertId);
+
+                        iCallback();
+
+                    })
+
+                } else {
+
+                    var sql = "SELECT gender, birthdate, birthdate_estimated FROM person WHERE person_id = \"" + person_id + "\"";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (result) {
+
+                        if (result && result[0].length > 0) {
+
+                            var row = result[0][0];
+
+                            if (row.gender != gender || row.birthdate != birthdate || row.birthdate_estimated !=
+                                birthdate_estimated) {
+
+                                var sql = "UPDATE person SET gender = \"" + gender + "\", birthdate = \"" + birthdate +
+                                    "\", birthdate_estimated = \"" + birthdate_estimated + "\" WHERE person_id = \"" +
+                                    person_id + "\"";
+
+                                queryRaw(sql, function (result) {
+
+                                    iCallback();
+
+                                })
+
+                            }
+
+                        } else {
+
+                            var sql = "INSERT INTO person (gender, birthdate, birthdate_estimated, creator, date_created, uuid) VALUES (\"" +
+                                gender + "\", \"" + birthdate + "\", \"" + birthdate_estimated + "\", \"" +
+                                user_id + "\", NOW(), \"" + uuid.v1() + "\")";
+
+                            console.log(sql);
+
+                            queryRaw(sql, function (person) {
+
+                                person_id = person[0].insertId;
+
+                                console.log(person[0].insertId);
+
+                                iCallback();
+
+                            })
+
+                        }
+
+                    })
+
+                }
+
+            },
+
+            function (iCallback) {
+
+                var sql = "SELECT person_address_id, address1, address2, city_village, state_province, " +
+                    " creator, date_created, county_district, neighborhood_cell, township_division FROM person_address " +
+                    "WHERE person_id = \"" + person_id + "\"";
+
+                console.log(sql);
+
+                queryRaw(sql, function (result) {
+
+                    if (result && result[0].length > 0) {
+
+                        var row = result[0][0];
+
+                        if (row.address1 != closestLandmark || row.address2 != homeDistrict ||
+                            row.city_village != currentVillage || row.state_province != currentDistrict ||
+                            row.county_district != homeTA || row.neighborhood_cell != homeVillage ||
+                            row.township_division != currentTA) {
+
+                            var sql = "UPDATE person_address SET address1 = \"" + closestLandmark + "\", address2 = \"" +
+                                homeDistrict + "\", city_village = \"" + currentVillage + "\", state_province = \"" +
+                                currentDistrict + "\", county_district = \"" + homeTA + "\", neighborhood_cell = \"" +
+                                homeVillage + "\", township_division = \"" + currentTA + "\" WHERE person_address_id = \"" +
+                                row.person_address_id + "\"";
+
+                            queryRaw(sql, function (result) {
+
+                                iCallback();
+
+                            })
+
+                        } else {
+
+                            iCallback();
+
+                        }
+
+                    } else {
+
+                        var sql = "INSERT INTO person_address (person_id, address1, address2, city_village, state_province, " +
+                            " creator, date_created, county_district, neighborhood_cell, township_division, uuid) VALUES (\"" +
+                            person_id + "\", \"" + closestLandmark + "\", \"" + homeDistrict + "\", \"" + currentVillage + "\", \"" +
+                            currentDistrict + "\", \"" + user_id + "\", NOW(), \"" + homeTA + "\", \"" + homeVillage + "\", \"" +
+                            currentTA + "\", \"" + uuid.v1() + "\")";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (address) {
+
+                            var address_id = address[0].insertId;
+
+                            console.log(address_id);
+
+                            iCallback();
+
+                        })
+
+                    }
+
+                })
+
+            },
+
+            function (iCallback) {
+
+                var sql = "SELECT person_name_id, given_name, middle_name, family_name FROM person_name WHERE " +
+                    "person_id = \"" + person_id + "\"";
+
+                console.log(sql);
+
+                queryRaw(sql, function (result) {
+
+                    if (result && result[0].length > 0) {
+
+                        var row = result[0][0];
+
+                        if (row.given_name != firstName || row.middle_name != middleName || row.family_name != familyName) {
+
+                            var sql = "UPDATE person_name SET given_name = \"" + firstName + "\", middle_name = \"" +
+                                middleName + "\", family_name = \"" + familyName + "\" WHERE person_name_id = \"" +
+                                row.person_name_id + "\"";
+
+                            console.log(sql);
+
+                            queryRaw(sql, function (result) {
+
+                                iCallback();
+
+                            })
+
+                        } else {
+
+                            iCallback();
+
+                        }
+
+                    } else {
+
+                        var sql = "INSERT INTO person_name (person_id, given_name, middle_name, family_name, creator, date_created, uuid) VALUES (\"" +
+                            person_id + "\", \"" + firstName + "\", \"" + middleName + "\", \"" + familyName + "\", \"" +
+                            user_id + "\", NOW(), \"" + uuid.v1() + "\")";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (name) {
+
+                            iCallback();
+
+                        })
+
+                    }
+
+                })
+
+            },
+
+            function (iCallback) {
+
+                if (!patient_id) {
+
+                    var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES (\"" +
+                        person_id + "\", \"" + user_id + "\", NOW())";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (patient) {
+
+                        patient_id = patient[0].insertId;
+
+                        console.log(patient_id);
+
+                        iCallback();
+
+                    })
+
+                } else {
+
+                    iCallback();
+
+                }
+
+            },
+
+            function (iCallback) {
+
+                if (data.prefix && data.createClinicId) {
+
+                    var json = {
+                        "npid": npid,
+                        "application": (data.currentProgram ? data.currentProgram.toLowerCase() : "unknown"),
+                        "site_code": couchdb.siteCode,
+                        "names": {
+                            "family_name": familyName,
+                            "given_name": firstName,
+                            "middle_name": middleName
+                        },
+                        "gender": null,
+                        "attributes": {
+                            "occupation": (data.attributes.occupation ? data.attributes.occupation : ""),
+                            "cell_phone_number": (data.attributes.cell_phone_number ? data.attributes.cell_phone_number : "")
+                        },
+                        "birthdate": birthdate,
+                        "patient": {
+                            "identifiers": {}
+                        },
+                        "birthdate_estimated": birthdate_estimated,
+                        "addresses": {
+                            "current_residence": (data.addresses.current_residence ? data.addresses.current_residence : ""),
+                            "current_village": currentVillage,
+                            "current_ta": currentTA,
+                            "current_district": currentDistrict,
+                            "home_village": homeVillage,
+                            "home_ta": homeTA,
+                            "home_district": homeDistrict
+                        },
+                        "action": "SEARCH"
+                    };
+
+                    generateId(patient_id, username, (data.location ? data.location : "Unknown"), (data.prefix ?
+                        data.prefix : "DMY"), site.facility_code, function (response) {
+
+                        var entry = {};
+
+                        entry[(data.prefix ? data.prefix : "DMY") + " Number"] = response;
+
+                        otherId.push(entry);
+
+                        iCallback();
+
+                    }, json);
+
+                } else {
+
+                    iCallback();
+
+                }
+
+            },
+
+            function (iCallback) {
+
+                var json = {
+                    "npid": npid,
+                    "application": (data.currentProgram ? data.currentProgram.toLowerCase() : "unknown"),
+                    "site_code": couchdb.siteCode,
+                    "names": {
+                        "family_name": familyName,
+                        "given_name": firstName,
+                        "middle_name": middleName
+                    },
+                    "gender": null,
+                    "attributes": {
+                        "occupation": (data.attributes.occupation ? data.attributes.occupation : ""),
+                        "cell_phone_number": (data.attributes.cell_phone_number ? data.attributes.cell_phone_number : "")
+                    },
+                    "birthdate": birthdate,
+                    "patient": {
+                        "identifiers": {}
+                    },
+                    "birthdate_estimated": birthdate_estimated,
+                    "addresses": {
+                        "current_residence": (data.addresses.current_residence ? data.addresses.current_residence : ""),
+                        "current_village": currentVillage,
+                        "current_ta": currentTA,
+                        "current_district": currentDistrict,
+                        "home_village": homeVillage,
+                        "home_ta": homeTA,
+                        "home_district": homeDistrict
+                    },
+                    "action": "SEARCH"
+                };
+
+                var sql = "SELECT identifier, name FROM patient_identifier LEFT OUTER JOIN " +
+                    "patient_identifier_type ON patient_identifier.identifier_type = " +
+                    "patient_identifier_type.patient_identifier_type_id WHERE name NOT IN (\"National id\") AND " +
+                    "patient_id = \"" + patient_id + "\"";
+
+                console.log(sql);
+
+                queryRaw(sql, function (result) {
+
+                    async.mapSeries(result[0], function (row, mCallback) {
+
+                        var otherId = {};
+
+                        otherId[row.name] = row.identifier;
+
+                        addIdentifierToDDERecord(patient_id, otherId, json, function () {
+
+                            mCallback();
+
+                        })
+
+
+                    }, function (err) {
+
+                        if (err)
+                            console.log(err.message);
+
+                        iCallback();
+
+                    });
+
+                });
+
+            },
+
+            function (iCallback) {
+
+                if (npid) {
+
+                    var sql = "SELECT patient_identifier_id, identifier FROM patient_identifier WHERE patient_id = \"" +
+                        patient_id + "\" AND identifier_type = (SELECT patient_identifier_type_id FROM " +
+                        "patient_identifier_type WHERE name = \"National id\")";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (result) {
+
+                        if (result && result[0].length > 0) {
+
+                            var row = result[0][0];
+
+                            if (row.identifier != npid) {
+
+                                var sql = "UPDATE patient_identifier SET identifier_type = (SELECT " +
+                                    "patient_identifier_type_id FROM patient_identifier_type WHERE name = " +
+                                    "\"Old Identification Number\" LIMIT 1) WHERE patient_identifier_id = \"" +
+                                    row.patient_identifier_id + "\"";
+
+                                console.log(sql);
+
+                                queryRaw(sql, function (result) {
+
+                                    otherId.push({"Old Identification Number": row.identifier});
+
+                                    var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
+                                        "creator, date_created, uuid) VALUES (\"" + patient_id + "\", \"" + npid +
+                                        "\", (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = \"National id\"), " +
+                                        "(SELECT location_id FROM location WHERE name = \"" + (data.location ? data.location : "Unknown") +
+                                        "\"), \"" + user_id + "\", NOW(), \"" + uuid.v1() + "\")";
+
+                                    console.log(sql);
+
+                                    queryRaw(sql, function (response) {
+
+                                        iCallback();
+
+                                    });
+
+                                })
+
+                            } else {
+
+                                iCallback();
+
+                            }
+
+                        } else {
+
+                            var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
+                                "creator, date_created, uuid) VALUES (\"" + patient_id + "\", \"" + npid +
+                                "\", (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = \"National id\"), " +
+                                "(SELECT location_id FROM location WHERE name = \"" + (data.location ? data.location : "Unknown") +
+                                "\"), \"" + user_id + "\", NOW(), \"" + uuid.v1() + "\")";
+
+                            console.log(sql);
+
+                            queryRaw(sql, function (response) {
+
+                                iCallback();
+
+                            });
+
+                        }
+
+                    });
+
+                } else {
+
+                    iCallback();
+
+                }
+
+            },
+
+            function (iCallback) {
+
+                if (data.patient && data.patient.identifiers && Object.keys(data.patient.identifiers).length > 0) {
+
+                    var keys = Object.keys(data.patient.identifiers);
+
+                    console.log(keys);
+
+                    async.mapSeries(keys, function (key, mCallback) {
+
+                        var sql = "SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = \"" + key + "\"";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (result) {
+
+                            if (result && result[0] && result[0].length > 0) {
+
+                                var sql = "SELECT patient_identifier_id FROM patient_identifier LEFT OUTER JOIN " +
+                                    "patient_identifier_type ON patient_identifier_type.patient_identifier_type_id = " +
+                                    "patient_identifier.identifier_type WHERE name = \"" + key + "\"";
+
+                                console.log(sql);
+
+                                queryRaw(sql, function (identifier) {
+
+                                    if (identifier[0] && identifier[0].length <= 0) {
+
+                                        var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
+                                            "creator, date_created, uuid) VALUES (\"" + patient_id + "\", \"" + data.patient.identifiers[key] +
+                                            "\", \"" + result[0][0].patient_identifier_type_id + "\", (SELECT location_id FROM location WHERE name = \"" +
+                                            (data.location ? data.location : "Unknown") + "\"), \"" + user_id + "\", NOW(), \"" +
+                                            uuid.v1() + "\")";
+
+                                        queryRaw(sql, function (result) {
+
+                                            console.log(result);
+
+                                            mCallback();
+
+                                        })
+
+                                    } else {
+
+                                        mCallback();
+
+                                    }
+
+                                })
+
+                            } else {
+
+                                mCallback();
+
+                            }
+
+                        })
+
+                    }, function (err) {
+
+                        if (err)
+                            console.log(err.message);
+
+                        iCallback();
+
+                    })
+
+                } else {
+
+                    iCallback();
+
+                }
+
+            },
+
+            function (iCallback) {
+
+                if (data.attributes && Object.keys(data.attributes).length > 0) {
+
+                    var keys = Object.keys(data.attributes);
+
+                    console.log(keys);
+
+                    var attributeMapping = {
+                        cell_phone_number: "Cell Phone Number",
+                        nationality: "Citizenship",
+                        home_phone_number: "Home Phone Number",
+                        office_phone_number: "Office Phone Number",
+                        occupation: "Occupation"
+                    };
+
+                    async.mapSeries(keys, function (key, mCallback) {
+
+                        if (!data.attributes[key] || String(data.attributes[key]).trim().toLowerCase() == "null") {
+
+                            mCallback();
+
+                        } else {
+
+                            var sql = "SELECT person_attribute_type_id FROM person_attribute_type WHERE name = \"" +
+                                attributeMapping[key] + "\"";
+
+                            console.log(sql);
+
+                            queryRaw(sql, function (result) {
+
+                                if (result && result[0] && result[0].length > 0) {
+
+                                    var person_attribute_type_id = result[0][0].person_attribute_type_id;
+
+                                    var sql = "SELECT person_attribute_id FROM person_attribute LEFT OUTER JOIN " +
+                                        "person_attribute_type ON person_attribute_type.person_attribute_type_id = " +
+                                        "person_attribute.person_attribute_type_id WHERE person_id = \"" +
+                                        patient_id + "\" AND name = \"" + attributeMapping[key] + "\"";
+
+                                    console.log(sql);
+
+                                    queryRaw(sql, function (attribute) {
+
+                                        if (attribute[0] && attribute[0].length > 0) {
+
+                                            var sql = "UPDATE person_attribute SET value = \"" + data.attributes[key] +
+                                                "\" WHERE person_attribute_id = \"" + attribute[0][0].person_attribute_id + "\"";
+
+                                            console.log(sql);
+
+                                            queryRaw(sql, function (data) {
+
+                                                console.log(data);
+
+                                                mCallback();
+
+                                            })
+
+                                        } else {
+
+                                            var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, " +
+                                                "date_created, uuid) VALUES(\"" + patient_id + "\", \"" + data.attributes[key] + "\", " +
+                                                "\"" + person_attribute_type_id + "\", \"" + user_id + "\", NOW(), \"" + uuid.v1() + "\")";
+
+                                            console.log(sql);
+
+                                            queryRaw(sql, function (data) {
+
+                                                console.log(data);
+
+                                                mCallback();
+
+                                            })
+
+                                        }
+
+                                    })
+
+                                } else {
+
+                                    mCallback();
+
+                                }
+
+                            })
+
+                        }
+
+                    }, function (err) {
+
+                        if (err)
+                            console.log(err.message);
+
+                        iCallback();
+
+                    })
+
+                } else {
+
+                    iCallback();
+
+                }
+
+            }
+
+        ], function () {
+
+            if (npid) {
+
+                callback({npid: npid, person_id: person_id});
+
+            } else {
+
+                var key = Object.keys(otherId[0])[0];
+
+                var id = otherId[0][key];
+
+                callback({npid: id, person_id: person_id});
+
+            }
+
+        })
 
     });
 
@@ -3318,9 +4538,11 @@ app.post("/login", function (req, res) {
 
                             if (location[0].length > 0) {
 
-                                res.status(200).json({token: token, username: user[0][0].username, roles: collection,
+                                res.status(200).json({
+                                    token: token, username: user[0][0].username, roles: collection,
                                     attributes: attributes, gender: gender, given_name: given_name,
-                                    family_name: family_name, location: location[0][0].name});
+                                    family_name: family_name, location: location[0][0].name
+                                });
 
                             } else {
 
@@ -3450,7 +4672,7 @@ app.get("/district_query", function (req, res) {
 
     var sql = "SELECT district.name FROM district LEFT OUTER JOIN region ON district.region_id = region.region_id " +
         "WHERE region.name = \"" + query.region + "\" AND district.name LIKE \"" + (query.district ?
-        query.district : "") + "%\"";
+            query.district : "") + "%\"";
 
     queryRaw(sql, function (data) {
 
@@ -3615,6 +4837,8 @@ app.post("/save_dummy_patient", function (req, res) {
         var sql = "INSERT INTO person (creator, date_created, uuid) VALUES ((SELECT user_id FROM users WHERE username = \"" +
             data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
+        console.log(sql);
+
         queryRaw(sql, function (person) {
 
             person_id = person[0].insertId;
@@ -3623,15 +4847,21 @@ app.post("/save_dummy_patient", function (req, res) {
                 "uuid) VALUES (\"" + person_id + "\", \"-\", \"-\", " + "(SELECT user_id FROM users WHERE " +
                 "username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
+            console.log(sql);
+
             queryRaw(sql, function (name) {
 
                 var sql = "INSERT INTO person_address (person_id, creator, date_created, uuid) VALUES (\"" + person_id +
                     "\", " + "(SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW(), \"" + uuid.v1() + "\")";
 
+                console.log(sql);
+
                 queryRaw(sql, function (address) {
 
                     var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES (\"" +
                         person_id + "\", (SELECT user_id FROM users WHERE username = \"" + data.userId + "\"), NOW())";
+
+                    console.log(sql);
 
                     queryRaw(sql, function (patient) {
 
@@ -3639,14 +4869,17 @@ app.post("/save_dummy_patient", function (req, res) {
 
                         console.log(patient_id);
 
+                        console.log("Will now generate ID...");
+
                         generateId(patient_id, data.userId, (data.location != undefined ? data.location : "Unknown"),
-                            (data.prefix ? data.prefix : "HTC"), site.facility_code, function (response) {
+                            (data.prefix ? data.prefix : "DMY"), site.facility_code, function (response) {
 
                                 npid = response;
 
                                 res.send(npid);
 
                             });
+
 
                     });
 
@@ -3793,177 +5026,25 @@ app.post("/demographics_update", function (req, res) {
 
         if (data.target_field) {
 
-            switch (data.target_field) {
+            var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = \"" + data.patient_id + "\"";
 
-                case "first_name":
+            console.log(sql);
 
-                    var sql = "UPDATE person_name SET given_name = \"" + data[data.target_field] + "\" WHERE " +
-                        data.target_field_id + " = \"" + data.target_field_id_value + "\"";
+            queryRaw(sql, function (result) {
 
-                    console.log(sql);
+                var patientId;
 
-                    queryRaw(sql, function (data) {
+                if (result && result[0].length > 0) {
 
-                        console.log(data);
+                    patientId = result[0][0].patient_id;
 
-                        res.status(200).json({message: "Record updated!"});
+                }
 
-                    })
+                switch (data.target_field) {
 
-                    break;
+                    case "first_name":
 
-                case "last_name":
-
-                    var sql = "UPDATE person_name SET family_name = \"" + data[data.target_field] + "\" WHERE " +
-                        data.target_field_id + " = \"" + data.target_field_id_value + "\"";
-
-                    console.log(sql);
-
-                    queryRaw(sql, function (data) {
-
-                        console.log(data);
-
-                        res.status(200).json({message: "Record updated!"});
-
-                    })
-
-                    break;
-
-                case "middle_name":
-
-                    var sql = "UPDATE person_name SET middle_name = \"" + (data[data.target_field] ?
-                        data[data.target_field] : "") + "\" WHERE " + data.target_field_id + " = \"" +
-                        data.target_field_id_value + "\"";
-
-                    console.log(sql);
-
-                    queryRaw(sql, function (data) {
-
-                        console.log(data);
-
-                        res.status(200).json({message: "Record updated!"});
-
-                    })
-
-                    break;
-
-                case "gender":
-
-                    var sql = "UPDATE person SET gender = \"" + (data[data.target_field] ? data[data.target_field].substring(0, 1).toUpperCase() :
-                        "") + "\" WHERE " + data.target_field_id + " = \"" + data.target_field_id_value + "\"";
-
-                    console.log(sql);
-
-                    queryRaw(sql, function (data) {
-
-                        console.log(data);
-
-                        res.status(200).json({message: "Record updated!"});
-
-                    })
-
-                    break;
-
-                case "date_of_birth":
-
-                    var sql = "UPDATE person SET birthdate = \"" + data[data.target_field] + "\", birthdate_estimated = \"" +
-                        data.date_of_birth_estimated + "\" WHERE " + data.target_field_id + " = \"" +
-                        data.target_field_id_value + "\"";
-
-                    console.log(sql);
-
-                    queryRaw(sql, function (data) {
-
-                        console.log(data);
-
-                        res.status(200).json({message: "Record updated!"});
-
-                    })
-
-                    break;
-
-                case "current_village":
-
-                case "current_ta":
-
-                case "current_district":
-
-                    var sql = "UPDATE person_address SET city_village = \"" + data.current_village + "\", township_division = \"" +
-                        data.current_ta + "\", state_province = \"" + data.current_district + "\" WHERE " +
-                        data.target_field_id + " = \"" + data.target_field_id_value + "\"";
-
-                    console.log(sql);
-
-                    queryRaw(sql, function (data) {
-
-                        console.log(data);
-
-                        res.status(200).json({message: "Record updated!"});
-
-                    })
-
-                    break;
-
-                case "home_district":
-
-                case "home_ta":
-
-                case "home_village":
-
-                    var sql = "UPDATE person_address SET address2 = \"" + data.home_district + "\", county_district = \"" +
-                        data.home_ta + "\", neighborhood_cell = \"" + data.home_village + "\" WHERE " +
-                        data.target_field_id + " = \"" + data.target_field_id_value + "\"";
-
-                    console.log(sql);
-
-                    queryRaw(sql, function (data) {
-
-                        console.log(data);
-
-                        res.status(200).json({message: "Record updated!"});
-
-                    })
-
-                    break;
-
-                case "closest_landmark":
-
-                    var sql = "UPDATE person_address SET address1 = \"" + data.closest_landmark + "\" WHERE " +
-                        data.target_field_id + " = \"" + data.target_field_id_value + "\"";
-
-                    console.log(sql);
-
-                    queryRaw(sql, function (data) {
-
-                        console.log(data);
-
-                        res.status(200).json({message: "Record updated!"});
-
-                    })
-
-                    break;
-
-                case "cell_phone_number":
-
-                case "nationality":
-
-                case "home_phone_number":
-
-                case "office_phone_number":
-
-                case "occupation":
-
-                    var attributeMapping = {
-                        cell_phone_number: "Cell Phone Number",
-                        nationality: "Citizenship",
-                        home_phone_number: "Home Phone Number",
-                        office_phone_number: "Office Phone Number",
-                        occupation: "Occupation"
-                    };
-
-                    if (data.target_field_id_value) {
-
-                        var sql = "UPDATE person_attribute SET value = \"" + data[data.target_field] + "\" WHERE " +
+                        var sql = "UPDATE person_name SET given_name = \"" + data[data.target_field] + "\" WHERE " +
                             data.target_field_id + " = \"" + data.target_field_id_value + "\"";
 
                         console.log(sql);
@@ -3976,12 +5057,12 @@ app.post("/demographics_update", function (req, res) {
 
                         })
 
-                    } else {
+                        break;
 
-                        var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, " +
-                            "date_created, uuid) VALUES(\"" + data.patient_id + "\", \"" + data[data.target_field] + "\", " +
-                            "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = \"" +
-                            attributeMapping[data.target_field] + "\" LIMIT 1), \"" + user_id + "\", NOW(), \"" + uuid.v1() + "\")";
+                    case "last_name":
+
+                        var sql = "UPDATE person_name SET family_name = \"" + data[data.target_field] + "\" WHERE " +
+                            data.target_field_id + " = \"" + data.target_field_id_value + "\"";
 
                         console.log(sql);
 
@@ -3989,21 +5070,226 @@ app.post("/demographics_update", function (req, res) {
 
                             console.log(data);
 
-                            res.status(200).json({message: "Record created!"});
+                            res.status(200).json({message: "Record updated!"});
 
                         })
 
-                    }
+                        break;
 
-                    break;
+                    case "middle_name":
 
-                default:
+                        var sql = "UPDATE person_name SET middle_name = \"" + (data[data.target_field] ?
+                                data[data.target_field] : "") + "\" WHERE " + data.target_field_id + " = \"" +
+                            data.target_field_id_value + "\"";
 
-                    res.status(200).json({message: "Unsupported parameter received!"});
+                        console.log(sql);
 
-                    break;
+                        queryRaw(sql, function (data) {
 
-            }
+                            console.log(data);
+
+                            res.status(200).json({message: "Record updated!"});
+
+                        })
+
+                        break;
+
+                    case "gender":
+
+                        var sql = "UPDATE person SET gender = \"" + (data[data.target_field] ? data[data.target_field].substring(0, 1).toUpperCase() :
+                                "") + "\" WHERE " + data.target_field_id + " = \"" + data.target_field_id_value + "\"";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (data) {
+
+                            console.log(data);
+
+                            res.status(200).json({message: "Record updated!"});
+
+                        })
+
+                        break;
+
+                    case "date_of_birth":
+
+                        var sql = "UPDATE person SET birthdate = \"" + data[data.target_field] + "\", birthdate_estimated = \"" +
+                            data.date_of_birth_estimated + "\" WHERE " + data.target_field_id + " = \"" +
+                            data.target_field_id_value + "\"";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (data) {
+
+                            console.log(data);
+
+                            res.status(200).json({message: "Record updated!"});
+
+                        })
+
+                        break;
+
+                    case "current_village":
+
+                    case "current_ta":
+
+                    case "current_district":
+
+                        var sql = "UPDATE person_address SET city_village = \"" + data.current_village + "\", township_division = \"" +
+                            data.current_ta + "\", state_province = \"" + data.current_district + "\" WHERE " +
+                            data.target_field_id + " = \"" + data.target_field_id_value + "\"";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (data) {
+
+                            console.log(data);
+
+                            res.status(200).json({message: "Record updated!"});
+
+                        })
+
+                        break;
+
+                    case "home_district":
+
+                    case "home_ta":
+
+                    case "home_village":
+
+                        var sql = "UPDATE person_address SET address2 = \"" + data.home_district + "\", county_district = \"" +
+                            data.home_ta + "\", neighborhood_cell = \"" + data.home_village + "\" WHERE " +
+                            data.target_field_id + " = \"" + data.target_field_id_value + "\"";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (data) {
+
+                            console.log(data);
+
+                            res.status(200).json({message: "Record updated!"});
+
+                        })
+
+                        break;
+
+                    case "closest_landmark":
+
+                        var sql = "UPDATE person_address SET address1 = \"" + data.closest_landmark + "\" WHERE " +
+                            data.target_field_id + " = \"" + data.target_field_id_value + "\"";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (data) {
+
+                            console.log(data);
+
+                            res.status(200).json({message: "Record updated!"});
+
+                        })
+
+                        break;
+
+                    case "cell_phone_number":
+
+                    case "nationality":
+
+                    case "home_phone_number":
+
+                    case "office_phone_number":
+
+                    case "occupation":
+
+                        var attributeMapping = {
+                            cell_phone_number: "Cell Phone Number",
+                            nationality: "Citizenship",
+                            home_phone_number: "Home Phone Number",
+                            office_phone_number: "Office Phone Number",
+                            occupation: "Occupation"
+                        };
+
+                        if (data.target_field_id_value) {
+
+                            var sql = "UPDATE person_attribute SET value = \"" + data[data.target_field] + "\" WHERE " +
+                                data.target_field_id + " = \"" + data.target_field_id_value + "\"";
+
+                            console.log(sql);
+
+                            queryRaw(sql, function (data) {
+
+                                console.log(data);
+
+                                res.status(200).json({message: "Record updated!"});
+
+                            })
+
+                        } else {
+
+                            if (patientId) {
+
+                                var sql = "SELECT person_attribute_id FROM person_attribute LEFT OUTER JOIN " +
+                                    "person_attribute_type ON person_attribute_type.person_attribute_type_id = " +
+                                    "person_attribute.person_attribute_type_id WHERE person_id = \"" +
+                                    patientId + "\" AND name = \"" + attributeMapping[data.target_field] + "\"";
+
+                                console.log(sql);
+
+                                queryRaw(sql, function (result) {
+
+                                    if (result && result[0].length > 0) {
+
+                                        data.target_field_id_value = result[0][0].person_attribute_id;
+
+                                        var sql = "UPDATE person_attribute SET value = \"" + data[data.target_field] + "\" WHERE " +
+                                            data.target_field_id + " = \"" + data.target_field_id_value + "\"";
+
+                                        console.log(sql);
+
+                                        queryRaw(sql, function (data) {
+
+                                            console.log(data);
+
+                                            res.status(200).json({message: "Record updated!"});
+
+                                        })
+
+                                    } else {
+
+                                        var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, " +
+                                            "date_created, uuid) VALUES(\"" + patientId + "\", \"" + data[data.target_field] + "\", " +
+                                            "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = \"" +
+                                            attributeMapping[data.target_field] + "\" LIMIT 1), \"" + user_id + "\", NOW(), \"" + uuid.v1() + "\")";
+
+                                        console.log(sql);
+
+                                        queryRaw(sql, function (data) {
+
+                                            console.log(data);
+
+                                            res.status(200).json({message: "Record created!"});
+
+                                        })
+
+                                    }
+
+                                })
+
+                            }
+
+                        }
+
+                        break;
+
+                    default:
+
+                        res.status(200).json({message: "Unsupported parameter received!"});
+
+                        break;
+
+                }
+
+
+            });
 
         } else {
 
@@ -4021,85 +5307,11 @@ app.post("/save_patient", function (req, res) {
 
     var data = req.body.data;
 
-    loggedIn(data.token, function (authentic, user_id, username) {
+    doSavePatient(data, function (msg) {
 
-        if (!authentic) {
+        res.status(200).json(msg);
 
-            return res.status(200).json({message: "Unauthorized access!"});
-
-        }
-
-        var npid;
-
-        var person_id;
-
-        var patient_id;
-
-        var sql = "INSERT INTO person (gender, birthdate, birthdate_estimated, creator, date_created, uuid) VALUES (\"" +
-            data["Gender"] + "\", \"" + data["Date of birth"] + "\", \"" + data["Birthdate Estimated"] + "\", " +
-            "(SELECT user_id FROM users WHERE username = \"" + data["User ID"] + "\"), NOW(), \"" + uuid.v1() + "\")";
-
-        queryRaw(sql, function (person) {
-
-            person_id = person[0].insertId;
-
-            console.log(person[0].insertId);
-
-            var sql = "INSERT INTO person_address (person_id, address1, address2, city_village, state_province, " +
-                " creator, date_created, county_district, neighborhood_cell, township_division, uuid) VALUES (\"" +
-                person_id + "\", \"" +
-                (data["Closest Landmark"] ? data["Closest Landmark"] : "") + "\", \"" +
-                (data["Home District"] ? data["Home District"] : "") + "\", \"" +
-                (data["Current Village"] ? data["Current Village"] : "") + "\", \"" +
-                (data["Current District"] ? data["Current District"] : "") + "\", " +
-                "(SELECT user_id FROM users WHERE username = \"" + data["User ID"] + "\")," +
-                " NOW(), \"" +
-                (data["Home T/A"] ? data["Home T/A"] : "") + "\", \"" +
-                (data["Home Village"] ? data["Home Village"] : "") + "\", \"" +
-                (data["Current T/A"] ? data["Current T/A"] : "") + "\", \"" +
-                uuid.v1() +
-                "\")";
-
-            queryRaw(sql, function (address) {
-
-                var address_id = address[0].insertId;
-
-                console.log(address_id);
-
-                var sql = "INSERT INTO person_name (person_id, given_name, middle_name, family_name, creator, date_created, uuid) VALUES (\"" +
-                    person_id + "\", \"" + data["First Name"] + "\", \"" + (data["Middle Name"] ? data["Middle Name"] : "") + "\", \"" +
-                    data["Last Name"] + "\", " + "(SELECT user_id FROM users WHERE username = \"" + data["User ID"] +
-                    "\"), NOW(), \"" + uuid.v1() + "\")";
-
-                queryRaw(sql, function (name) {
-
-                    var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES (\"" +
-                        person_id + "\", (SELECT user_id FROM users WHERE username = \"" + data["User ID"] + "\"), NOW())";
-
-                    queryRaw(sql, function (patient) {
-
-                        patient_id = patient[0].insertId;
-
-                        console.log(patient_id);
-
-                        generateId(patient_id, data["User ID"], (data["Location"] != undefined ? data["Location"] :
-                            "Unknown"), (data.prefix ? data.prefix : "HTC"), site.facility_code, function (response) {
-
-                            npid = response;
-
-                            res.send(npid);
-
-                        });
-
-                    })
-
-                });
-
-            })
-
-        });
-
-    });
+    })
 
 });
 
@@ -4414,8 +5626,10 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({first_name: data[0][0].given_name, person_name_id: data[0][0].person_name_id,
-                            field: "first_name", field_id: "person_name_id"});
+                        res.status(200).json({
+                            first_name: data[0][0].given_name, person_name_id: data[0][0].person_name_id,
+                            field: "first_name", field_id: "person_name_id"
+                        });
 
                     }
 
@@ -4434,8 +5648,10 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({last_name: data[0][0].family_name, person_name_id: data[0][0].person_name_id,
-                            field: "last_name", field_id: "person_name_id"});
+                        res.status(200).json({
+                            last_name: data[0][0].family_name, person_name_id: data[0][0].person_name_id,
+                            field: "last_name", field_id: "person_name_id"
+                        });
 
                     }
 
@@ -4454,8 +5670,10 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({middle_name: data[0][0].middle_name, person_name_id: data[0][0].person_name_id,
-                            field: "middle_name", field_id: "person_name_id"});
+                        res.status(200).json({
+                            middle_name: data[0][0].middle_name, person_name_id: data[0][0].person_name_id,
+                            field: "middle_name", field_id: "person_name_id"
+                        });
 
                     }
 
@@ -4474,8 +5692,10 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({gender: data[0][0].gender, person_id: data[0][0].person_id,
-                            field: "gender", field_id: "person_id"});
+                        res.status(200).json({
+                            gender: data[0][0].gender, person_id: data[0][0].person_id,
+                            field: "gender", field_id: "person_id"
+                        });
 
                     }
 
@@ -4494,8 +5714,13 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({date_of_birth: data[0][0].birthdate, date_of_birth_estimated: data[0][0].birthdate_estimated, person_id: data[0][0].person_id,
-                            field: "date_of_birth", field_id: "person_id"});
+                        res.status(200).json({
+                            date_of_birth: data[0][0].birthdate,
+                            date_of_birth_estimated: data[0][0].birthdate_estimated,
+                            person_id: data[0][0].person_id,
+                            field: "date_of_birth",
+                            field_id: "person_id"
+                        });
 
                     }
 
@@ -4514,7 +5739,12 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({current_village: data[0][0].city_village, person_address_id: data[0][0].person_address_id, field: "current_village", field_id: "person_address_id"});
+                        res.status(200).json({
+                            current_village: data[0][0].city_village,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "current_village",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4533,7 +5763,12 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({current_ta: data[0][0].township_division, person_address_id: data[0][0].person_address_id, field: "current_ta", field_id: "person_address_id"});
+                        res.status(200).json({
+                            current_ta: data[0][0].township_division,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "current_ta",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4552,7 +5787,12 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({current_district: data[0][0].state_province, person_address_id: data[0][0].person_address_id, field: "current_district", field_id: "person_address_id"});
+                        res.status(200).json({
+                            current_district: data[0][0].state_province,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "current_district",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4571,7 +5811,12 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({home_district: data[0][0].address2, person_address_id: data[0][0].person_address_id, field: "home_district", field_id: "person_address_id"});
+                        res.status(200).json({
+                            home_district: data[0][0].address2,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "home_district",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4590,7 +5835,12 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({home_ta: data[0][0].county_district, person_address_id: data[0][0].person_address_id, field: "home_ta", field_id: "person_address_id"});
+                        res.status(200).json({
+                            home_ta: data[0][0].county_district,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "home_ta",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4609,7 +5859,12 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({home_village: data[0][0].neighborhood_cell, person_address_id: data[0][0].person_address_id, field: "home_village", field_id: "person_address_id"});
+                        res.status(200).json({
+                            home_village: data[0][0].neighborhood_cell,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "home_village",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4628,7 +5883,12 @@ app.get("/demographics_by_id_and_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({closest_landmark: data[0][0].address1, person_address_id: data[0][0].person_address_id, field: "closest_landmark", field_id: "person_address_id"});
+                        res.status(200).json({
+                            closest_landmark: data[0][0].address1,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "closest_landmark",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4735,8 +5995,10 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({first_name: data[0][0].given_name, person_name_id: data[0][0].person_name_id,
-                            field: "first_name", field_id: "person_name_id"});
+                        res.status(200).json({
+                            first_name: data[0][0].given_name, person_name_id: data[0][0].person_name_id,
+                            field: "first_name", field_id: "person_name_id"
+                        });
 
                     }
 
@@ -4754,8 +6016,10 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({last_name: data[0][0].family_name, person_name_id: data[0][0].person_name_id,
-                            field: "last_name", field_id: "person_name_id"});
+                        res.status(200).json({
+                            last_name: data[0][0].family_name, person_name_id: data[0][0].person_name_id,
+                            field: "last_name", field_id: "person_name_id"
+                        });
 
                     }
 
@@ -4773,8 +6037,10 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({middle_name: data[0][0].middle_name, person_name_id: data[0][0].person_name_id,
-                            field: "middle_name", field_id: "person_name_id"});
+                        res.status(200).json({
+                            middle_name: data[0][0].middle_name, person_name_id: data[0][0].person_name_id,
+                            field: "middle_name", field_id: "person_name_id"
+                        });
 
                     }
 
@@ -4792,8 +6058,10 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({gender: data[0][0].gender, person_id: data[0][0].person_id,
-                            field: "gender", field_id: "person_id"});
+                        res.status(200).json({
+                            gender: data[0][0].gender, person_id: data[0][0].person_id,
+                            field: "gender", field_id: "person_id"
+                        });
 
                     }
 
@@ -4812,8 +6080,13 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({date_of_birth: data[0][0].birthdate, date_of_birth_estimated: data[0][0].birthdate_estimated, person_id: data[0][0].person_id,
-                            field: "date_of_birth", field_id: "person_id"});
+                        res.status(200).json({
+                            date_of_birth: data[0][0].birthdate,
+                            date_of_birth_estimated: data[0][0].birthdate_estimated,
+                            person_id: data[0][0].person_id,
+                            field: "date_of_birth",
+                            field_id: "person_id"
+                        });
 
                     }
 
@@ -4832,7 +6105,12 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({current_village: data[0][0].city_village, person_address_id: data[0][0].person_address_id, field: "current_village", field_id: "person_address_id"});
+                        res.status(200).json({
+                            current_village: data[0][0].city_village,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "current_village",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4851,7 +6129,12 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({current_ta: data[0][0].township_division, person_address_id: data[0][0].person_address_id, field: "current_ta", field_id: "person_address_id"});
+                        res.status(200).json({
+                            current_ta: data[0][0].township_division,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "current_ta",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4870,7 +6153,12 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({current_district: data[0][0].state_province, person_address_id: data[0][0].person_address_id, field: "current_district", field_id: "person_address_id"});
+                        res.status(200).json({
+                            current_district: data[0][0].state_province,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "current_district",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4889,7 +6177,12 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({home_district: data[0][0].address2, person_address_id: data[0][0].person_address_id, field: "home_district", field_id: "person_address_id"});
+                        res.status(200).json({
+                            home_district: data[0][0].address2,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "home_district",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4908,7 +6201,12 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({home_ta: data[0][0].county_district, person_address_id: data[0][0].person_address_id, field: "home_ta", field_id: "person_address_id"});
+                        res.status(200).json({
+                            home_ta: data[0][0].county_district,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "home_ta",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4927,7 +6225,12 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({home_village: data[0][0].neighborhood_cell, person_address_id: data[0][0].person_address_id, field: "home_village", field_id: "person_address_id"});
+                        res.status(200).json({
+                            home_village: data[0][0].neighborhood_cell,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "home_village",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -4946,7 +6249,12 @@ app.get("/demographics_by_field", function (req, res) {
 
                     if (data[0].length > 0) {
 
-                        res.status(200).json({closest_landmark: data[0][0].address1, person_address_id: data[0][0].person_address_id, field: "closest_landmark", field_id: "person_address_id"});
+                        res.status(200).json({
+                            closest_landmark: data[0][0].address1,
+                            person_address_id: data[0][0].person_address_id,
+                            field: "closest_landmark",
+                            field_id: "person_address_id"
+                        });
 
                     }
 
@@ -5276,7 +6584,7 @@ app.post("/update_user", function (req, res) {
 
         console.log(data);
 
-        var sql = "SELECT user_id, person_id FROM users WHERE username = \"" + data.userId + "\"";
+        var sql = "SELECT user_id, person_id FROM users WHERE username = \"" + data.username + "\"";
 
         console.log(sql);
 
@@ -5291,7 +6599,7 @@ app.post("/update_user", function (req, res) {
 
             queryRaw(sql, function (name) {
 
-                var sql = "UPDATE person SET gender = \"" + data.gender.substring(0, 1).toUpperCase() +
+                var sql = "UPDATE person SET gender = \"" + String(data.gender).substring(0, 1).toUpperCase() +
                     "\" WHERE person_id = \"" + person[0][0].person_id + "\"";
 
                 console.log(sql);
@@ -5513,414 +6821,6 @@ app.get("/roles", function (req, res) {
         var result = "<li>" + roles.join("</li><li>") + "</li>";
 
         res.send(result);
-
-    });
-
-})
-
-app.get("/stock_list", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var pageSize = 10;
-
-    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
-
-    var sql = "SELECT stock.stock_id, stock.name AS name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
-        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
-        "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
-        "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
-        "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
-        "stock.category_id WHERE COALESCE(report.voided,0) = 0 GROUP BY stock.stock_id LIMIT " +
-        lowerLimit + ", " + pageSize;
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var collection = [];
-
-        for (var i = 0; i < data[0].length; i++) {
-
-            if (!data[0][i].name)
-                continue;
-
-            var entry = {
-                stock_id: data[0][i].stock_id,
-                name: data[0][i].name,
-                description: data[0][i].description,
-                category: data[0][i].category_name,
-                inStock: (data[0][i].receipt_quantity - data[0][i].dispatch_quantity),
-                re_order_level: data[0][i].reorder_level,
-                avg: (data[0][i].duration > 0 ?
-                    (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
-                receipt_quantity: data[0][i].receipt_quantity,
-                dispatch_quantity: data[0][i].dispatch_quantity,
-                last_order_size: data[0][i].last_order_size
-            };
-
-            collection.push(entry);
-
-        }
-
-        res.status(200).json(collection);
-
-    })
-
-})
-
-app.get("/consumption_types", function (req, res) {
-
-    var sql = "SELECT name FROM consumption_type";
-
-    queryRawStock(sql, function (data) {
-
-        var collection = [];
-
-        console.log(data[0]);
-
-        for (var i = 0; i < data[0].length; i++) {
-
-            collection.push(data[0][i].name);
-
-        }
-
-        res.send("<li>" + collection.join("</li><li>") + "</li>");
-
-    });
-
-})
-
-app.get("/available_batches_to_user_summary", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT batch_number, dispatch_id, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
-        "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" +
-        query.item_name + "\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId + "\" GROUP BY batch_number " +
-        "HAVING available > 0";
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var result = {
-            inStock: (data[0] && data[0][0].available ? data[0][0].available : 0)
-        };
-
-        res.status(200).json(result);
-
-    })
-
-})
-
-app.get("/available_batches_to_user", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT item_name, report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
-        "SUM(COALESCE(consumption_quantity,0))) AS available FROM report LEFT OUTER JOIN receipt ON report.batch_number " +
-        " = receipt.batch_number WHERE COALESCE(report.batch_number,\"\") != \"\" AND item_name LIKE \"" +
-        (query.item_name ? query.item_name : "") + "%\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId +
-        "\" AND report.batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" GROUP BY report.batch_number " +
-        "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var result = "";
-
-        for (var i = 0; i < data[0].length; i++) {
-
-            var expiryCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute(\"expiry\")) {" +
-                "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute(\"expiry\")).value = \"" +
-                (data[0][i].expiry_date ? data[0][i].expiry_date.format("YYYY-mm-dd") : "") + "\";} ";
-
-            var dispatchCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute(\"dispatch\")) {" +
-                "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute(\"dispatch\")).value = \"" +
-                (data[0][i].dispatch_id ? data[0][i].dispatch_id : "") + "\";} ";
-
-            result += "<li tstValue=\"" + data[0][i].batch_number + "\" available=\"" + data[0][i].available +
-                "\" dispatch_id=\"" + data[0][i].dispatch_id + "\" onclick=\"if(__$('data.dispatch_id')){" +
-                "__$('data.dispatch_id').value = \"" + data[0][i].dispatch_id + "\"} " + expiryCmd + dispatchCmd + " \" >" +
-                (!query.item_name ? data[0][i].item_name + ": " : "") + data[0][i].batch_number + " (" +
-                ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
-                data[0][i].available + ")" + "</li>";
-
-        }
-
-        res.send(result);
-
-    })
-
-})
-
-app.get("/available_batches", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT batch_number, expiry_date, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(dispatch_quantity,0))) " +
-        "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" +
-        query.item_name + "\" AND batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" GROUP BY batch_number " +
-        "HAVING available > 0 ORDER BY expiry_date ASC";
-
-    queryRawStock(sql, function (data) {
-
-        var collection = [];
-
-        console.log(data[0]);
-
-        var result = "";
-
-        for (var i = 0; i < data[0].length; i++) {
-
-            result += "<li tstValue=\"" + data[0][i].batch_number + "\" available=\"" + data[0][i].available + "\">" +
-                data[0][i].batch_number + " (" +
-                ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
-                data[0][i].available + ")" + "</li>";
-
-        }
-
-        res.send(result);
-
-    })
-
-})
-
-app.get("/stock_categories", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT name FROM category WHERE name LIKE \"" + query.category + "%\"";
-
-    queryRawStock(sql, function (data) {
-
-        var collection = [];
-
-        console.log(data[0]);
-
-        for (var i = 0; i < data[0].length; i++) {
-
-            collection.push(data[0][i].name);
-
-        }
-
-        var result = "<li>" + collection.sort().join("</li><li>") + "</li>";
-
-        res.send(result);
-
-    })
-
-})
-
-app.get("/stock_items", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT stock.name FROM stock LEFT OUTER JOIN category ON stock.category_id = category.category_id WHERE " +
-        "category.name = \"" + query.category + "\" AND stock.name LIKE \"" + query.item_name + "%\"";
-
-    queryRawStock(sql, function (data) {
-
-        var collection = [];
-
-        console.log(data[0]);
-
-        for (var i = 0; i < data[0].length; i++) {
-
-            collection.push(data[0][i].name);
-
-        }
-
-        var result = "<li>" + collection.sort().join("</li><li>") + "</li>";
-
-        res.send(result);
-
-    })
-
-})
-
-app.get("/items_list", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT stock.stock_id, stock.name FROM stock WHERE stock.name LIKE \"" + query.item_name + "%\"";
-
-    queryRawStock(sql, function (data) {
-
-        console.log(data[0]);
-
-        var result = "";
-
-        for (var i = 0; i < data[0].length; i++) {
-
-            result += "<li tstValue=\"" + data[0][i].stock_id + "\">" + data[0][i].name + "</li>";
-
-        }
-
-        res.send(result);
-
-    })
-
-})
-
-app.get("/stock_search", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var pageSize = 10;
-
-    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
-
-    var sql = "SELECT stock.stock_id, stock.name AS item_name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
-        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
-        "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
-        "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
-        "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
-        "stock.category_id WHERE COALESCE(report.voided,0) = 0 " + (query.category && query.item_name ?
-        "AND category.name = \"" + query.category + "\" AND COALESCE(report.voided,0) = 0 AND stock.name = \"" +
-        query.item_name + "\"" : "") + " GROUP BY stock.stock_id LIMIT " +
-        lowerLimit + ", " + pageSize;
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var collection = [];
-
-        console.log(data[0]);
-
-        for (var i = 0; i < data[0].length; i++) {
-
-            var entry = {
-                stock_id: data[0][i].stock_id,
-                name: data[0][i].item_name,
-                category: data[0][i].category_name,
-                description: data[0][i].description,
-                inStock: (parseInt(data[0][i].receipt_quantity) - parseInt(data[0][i].dispatch_quantity)),
-                last_order_size: (data[0][i].last_order_size ? data[0][i].last_order_size : 0),
-                avg: (data[0][i].duration > 0 ?
-                    (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
-                re_order_level: data[0][i].reorder_level
-            }
-
-            collection.push(entry);
-
-        }
-
-        // var collection = (categories[query.category] || []);
-
-        res.status(200).json(collection);
-
-    })
-
-})
-
-
-app.post("/delete_item", function (req, res) {
-
-    var data = req.body.data;
-
-    loggedIn(data.token, function (authentic, user_id, username) {
-
-        if (!authentic) {
-
-            return res.status(200).json({message: "Unauthorized access!"});
-
-        }
-
-        var sql = "DELETE FROM stock WHERE stock_id = \"" + data.stock_id + "\"";
-
-        console.log(sql);
-
-        queryRawStock(sql, function (data) {
-
-            console.log(data);
-
-            return res.status(200).json({message: "Item deleted!"});
-
-        })
-
-    });
-
-})
-
-app.post("/save_item", function (req, res) {
-
-    var data = req.body.data;
-
-    loggedIn(data.token, function (authentic, user_id, username) {
-
-        if (!authentic) {
-
-            return res.status(200).json({message: "Unauthorized access!"});
-
-        }
-
-        console.log(Object.keys(data));
-
-        switch (data.datatype) {
-
-            case "receive":
-
-                receiveStock(data, res);
-
-                break;
-
-            case "stock":
-
-                saveStock(data, res);
-
-                break;
-
-            case "dispatch":
-
-                dispatchStock(data, res);
-
-                break;
-
-            case "transfer":
-
-                transferStock(data, res);
-
-                break;
-
-            case "batch":
-
-                saveBatch(data, res);
-
-                break;
-
-            case "consumption":
-
-                saveConsumption(data, res);
-
-                break;
-
-            case "reverse_consumption":
-
-                reverseConsumption(data, res);
-
-                break;
-
-        }
 
     });
 
@@ -6682,329 +7582,6 @@ app.get("/user_stats", function (req, res) {
 
 })
 
-app.get("/stock_types", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT name FROM stock";
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var result = [];
-
-        if (data[0].length > 0) {
-
-            for (var i = 0; i < data[0].length; i++) {
-
-                result.push(data[0][i].name);
-
-            }
-
-        }
-
-        res.status(200).json(result);
-
-    });
-
-})
-
-app.get("/used_stock_stats", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT item_name, username, SUM(COALESCE(consumption_quantity,0)) " +
-        "AS used FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
-        "\" AND username = \"" + query.username + "\"" + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
-        query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" +
-        query.end_date + "\")" : "") + " GROUP BY item_name, username ";
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var result = 0;
-
-        if (data[0].length > 0) {
-
-            result = data[0][0].used;
-
-        }
-
-        res.status(200).json({total: result});
-
-    });
-
-})
-
-app.get("/available_stock_stats", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT item_name, username, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
-        "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
-        "\" AND username = \"" + query.username + "\"" + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
-        query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" +
-        query.end_date + "\")" : "") + " GROUP BY item_name, username " +
-        "HAVING available > 0";
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var result = 0;
-
-        if (data[0].length > 0) {
-
-            result = data[0][0].available;
-
-        }
-
-        res.status(200).json({total: result});
-
-    });
-
-})
-
-app.get("/test_1_kit_name", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT DISTINCT value_text FROM htc1_7.obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
-        "WHERE name = \"First Pass Test Kit 1 Name\"" + (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" +
-        query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" +
-        query.end_date + "\")" : "") + " LIMIT 1) LIMIT 1";
-
-    console.log(sql);
-
-    queryRaw(sql, function (data) {
-
-        var result = "";
-
-        if (data[0].length > 0) {
-
-            result = data[0][0].value_text;
-
-        }
-
-        res.status(200).json({name: result});
-
-    });
-
-})
-
-app.get("/test_2_kit_name", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT DISTINCT value_text FROM htc1_7.obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
-        "WHERE name = \"First Pass Test Kit 2 Name\"" + (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" +
-        query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" +
-        query.end_date + "\")" : "") + " LIMIT 1) LIMIT 1";
-
-    console.log(sql);
-
-    queryRaw(sql, function (data) {
-
-        var result = "";
-
-        if (data[0].length > 0) {
-
-            result = data[0][0].value_text;
-
-        }
-
-        res.status(200).json({name: result});
-
-    });
-
-})
-
-app.get("/total_in_rooms_at_month_start", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT item_name, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
-        "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
-        "\" " + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") +
-        " GROUP BY item_name HAVING available > 0";
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var result = 0;
-
-        if (data[0].length > 0) {
-
-            result = data[0][0].available;
-
-        }
-
-        res.status(200).json({total: result});
-
-    });
-
-})
-
-app.get("/total_tests_received_during_month", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT item_name, SUM(receipt_quantity) AS received_quantity FROM report WHERE COALESCE(receipt_quantity,0) " +
-        "> 0 AND item_name = \"" + query.item_name + "\" " + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
-        query.start_date + "\")" : "") + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" + query.end_date +
-        "\")" : "") + " GROUP BY item_name";
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var result = 0;
-
-        if (data[0].length > 0) {
-
-            result = data[0][0].received_quantity;
-
-        }
-
-        res.status(200).json({total: result});
-
-    });
-
-})
-
-app.get("/total_tests_used_for_testing_clients", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,\"\") = " +
-        "\"Normal use\" AND item_name = \"" + query.item_name + "\" " + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
-        query.start_date + "\")" : "") + (query.end_date ? " AND DATE(transaction_date) <= " +
-        "DATE(\"" + query.end_date + "\")" : "") + " GROUP BY item_name";
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var result = 0;
-
-        if (data[0].length > 0) {
-
-            result = data[0][0].total;
-
-        }
-
-        res.status(200).json({total: result});
-
-    });
-
-})
-
-app.get("/total_other_tests", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,\"\") " +
-        "NOT IN (\"Normal use\", \"Disposal\") AND item_name = \"" + query.item_name + "\" " + (query.start_date ?
-        " AND DATE(transaction_date) >= DATE(\"" + query.start_date + "\")" : "") + (query.end_date ?
-        " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") + " GROUP BY item_name";
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var result = 0;
-
-        if (data[0].length > 0) {
-
-            result = data[0][0].total;
-
-        }
-
-        res.status(200).json({total: result});
-
-    });
-
-})
-
-app.get("/total_disposals", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,\"\") " +
-        "IN (\"Disposal\", \"Expired\") AND item_name = \"" + query.item_name + "\" " + (query.start_date ?
-        " AND DATE(transaction_date) >= DATE(\"" + query.start_date + "\")" : "") + (query.end_date ?
-        " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") + " GROUP BY item_name";
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var result = 0;
-
-        if (data[0].length > 0) {
-
-            result = data[0][0].total;
-
-        }
-
-        res.status(200).json({total: result});
-
-    });
-
-})
-
-app.get("/total_in_rooms_at_month_end", function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT item_name, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
-        "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
-        "\" " + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") +
-        " GROUP BY item_name HAVING available > 0";
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var result = 0;
-
-        if (data[0].length > 0) {
-
-            result = data[0][0].available;
-
-        }
-
-        res.status(200).json({total: result});
-
-    });
-
-})
-
 app.get("/facility", function (req, res) {
 
     res.status(200).json({facility: site.facility});
@@ -7140,35 +7717,35 @@ app.get("/bookings", function (req, res) {
 
 });
 
-app.get("/bookings_count", function(req,res){
+app.get("/bookings_count", function (req, res) {
 
-        var url_parts = url.parse(req.url, true);
+    var url_parts = url.parse(req.url, true);
 
-        var query = url_parts.query;
+    var query = url_parts.query;
 
-        var sql = 'SELECT obs.value_text AS appointment_date, count(obs.value_text) as count ' +
+    var sql = 'SELECT obs.value_text AS appointment_date, count(obs.value_text) as count ' +
         'FROM obs LEFT OUTER JOIN person ON person.person_id = obs.person_id LEFT OUTER JOIN patient_identifier ON ' +
         'patient_identifier.patient_id = obs.person_id WHERE concept_id = (SELECT concept_id FROM concept_name WHERE ' +
         'name = "Appointment date" AND voided = 0 LIMIT 1) AND DATE(value_text) >= DATE("' + query.start_date + '") ' +
         'AND DATE(value_text) <= DATE("' + query.end_date + '") AND obs.voided = 0 GROUP BY obs.value_text';
 
-        console.log(sql);
+    console.log(sql);
 
-        queryRaw(sql, function (resp) {
+    queryRaw(sql, function (resp) {
 
-            var data = {};
+        var data = {};
 
-            console.log(resp);
+        console.log(resp);
 
-            for (var i = 0; i < resp[0].length; i++) {
+        for (var i = 0; i < resp[0].length; i++) {
 
-                data[resp[0][i].appointment_date]= resp[0][i].count;
+            data[resp[0][i].appointment_date] = resp[0][i].count;
 
-            }
+        }
 
-            res.status(200).json(data);
+        res.status(200).json(data);
 
-        })
+    })
 
 });
 
@@ -7186,7 +7763,7 @@ app.post("/test", function (req, res) {
 
 });
 
-app.get("/facilities", function(req, res){
+app.get("/facilities", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -7196,11 +7773,11 @@ app.get("/facilities", function(req, res){
 
     var results = [];
 
-    for(var i = 0; i < facilities.length; i++) {
+    for (var i = 0; i < facilities.length; i++) {
 
         var facility = facilities[i];
 
-        if(facility.toLowerCase().match("^" + query.name.toLowerCase())) {
+        if (facility.toLowerCase().match("^" + query.name.toLowerCase())) {
 
             results.push(facility);
 
@@ -7230,6 +7807,54 @@ for (var i in plugins) {
 
 }
 
+app.get("/fetch_remote_if_not_exists/:id", function (req, res) {
+
+    var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = \"" + req.params.id + "\"";
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        console.log(data);
+
+        if (data && data[0].length > 0) {
+
+            res.redirect("/patient/" + req.params.id);
+
+        } else {
+
+            res.redirect("/modules/no_local_data.html?npid=" + req.params.id);
+
+        }
+
+    })
+
+})
+
+app.get("/does_patient_exist_locally/:id", function (req, res) {
+
+    var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = \"" + req.params.id + "\"";
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        console.log(data);
+
+        if (data && data[0].length > 0) {
+
+            res.status(200).json({exists: true});
+
+        } else {
+
+            res.status(200).json({exists: false});
+
+        }
+
+    })
+
+})
+
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/public/views/index.html");
 });
@@ -7241,21 +7866,21 @@ portfinder.getPort(function (err, port) {
     server.listen(port, function () {
 
         var settingFiles = [
-                __dirname + "/public/modules/config/dashboard.settings.json",
-                __dirname + "/public/modules/config/landing.settings.json",
-                __dirname + "/public/modules/config/patient.settings.json",
-                __dirname + "/public/modules/config/stock.settings.json",
-                __dirname + "/public/modules/config/user.settings.json"
+            __dirname + "/public/config/dashboard.settings.json",
+            __dirname + "/public/config/landing.settings.json",
+            __dirname + "/public/config/patient.settings.json",
+            __dirname + "/public/config/stock.settings.json",
+            __dirname + "/public/config/user.settings.json"
         ];
 
         var files = [
-                __dirname + "/public/modules/config/dashboard.settings.json",
-                __dirname + "/public/modules/config/landing.settings.json",
-                __dirname + "/public/modules/config/patient.settings.json",
-                __dirname + "/public/modules/config/stock.settings.json",
-                __dirname + "/public/modules/config/user.settings.json",
-                __dirname + "/public/modules/config/landing.modules.json",
-                __dirname + "/public/modules/config/patient.modules.json"
+            __dirname + "/public/config/dashboard.settings.json",
+            __dirname + "/public/config/landing.settings.json",
+            __dirname + "/public/config/patient.settings.json",
+            __dirname + "/public/config/stock.settings.json",
+            __dirname + "/public/config/user.settings.json",
+            __dirname + "/public/config/landing.modules.json",
+            __dirname + "/public/config/patient.modules.json"
         ]
 
         var address = "http://" + ip.address() + ":" + port;
@@ -7266,7 +7891,7 @@ portfinder.getPort(function (err, port) {
 
             if (!fs.existsSync(filename)) {
 
-                fs.writeFileSync(filename, fs.readFileSync(filename + ".example"));
+                fs.writeFileSync(filename, fs.readFileSync(filename.replace(/\.json$/i, ".json.example")));
 
             }
 
@@ -7289,3 +7914,12 @@ portfinder.getPort(function (err, port) {
     });
 
 });
+
+/*
+ * =================================================== WARNING! ==================================================
+ *
+ *                          DON'T EDIT THIS FILE. YOUR CHANGES WILL BE OVERWRITTEN!
+ *
+ * ===============================================================================================================
+ *
+ */
