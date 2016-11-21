@@ -1261,6 +1261,7 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
 }
 
+
  var tasks = {
 
                         "creatinine"       :  ["Creatinine Result", "/spec/dm/creatinine.spec"],
@@ -1310,6 +1311,16 @@ function executeTasks(){
 
 function addToComplicationWorkFlow(element){
 
+	 var contButton = __$("btnContinue");
+
+	 if(!contButton.getAttribute("onclick")){
+
+	 	contButton.className = "blue";
+
+	 	contButton.setAttribute("onclick", "window.parent.dashboard.autoContinue = true;executeTasks();");
+
+	 }
+
     if(!dashboard.complicationWorkFlow){
 
          dashboard.complicationWorkFlow = [];
@@ -1325,7 +1336,13 @@ function addToComplicationWorkFlow(element){
 
         var index = dashboard.complicationWorkFlow.indexOf(element.id);
 
-        dashboard.complicationWorkFlow.splice(index,1)
+        dashboard.complicationWorkFlow.splice(index,1);
+
+        if(dashboard.complicationWorkFlow.length == 0 ){
+
+	        disableContinue();
+
+        }
 
     }
 
@@ -1389,6 +1406,24 @@ function executeAutoConitnue(){
 
 }
 
+
+
+function disableContinue(){
+
+	var contButton = __$("btnContinue");
+
+    contButton.className =  "gray";
+
+    contButton.removeAttribute("onclick");
+}
+
+if(!dashboard.complicationWorkFlow){
+
+		
+	disableContinue();
+
+
+}
 
 loadPage('creatinine');
 
