@@ -1,6 +1,7 @@
 {
     "facility": "Lighthouse Trust",
-    "facility code" : "KCH",
+    "location": "Lilongwe City",
     "htc location": "Lilongwe City",
-    "reset month": "January"
+    "reset month": "January",
+    "facility_code": "KCH"
 }
