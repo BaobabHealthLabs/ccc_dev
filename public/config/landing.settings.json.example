@@ -1,1 +1,10 @@
-{"basePath":"http://192.168.18.237:3015","modulesPath":"/config/landing.modules.json","barcodePath":"/patient/","savePath":"/save_other","dummyPatientCreatePath":"/save_dummy_patient","facilityPath":"/facility","useStartSessionButton":false}
+{
+  "basePath": "http://192.168.18.249:3016",
+  "modulesPath": "/modules/config/landing.modules.json",
+  "barcodePath": "/fetch_remote_if_not_exists/",
+  "savePath": "/save_other",
+  "dummyPatientCreatePath": "/save_dummy_patient",
+  "facilityPath": "/facility",
+  "useStartSessionButton": false,
+  "afterCreatePath": "/save_patient"
+}
