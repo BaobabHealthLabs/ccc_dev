@@ -23,5 +23,5 @@ O.1.4.1. Positive
 O.1.4.2. Negative
 O.1.4.3. Unknown
 
-Q.1.5. Summary [pos :: 6 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Diabetes History Summary $$condition::true]
+Q.1.5. Summary [pos :: 6 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Diabetes History Summary $$condition::true]
 

@@ -1,6 +1,6 @@
 {
   "basePath": "http://192.168.18.249:3016",
-  "modulesPath": "/modules/config/landing.modules.json",
+  "modulesPath": "/config/landing.modules.json",
   "barcodePath": "/fetch_remote_if_not_exists/",
   "savePath": "/save_other",
   "dummyPatientCreatePath": "/save_dummy_patient",

@@ -116,7 +116,7 @@ function __$(id) {
 
     }
 
-function showSummary() {
+function loadSummary() {
 
         if (__$("keyboard")) {
 

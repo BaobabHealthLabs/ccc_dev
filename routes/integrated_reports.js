@@ -102,7 +102,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            res.send(String(result));
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE person.gender = 'M' AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+            });
 
         });
 
@@ -111,7 +118,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            res.send(String(result));
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE person.gender = 'M' AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM')";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+            });
 
         });
 
@@ -120,7 +134,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            res.send(String(result));
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE person.gender = 'F' AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+            });
 
         });
 
@@ -129,7 +150,18 @@ module.exports = function (router) {
 
             var result = 0;
 
-            res.send(String(result));
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE person.gender = 'F' AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM')";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+            
 
         });
 
