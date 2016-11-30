@@ -273,7 +273,7 @@ if (Object.getOwnPropertyNames(String.prototype).indexOf("beautify") < 0) {
 
     }
 
-function showSummary() {
+function loadSummary() {
 
         if (__$("keyboard")) {
 

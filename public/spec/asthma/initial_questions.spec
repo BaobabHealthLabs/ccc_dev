@@ -25,4 +25,4 @@ Q.1.6. Is patient breastfeeding? [pos::7$$condition::patientIsANC()$$ parent :: 
 O.1.6.1. No
 O.1.6.2. Yes
 
-Q.1.7. Summary [pos :: 8 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Initial Questions Summary $$condition::true]
+Q.1.7. Summary [pos :: 8 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Initial Questions Summary $$condition::true]

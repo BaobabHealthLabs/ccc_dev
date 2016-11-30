@@ -161,10 +161,169 @@ module.exports = function (router) {
 
             });
 
-            
+        });
+
+    router.route("/new_registered_under_14")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 0 AND (year(patient_program.date_created) - year(person.birthdate)) <= 14 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
 
         });
 
+    router.route("/cumulative_registered_under_14")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 0 AND (year(patient_program.date_created) - year(person.birthdate)) <= 14 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_registered_between_14_to_44")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 15 AND (year(patient_program.date_created) - year(person.birthdate)) <= 44 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 GROUP BY person.gender AND patient_program.voided = 0 AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_registered_between_14_to_44")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 15 AND (year(patient_program.date_created) - year(person.birthdate)) <= 44 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 GROUP BY person.gender AND patient_program.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_registered_between_45_to_64")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 45 AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 GROUP BY person.gender AND patient_program.voided = 0 AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_registered_between_45_to_64")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 45 AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 AND patient_program.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_registered_above_64")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 65 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_registered_above_64")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 65 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_diabetes_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE program.name = 'DIABETES PROGRAM' AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
     return router;
 
 }

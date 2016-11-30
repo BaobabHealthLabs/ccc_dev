@@ -43,4 +43,4 @@ O.1.7.17. Student
 O.1.7.18. Teacher
 O.1.7.19. Other
 
-Q.1.8. Summary [pos :: 7 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Hypertension Social History Summary $$condition::true]
+Q.1.8. Summary [pos :: 7 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Hypertension Social History Summary $$condition::true]

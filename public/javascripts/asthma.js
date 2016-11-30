@@ -150,7 +150,7 @@ function diagonosidAndTransfer(){
 
     }
 
-function showSummary() {
+function loadSummary() {
 
         if (__$("keyboard")) {
 
