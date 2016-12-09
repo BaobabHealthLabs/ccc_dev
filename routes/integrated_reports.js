@@ -100,13 +100,23 @@ module.exports = function (router) {
     router.route("/new_registered_male")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE person.gender = 'M' AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.date_enrolled >= now()-interval 3 month";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE person.gender = 'M' " + 
+                      "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') " + 
+                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
             });
@@ -118,7 +128,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE person.gender = 'M' AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM')";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE person.gender = 'M' AND " + 
+                      "program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM')";
 
             queryRaw(sql, function(data){
 
@@ -134,7 +147,11 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE person.gender = 'F' AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.date_enrolled >= now()-interval 3 month";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE person.gender = 'F' " + 
+                      "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') " + 
+                      "AND patient_program.date_enrolled >= now()-interval 3 month";
 
             queryRaw(sql, function(data){
 
@@ -150,7 +167,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE person.gender = 'F' AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM')";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE person.gender = 'F' " + 
+                      "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM')";
 
             queryRaw(sql, function(data){
 
@@ -168,7 +188,13 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 0 AND (year(patient_program.date_created) - year(person.birthdate)) <= 14 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 AND patient_program.date_enrolled >= now()-interval 3 month";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id " + 
+                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 0 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 14 " + 
+                      "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') " + 
+                      "AND patient_program.voided = 0 AND patient_program.date_enrolled >= now()-interval 3 month";
 
             queryRaw(sql, function(data){
 
@@ -186,7 +212,11 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 0 AND (year(patient_program.date_created) - year(person.birthdate)) <= 14 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 0 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 14 " + 
+                      "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0";
 
             queryRaw(sql, function(data){
 
@@ -204,7 +234,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 15 AND (year(patient_program.date_created) - year(person.birthdate)) <= 44 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 GROUP BY person.gender AND patient_program.voided = 0 AND patient_program.date_enrolled >= now()-interval 3 month";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id " + 
+                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 15 AND (year(patient_program.date_created) - year(person.birthdate)) <= 44 " + 
+                      "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 GROUP BY patient_program.voided = 0 AND patient_program.date_enrolled >= now()-interval 3 month";
 
             queryRaw(sql, function(data){
 
@@ -222,7 +255,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 15 AND (year(patient_program.date_created) - year(person.birthdate)) <= 44 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 GROUP BY person.gender AND patient_program.voided = 0";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 15 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 44 " + 
+                      "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') " + 
+                      "AND patient_program.voided = 0 GROUP BY person.gender AND patient_program.voided = 0";
 
             queryRaw(sql, function(data){
 
@@ -240,7 +278,13 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 45 AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 GROUP BY person.gender AND patient_program.voided = 0 AND patient_program.date_enrolled >= now()-interval 3 month";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 45 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') " + 
+                      "AND patient_program.voided = 0 GROUP BY patient_program.voided = 0 " + 
+                      "AND patient_program.date_enrolled >= now()-interval 3 month";
 
             queryRaw(sql, function(data){
 
@@ -258,7 +302,13 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 45 AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 AND patient_program.voided = 0";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id " + 
+                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 45 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') " + 
+                      "AND patient_program.voided = 0 AND patient_program.voided = 0";
 
             queryRaw(sql, function(data){
 
@@ -276,7 +326,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 65 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 AND patient_program.date_enrolled >= now()-interval 3 month";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id " + 
+                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 65 " + 
+                      "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') " + 
+                      "AND patient_program.voided = 0 AND patient_program.date_enrolled >= now()-interval 3 month";
 
             queryRaw(sql, function(data){
 
@@ -294,7 +349,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender, patient_program.voided FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE (year(patient_program.date_created) - year(person.birthdate)) > 65 AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id " + 
+                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 65 " + 
+                      "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') " + 
+                      "AND patient_program.voided = 0";
 
             queryRaw(sql, function(data){
 
@@ -312,7 +372,852 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program ON program.program_id = patient_program.program_id WHERE program.name = 'DIABETES PROGRAM' AND patient_program.date_enrolled >= now()-interval 3 month";
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name = 'DIABETES PROGRAM' " + 
+                      "AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_diabetes_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+                      "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name = 'DIABETES PROGRAM'";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_hypertension_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+                      "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' " + 
+                      "AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_hypertension_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+                      "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' " + 
+                      "AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_diabetes_and_hypertension")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+                      "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name IN('DIABETES PROGRAM', 'HYPERTENSION PROGRAM') " + 
+                      "AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_diabetes_and_hypertension")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+                      "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name IN('DIABETES PROGRAM', 'HYPERTENSION PROGRAM')";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_asthma")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+                      "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name = 'ASTHMA PROGRAM' AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_asthma")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+                      "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name = 'ASTHMA PROGRAM'";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_epilepsy")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+                      "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name = 'EPILEPSY PROGRAM' " + 
+                      "AND patient_program.date_enrolled >= now()-interval 3 month";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_epilepsy")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+                      "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name = 'EPILEPSY PROGRAM'";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_other")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+                      "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name IN('TB PROGRAM')";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_other")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+                      "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
+                      "ON program.program_id = patient_program.program_id WHERE program.name IN('TB PROGRAM')";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_attended_the_clinic")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM encounter LEFT OUTER JOIN person " + 
+                      "ON person.person_id = encounter.patient_id LEFT OUTER JOIN encounter_type " + 
+                      "ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE encounter_type.name IN('VITALS', 'APPOINTMENT', 'LAB RESULTS', 'LAB RESULTS', 'UPDATE OUTCOME', 'DIABETES HISTORY', 'PAST DIABETES MEDICAL HISTORY', 'GENERAL HEALTH', 'DIABETES INITIAL QUESTIONS', 'SEIZURE TYPE', 'FAMILY HISTORY', 'PATIENT HISTORY AT ENROLMENT', 'EPILEPSY PATIENT OVERVIEW', 'MEDICAL AND SURGICAL HISTORY', 'TRIGGERS', 'PRE-ICTAL WARNING', 'POST-ICTAL FEATURES', 'EPILEPSY VISIT', 'DIABETES FAMILY HISTORY', 'TREATMENTS', 'HIV/ART STATUS', 'VDRL STATUS', 'ASTHMA VISIT', 'EPILEPSY INITIAL QUESTIONS', 'ASTHMA INITIAL QUESTIONS', 'HYPERTENSION SOCIAL HISTORY', 'HYPERTENSION TEST')";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_did_not_attend_in_quarter")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM encounter LEFT OUTER JOIN person " + 
+                      "ON person.person_id = encounter.patient_id LEFT OUTER JOIN encounter_type " + 
+                      "ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE encounter_type.name NOT IN('VITALS', 'APPOINTMENT', 'LAB RESULTS', 'LAB RESULTS', 'UPDATE OUTCOME', 'DIABETES HISTORY', 'PAST DIABETES MEDICAL HISTORY', 'GENERAL HEALTH', 'DIABETES INITIAL QUESTIONS', 'SEIZURE TYPE', 'FAMILY HISTORY', 'PATIENT HISTORY AT ENROLMENT', 'EPILEPSY PATIENT OVERVIEW', 'MEDICAL AND SURGICAL HISTORY', 'TRIGGERS', 'PRE-ICTAL WARNING', 'POST-ICTAL FEATURES', 'EPILEPSY VISIT', 'DIABETES FAMILY HISTORY', 'TREATMENTS', 'HIV/ART STATUS', 'VDRL STATUS', 'ASTHMA VISIT', 'EPILEPSY INITIAL QUESTIONS', 'ASTHMA INITIAL QUESTIONS', 'HYPERTENSION SOCIAL HISTORY', 'HYPERTENSION TEST')";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_treatment_stopped")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM ccc1_7.obs LEFT OUTER JOIN person " + 
+                      "ON person.person_id = obs.person_id WHERE obs.value_text = 'Treatment stopped'";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_transfer_out")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM ccc1_7.obs LEFT OUTER JOIN person " + 
+                      "ON person.person_id = obs.person_id WHERE obs.value_text = 'Transfer out'";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_died")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM ccc1_7.obs LEFT OUTER JOIN person " + 
+                      "ON person.person_id = obs.person_id WHERE obs.value_text = 'Died'";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_lost_to_follow_up")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM ccc1_7.obs LEFT OUTER JOIN person " + 
+                      "ON person.person_id = obs.person_id WHERE obs.value_text = 'Follow up'";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_obese")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(person_id)) AS total, (COALESCE((SELECT value_numeric FROM obs AS t2 LEFT OUTER "+
+                      "JOIN concept_name ON concept_name.concept_id = t2.concept_id where t2.encounter_id = t1.encounter_id "+
+                      "AND name IN ('Weight (kg)') ORDER BY t2.obs_id DESC LIMIT 1), 0) / POW(COALESCE((SELECT value_numeric FROM  "+
+                      "obs AS t2 LEFT OUTER JOIN concept_name ON concept_name.concept_id = t2.concept_id where t2.person_id = t1.person_id AND "+
+                      "name IN ('Height (cm)') ORDER BY t2.obs_id DESC LIMIT 1), 1) / 100, 2)) AS bmi FROM obs AS t1 GROUP BY person_id HAVING bmi > 30";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_obese")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(person_id)) AS total, (COALESCE((SELECT value_numeric FROM obs AS t2 LEFT OUTER "+
+                      "JOIN concept_name ON concept_name.concept_id = t2.concept_id where t2.encounter_id = t1.encounter_id "+
+                      "AND name IN ('Weight (kg)') ORDER BY t2.obs_id DESC LIMIT 1), 0) / POW(COALESCE((SELECT value_numeric FROM  "+
+                      "obs AS t2 LEFT OUTER JOIN concept_name ON concept_name.concept_id = t2.concept_id where t2.person_id = t1.person_id AND "+
+                      "name IN ('Height (cm)') ORDER BY t2.obs_id DESC LIMIT 1), 1) / 100, 2)) AS bmi FROM obs AS t1 GROUP BY person_id HAVING bmi > 30";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_current_smoker")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name IN('Smoking?', 'Do you currently smoke?', 'Smoke?') " + 
+                      "AND obs.value_text IN('Current smoker', 'Yes') AND obs.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_current_smoker")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name IN('Smoking?', 'Do you currently smoke?', 'Smoke?') " + 
+                      "AND obs.value_text IN('Current smoker', 'Yes') AND obs.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_drinks_alcohol")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name = 'Are you a heavy alcohol drinker?' " + 
+                      "AND obs.value_text = 'Yes' AND obs.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_drinks_alcohol")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name = 'Are you a heavy alcohol drinker?' " + 
+                      "AND obs.value_text = 'Yes' AND obs.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_attended_clinic_ht_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
+                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' " + 
+                      "AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_attended_clinic_ht_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
+                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' " + 
+                      "AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_blood_pressure_measured_ht_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
+                      "LEFT OUTER JOIN concept_name ON obs.concept_id = concept_name.concept_id " + 
+                      "WHERE patient_program.program_id = 17 AND concept_name.name IN('Systolic blood pressure', 'Diastolic blood pressure')";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_blood_pressure_measured_ht_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
+                      "LEFT OUTER JOIN concept_name ON obs.concept_id = concept_name.concept_id " + 
+                      "WHERE patient_program.program_id = 17 AND concept_name.name IN('Systolic blood pressure', 'Diastolic blood pressure')";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_blood_pressure_controlled_ht_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN encounter_type " + 
+                      "ON encounter_type.encounter_type_id = obs.encounter_id LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
+                      "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = obs.concept_id WHERE patient_program.program_id = 17 " + 
+                      "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric < 140) OR (concept_name.name = 'Diastolic blood pressure' AND obs.value_numeric < 90)";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_blood_pressure_controlled_ht_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN encounter_type " + 
+                      "ON encounter_type.encounter_type_id = obs.encounter_id LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
+                      "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = obs.concept_id WHERE patient_program.program_id = 17 " + 
+                      "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric < 140) OR (concept_name.name = 'Diastolic blood pressure' AND obs.value_numeric < 90)";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_attended_clinic_ht_and_dt")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
+                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' " + 
+                      "AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_attended_clinic_ht_and_dt")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
+                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' " + 
+                      "AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_attended_clinic_diabetes_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
+                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'DIABETES PROGRAM' " + 
+                      "AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_attended_clinic_diabetes_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
+                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'DIABETES PROGRAM' " + 
+                      "AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_attended_clinic_asthma_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
+                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'ASTHMA PROGRAM' " + 
+                      "AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_attended_clinic_asthma_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
+                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'ASTHMA PROGRAM' " + 
+                      "AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_attended_clinic_epilepsy_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
+                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'EPILEPSY PROGRAM' " + 
+                      "AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_attended_clinic_epilepsy_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
+                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'EPILEPSY PROGRAM' " + 
+                      "AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_diabetic_drug_metformin")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(orders.concept_id) AS total FROM ccc1_7.orders " + 
+                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+                      "AND orders.concept_id = 4052 AND orders.voided = 0;";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_diabetic_drug_metformin")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(orders.concept_id) AS total FROM ccc1_7.orders " + 
+                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+                      "AND orders.concept_id = 4052 AND orders.voided = 0;";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_diabetic_drug_glibenclamide")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(orders.concept_id) AS total FROM ccc1_7.orders " + 
+                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+                      "AND orders.concept_id = 4046 AND orders.voided = 0;";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_diabetic_drug_glibenclamide")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(orders.concept_id) AS total FROM ccc1_7.orders " + 
+                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+                      "AND orders.concept_id = 4046 AND orders.voided = 0;";
 
             queryRaw(sql, function(data){
 
