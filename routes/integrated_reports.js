@@ -1155,8 +1155,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(orders.concept_id) AS total FROM ccc1_7.orders " + 
-                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id = 4052 AND orders.voided = 0;";
 
             queryRaw(sql, function(data){
@@ -1175,8 +1175,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(orders.concept_id) AS total FROM ccc1_7.orders " + 
-                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id = 4052 AND orders.voided = 0;";
 
             queryRaw(sql, function(data){
@@ -1195,8 +1195,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(orders.concept_id) AS total FROM ccc1_7.orders " + 
-                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id = 4046 AND orders.voided = 0;";
 
             queryRaw(sql, function(data){
@@ -1215,13 +1215,413 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(orders.concept_id) AS total FROM ccc1_7.orders " + 
-                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id = 4046 AND orders.voided = 0;";
 
             queryRaw(sql, function(data){
 
                 console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_diabetic_drug_insuline")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+                      "AND orders.concept_id IN(278, 279, 280, 281, 282) AND orders.voided = 0;";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_diabetic_drug_insuline")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+                      "AND orders.concept_id IN(278, 279, 280, 281, 282) AND orders.voided = 0;";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_hypertensive_drug_hydro")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+                      "AND orders.concept_id = 1243 AND orders.voided = 0;";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_hypertensive_drug_hydro")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+                      "AND orders.concept_id = 1243 AND orders.voided = 0;";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_hypertensive_drug_captopril")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+                      "AND orders.concept_id = 3182 AND orders.voided = 0;";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_hypertensive_drug_captopril")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+                      "AND orders.concept_id = 3182 AND orders.voided = 0;";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_hypertensive_drug_other")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+                      "AND orders.concept_id NOT IN(3182, 1243) AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_hypertensive_drug_other")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+                      "AND orders.concept_id NOT IN(3182, 1243) AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_asthma_drug_salb_inhaler")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+                      "AND orders.concept_id = 798 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_asthma_drug_salb_inhaler")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+                      "AND orders.concept_id = 798 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_asthma_drug_steroid_inhaler")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+                      "AND orders.concept_id = 1240 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_asthma_drug_steroid_inhaler")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+                      "AND orders.concept_id = 1240 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_asthma_drug_other")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+                      "AND orders.concept_id NOT IN(798, 1240) AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_asthma_drug_other")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+                      "AND orders.concept_id = 1240 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_epilepsy_drug_pherno")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+                      "AND orders.concept_id IN(8249, 238) AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_epilepsy_drug_pherno")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+                      "AND orders.concept_id IN(8249, 238) AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_epilepsy_drug_pheny")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+                      "AND orders.concept_id = 273 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_epilepsy_drug_pheny")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+                      "AND orders.concept_id = 273 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_epilepsy_drug_carb")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+                      "AND orders.concept_id = 920 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_epilepsy_drug_carb")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+                      "AND orders.concept_id = 920 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
