@@ -135,7 +135,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
             });
@@ -155,7 +155,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
             });
@@ -174,7 +174,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -198,7 +198,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -220,7 +220,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -241,7 +241,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -264,7 +264,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+               console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -288,7 +288,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -312,7 +312,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -335,7 +335,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -358,7 +358,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -379,7 +379,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -399,7 +399,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -420,7 +420,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -441,7 +441,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -462,7 +462,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -482,7 +482,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -502,7 +502,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -522,7 +522,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -543,7 +543,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -563,7 +563,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -583,7 +583,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -603,7 +603,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -624,7 +624,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -645,7 +645,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -664,7 +664,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -683,7 +683,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -702,7 +702,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -721,7 +721,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -743,7 +743,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -765,7 +765,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -785,7 +785,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -805,7 +805,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -825,7 +825,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -845,7 +845,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -866,7 +866,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -887,7 +887,51 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_medication_prescribed_ht_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE obs.concept_id IN(9392, 9393) " + 
+                      "AND encounter.encounter_type = 158 AND patient_program.program_id = 17 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_medication_prescribed_ht_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE obs.concept_id IN(9392, 9393) " + 
+                      "AND encounter.encounter_type = 158 AND patient_program.program_id = 17 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -908,7 +952,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -929,7 +973,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -951,7 +995,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -973,7 +1017,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -994,7 +1038,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1015,7 +1059,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1036,7 +1080,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1057,7 +1101,51 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_medication_prescribed_diabetes_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM obs " + 
+                      "LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE obs.concept_id IN(9392, 9393) " + 
+                      "AND encounter.encounter_type = 158 AND patient_program.program_id = 13 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_medication_prescribed_diabetes_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM obs " + 
+                      "LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE obs.concept_id IN(9392, 9393) " + 
+                      "AND encounter.encounter_type = 158 AND patient_program.program_id = 13 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1078,7 +1166,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1099,7 +1187,49 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_medication_prescribed_asthma_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 19 " + 
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_medication_prescribed_asthma_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 19 " + 
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1120,7 +1250,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1141,7 +1271,49 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_medication_prescribed_epilepsy_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 16 " + 
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_medication_prescribed_epilepsy_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 16 " + 
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1161,7 +1333,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1181,7 +1353,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1201,7 +1373,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1221,7 +1393,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1241,7 +1413,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1261,7 +1433,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1281,7 +1453,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
@@ -1301,7 +1473,7 @@ module.exports = function (router) {
 
             queryRaw(sql, function(data){
 
-                console.log(data[0]["total"]);
+                console.log(data[0][0]["total"]);
 
                 res.send(data[0][0]);
 
