@@ -1154,6 +1154,93 @@ module.exports = function (router) {
 
         });
 
+    router.route("/new_bgm_diabetes_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total, patient_program.program_id FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE patient_program.program_id = 13 AND obs.concept_id = 6381 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_bgm_diabetes_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total, patient_program.program_id FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE patient_program.program_id = 13 AND obs.concept_id = 6381 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_bgc_fbg_diabetes_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total, patient_program.program_id FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE patient_program.program_id = 13 AND obs.concept_id IN (6381 , 9417, 9418) AND obs.value_numeric < 7";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_bgc_fbg_diabetes_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total, patient_program.program_id FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE patient_program.program_id = 13 AND obs.concept_id IN (6381 , 9417, 9418) AND obs.value_numeric < 7 " + 
+                      "AND obs.voided = 0 AND encounter.voided = 0 AND patient_program.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
     router.route("/new_attended_clinic_asthma_alone")
         .get(function (req, res) {
 
@@ -1238,6 +1325,50 @@ module.exports = function (router) {
 
         });
 
+    router.route("/new_no_asthma_in_3months_asthma_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total, patient_program.program_id FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE patient_program.program_id = 19 AND obs.concept_id IN(9542, 9553) AND obs.value_text = 'No' " + 
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_no_asthma_in_3months_asthma_alone")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total, patient_program.program_id FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE patient_program.program_id = 19 AND obs.concept_id IN(9542, 9553) AND obs.value_text = 'No' " + 
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
     router.route("/new_attended_clinic_epilepsy_alone")
         .get(function (req, res) {
 
@@ -1310,6 +1441,166 @@ module.exports = function (router) {
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 16 " + 
                       "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_disease_complications_stroke")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 9560, 9565, 9403) " + 
+                      "AND obs.value_text IN ('Stroke', 'Strokes', 'Yes') AND obs.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_disease_complications_stroke")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 9560, 9565, 9403) " + 
+                      "AND obs.value_text IN ('Stroke', 'Strokes', 'Yes') AND obs.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_disease_complications_mi")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 9403 " + 
+                      "AND obs.value_text = 'Myocardial Infarction' AND obs.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_disease_complications_mi")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 9403 " + 
+                      "AND obs.value_text = 'Myocardial Infarction' AND obs.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_disease_complications_blindness")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.value_text LIKE '%Visual Blindness%' " + 
+                      "AND obs.concept_id = 6406 AND obs.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_disease_complications_blindness")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.value_text LIKE '%Visual Blindness%' " + 
+                      "AND obs.concept_id = 6406 AND obs.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_disease_complications_burns")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 6406 " + 
+                      "AND obs.value_text = 'Burns' AND obs.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_disease_complications_burns")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 6406 " + 
+                      "AND obs.value_text = 'Burns' AND obs.voided = 0 AND encounter.voided = 0";
 
             queryRaw(sql, function(data){
 

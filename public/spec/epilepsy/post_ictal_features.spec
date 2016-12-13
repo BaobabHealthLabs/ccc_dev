@@ -36,4 +36,4 @@ Q.1.9. Hyperactivity a post-ictal feature? [pos:: 8$$parent::Headache a post-ict
 O.1.9.1. Yes
 O.1.9.2. No
 
-Q.1.10. Summary [pos :: 9 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Post-Icta Features Summary $$condition::true]
+Q.1.10. Summary [pos :: 9 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Post-Icta Features Summary $$condition::true]

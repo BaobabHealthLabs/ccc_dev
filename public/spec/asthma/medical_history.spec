@@ -69,16 +69,16 @@ Q.1.8. Chest deformities at Birth? [pos:: 14$$tt_requirenextclick::false$$parent
 O.1.8.1. Yes
 O.1.8.2. No
 
-Q.1.9. Complication [pos:: 15$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$ helpText :: Does the patient have any of these complications$$parent::Diagnosis ]
+Q.1.9. Complications [pos:: 15$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$ helpText :: Does the patient have any of these complications$$parent::Diagnosis ]
 O.1.9.1. Amputation
 O.1.9.2. Stroke
 O.1.9.3. Ulcers
 O.1.9.4. Myocardial Injactia
 O.1.9.5. Impotence
-O.1.9.5. Visual Blindness
-O.1.9.6. Foot Ulcers
-O.1.9.7. Peripheral nueropathy
-0.1.9.8. CVA
+O.1.9.6. Visual Blindness
+O.1.9.7. Foot Ulcers
+O.1.9.8. Peripheral nueropathy
+0.1.9.9. CVA
 
 Q.1.10. Advice on life changes [pos:: 16$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$parent::Diagnosis]
 O.1.10.1. Cigarette or smoke free enviroment

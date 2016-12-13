@@ -4,4 +4,4 @@ O.1.1.1. Yes
 O.1.1.2. No
 O.1.1.3. Unknown
 
-Q.1.2. Summary [pos :: 1 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Pre-Ictal Summary $$condition::true]
+Q.1.2. Summary [pos :: 1 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Pre-Ictal Summary $$condition::true]
