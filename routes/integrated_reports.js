@@ -1533,6 +1533,46 @@ module.exports = function (router) {
 
         });
 
+    router.route("/new_disease_complications_cd")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 6773, 9428) " + 
+                      "AND obs.value_text = 'Serious Cardiac Problems' AND obs.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_disease_complications_cd")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text FROM ccc1_7.obs " + 
+                      "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 6773, 9428) " + 
+                      "AND obs.value_text = 'Serious Cardiac Problems' AND obs.voided = 0 AND encounter.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
     router.route("/new_disease_complications_blindness")
         .get(function (req, res) {
 
