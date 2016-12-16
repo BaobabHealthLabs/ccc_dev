@@ -13,4 +13,4 @@ O.1.2.1.1.3. Severe
 
 Q.1.2.1.2. Shortness of breath Test Date [pos :: 4 $$ field_type:: date $$ estimate_label :: Year(s) ago $$ parent :: Hypertension Test Type:Shortness of breath]
 
-Q.1.3. Summary [pos :: 5 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Shortness of breath Test Summary $$condition::true]
+Q.1.3. Summary [pos :: 5 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Shortness of breath Test Summary $$condition::true]

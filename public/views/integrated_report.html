@@ -46,6 +46,11 @@
         Chronic Care Clinic : Integrated CCC Cohort Report<br/>
         <font id="facility">Facility Name<font>
 </div>
+
+<div style="width:100%; background:green; height: 15px">
+    <div id="progressbar" style="width:0%; background : blue; height :15px ">   
+    </div>
+</div>
 <div style="overflow: auto; height: calc(83vh - 80px); padding-left:1%; padding-right:1%">
 
 <table class="card">
@@ -1040,40 +1045,7 @@
 
     }
 
-    function ajaxRequest(url, id, callback) {
-
-        var httpRequest = new XMLHttpRequest();
-
-        httpRequest.onreadystatechange = function () {
-
-            if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
-                    httpRequest.status == 304)) {
-
-                if (httpRequest.responseText.trim().length > 0) {
-                    var result = JSON.parse(httpRequest.responseText);
-
-                    callback(result, id);
-
-                } else {
-
-                    callback(undefined);
-
-                }
-
-            }
-
-        };
-        try {
-            httpRequest.open("GET", url, true);
-            httpRequest.send(null);
-        } catch (e) {
-        }
-
-    }
-
-    function loadData() {
-
-        var links = {
+    var links = {
             "new_registered_male": "/integrated_reports/new_registered_male?start_date=" + startDate + "&end_date=" + endDate,
             "cumulative_registered_male": "/integrated_reports/cumulative_registered_male?start_date=" + startDate + "&end_date=" + endDate,
             "new_registered_female": "/integrated_reports/new_registered_female?start_date=" + startDate + "&end_date=" + endDate,
@@ -1187,15 +1159,62 @@
 
 
             
-        }
+    }
+
+    var  x = 0;
+    function ajaxRequest(url, id,index, callback) {
+
+
+            var httpRequest = new XMLHttpRequest();
+
+            httpRequest.onreadystatechange = function () {
+
+                if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                        httpRequest.status == 304)) {
+
+                    if (httpRequest.responseText.trim().length > 0) {
+                        var result = JSON.parse(httpRequest.responseText);
+
+                        setTimeout(function(){
+
+                            callback(result, id);
+
+                        },500)   
+
+                         
+                    } else {
+
+                        callback(undefined);
+
+                    }
+
+                }
+
+            };
+            try {
+                httpRequest.open("GET", url, true);
+                httpRequest.send(null);
+            } catch (e) {
+            }
+
+    }
+
+    function loadData() {
+
 
         var keys = Object.keys(links);
+
 
         for(var i = 0; i < keys.length; i++) {
 
             var key = keys[i];
 
-            ajaxRequest(links[key], key, function(data, id) {
+            ajaxRequest(links[key], key,i, function(data, id) {
+
+                x++;
+
+                __$("progressbar").style.width = ((x)*100/Object.keys(links).length)+"%";
+
 
                 if(__$(id)) {
 
