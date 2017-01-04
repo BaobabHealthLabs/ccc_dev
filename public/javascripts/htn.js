@@ -1122,7 +1122,7 @@ function loadCardDashboard(){
 
     var id_keys = Object.keys(data.identifiers)
 
-    __$("ncd_reg_no").innerHTML = data.identifiers["HTN Number"].identifier;
+    __$("ncd_reg_no").innerHTML = data.identifiers["HTN Number"] ? data.identifiers["HTN Number"].identifier : data.identifiers["National id"].identifier;
 
     __$("year").innerHTML= (new Date()).getFullYear();
 
@@ -1153,8 +1153,10 @@ function loadCardDashboard(){
 
 
     /*Address*/
-    var address = data.addresses[0]["Current District"] +"\tDistrict, TA\t"
-                +data.addresses[0]["Current T/A"]+",\t"+data.addresses[0]["Current Village"]+"\tvillage";
+    var address = data.addresses["Current District"] +"\tDistrict, TA\t"
+                +data.addresses["Current T/A"]+",\t"+data.addresses["Current Village"]+"\tvillage";
+
+    address = data.addresses["Closest Landmark"].length > 0 ? address + "<br/> Near : "+ data.addresses["Closest Landmark"] : address;
 
     __$("address").innerHTML = address;
 

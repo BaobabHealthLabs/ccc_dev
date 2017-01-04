@@ -1012,7 +1012,7 @@ function loadCardDashboard(){
 
 	var id_keys = Object.keys(data.identifiers)
 
-	__$("ncd_reg_no").innerHTML = data.identifiers["AST Number"].identifier;
+    __$("ncd_reg_no").innerHTML = data.identifiers["AST Number"] ? data.identifiers["AST Number"].identifier : data.identifiers["National id"].identifier;
 
 	if(__$("year")){
 
@@ -1060,11 +1060,13 @@ function loadCardDashboard(){
         	}
     }
 
-    //Address
-    var address = data.addresses[0]["Current District"] +"\tDistrict, TA\t"
-    			+data.addresses[0]["Current T/A"]+",\t"+data.addresses[0]["Current Village"]+"\tvillage";
+    //Address	
+    var address = data.addresses["Current District"] +"\tDistrict, TA\t"
+                +data.addresses["Current T/A"]+",\t"+data.addresses["Current Village"]+"\tvillage";
 
-    __$("address").innerHTML = address;	
+    address = data.addresses["Closest Landmark"].length > 0 ? address + "<br/> Near : "+ data.addresses["Closest Landmark"] : address;
+
+    __$("address").innerHTML = address;
 
 
     //Gardian Data
@@ -1078,7 +1080,6 @@ function loadCardDashboard(){
    		__$("relation_to_patient").innerHTML =  guardain[0].relative_type;
    	}
 
-   	//HIV ART Status
    //HIV ART Status
     if(window.parent.dashboard.queryAnyExistingObs("HIV status")){
         
