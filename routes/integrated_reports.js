@@ -914,12 +914,18 @@ module.exports = function (router) {
     router.route("/new_obese")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(t1.person_id)) AS total from obs t1 INNER JOIN " + 
                       "(select t2.person_id, t2.obs_datetime, t2.encounter_id, (ifnull(t2.value_numeric, t2.value_text) / 100) as height " + 
                       "FROM obs t2 WHERE t2.concept_id = 5090) as t3 ON t3.encounter_id = t1.encounter_id WHERE t1.concept_id = 5089 and t1.voided = 0 " + 
                       "AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) >= 30";
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2244,6 +2250,46 @@ module.exports = function (router) {
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
                       "AND orders.concept_id = 1243 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/new_anti_hypertensive_drug_amlodipine")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+                      "AND orders.concept_id = 3187 AND orders.voided = 0";
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+
+
+            });
+
+        });
+
+    router.route("/cumulative_anti_hypertensive_drug_amlodipine")
+        .get(function (req, res) {
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+                      "AND orders.concept_id = 3187 AND orders.voided = 0";
 
             queryRaw(sql, function(data){
 
