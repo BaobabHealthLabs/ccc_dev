@@ -10,7 +10,7 @@ O.1.1.6. 6 weeks
 O.1.1.7. 7 weeks
 O.1.1.8. 8 weeks
 
-Q.1.2. Appointment [pos :: 1 $$ concept ::Appointment date $$ id :: appointment_calendar $$ field_type :: calendar $$ optional :: true $$ tt_onUnLoad :: validateAppointment()]
+Q.1.2. Appointment [pos :: 1 $$ concept :: Appointment date $$ id :: appointment_calendar $$ field_type :: calendar $$ optional :: true $$ tt_onUnLoad :: validateAppointment()]
 
 Q.1.3. Appointment date [pos :: 2 $$ id :: appointment_date $$ field_type :: hidden$$parent::Appointment $$condition::false]
 

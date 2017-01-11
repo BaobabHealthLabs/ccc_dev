@@ -394,6 +394,20 @@ function setAppointmentCalendar(source, target){
 
             __$(target).setAttribute("ajaxCalendarUrl", ajaxurl);
 
+            __$(target).style.backgroundColor = "green";
+            
+            __$(target).setAttribute("value", __$(target).value)
+
+            var maxdate= new Date();
+
+            maxdate.setDate(366);
+
+            __$(target).setAttribute("max",maxdate.format('YYYY-mm-dd'));
+
+            var min  =  "2000-01-01";
+
+            __$(target).setAttribute("min",min);
+
         }
 
 }
