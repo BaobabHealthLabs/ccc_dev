@@ -1,6 +1,6 @@
 P.1. DIABETES INITIAL QUESTIONS [program:: DIABETES PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 
-Q.1.1. Is the patient a: [pos:: 0$$ concept:: TYPE OF PATIENT$$ id:: patient_type$$ condition:: !existingDiabetesPatient() $$ tt_requireNextClick :: false]
+Q.1.1. Is the patient a: [pos:: 0$$ concept:: TYPE OF PATIENT$$ id:: patient_type$$ condition:: !existingDiabetesPatient() $$ tt_requireNextClick :: true]
 O.1.1.1. New Patient
 O.1.1.2. Transfer in
 O.1.1.3. Temporary Patient
