@@ -67,7 +67,7 @@ function __$(id){
 
 function loadPage(id,element) {
 
-     if(id == "oedema"){
+    if(id == "oedema"){
 
      	__$("complication_data").innerHTML = "";
 
@@ -131,14 +131,20 @@ function loadPage(id,element) {
 
                     switch (label) {
 
+                    	case "Any sign of Oedema?":
+                            
+                            entry.date = leaf[label].response.value;;
+                            
+                            break;
+
                         case "Oedema measure":
 
                             entry.value = leaf[label].response.value;
 
-                            break;
+                            break;    
 
                         case "Oedema Test Date":
-
+                        	
                             entry.date = (new Date(leaf[label].response.value)).format();
 
                             break;
