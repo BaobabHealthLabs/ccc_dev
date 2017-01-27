@@ -714,11 +714,18 @@ module.exports = function (router) {
     router.route("/new_other")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
-                      "ON program.program_id = patient_program.program_id WHERE program.name = 'TB PROGRAM'";
+                      "ON program.program_id = patient_program.program_id WHERE program.name = 'TB PROGRAM' " + 
+                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -734,11 +741,18 @@ module.exports = function (router) {
     router.route("/cumulative_other")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
-                      "ON program.program_id = patient_program.program_id WHERE program.name = 'TB PROGRAM'";
+                      "ON program.program_id = patient_program.program_id WHERE program.name = 'TB PROGRAM' " + 
+                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -956,11 +970,18 @@ module.exports = function (router) {
     router.route("/new_current_smoker")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name IN('Smoking?', 'Do you currently smoke?', 'Smoke?') " + 
-                      "AND obs.value_text IN('Current smoker', 'Yes') AND obs.voided = 0";
+                      "AND obs.value_text IN('Current smoker', 'Yes') AND obs.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -976,11 +997,18 @@ module.exports = function (router) {
     router.route("/cumulative_current_smoker")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name IN('Smoking?', 'Do you currently smoke?', 'Smoke?') " + 
-                      "AND obs.value_text IN('Current smoker', 'Yes') AND obs.voided = 0";
+                      "AND obs.value_text IN('Current smoker', 'Yes') AND obs.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -995,12 +1023,18 @@ module.exports = function (router) {
 
     router.route("/new_drinks_alcohol")
         .get(function (req, res) {
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
 
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name = 'Are you a heavy alcohol drinker?' " + 
-                      "AND obs.value_text = 'Yes' AND obs.voided = 0";
+                      "AND obs.value_text = 'Yes' AND obs.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1016,11 +1050,18 @@ module.exports = function (router) {
     router.route("/cumulative_drinks_alcohol")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name = 'Are you a heavy alcohol drinker?' " + 
-                      "AND obs.value_text = 'Yes' AND obs.voided = 0";
+                      "AND obs.value_text = 'Yes' AND obs.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1854,12 +1895,18 @@ module.exports = function (router) {
     router.route("/new_attended_clinic_asthma_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'ASTHMA PROGRAM' " + 
-                      "AND orders.voided = 0";
+                      "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1875,12 +1922,18 @@ module.exports = function (router) {
     router.route("/cumulative_attended_clinic_asthma_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'ASTHMA PROGRAM' " + 
-                      "AND orders.voided = 0";
+                      "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)          
 
             queryRaw(sql, function(data){
 
@@ -1896,12 +1949,19 @@ module.exports = function (router) {
     router.route("/new_medication_prescribed_asthma_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 19 " + 
-                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1917,12 +1977,19 @@ module.exports = function (router) {
     router.route("/cumulative_medication_prescribed_asthma_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 19 " + 
-                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1938,13 +2005,20 @@ module.exports = function (router) {
     router.route("/new_no_asthma_in_3months_asthma_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.program_id = 19 AND obs.concept_id IN(9542, 9553) AND obs.value_text = 'No' " + 
-                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0";
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1960,13 +2034,20 @@ module.exports = function (router) {
     router.route("/cumulative_no_asthma_in_3months_asthma_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.program_id = 19 AND obs.concept_id IN(9542, 9553) AND obs.value_text = 'No' " + 
-                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0";
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1982,12 +2063,19 @@ module.exports = function (router) {
     router.route("/new_attended_clinic_epilepsy_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'EPILEPSY PROGRAM' " + 
-                      "AND orders.voided = 0";
+                      "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)          
 
             queryRaw(sql, function(data){
 
@@ -2003,12 +2091,18 @@ module.exports = function (router) {
     router.route("/cumulative_attended_clinic_epilepsy_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'EPILEPSY PROGRAM' " + 
-                      "AND orders.voided = 0";
+                      "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)         
 
             queryRaw(sql, function(data){
 
@@ -2024,12 +2118,19 @@ module.exports = function (router) {
     router.route("/new_medication_prescribed_epilepsy_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 16 " + 
-                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2045,12 +2146,19 @@ module.exports = function (router) {
     router.route("/cumulative_medication_prescribed_epilepsy_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 16 " + 
-                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0";
+                      "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2066,10 +2174,17 @@ module.exports = function (router) {
     router.route("/new_no_seizure_epilepsy_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs INNER JOIN encounter ON encounter.patient_id = obs.person_id " + 
-                      "WHERE obs.concept_id = 9517 AND obs.value_text = 'No' AND encounter.voided = 0";
+                      "WHERE obs.concept_id = 9517 AND obs.value_text = 'No' AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2085,10 +2200,17 @@ module.exports = function (router) {
     router.route("/cumulative_no_seizure_epilepsy_alone")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs INNER JOIN encounter ON encounter.patient_id = obs.person_id " + 
-                      "WHERE obs.concept_id = 9517 AND obs.value_text = 'No' AND encounter.voided = 0";
+                      "WHERE obs.concept_id = 9517 AND obs.value_text = 'No' AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2104,11 +2226,18 @@ module.exports = function (router) {
     router.route("/new_disease_complications_stroke")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 9560, 9565, 9403) " + 
-                      "AND obs.value_text IN ('Stroke', 'Strokes', 'Yes') AND obs.voided = 0 AND encounter.voided = 0";
+                      "AND obs.value_text IN ('Stroke', 'Strokes', 'Yes') AND obs.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2124,11 +2253,18 @@ module.exports = function (router) {
     router.route("/cumulative_disease_complications_stroke")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 9560, 9565, 9403) " + 
-                      "AND obs.value_text IN ('Stroke', 'Strokes', 'Yes') AND obs.voided = 0 AND encounter.voided = 0";
+                      "AND obs.value_text IN ('Stroke', 'Strokes', 'Yes') AND obs.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2144,11 +2280,18 @@ module.exports = function (router) {
     router.route("/new_disease_complications_mi")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 9403 " + 
-                      "AND obs.value_text = 'Myocardial Infarction' AND obs.voided = 0 AND encounter.voided = 0";
+                      "AND obs.value_text = 'Myocardial Infarction' AND obs.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2164,11 +2307,18 @@ module.exports = function (router) {
     router.route("/cumulative_disease_complications_mi")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 9403 " + 
-                      "AND obs.value_text = 'Myocardial Infarction' AND obs.voided = 0 AND encounter.voided = 0";
+                      "AND obs.value_text = 'Myocardial Infarction' AND obs.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2184,11 +2334,18 @@ module.exports = function (router) {
     router.route("/new_disease_complications_cd")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 6773, 9428) " + 
-                      "AND obs.value_text = 'Serious Cardiac Problems' AND obs.voided = 0 AND encounter.voided = 0";
+                      "AND obs.value_text = 'Serious Cardiac Problems' AND obs.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2204,11 +2361,18 @@ module.exports = function (router) {
     router.route("/cumulative_disease_complications_cd")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 6773, 9428) " + 
-                      "AND obs.value_text = 'Serious Cardiac Problems' AND obs.voided = 0 AND encounter.voided = 0";
+                      "AND obs.value_text = 'Serious Cardiac Problems' AND obs.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2224,11 +2388,18 @@ module.exports = function (router) {
     router.route("/new_disease_complications_blindness")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.value_text LIKE '%Visual Blindness%' " + 
-                      "AND obs.concept_id = 6406 AND obs.voided = 0 AND encounter.voided = 0";
+                      "AND obs.concept_id = 6406 AND obs.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2244,11 +2415,18 @@ module.exports = function (router) {
     router.route("/cumulative_disease_complications_blindness")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.value_text LIKE '%Visual Blindness%' " + 
-                      "AND obs.concept_id = 6406 AND obs.voided = 0 AND encounter.voided = 0";
+                      "AND obs.concept_id = 6406 AND obs.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2264,11 +2442,18 @@ module.exports = function (router) {
     router.route("/new_disease_complications_burns")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 6406 " + 
-                      "AND obs.value_text = 'Burns' AND obs.voided = 0 AND encounter.voided = 0";
+                      "AND obs.value_text = 'Burns' AND obs.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2284,11 +2469,18 @@ module.exports = function (router) {
     router.route("/cumulative_disease_complications_burns")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 6406 " + 
-                      "AND obs.value_text = 'Burns' AND obs.voided = 0 AND encounter.voided = 0";
+                      "AND obs.value_text = 'Burns' AND obs.voided = 0 AND encounter.voided = 0 " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2304,11 +2496,18 @@ module.exports = function (router) {
     router.route("/new_anti_diabetic_drug_metformin")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 4052 AND orders.voided = 0";
+                      "AND orders.concept_id = 4052 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2324,11 +2523,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_diabetic_drug_metformin")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 4052 AND orders.voided = 0";
+                      "AND orders.concept_id = 4052 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2344,11 +2550,18 @@ module.exports = function (router) {
     router.route("/new_anti_diabetic_drug_glibenclamide")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 4046 AND orders.voided = 0";
+                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+                      "AND orders.concept_id = 4046 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2364,11 +2577,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_diabetic_drug_glibenclamide")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 4046 AND orders.voided = 0";
+                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+                      "AND orders.concept_id = 4046 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2384,11 +2604,18 @@ module.exports = function (router) {
     router.route("/new_anti_diabetic_drug_insuline")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id IN(278, 279, 280, 281, 282) AND orders.voided = 0";
+                      "AND orders.concept_id IN(278, 279, 280, 281, 282) AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2404,11 +2631,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_diabetic_drug_insuline")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id IN(278, 279, 280, 281, 282) AND orders.voided = 0";
+                      "AND orders.concept_id IN(278, 279, 280, 281, 282) AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2424,11 +2658,18 @@ module.exports = function (router) {
     router.route("/new_anti_hypertensive_drug_hydro")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
-                      "AND orders.concept_id = 1243 AND orders.voided = 0";
+                      "AND orders.concept_id = 1243 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2444,11 +2685,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_hypertensive_drug_hydro")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
-                      "AND orders.concept_id = 1243 AND orders.voided = 0";
+                      "AND orders.concept_id = 1243 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2464,11 +2712,18 @@ module.exports = function (router) {
     router.route("/new_anti_hypertensive_drug_amlodipine")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 3187 AND orders.voided = 0";
+                      "AND orders.concept_id = 3187 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2484,11 +2739,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_hypertensive_drug_amlodipine")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 3187 AND orders.voided = 0";
+                      "AND orders.concept_id = 3187 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2504,11 +2766,18 @@ module.exports = function (router) {
     router.route("/new_anti_hypertensive_drug_captopril")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
-                      "AND orders.concept_id = 3182 AND orders.voided = 0";
+                      "AND orders.concept_id = 3182 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2524,11 +2793,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_hypertensive_drug_captopril")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
-                      "AND orders.concept_id = 3182 AND orders.voided = 0";
+                      "AND orders.concept_id = 3182 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2544,11 +2820,18 @@ module.exports = function (router) {
     router.route("/new_anti_hypertensive_drug_other")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
-                      "AND orders.concept_id NOT IN(3182, 1243) AND orders.voided = 0";
+                      "AND orders.concept_id NOT IN(3182, 1243) AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2564,11 +2847,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_hypertensive_drug_other")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
-                      "AND orders.concept_id NOT IN(3182, 1243) AND orders.voided = 0";
+                      "AND orders.concept_id NOT IN(3182, 1243) AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2584,11 +2874,18 @@ module.exports = function (router) {
     router.route("/new_anti_asthma_drug_salb_inhaler")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
-                      "AND orders.concept_id = 798 AND orders.voided = 0";
+                      "AND orders.concept_id = 798 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2604,11 +2901,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_asthma_drug_salb_inhaler")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
-                      "AND orders.concept_id = 798 AND orders.voided = 0";
+                      "AND orders.concept_id = 798 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2624,11 +2928,18 @@ module.exports = function (router) {
     router.route("/new_anti_asthma_drug_steroid_inhaler")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
-                      "AND orders.concept_id = 1240 AND orders.voided = 0";
+                      "AND orders.concept_id = 1240 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2644,11 +2955,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_asthma_drug_steroid_inhaler")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
-                      "AND orders.concept_id = 1240 AND orders.voided = 0";
+                      "AND orders.concept_id = 1240 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2664,11 +2982,18 @@ module.exports = function (router) {
     router.route("/new_anti_asthma_drug_other")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
-                      "AND orders.concept_id NOT IN(798, 1240) AND orders.voided = 0";
+                      "AND orders.concept_id NOT IN(798, 1240) AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2684,11 +3009,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_asthma_drug_other")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
-                      "AND orders.concept_id = 1240 AND orders.voided = 0";
+                      "AND orders.concept_id = 1240 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2704,11 +3036,18 @@ module.exports = function (router) {
     router.route("/new_anti_epilepsy_drug_pherno")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
-                      "AND orders.concept_id IN(8249, 238) AND orders.voided = 0";
+                      "AND orders.concept_id IN(8249, 238) AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2724,11 +3063,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_epilepsy_drug_pherno")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
-                      "AND orders.concept_id IN(8249, 238) AND orders.voided = 0";
+                      "AND orders.concept_id IN(8249, 238) AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2744,11 +3090,18 @@ module.exports = function (router) {
     router.route("/new_anti_epilepsy_drug_pheny")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
-                      "AND orders.concept_id = 273 AND orders.voided = 0";
+                      "AND orders.concept_id = 273 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2764,11 +3117,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_epilepsy_drug_pheny")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
-                      "AND orders.concept_id = 273 AND orders.voided = 0";
+                      "AND orders.concept_id = 273 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2784,11 +3144,18 @@ module.exports = function (router) {
     router.route("/new_anti_epilepsy_drug_carb")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
-                      "AND orders.concept_id = 920 AND orders.voided = 0";
+                      "AND orders.concept_id = 920 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2804,11 +3171,18 @@ module.exports = function (router) {
     router.route("/cumulative_anti_epilepsy_drug_carb")
         .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query
+
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
                       "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
-                      "AND orders.concept_id = 920 AND orders.voided = 0";
+                      "AND orders.concept_id = 920 AND orders.voided = 0 " + 
+                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
