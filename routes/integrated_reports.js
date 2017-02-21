@@ -6,6 +6,9 @@ module.exports = function (router) {
 
     var async = require('async');
     var url = require('url');
+    var connection = require("../config/database.json");
+    var fs = require("fs");
+    var database = connection.database;
 
     if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
@@ -106,7 +109,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE person.gender = 'M' " + 
                       "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') " + 
@@ -133,12 +136,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE person.gender = 'M' AND " + 
                       "program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM')" + 
                       "AND patient_program.voided = 0 AND person.voided = 0 " + 
-                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -160,7 +163,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE person.gender = 'F' " + 
                       "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM')" + 
@@ -187,12 +190,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, person.gender AS gender FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE person.gender = 'F' " + 
                       "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM')" + 
                       "AND patient_program.voided = 0 AND person.voided = 0 " + 
-                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -216,7 +219,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id " + 
                       "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 0 " + 
@@ -246,13 +249,13 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id " + 
                       "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 0 " + 
                       "AND (year(patient_program.date_created) - year(person.birthdate)) <= 14 " + 
                       "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') " + 
-                      "AND patient_program.voided = 0 AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND patient_program.voided = 0 AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -276,7 +279,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN program ON program.program_id = patient_program.program_id " + 
                       "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 14 " + 
@@ -304,13 +307,13 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN program ON program.program_id = patient_program.program_id " + 
                       "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 14 " + 
                       "AND (year(patient_program.date_created) - year(person.birthdate)) <= 44 " + 
                       "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') " + 
-                      "AND patient_program.voided = 0 AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND patient_program.voided = 0 AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -332,7 +335,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id " + 
                       "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 45 " + 
@@ -362,13 +365,13 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id " + 
                       "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 45 " + 
                       "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
                       "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 " + 
-                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -392,7 +395,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id " + 
                       "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 65 " + 
@@ -421,12 +424,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id " + 
                       "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 65 " + 
                       "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 " + 
-                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -450,7 +453,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name = 'DIABETES PROGRAM' AND patient_program.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
@@ -477,10 +480,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name = 'DIABETES PROGRAM' AND patient_program.voided = 0 " + 
-                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -504,7 +507,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' AND patient_program.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
@@ -531,10 +534,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' AND patient_program.voided = 0 " + 
-                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -558,7 +561,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name IN('DIABETES PROGRAM', 'HYPERTENSION PROGRAM') AND patient_program.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
@@ -585,10 +588,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name IN('DIABETES PROGRAM', 'HYPERTENSION PROGRAM') AND patient_program.voided = 0 " + 
-                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -612,7 +615,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name = 'ASTHMA PROGRAM' AND patient_program.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
@@ -639,10 +642,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name = 'ASTHMA PROGRAM' AND patient_program.voided = 0 " + 
-                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -666,7 +669,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name = 'EPILEPSY PROGRAM' AND patient_program.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
@@ -693,10 +696,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name = 'EPILEPSY PROGRAM' AND patient_program.voided = 0 " + 
-                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -720,7 +723,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name = 'TB PROGRAM' " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
@@ -747,10 +750,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM ccc1_7.patient_program LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program LEFT OUTER JOIN person " + 
                       "ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id WHERE program.name = 'TB PROGRAM' " + 
-                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+                      "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -778,7 +781,7 @@ module.exports = function (router) {
                       "ON person.person_id = encounter.patient_id LEFT OUTER JOIN encounter_type " + 
                       "ON encounter_type.encounter_type_id = encounter.encounter_type " + 
                       "WHERE encounter_type.name IN('VITALS', 'APPOINTMENT', 'LAB RESULTS', 'LAB RESULTS', 'UPDATE OUTCOME', 'DIABETES HISTORY', 'PAST DIABETES MEDICAL HISTORY', 'GENERAL HEALTH', 'DIABETES INITIAL QUESTIONS', 'SEIZURE TYPE', 'FAMILY HISTORY', 'PATIENT HISTORY AT ENROLMENT', 'EPILEPSY PATIENT OVERVIEW', 'MEDICAL AND SURGICAL HISTORY', 'TRIGGERS', 'PRE-ICTAL WARNING', 'POST-ICTAL FEATURES', 'EPILEPSY VISIT', 'DIABETES FAMILY HISTORY', 'TREATMENTS', 'HIV/ART STATUS', 'VDRL STATUS', 'ASTHMA VISIT', 'EPILEPSY INITIAL QUESTIONS', 'ASTHMA INITIAL QUESTIONS', 'HYPERTENSION SOCIAL HISTORY', 'HYPERTENSION TEST')" + 
-                      "AND encounter.voided = 0 AND Date(encounter.encounter_datetime) >='"+query.start_date+"' AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
+                      "AND encounter.voided = 0 AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -806,7 +809,7 @@ module.exports = function (router) {
                       "ON person.person_id = encounter.patient_id LEFT OUTER JOIN encounter_type " + 
                       "ON encounter_type.encounter_type_id = encounter.encounter_type " + 
                       "WHERE encounter_type.name NOT IN('VITALS', 'APPOINTMENT', 'LAB RESULTS', 'LAB RESULTS', 'UPDATE OUTCOME', 'DIABETES HISTORY', 'PAST DIABETES MEDICAL HISTORY', 'GENERAL HEALTH', 'DIABETES INITIAL QUESTIONS', 'SEIZURE TYPE', 'FAMILY HISTORY', 'PATIENT HISTORY AT ENROLMENT', 'EPILEPSY PATIENT OVERVIEW', 'MEDICAL AND SURGICAL HISTORY', 'TRIGGERS', 'PRE-ICTAL WARNING', 'POST-ICTAL FEATURES', 'EPILEPSY VISIT', 'DIABETES FAMILY HISTORY', 'TREATMENTS', 'HIV/ART STATUS', 'VDRL STATUS', 'ASTHMA VISIT', 'EPILEPSY INITIAL QUESTIONS', 'ASTHMA INITIAL QUESTIONS', 'HYPERTENSION SOCIAL HISTORY', 'HYPERTENSION TEST')" + 
-                      "AND encounter.voided = 0 AND Date(encounter.encounter_datetime) >='"+query.start_date+"' AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
+                      "AND encounter.voided = 0 AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -830,9 +833,9 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM ccc1_7.obs LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM " + database + ".obs LEFT OUTER JOIN person " + 
                       "ON person.person_id = obs.person_id WHERE obs.value_text = 'Treatment stopped' AND obs.voided = 0 " + 
-                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+                      "AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -856,9 +859,9 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM ccc1_7.obs LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM " + database + ".obs LEFT OUTER JOIN person " + 
                       "ON person.person_id = obs.person_id WHERE obs.value_text = 'Transfer out' AND obs.voided = 0 " + 
-                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+                      "AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -882,9 +885,9 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM ccc1_7.obs LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM " + database + ".obs LEFT OUTER JOIN person " + 
                       "ON person.person_id = obs.person_id WHERE obs.value_text = 'Died' AND obs.voided = 0 " + 
-                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+                      "AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -908,9 +911,9 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM ccc1_7.obs LEFT OUTER JOIN person " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.value_text AS value FROM " + database + ".obs LEFT OUTER JOIN person " + 
                       "ON person.person_id = obs.person_id WHERE obs.value_text = 'Follow up' AND obs.voided = 0 " + 
-                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+                      "AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -976,7 +979,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM " + database + ".obs LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name IN('Smoking?', 'Do you currently smoke?', 'Smoke?') " + 
                       "AND obs.value_text IN('Current smoker', 'Yes') AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
@@ -1003,10 +1006,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM " + database + ".obs LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name IN('Smoking?', 'Do you currently smoke?', 'Smoke?') " + 
                       "AND obs.value_text IN('Current smoker', 'Yes') AND obs.voided = 0 " + 
-                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+                      "AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1029,7 +1032,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM " + database + ".obs LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name = 'Are you a heavy alcohol drinker?' " + 
                       "AND obs.value_text = 'Yes' AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
@@ -1056,10 +1059,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM ccc1_7.obs LEFT OUTER JOIN concept_name " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, obs.voided AS voided FROM " + database + ".obs LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = obs.concept_id WHERE concept_name.name = 'Are you a heavy alcohol drinker?' " + 
                       "AND obs.value_text = 'Yes' AND obs.voided = 0 " + 
-                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+                      "AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1083,7 +1086,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from " + database + ".orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' " + 
                       "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
@@ -1110,10 +1113,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from ccc1_7.orders " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from " + database + ".orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' " + 
-                      "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1137,7 +1140,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE obs.concept_id IN(9392, 9393) " + 
                       "AND encounter.encounter_type = 158 AND patient_program.program_id = 17 AND obs.voided = 0 " + 
@@ -1166,12 +1169,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE obs.concept_id IN(9392, 9393) " + 
                       "AND encounter.encounter_type = 158 AND patient_program.program_id = 17 AND obs.voided = 0 " + 
                       "AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1195,7 +1198,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN concept_name ON obs.concept_id = concept_name.concept_id " + 
                       "WHERE patient_program.program_id = 17 AND concept_name.name IN('Systolic blood pressure', 'Diastolic blood pressure') AND obs.voided = 0 " + 
@@ -1223,11 +1226,11 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN concept_name ON obs.concept_id = concept_name.concept_id " + 
                       "WHERE patient_program.program_id = 17 AND concept_name.name IN('Systolic blood pressure', 'Diastolic blood pressure') AND obs.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1251,7 +1254,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN encounter_type " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN encounter_type " + 
                       "ON encounter_type.encounter_type_id = obs.encounter_id LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = obs.concept_id WHERE patient_program.program_id = 17 " + 
@@ -1281,12 +1284,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN encounter_type " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN encounter_type " + 
                       "ON encounter_type.encounter_type_id = obs.encounter_id LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = obs.concept_id WHERE patient_program.program_id = 17 " + 
                       "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric <= 140) OR (concept_name.name = 'Diastolic blood pressure' AND obs.value_numeric <= 90) " + 
-                      "AND obs.voided =  0 AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND obs.voided = 0 AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1310,7 +1313,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id " + 
                       "WHERE patient_program.patient_id IN (SELECT DISTINCT p1.patient_id from patient_program p1, patient_program p2 " + 
@@ -1339,12 +1342,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id " + 
                       "WHERE patient_program.patient_id IN (SELECT DISTINCT p1.patient_id from patient_program p1, patient_program p2 " + 
                       "WHERE p1.patient_id = p2.patient_id and p1.program_id = 13 and p2.program_id = 17) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1368,7 +1371,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
                       "AND orders.voided = 0 LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "AND encounter.voided = 0 and encounter.encounter_type = 158 " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id and obs.voided = 0 " + 
@@ -1398,13 +1401,13 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
                       "AND orders.voided = 0 LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "AND encounter.voided = 0 and encounter.encounter_type = 158 " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id and obs.voided = 0 " + 
                       "WHERE obs.concept_id In (9392, 9393) AND patient_program.patient_id IN " + 
                       "(SELECT DISTINCT p1.patient_id from patient_program p1, patient_program p2 WHERE p1.patient_id = p2.patient_id and p1.program_id = 13 and p2.program_id = 17) " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1428,7 +1431,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN concept_name ON obs.concept_id = concept_name.concept_id " + 
                       "WHERE concept_name.name IN('Systolic blood pressure', 'Diastolic blood pressure') " + 
@@ -1458,13 +1461,13 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN concept_name ON obs.concept_id = concept_name.concept_id " + 
                       "WHERE concept_name.name IN('Systolic blood pressure', 'Diastolic blood pressure') " + 
                       "AND patient_program.patient_id in (SELECT DISTINCT p1.patient_id from patient_program p1, patient_program p2 " + 
                       "WHERE p1.patient_id = p2.patient_id and p1.program_id = 13 and p2.program_id = 17) " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1488,7 +1491,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.patient_id IN (SELECT DISTINCT p1.patient_id from patient_program p1, patient_program p2 " + 
@@ -1518,13 +1521,13 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.patient_id IN (SELECT DISTINCT p1.patient_id from patient_program p1, patient_program p2 " + 
                       "WHERE p1.patient_id = p2.patient_id and p1.program_id = 13 and p2.program_id = 17) " + 
                       "AND obs.concept_id = 6381 AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1548,7 +1551,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.patient_id IN (SELECT DISTINCT p1.patient_id from patient_program p1, patient_program p2 " + 
@@ -1578,13 +1581,13 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.patient_id IN (SELECT DISTINCT p1.patient_id from patient_program p1, patient_program p2 " + 
                       "WHERE p1.patient_id = p2.patient_id and p1.program_id = 13 and p2.program_id = 17) " + 
                       "AND obs.concept_id IN (6381 , 9417, 9418) AND obs.value_numeric < 7 AND obs.voided = 0 AND encounter.voided = 0 " + 
-                      "AND patient_program.voided = 0 AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND patient_program.voided = 0 AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1608,7 +1611,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = obs.encounter_id " + 
                       "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id " + 
@@ -1640,7 +1643,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = obs.encounter_id " + 
                       "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id " + 
@@ -1648,7 +1651,7 @@ module.exports = function (router) {
                       "WHERE patient_program.patient_id IN (SELECT DISTINCT p1.patient_id from patient_program p1, patient_program p2 " + 
                       "WHERE p1.patient_id = p2.patient_id and p1.program_id = 13 and p2.program_id = 17) " + 
                       "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric <= 140) OR (concept_name.name = 'Diastolic blood pressure' AND obs.value_numeric <= 90) " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
 
             console.log(sql)
@@ -1673,7 +1676,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'DIABETES PROGRAM' " + 
                       "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
@@ -1700,10 +1703,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'DIABETES PROGRAM' " + 
-                      "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1727,7 +1730,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE obs.concept_id IN(9392, 9393) " + 
                       "AND encounter.encounter_type = 158 AND patient_program.program_id = 13 AND obs.voided = 0 " + 
@@ -1757,12 +1760,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE obs.concept_id IN(9392, 9393) " + 
                       "AND encounter.encounter_type = 158 AND patient_program.program_id = 13 AND obs.voided = 0 " + 
                       "AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1786,7 +1789,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.program_id = 13 AND obs.concept_id = 6381 AND obs.voided = 0 " + 
@@ -1815,12 +1818,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.program_id = 13 AND obs.concept_id = 6381 AND obs.voided = 0 " + 
                       "AND patient_program.voided = 0 AND encounter.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1844,7 +1847,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.program_id = 13 AND obs.concept_id IN (6381 , 9417, 9418) AND obs.value_numeric < 7 " + 
@@ -1872,12 +1875,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.program_id = 13 AND obs.concept_id IN (6381 , 9417, 9418) AND obs.value_numeric < 7 " + 
                       "AND obs.voided = 0 AND encounter.voided = 0 AND patient_program.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1901,7 +1904,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'ASTHMA PROGRAM' " + 
                       "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
@@ -1928,10 +1931,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'ASTHMA PROGRAM' " + 
-                      "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)          
 
@@ -1955,7 +1958,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 19 " + 
                       "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
@@ -1983,11 +1986,11 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 19 " + 
                       "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2011,7 +2014,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.program_id = 19 AND obs.concept_id IN(9542, 9553) AND obs.value_text = 'No' " + 
@@ -2040,12 +2043,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT (obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE patient_program.program_id = 19 AND obs.concept_id IN(9542, 9553) AND obs.value_text = 'No' " + 
                       "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2070,7 +2073,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'EPILEPSY PROGRAM' " + 
                       "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
@@ -2097,10 +2100,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
                       "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'EPILEPSY PROGRAM' " + 
-                      "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)         
 
@@ -2124,7 +2127,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 16 " + 
                       "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
@@ -2152,11 +2155,11 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE obs.concept_id IN(9392, 9393) AND encounter.encounter_type = 158 AND patient_program.program_id = 16 " + 
                       "AND obs.voided = 0 AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2180,7 +2183,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs INNER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs INNER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "WHERE obs.concept_id = 9517 AND obs.value_text = 'No' AND encounter.voided = 0 " + 
                       "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
 
@@ -2206,9 +2209,9 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs INNER JOIN encounter ON encounter.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs INNER JOIN encounter ON encounter.patient_id = obs.person_id " + 
                       "WHERE obs.concept_id = 9517 AND obs.value_text = 'No' AND encounter.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2232,7 +2235,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 9560, 9565, 9403) " + 
                       "AND obs.value_text IN ('Stroke', 'Strokes', 'Yes') AND obs.voided = 0 AND encounter.voided = 0 " + 
                       "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
@@ -2259,10 +2262,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 9560, 9565, 9403) " + 
                       "AND obs.value_text IN ('Stroke', 'Strokes', 'Yes') AND obs.voided = 0 AND encounter.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2286,7 +2289,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 9403 " + 
                       "AND obs.value_text = 'Myocardial Infarction' AND obs.voided = 0 AND encounter.voided = 0 " + 
                       "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
@@ -2313,10 +2316,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 9403 " + 
                       "AND obs.value_text = 'Myocardial Infarction' AND obs.voided = 0 AND encounter.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2340,7 +2343,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 6773, 9428) " + 
                       "AND obs.value_text = 'Serious Cardiac Problems' AND obs.voided = 0 AND encounter.voided = 0 " + 
                       "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
@@ -2367,10 +2370,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id IN(6178, 6773, 9428) " + 
                       "AND obs.value_text = 'Serious Cardiac Problems' AND obs.voided = 0 AND encounter.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2394,7 +2397,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.value_text LIKE '%Visual Blindness%' " + 
                       "AND obs.concept_id = 6406 AND obs.voided = 0 AND encounter.voided = 0 " + 
                       "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
@@ -2421,10 +2424,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.value_text LIKE '%Visual Blindness%' " + 
                       "AND obs.concept_id = 6406 AND obs.voided = 0 AND encounter.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2448,7 +2451,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 6406 " + 
                       "AND obs.value_text = 'Burns' AND obs.voided = 0 AND encounter.voided = 0 " + 
                       "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
@@ -2475,10 +2478,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc1_7.obs " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id WHERE obs.concept_id = 6406 " + 
                       "AND obs.value_text = 'Burns' AND obs.voided = 0 AND encounter.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2502,8 +2505,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id = 4052 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -2529,10 +2532,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id = 4052 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2556,8 +2559,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "WHERE concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id = 4046 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -2583,10 +2586,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "WHERE concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "WHERE concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id = 4046 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2610,8 +2613,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id IN(278, 279, 280, 281, 282) AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -2637,10 +2640,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id IN(278, 279, 280, 281, 282) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2664,8 +2667,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6872) " + 
                       "AND orders.concept_id = 1243 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -2691,10 +2694,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6872) " + 
                       "AND orders.concept_id = 1243 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2718,8 +2721,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id = 3187 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -2745,10 +2748,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6871) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6871) " + 
                       "AND orders.concept_id = 3187 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2772,8 +2775,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6872) " + 
                       "AND orders.concept_id = 3182 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -2799,10 +2802,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6872) " + 
                       "AND orders.concept_id = 3182 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2826,8 +2829,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6872) " + 
                       "AND orders.concept_id NOT IN(3182, 1243) AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -2853,10 +2856,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 6872) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6872) " + 
                       "AND orders.concept_id NOT IN(3182, 1243) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2880,8 +2883,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9243) " + 
                       "AND orders.concept_id = 798 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -2907,10 +2910,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9243) " + 
                       "AND orders.concept_id = 798 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2934,8 +2937,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9243) " + 
                       "AND orders.concept_id = 1240 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -2961,10 +2964,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9243) " + 
                       "AND orders.concept_id = 1240 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2988,8 +2991,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9243) " + 
                       "AND orders.concept_id NOT IN(798, 1240) AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -3015,10 +3018,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9243) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9243) " + 
                       "AND orders.concept_id = 1240 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -3042,8 +3045,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9246) " + 
                       "AND orders.concept_id IN(8249, 238) AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -3069,10 +3072,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9246) " + 
                       "AND orders.concept_id IN(8249, 238) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -3096,8 +3099,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9246) " + 
                       "AND orders.concept_id = 273 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -3123,10 +3126,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9246) " + 
                       "AND orders.concept_id = 273 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -3150,8 +3153,8 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9246) " + 
                       "AND orders.concept_id = 920 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
@@ -3177,10 +3180,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM ccc1_7.orders " + 
-                      "where concept_id IN (SELECT concept_id FROM ccc1_7.concept_set where concept_set = 9246) " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9246) " + 
                       "AND orders.concept_id = 920 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
