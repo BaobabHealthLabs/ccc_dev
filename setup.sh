@@ -112,7 +112,7 @@ getUserOption()
 
 if [ ${#GIT} == 0 ]; then
 
-  showMessageBox "Application Configuration" "HTS Setup" "Git not found. Installing Git.";
+  showMessageBox "Application Configuration" "CCC Setup" "Git not found. Installing Git.";
 
 	clear;
 	
@@ -126,7 +126,7 @@ fi
 
 if [ ${#MYSQL} == 0 ]; then
 
-  showMessageBox "Application Configuration" "HTS Setup" "MySQL not found. Installing MySQL.";
+  showMessageBox "Application Configuration" "CCC Setup" "MySQL not found. Installing MySQL.";
 
 	clear;
 	
@@ -138,7 +138,7 @@ if [ ${#MYSQL} == 0 ]; then
 
 else
 
-    showMessageBox "Application Configuration" "HTS Setup" "MySQL found: OK";
+    showMessageBox "Application Configuration" "CCC Setup" "MySQL found: OK";
 
 		clear;
 		
@@ -150,7 +150,7 @@ if [ ${#NODE} == 0 ]; then
 
     # echo "Installing Node.js";
     
-    showMessageBox "Application Configuration" "HTS Setup" "Node.js not found. Installing Node.js.";
+    showMessageBox "Application Configuration" "CCC Setup" "Node.js not found. Installing Node.js.";
 
 		clear;
 		
@@ -186,7 +186,7 @@ if [ ${#NODE} == 0 ]; then
 
 else
 
-    showMessageBox "Application Configuration" "HTS Setup" "Node.js found: OK";
+    showMessageBox "Application Configuration" "CCC Setup" "Node.js found: OK";
 
 		clear;
 		
@@ -194,7 +194,7 @@ fi
 
 if [ -f config/couchdb.json ]; then
 
-	showMessageBox "Application Configuration" "HTS Setup" "CouchDB configuration found. OK";
+	showMessageBox "Application Configuration" "CCC Setup" "CouchDB configuration found. OK";
 
 	clear;
 	
@@ -206,7 +206,7 @@ fi
 
 if [ -f config/database.json ]; then
 
-	showMessageBox "Application Configuration" "HTS Setup" "MySQL database configuration found. OK";
+	showMessageBox "Application Configuration" "CCC Setup" "MySQL database configuration found. OK";
 
 	clear;
 	
@@ -218,7 +218,7 @@ fi
 
 if [ -f config/site.json ]; then
 
-	showMessageBox "Application Configuration" "HTS Setup" "Site configuration found. OK";
+	showMessageBox "Application Configuration" "CCC Setup" "Site configuration found. OK";
 
 	clear;
 	
@@ -241,7 +241,7 @@ if [[ $online -eq 0 ]]; then
 
 	# read -p "Install or update shared dependencies [y/N]: " INSTALL_DEPENDS
 
-	getUserConfirmation "Application Configuration" "HTS Setup" "Install or update shared dependencies?";
+	getUserConfirmation "Application Configuration" "CCC Setup" "Install or update shared dependencies?";
 				
 	case $EXIT_CODE in
 		0)
@@ -284,7 +284,7 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			showMessageBox "Application Configuration" "HTS Setup" "Updating ../common/modules/";
+			showMessageBox "Application Configuration" "CCC Setup" "Updating ../common/modules/";
 	
 			cd ../common/modules;
 		
@@ -298,7 +298,7 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			showMessageBox "Application Configuration" "HTS Setup" "Cloning libraries into ../common/modules/";
+			showMessageBox "Application Configuration" "CCC Setup" "Cloning libraries into ../common/modules/";
 	
 			mkdir -p ../common;
 		
@@ -318,7 +318,7 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			showMessageBox "Application Configuration" "HTS Setup" "Updating ../common/touchscreentoolkit/";
+			showMessageBox "Application Configuration" "CCC Setup" "Updating ../common/touchscreentoolkit/";
 	
 			cd ../common/touchscreentoolkit;
 		
@@ -332,7 +332,7 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			showMessageBox "Application Configuration" "HTS Setup" "Cloning libraries into ../common/touchscreentoolkit/";
+			showMessageBox "Application Configuration" "CCC Setup" "Cloning libraries into ../common/touchscreentoolkit/";
 	
 			mkdir -p ../common;
 		
@@ -370,7 +370,7 @@ if [[ $online -eq 0 ]]; then
 
 		clear
 	
-		git pull https://$GIT_USERNAME:$GIT_PASSWORD@github.com/BaobabHealthTrust/hts.git;
+		git pull https://$GIT_USERNAME:$GIT_PASSWORD@github.com/BaobabHealthTrust/ccc_dev.git;
 
 	fi
 	
@@ -406,7 +406,7 @@ echo
 		
 # read -p "Configure application [y/N]: " CONFIGURE_APP
 
-getUserConfirmation "Application Configuration" "HTS Setup" "Configure application?";
+getUserConfirmation "Application Configuration" "CCC Setup" "Configure application?";
 			
 case $EXIT_CODE in
 	0)
@@ -609,52 +609,22 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 
 	clear
 
-	# read -p "Enter HTS made database name [default: hts_$TARGET_ENV]: " HTS_DATABASE;
+	# read -p "Enter CCC made database name [default: ccc_$TARGET_ENV]: " CCC_DATABASE;
 	
-	getUserData "Application Configuration" "MySQL OpenMRS Database Configuration" "Enter HTS main database name [default: hts_$TARGET_ENV]: ";
+	getUserData "Application Configuration" "MySQL OpenMRS Database Configuration" "Enter CCC main database name [default: ccc_$TARGET_ENV]: ";
 	
-	HTS_DATABASE=$RETVAL;
+	CCC_DATABASE=$RETVAL;
 	
 	clear			
 
-	if [ ${#HTS_DATABASE} == 0 ]; then
+	if [ ${#CCC_DATABASE} == 0 ]; then
 	
-		HTS_DATABASE="hts_$TARGET_ENV";
+		CCC_DATABASE="ccc_$TARGET_ENV";
 	
 	fi
 	
 	echo
 
-	# read -p "Enter HTS stock management database name [default: hts_"$TARGET_ENV"_inventory]: " HTS_INVENTORY_DATABASE;
-	
-	getUserData "Application Configuration" "MySQL OpenMRS Database Configuration" "Enter HTS stock management database name [default: hts_"$TARGET_ENV"_inventory]: ";
-	
-	HTS_INVENTORY_DATABASE=$RETVAL;
-	
-	clear			
-
-	if [ ${#HTS_INVENTORY_DATABASE} == 0 ]; then
-	
-		HTS_INVENTORY_DATABASE="hts_"$TARGET_ENV"_inventory";
-	
-	fi
-	
-	echo
-
-	# read -p "Enter HTS quality control database name [default: hts_"$TARGET_ENV"_quality_control]: " HTS_QUALITY_CONTROL_DATABASE;
-	
-	getUserData "Application Configuration" "MySQL OpenMRS Database Configuration" "Enter HTS quality control database name [default: hts_"$TARGET_ENV"_quality_control]: ";
-	
-	HTS_QUALITY_CONTROL_DATABASE=$RETVAL;
-	
-	clear			
-
-	if [ ${#HTS_QUALITY_CONTROL_DATABASE} == 0 ]; then
-	
-		HTS_QUALITY_CONTROL_DATABASE="hts_"$TARGET_ENV"_quality_control";
-	
-	fi
-	
 	node -e " var fs = require('fs'); \
 						var config = (fs.existsSync('./config/database.json') ? 
 							JSON.parse(fs.readFileSync('./config/database.json')) : \
@@ -664,9 +634,7 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 						config.host = \"$MYSQL_HOST\"; \
 						config.user = \"$MYSQL_USERNAME\"; \
 						config.password = \"$MYSQL_PASSWORD\"; \
-						config.database = \"$HTS_DATABASE\"; \
-						config.stockDatabase = \"$HTS_INVENTORY_DATABASE\"; \
-						config.qualityControlDatabase = \"$HTS_QUALITY_CONTROL_DATABASE\"; \
+						config.database = \"$CCC_DATABASE\"; \
 						fs.writeFileSync('./config/database.json', JSON.stringify(config, undefined, 4));";
 		
 	clear
@@ -693,32 +661,32 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 	clear			
 
-	# read -p "Is the facility location the same as HTS location? [Y/n]: " HTS_LOCATION_SAME_AS_FACILITY_LOCATION;
+	# read -p "Is the facility location the same as CCC location? [Y/n]: " CCC_LOCATION_SAME_AS_FACILITY_LOCATION;
 	
-	getUserConfirmation "Application Configuration" "Site Details Configuration" "Is the facility location the same as HTS location?";
+	getUserConfirmation "Application Configuration" "Site Details Configuration" "Is the facility location the same as CCC location?";
 			
 	case $EXIT_CODE in
 		0)
-			HTS_LOCATION_SAME_AS_FACILITY_LOCATION="y";;
+			CCC_LOCATION_SAME_AS_FACILITY_LOCATION="y";;
 		1)
-			HTS_LOCATION_SAME_AS_FACILITY_LOCATION="n";;
+			CCC_LOCATION_SAME_AS_FACILITY_LOCATION="n";;
 		255)
-			HTS_LOCATION_SAME_AS_FACILITY_LOCATION="y";;
+			CCC_LOCATION_SAME_AS_FACILITY_LOCATION="y";;
 	esac
 
 	clear		
 
-	if [ ${#HTS_LOCATION_SAME_AS_FACILITY_LOCATION} == 0 ] || [ $(echo "$HTS_LOCATION_SAME_AS_FACILITY_LOCATION" | tr '[:upper:]' '[:lower:]') == "y" ]; then
+	if [ ${#CCC_LOCATION_SAME_AS_FACILITY_LOCATION} == 0 ] || [ $(echo "$CCC_LOCATION_SAME_AS_FACILITY_LOCATION" | tr '[:upper:]' '[:lower:]') == "y" ]; then
 	
-		HTS_LOCATION=$FACILITY_LOCATION;
+		CCC_LOCATION=$FACILITY_LOCATION;
 		
 	else
 	
-		# read -p "Enter HTS facility location: " HTS_LOCATION;
+		# read -p "Enter CCC facility location: " CCC_LOCATION;
 	
-		getUserData "Application Configuration" "Site Details Configuration" "Enter HTS facility location: ";
+		getUserData "Application Configuration" "Site Details Configuration" "Enter CCC facility location: ";
 	
-		HTS_LOCATION=$RETVAL;
+		CCC_LOCATION=$RETVAL;
 	
 		clear			
 
@@ -726,11 +694,11 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 	echo
 
-	# read -p "Enter auto-incremental HTS identifiers reset month [JAN/feb/mar/apr/may/jun/jul/aug/sep/oct/nov/dec]: " RESET_MONTH
+	# read -p "Enter auto-incremental CCC identifiers reset month [JAN/feb/mar/apr/may/jun/jul/aug/sep/oct/nov/dec]: " RESET_MONTH
 	
 	declare -a MONTHS=("1" "January" "2" "February" "3" "March" "4" "April" "5" "May" "6" "June" "7" "July" "8" "August" "9" "September" "10" "October" "11" "November" "12" "December");
 
-	getUserOption "Application Configuration" "Site Details Configuration" "Enter auto-incremental HTS identifiers reset month: " MONTHS[@]
+	getUserOption "Application Configuration" "Site Details Configuration" "Enter auto-incremental CCC identifiers reset month: " MONTHS[@]
 
 	case $RETVAL in
 		1)
@@ -771,36 +739,36 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 	fi
 	
-	# read -p "Is the facility code for HTS the same as that for DDE which is '$SITE_CODE'? [Y/n]: " HTS_FACILITY_CODE_SAME_AS_SITE_CODE
+	# read -p "Is the facility code for CCC the same as that for DDE which is '$SITE_CODE'? [Y/n]: " CCC_FACILITY_CODE_SAME_AS_SITE_CODE
 	
-	getUserConfirmation "Application Configuration" "Site Details Configuration" "Is the facility code for HTS the same as that for DDE which is '$SITE_CODE'?";
+	getUserConfirmation "Application Configuration" "Site Details Configuration" "Is the facility code for CCC the same as that for DDE which is '$SITE_CODE'?";
 			
 	case $EXIT_CODE in
 		0)
-			HTS_FACILITY_CODE_SAME_AS_SITE_CODE="y";;
+			CCC_FACILITY_CODE_SAME_AS_SITE_CODE="y";;
 		1)
-			HTS_FACILITY_CODE_SAME_AS_SITE_CODE="n";;
+			CCC_FACILITY_CODE_SAME_AS_SITE_CODE="n";;
 		255)
-			HTS_FACILITY_CODE_SAME_AS_SITE_CODE="y";;
+			CCC_FACILITY_CODE_SAME_AS_SITE_CODE="y";;
 	esac
 
 	clear		
 
-	if [ ${#HTS_FACILITY_CODE_SAME_AS_SITE_CODE} == 0 ] || [ $(echo "$HTS_FACILITY_CODE_SAME_AS_SITE_CODE" | tr '[:upper:]' '[:lower:]') == "y" ]; then
+	if [ ${#CCC_FACILITY_CODE_SAME_AS_SITE_CODE} == 0 ] || [ $(echo "$CCC_FACILITY_CODE_SAME_AS_SITE_CODE" | tr '[:upper:]' '[:lower:]') == "y" ]; then
 	
-		HTS_FACILITY_CODE=$(echo "$SITE_CODE" | tr '[:lower:]' '[:upper:]' );
+		CCC_FACILITY_CODE=$(echo "$SITE_CODE" | tr '[:lower:]' '[:upper:]' );
 	
 	else 
 	
-		read -p "Enter HTS facility code [default: $SITE_CODE]: " HTS_FACILITY_CODE
+		read -p "Enter CCC facility code [default: $SITE_CODE]: " CCC_FACILITY_CODE
 	
-		if [ ${#HTS_FACILITY} == 0 ]; then
+		if [ ${#CCC_FACILITY} == 0 ]; then
 		
-			HTS_FACILITY_CODE=$(echo "$SITE_CODE" | tr '[:lower:]' '[:upper:]' );
+			CCC_FACILITY_CODE=$(echo "$SITE_CODE" | tr '[:lower:]' '[:upper:]' );
 		
 		else
 	
-			HTS_FACILITY_CODE=$(echo "$HTS_FACILITY_CODE" | tr '[:lower:]' '[:upper:]' );
+			CCC_FACILITY_CODE=$(echo "$CCC_FACILITY_CODE" | tr '[:lower:]' '[:upper:]' );
 		
 		fi
 	
@@ -828,9 +796,9 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 						}; \
 						config.facility = \"$FACILITY\"; \
 						config.location = \"$FACILITY_LOCATION\"; \
-						config['htc location'] = \"$HTS_LOCATION\"; \
+						config['htc location'] = \"$CCC_LOCATION\"; \
 						config['reset month'] = (months[\"$RESET_MONTH\"] ? months[\"$RESET_MONTH\"] : 'January'); \
-						config['facility_code'] = \"$HTS_FACILITY_CODE\"; \
+						config['facility_code'] = \"$CCC_FACILITY_CODE\"; \
 						fs.writeFileSync('./config/site.json', JSON.stringify(config, undefined, 4));";
 		
 	clear
@@ -972,21 +940,21 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 	
 	fi
 	
-	if [ ${#HTS_DATABASE} == 0 ]; then
+	if [ ${#CCC_DATABASE} == 0 ]; then
 	
-		HTS_DATABASE=$(node -e "console.log(require('./config/database.json').database);");
-	
-	fi
-	
-	if [ ${#HTS_INVENTORY_DATABASE} == 0 ]; then
-	
-		HTS_INVENTORY_DATABASE=$(node -e "console.log(require('./config/database.json').stockDatabase);");
+		CCC_DATABASE=$(node -e "console.log(require('./config/database.json').database);");
 	
 	fi
 	
-	if [ ${#HTS_QUALITY_CONTROL_DATABASE} == 0 ]; then
+	if [ ${#CCC_INVENTORY_DATABASE} == 0 ]; then
 	
-		HTS_QUALITY_CONTROL_DATABASE=$(node -e "console.log(require('./config/database.json').qualityControlDatabase);");
+		CCC_INVENTORY_DATABASE=$(node -e "console.log(require('./config/database.json').stockDatabase);");
+	
+	fi
+	
+	if [ ${#CCC_QUALITY_CONTROL_DATABASE} == 0 ]; then
+	
+		CCC_QUALITY_CONTROL_DATABASE=$(node -e "console.log(require('./config/database.json').qualityControlDatabase);");
 	
 	fi
 	
@@ -1015,22 +983,22 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 		
 		echo "Dropping databases if they exist...";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $HTS_DATABASE";
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $CCC_DATABASE";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $HTS_INVENTORY_DATABASE";
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $CCC_INVENTORY_DATABASE";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $HTS_QUALITY_CONTROL_DATABASE";
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $CCC_QUALITY_CONTROL_DATABASE";
 	
 		echo 
 		
 		echo "Creating databases...";
 		
 		# Create databases
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_DATABASE";
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $CCC_DATABASE";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_INVENTORY_DATABASE";
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $CCC_INVENTORY_DATABASE";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_QUALITY_CONTROL_DATABASE";
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $CCC_QUALITY_CONTROL_DATABASE";
 		
 		echo 
 		
@@ -1041,55 +1009,55 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 		
 		echo "Loading OpenMRS schema...";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/openmrs_1_7_2_concept_server_full_db.sql;
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE < ./db/openmrs_1_7_2_concept_server_full_db.sql;
 		
 		echo 
 		
 		echo "Loading inventory schema...";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_INVENTORY_DATABASE < ./db/inventory.sql;
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_INVENTORY_DATABASE < ./db/inventory.sql;
 		
 		echo 
 		
 		echo "Loading quality control schema...";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_QUALITY_CONTROL_DATABASE < ./db/quality_control.sql;
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_QUALITY_CONTROL_DATABASE < ./db/quality_control.sql;
 				
 		echo 
 		
 		echo "Loading inventory triggers schema...";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_INVENTORY_DATABASE < ./db/triggers.sql;
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_INVENTORY_DATABASE < ./db/triggers.sql;
 	
 		echo 
 		
-		echo "Loading HTS roles...";
+		echo "Loading CCC roles...";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/htc.roles.sql;
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE < ./db/htc.roles.sql;
 		
 		echo 
 		
 		echo "Loading nationalities...";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/nationalities.sql;
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE < ./db/nationalities.sql;
 		
 		echo 
 		
-		echo "Loading HTS initial user attributes...";
+		echo "Loading CCC initial user attributes...";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e 'DELETE FROM person_attribute WHERE person_id = 1; INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) VALUES((SELECT person_id FROM person LIMIT 1), "HTS-0001", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = "HTS Provider ID"), (SELECT user_id FROM users LIMIT 1), NOW(), (SELECT UUID()))';
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e 'DELETE FROM person_attribute WHERE person_id = 1; INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) VALUES((SELECT person_id FROM person LIMIT 1), "CCC-0001", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = "CCC Provider ID"), (SELECT user_id FROM users LIMIT 1), NOW(), (SELECT UUID()))';
 	
 		echo 
 		
-		echo "Loading HTS triggers...";
+		echo "Loading CCC triggers...";
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/htc_triggers.sql;
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE < ./db/htc_triggers.sql;
 	
 		echo
 	
 		echo "Loading locations..."
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location_tag (name, description, creator, date_created, uuid) VALUES ('HTS', 'HTS Locations', (SELECT user_id FROM users WHERE username = 'admin'), NOW(), (SELECT UUID()))";
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO location_tag (name, description, creator, date_created, uuid) VALUES ('CCC', 'CCC Locations', (SELECT user_id FROM users WHERE username = 'admin'), NOW(), (SELECT UUID()))";
 	
 		clear
 	
@@ -1113,21 +1081,21 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 	
 				echo
 				
-				# read -p "Enter location $i: " HTS_ROOM
+				# read -p "Enter location $i: " CCC_ROOM
 	
 				getUserData "Application Configuration" "Locations Configuration" "Enter location $i: ";
 	
-				HTS_ROOM=$RETVAL;
+				CCC_ROOM=$RETVAL;
 	
 				clear			
 
-				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location (name, description, creator, date_created, uuid) VALUES ('$HTS_ROOM', 'HTS location', (SELECT user_id FROM users WHERE username = 'admin'), NOW(), (SELECT UUID()))";
+				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO location (name, description, creator, date_created, uuid) VALUES ('$CCC_ROOM', 'CCC location', (SELECT user_id FROM users WHERE username = 'admin'), NOW(), (SELECT UUID()))";
 	
 			done
 		
 		fi
 		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location_tag_map (location_id, location_tag_id) SELECT location_id, (SELECT location_tag_id FROM location_tag WHERE name = 'HTS') FROM location WHERE description = 'HTS location'";
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO location_tag_map (location_id, location_tag_id) SELECT location_id, (SELECT location_tag_id FROM location_tag WHERE name = 'CCC') FROM location WHERE description = 'CCC location'";
 		
 	fi
 	
@@ -1147,13 +1115,13 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 	
 		SQL="SELECT COUNT(*) AS num FROM concept_name LEFT OUTER JOIN concept ON concept.concept_id = concept_name.concept_id WHERE name = '$concept' AND voided = 0 LIMIT 1";
 	
-		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
 	
 		if [ $COUNT == 0 ]; then
 	
-			LAST_INSERT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept (retired, datatype_id, class_id, creator, date_created, uuid) VALUES (0, 4, 11, 1, NOW(), (SELECT UUID())); SELECT LAST_INSERT_ID() AS num") | tr 'num\ ' '\ ');
+			LAST_INSERT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO concept (retired, datatype_id, class_id, creator, date_created, uuid) VALUES (0, 4, 11, 1, NOW(), (SELECT UUID())); SELECT LAST_INSERT_ID() AS num") | tr 'num\ ' '\ ');
 		
-			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept_name (concept_id, name, locale, creator, date_created, voided, uuid, concept_name_type) VALUES ('$LAST_INSERT_ID','$concept','en',(SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()), 'FULLY_SPECIFIED')";
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO concept_name (concept_id, name, locale, creator, date_created, voided, uuid, concept_name_type) VALUES ('$LAST_INSERT_ID','$concept','en',(SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()), 'FULLY_SPECIFIED')";
 		
 		fi
 
@@ -1196,11 +1164,11 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 	
 		SQL="SELECT COUNT(*) AS num FROM encounter_type WHERE name = '$encounterType' AND retired = 0 LIMIT 1";
 	
-		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
 	
 		if [ $COUNT == 0 ]; then
 	
-			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO encounter_type (name, description, creator, date_created, retired, uuid) VALUES ('$encounterType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO encounter_type (name, description, creator, date_created, retired, uuid) VALUES ('$encounterType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
 		
 		fi
 
@@ -1241,11 +1209,11 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 	
 		SQL="SELECT COUNT(*) AS num FROM patient_identifier_type WHERE name = '$identifierType' AND retired = 0 LIMIT 1";
 	
-		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
 	
 		if [ $COUNT == 0 ]; then
 	
-			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO patient_identifier_type (name, description, creator, date_created, retired, uuid) VALUES ('$identifierType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO patient_identifier_type (name, description, creator, date_created, retired, uuid) VALUES ('$identifierType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
 		
 		fi
 
@@ -1286,11 +1254,11 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 	
 		SQL="SELECT COUNT(*) AS num FROM person_attribute_type WHERE name = '$attributeType' AND retired = 0 LIMIT 1";
 	
-		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
 	
 		if [ $COUNT == 0 ]; then
 	
-			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO person_attribute_type (name, description, creator, date_created, retired, uuid) VALUES ('$attributeType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO person_attribute_type (name, description, creator, date_created, retired, uuid) VALUES ('$attributeType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
 		
 		fi
 
@@ -1308,27 +1276,27 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 
 		program=$(echo $program | tr "_" "\ ");
 	
-		PROGRAM_EXISTS=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "SELECT COUNT(*) AS num FROM program WHERE name = '$program'") | tr 'num\ ' '\ ');
+		PROGRAM_EXISTS=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "SELECT COUNT(*) AS num FROM program WHERE name = '$program'") | tr 'num\ ' '\ ');
 	
 		if [ $PROGRAM_EXISTS == 0 ]; then 
 	
 			SQL="SELECT COUNT(*) AS num FROM concept_name LEFT OUTER JOIN concept ON concept.concept_id = concept_name.concept_id WHERE name = '$program' AND voided = 0 LIMIT 1";
 	
-			COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+			COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
 	
 			if [ $COUNT == 0 ]; then
 	
-				CONCEPT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept (retired, datatype_id, class_id, creator, date_created, uuid) VALUES (0, 4, 11, 1, NOW(), (SELECT UUID())); SELECT LAST_INSERT_ID() AS num") | tr 'num\ ' '\ ');
+				CONCEPT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO concept (retired, datatype_id, class_id, creator, date_created, uuid) VALUES (0, 4, 11, 1, NOW(), (SELECT UUID())); SELECT LAST_INSERT_ID() AS num") | tr 'num\ ' '\ ');
 		
-				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept_name (concept_id, name, locale, creator, date_created, voided, uuid, concept_name_type) VALUES ('$CONCEPT_ID','$concept','en',(SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()), 'FULLY_SPECIFIED')";
+				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO concept_name (concept_id, name, locale, creator, date_created, voided, uuid, concept_name_type) VALUES ('$CONCEPT_ID','$concept','en',(SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()), 'FULLY_SPECIFIED')";
 		
-				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO program (concept_id, creator, date_created, retired, name, uuid) VALUES ('$CONCEPT_ID', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, '$program', (SELECT UUID()))";
+				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO program (concept_id, creator, date_created, retired, name, uuid) VALUES ('$CONCEPT_ID', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, '$program', (SELECT UUID()))";
 		
 			else
 		
-				CONCEPT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "SELECT concept_id AS id FROM concept_name WHERE name = '$program' LIMIT 1") | tr 'id\ ' '\ ');
+				CONCEPT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "SELECT concept_id AS id FROM concept_name WHERE name = '$program' LIMIT 1") | tr 'id\ ' '\ ');
 		
-				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO program (concept_id, creator, date_created, retired, name, uuid) VALUES ('$CONCEPT_ID', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, '$program', (SELECT UUID()))";
+				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $CCC_DATABASE -e "INSERT INTO program (concept_id, creator, date_created, retired, name, uuid) VALUES ('$CONCEPT_ID', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, '$program', (SELECT UUID()))";
 		
 			fi
 	
@@ -1348,7 +1316,7 @@ if [ ${#TARGET_ENV} == 0 ]; then
 
 	declare -a ENVIRONMENTS=("1" "development" "2" "production" "3" "test");
 
-	getUserOption "Application Startup Configuration" "HTS Setup" "Enter target application environment: " ENVIRONMENTS[@]
+	getUserOption "Application Startup Configuration" "CCC Setup" "Enter target application environment: " ENVIRONMENTS[@]
 
 	case $RETVAL in
 		1)
@@ -1381,7 +1349,7 @@ if [ ${#PM2} != 0 ] && [ $EXIT_CODE == 0 ]; then
 	
 	else
 	
-		node -e "var cg = {'name': 'hts', 'script': 'app.js', 'env_production': {'NODE_ENV':'$TARGET_ENV'}}; var fs = require('fs'); fs.writeFileSync('./process.json', JSON.stringify(cg, undefined, 4));"
+		node -e "var cg = {'name': 'ccc', 'script': 'app.js', 'env_production': {'NODE_ENV':'$TARGET_ENV'}}; var fs = require('fs'); fs.writeFileSync('./process.json', JSON.stringify(cg, undefined, 4));"
 	
 	fi
 
@@ -1393,6 +1361,6 @@ fi
 
 # echo "Done!";
 
-showMessageBox "Application Configuration" "HTS Setup" "Done!";
+showMessageBox "Application Configuration" "CCC Setup" "Done!";
 
 clear
