@@ -110,17 +110,21 @@ getUserOption()
   exec 3>&-	
 }
 
-if [ ${#GIT} == 0 ]; then
+if [[ $online -eq 0 ]]; then
 
-  showMessageBox "Application Configuration" "CCC Setup" "Git not found. Installing Git.";
+	if [ ${#GIT} == 0 ]; then
 
-	clear;
+		showMessageBox "Application Configuration" "CCC Setup" "Git not found. Installing Git.";
+
+		clear;
 	
-	sudo apt-get install git;
+		sudo apt-get install git;
 	
-else 
+	else 
 
-    echo "Git found: OK";
+		  echo "Git found: OK";
+
+	fi
 
 fi
 
