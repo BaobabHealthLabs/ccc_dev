@@ -24,7 +24,7 @@ showMessageBox()
   
   	clear;
   
-  	exit;
+  	exit 1;
   
   fi
   
@@ -43,7 +43,7 @@ getUserPassword()
   
   	clear;
   
-  	exit;
+  	exit 1;
   
   fi
   
@@ -62,7 +62,7 @@ getUserData()
   
   	clear;
   
-  	exit;
+  	exit 1;
   
   fi
   
@@ -81,7 +81,7 @@ getUserConfirmation()
   
   	clear;
   
-  	exit;
+  	exit 1;
   
   fi
   
@@ -103,7 +103,7 @@ getUserOption()
   
   	clear;
   
-  	exit;
+  	exit 1;
   
   fi  
   
@@ -1370,3 +1370,5 @@ fi
 showMessageBox "Application Configuration" "CCC Setup" "Done!";
 
 clear
+
+exit 0;
