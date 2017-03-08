@@ -35,7 +35,7 @@ getUserPassword()
 {
 	exec 3>&1
 	
-  RETVAL=$(dialog --clear --backtitle "$1" --title "$2" --passwordbox "$3" 16 51 2>&1 1>&3)
+  RETVAL=$(dialog --clear --backtitle "$1" --title "$2" --insecure --passwordbox "$3" 16 51 2>&1 1>&3)
   
   EXIT_CODE=$?
   
