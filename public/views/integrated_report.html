@@ -43,8 +43,8 @@
 <body oncontextmenu="return false;" style="margin: 0px;">
 <div align="center"
      style="font-size: 2.3em; background-color: rgb(98, 129, 167); color: rgb(238, 238, 238); padding: 15px;">
-        Chronic Care Clinic : Integrated CCC Cohort Report<br/>
-        Facility Name : <font id="facility"><font>
+        Chronic Care Clinic : Integrated CCC Cohort Report <br/>
+        Facility Name : <span id="facility"></span> (<span id="quarter"></span>)
 </div>
 
 <div style="width: 100%;height: 10px;">
@@ -1241,6 +1241,20 @@
     ajaxRequest('/integrated_reports/site','facility',0,function(data,id){
             __$(id).innerHTML = data
     });
+
+    function getQueryParams(qs) {
+        qs = qs.split('+').join(' ');
+        var params = {},
+            tokens,
+            re = /[?&]?([^=]+)=([^&]*)/g;
+
+        while (tokens = re.exec(qs)) {
+            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+        }
+
+        return params;
+    }
+    __$('quarter').innerHTML = getQueryParams(document.location.search).quarter;
     loadData();
 
 </script>
