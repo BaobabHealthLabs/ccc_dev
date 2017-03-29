@@ -98,6 +98,9 @@ module.exports = function (router) {
 
             });
 
+        // added for printing purposes, can be removed if later realised not to be neccessary. Mar 24th, 17
+        knex.destroy(sql);    
+
     }
 
     router.route("/new_registered_male")
@@ -3207,11 +3210,15 @@ module.exports = function (router) {
             });
 
         });
+
+
+
     router.route("/site")
       .get(function(req,res){
           var site = require(__dirname + "/../config/site.json");
           res.send([site.facility])
     });
+
     return router;
 
 }
