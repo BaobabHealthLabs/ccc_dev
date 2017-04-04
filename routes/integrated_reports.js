@@ -341,7 +341,7 @@ module.exports = function (router) {
             var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id " + 
-                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 45 " + 
+                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) >= 45 " + 
                       "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
                       "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
@@ -371,7 +371,7 @@ module.exports = function (router) {
             var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id " + 
-                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 45 " + 
+                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) >= 45 " + 
                       "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
                       "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
@@ -401,7 +401,7 @@ module.exports = function (router) {
             var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id " + 
-                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 65 " + 
+                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) >= 65 " + 
                       "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
@@ -430,7 +430,7 @@ module.exports = function (router) {
             var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total, patient_program.voided FROM " + database + ".patient_program " + 
                       "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id LEFT OUTER JOIN program " + 
                       "ON program.program_id = patient_program.program_id " + 
-                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) > 65 " + 
+                      "WHERE (year(patient_program.date_created) - year(person.birthdate)) >= 65 " + 
                       "AND program.name IN('HYPERTENSION PROGRAM', 'ASTHMA PROGRAM', 'DIABETES PROGRAM', 'EPILEPSY PROGRAM') AND patient_program.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
