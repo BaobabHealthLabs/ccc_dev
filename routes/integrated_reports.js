@@ -2736,10 +2736,11 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
-                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 3187 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN patient_program " + 
+                      "ON orders.patient_id = patient_program.patient_id WHERE orders.encounter_id IN " + 
+                      "(SELECT encounter_id FROM " + database + ".encounter WHERE encounter_type = 167 and voided = 0) AND orders.patient_id IN " + 
+                      "(SELECT patient_id FROM " + database + ".patient_program WHERE program_id = 20 AND voided = 0) AND orders.concept_id = 3187 " + 
+                      "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2763,10 +2764,11 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
-                      "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 3187 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN patient_program " + 
+                      "ON orders.patient_id = patient_program.patient_id WHERE orders.encounter_id IN " + 
+                      "(SELECT encounter_id FROM " + database + ".encounter WHERE encounter_type = 167 and voided = 0) AND orders.patient_id IN " + 
+                      "(SELECT patient_id FROM " + database + ".patient_program WHERE program_id = 20 AND voided = 0) AND orders.concept_id = 3187 " + 
+                      "AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
