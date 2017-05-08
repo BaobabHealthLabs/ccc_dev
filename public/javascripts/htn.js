@@ -1131,6 +1131,8 @@ function loadCardDashboard(){
 
     var patient_name = data["names"][0][name_keys[0]] + "\t" + data["names"][0][name_keys[2]] +"\t" +data["names"][0][name_keys[1]];
 
+    var patient_phone_number = data.attributes["Cell Phone Number"]
+
     __$("patient_name").innerHTML = patient_name;
 
 
@@ -1147,6 +1149,11 @@ function loadCardDashboard(){
             if(__$("female")){
                 __$("female").style.border ="2px solid red";
             }
+    }
+
+    if((patient_phone_number != "Undefined") || (patient_phone_number.length > 0)){
+        __$("patient_phone_number").innerHTML = patient_phone_number
+
     }
 
 

@@ -1042,6 +1042,8 @@ function loadCardDashboard(){
 	
 	var patient_name = data["names"][0][name_keys[0]] + "\t" + data["names"][0][name_keys[2]] +"\t" +data["names"][0][name_keys[1]];
 
+    var patient_phone_number = data.attributes["Cell Phone Number"]
+
 	__$("patient_name").innerHTML = patient_name;
 
 
@@ -1060,6 +1062,11 @@ function loadCardDashboard(){
         	}
     }
 
+    if((patient_phone_number != "Undefined") || (patient_phone_number.length > 0)){
+        __$("patient_phone_number").innerHTML = patient_phone_number
+
+    }
+
     //Address	
     var address = data.addresses["Current District"] +"\tDistrict, TA\t"
                 +data.addresses["Current T/A"]+",\t"+data.addresses["Current Village"]+"\tvillage";
@@ -1069,7 +1076,7 @@ function loadCardDashboard(){
     __$("address").innerHTML = address;
 
 
-    //Gardian Data
+    //Guardian Data
 
     var guardain = data.relationships;
     
@@ -1078,6 +1085,12 @@ function loadCardDashboard(){
    		__$("guardian_name").innerHTML = guardain[0].relative_name;	
 
    		__$("relation_to_patient").innerHTML =  guardain[0].relative_type;
+
+        if(guardain[guardain.length-1].phone_number){
+
+            __$("guardian_phone").innerHTML =  guardain[guardain.length-1].phone_number;
+
+        }
    	}
 
    //HIV ART Status
