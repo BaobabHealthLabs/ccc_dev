@@ -1307,12 +1307,10 @@ function loadCardDashboard(){
                 __$("female").style.border ="2px solid red";
             }
     }
-    
-    if((patient_phone_number != "Undefined") || (patient_phone_number.length > 0)){
-        __$("patient_phone_number").innerHTML = patient_phone_number
+    if (patient_phone_number){
+      __$('patient_phone_number').innerHTML = patient_phone_number
 
     }
-
    
 
 

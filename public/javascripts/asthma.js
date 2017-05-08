@@ -1062,7 +1062,8 @@ function loadCardDashboard(){
         	}
     }
 
-    if((patient_phone_number != "Undefined") || (patient_phone_number.length > 0)){
+    if(patient_phone_number){
+
         __$("patient_phone_number").innerHTML = patient_phone_number
 
     }
