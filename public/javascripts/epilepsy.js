@@ -465,6 +465,7 @@ function seizureType(response){
 }
 
 function familyHistory(concept_data){
+  //console.log("Here")
 
 	var concept_names = Object.keys(concept_data);
 
@@ -603,7 +604,7 @@ function medicalSurgicalHistory(encounter_data){
 
 			element_id_prefix = element_id_prefix.replace("/","").replace("__","_");
 
-			
+
 			if (encounter_data[concept_names[i]].response.value=="Yes"){
 
 				if(__$(element_id_prefix+"_unk")){
@@ -767,6 +768,7 @@ function postIctaFeatures(encounter_data){
 }
 
 function triggers(encounter_data){
+  //console.log(encounter_data)
 
 	var concept_names = Object.keys(encounter_data);
 
@@ -1113,6 +1115,7 @@ function epilepsyVisits(encounter_data,visitDate){
 
 
 	visitRows.push(visitRow);
+
 }
 
 function getTreatmentData(encounter_data,visit){
@@ -1151,7 +1154,7 @@ function getTreatmentData(encounter_data,visit){
 }
 
 function drawResponse(encounter,encounter_data,visit){
-	
+  //console.log(encounter)	
 
 
 	if(encounter=="EPILEPSY VISIT"){
@@ -1195,9 +1198,9 @@ function drawResponse(encounter,encounter_data,visit){
 					patientHistoryAtEnrollment(encounter_data[i]);
 
 					break;
-				case "FAMILY HISTORY":
+				case "EPILEPSY FAMILY HISTORY":
 
-
+          //console.log("Here")
 					familyHistory(encounter_data[i]);
 
 					break;
@@ -1474,7 +1477,7 @@ function loadCardDashboard(){
 
 	var visits;
 
-    console.log(patient_programs);
+    //console.log(patient_programs);
 
 	for(var i = 0 ; i < patient_program_keys.length; i++){
 
@@ -1489,7 +1492,7 @@ function loadCardDashboard(){
 
 			for (var k = encounters.length - 1; k >= 0; k--) {
 
-                console.log(encounters);
+                console.log(patient_programs[patient_program_keys[i]]["visits"][visits[j]][encounters[k]]);
 			
 				drawResponse(encounters[k],patient_programs[patient_program_keys[i]]["visits"][visits[j]][encounters[k]],visits[j]);
 
