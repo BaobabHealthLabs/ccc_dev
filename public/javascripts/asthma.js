@@ -338,7 +338,7 @@ function loadCheckConditions(){
 	var all_page_options = ["Asthma","COPD","Chronic dry cough",
 							"Indoor cooking","Occupational Exposure",
 							"TB Contact","Smoking","Secondhand smoking"];
-							
+
 
 	for(var i = 0; i < all_page_options.length; i++){
 
