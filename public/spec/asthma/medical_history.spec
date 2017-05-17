@@ -52,44 +52,51 @@ O.1.4.6.1.19. Other
 
 Q.1.4.6.2. Occupation Exposure Date[pos:: 10$$field_type::date$$id::occupational_exposure1$$parent::Exposures:Occupational Exposure]
 
-Q.1.5. Asthma history in the past month? [pos:: 11$$tt_requirenextclick::false$$parent::Diagnosis]
+Q.1.5. History of chronic dry cough? [pos:: 11$$id::chronic_dry_cough$$tt_requirenextclick::true$$parent::Diagnosis]
 O.1.5.1. Yes
 O.1.5.2. No
-O.1.5.3. Unknown
 
-Q.1.6. History of TB in the Past Two Years? [pos:: 12$$tt_requirenextclick::false$$parent::Diagnosis]
-O.1.6.1. Yes
-O.1.6.2. No
+Q.1.6. Chronic dry cough duration [pos:: 12$$field_type::number$$parent:: History of chronic dry cough?$$condition::__$('chronic_dry_cough').value =="Yes"$$tt_pageStyleClass :: Numeric NumbersOnly]
 
-Q.1.7. History of Stroke? [pos:: 13$$tt_requirenextclick::false$$parent::Diagnosis]
-O.1.7.1. Yes
-O.1.7.2. No
+Q.1.7. Chronic dry cough Age onset [pos::13$$field_type::number$$parent::History of chronic dry cough?$$condition::__$('chronic_dry_cough').value =="Yes"$$tt_pageStyleClass :: Numeric NumbersOnly]
 
-Q.1.8. Chest deformities at Birth? [pos:: 14$$tt_requirenextclick::false$$parent::Diagnosis]
+Q.1.8. Asthma history in the past month? [pos:: 14$$tt_requirenextclick::false$$parent::Diagnosis]
 O.1.8.1. Yes
 O.1.8.2. No
+O.1.8.3. Unknown
 
-Q.1.9. Complications [pos:: 15$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$ helpText :: Does the patient have any of these complications$$parent::Diagnosis ]
-O.1.9.1. Amputation
-O.1.9.2. Stroke
-O.1.9.3. Ulcers
-O.1.9.4. Myocardial Injactia
-O.1.9.5. Impotence
-O.1.9.6. Visual Blindness
-O.1.9.7. Foot Ulcers
-O.1.9.8. Peripheral nueropathy
-0.1.9.9. CVA
+Q.1.9. History of TB in the Past Two Years? [pos:: 15$$tt_requirenextclick::false$$parent::Diagnosis]
+O.1.9.1. Yes
+O.1.9.2. No
 
-Q.1.10. Advice on life changes [pos:: 16$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$parent::Diagnosis]
-O.1.10.1. Cigarette or smoke free enviroment
-O.1.10.2. Correct use of inhaler
-O.1.10.3. Weight loss
-O.1.10.4. Breathing exercises
-O.1.10.5. Allergen avoidance
-O.1.10.6. Acid reflux
+Q.1.9. History of Stroke? [pos:: 16$$tt_requirenextclick::false$$parent::Diagnosis]
+O.1.9.1. Yes
+O.1.9.2. No
 
-Q.1.11. Summary [pos :: 17 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Asthma Medical History Summary $$condition::true]
-     
+Q.1.10. Chest deformities at Birth? [pos:: 17$$tt_requirenextclick::false$$parent::Diagnosis]
+O.1.10.1. Yes
+O.1.10.2. No
+
+Q.1.11. Complications [pos:: 18$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$ helpText :: Does the patient have any of these complications$$parent::Diagnosis ]
+O.1.11.1. Amputation
+O.1.11.2. Stroke
+O.1.11.3. Ulcers
+O.1.11.4. Myocardial Injactia
+O.1.11.5. Impotence
+O.1.11.6. Visual Blindness
+O.1.11.7. Foot Ulcers
+O.1.11.8. Peripheral nueropathy
+0.1.11.9. CVA
+
+Q.1.12. Advice on life changes [pos:: 19$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$parent::Diagnosis]
+O.1.12.1. Cigarette or smoke free enviroment
+O.1.12.2. Correct use of inhaler
+O.1.12.3. Weight loss
+O.1.12.4. Breathing exercises
+O.1.12.5. Allergen avoidance
+O.1.12.6. Acid reflux
+
+Q.1.13. Summary [pos :: 20 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Asthma Medical History Summary $$condition::true]
      
      
      

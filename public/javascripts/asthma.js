@@ -1264,7 +1264,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="year"){
+				if(response =="yr"){
 
 				
                     span.removeAttribute("class");
