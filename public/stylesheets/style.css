@@ -2,7 +2,6 @@ body {
     padding: 0px;
     margin: 1px;
     font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
-    overflow: auto;
     -moz-user-select: none;
 }
 
