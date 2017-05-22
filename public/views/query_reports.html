@@ -38,9 +38,19 @@
                 endDate: year + "-12-31"
             }
         }
+        var this_path = window.location.href;
+   
+        var report = this_path.split("=").splice(-1)
+
+        if (report == "integrated"){
 
         var path = "/views/integrated_report.html?start_date=" + quarters[qtr].startDate + "&end_date=" + quarters[qtr].endDate+"&quarter="+value 
 
+    }else {
+
+        var path = "/views/biannual_report.html?start_date=" + quarters[qtr].startDate + "&end_date=" + quarters[qtr].endDate+"&quarter="+value 
+
+        }
         window.location = path;
 
     }
