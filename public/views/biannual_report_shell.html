@@ -12,8 +12,8 @@
         border: 1px solid;
     }
     .card th{
-        background: #6281a7;
-        color: #ffffff;
+        #background: #6281a7;
+        #color: #ffffff;
 
 
     }
@@ -31,6 +31,20 @@
         text-decoration: none;
         color: black;
     }
+    .condition {
+         border-right: 1px solid #305d97; 
+         border-top: 1px solid #305d97; 
+         border-bottom: 1px solid #ffffff; 
+         width: 25%;
+         background: #6281a7;
+    }
+    .medicine {
+        border-right: 1px solid #305d97; 
+        border-top: 1px solid #305d97; 
+        border-bottom: 1px solid #305d97; 
+        width: 40%;
+        background: #6281a7;
+    }
 </style>
 
 <div style="width: 100%;height: 10px;">
@@ -41,346 +55,415 @@
     </div>    
 </div>
 
-<table class="card">
-<table style="border-collapse: collapse;" border="1" cellpadding="10" width="100%">
+<table>
+
+<table style="border-collapse: collapse;" border="1" cellpadding="10" width="100%" class="card">
     <tr>
         <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
             Condition
         </th>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            &nbsp;
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 45%;">
             Variables
         </th>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 15%;">
             New
         </th>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 15%;">
             Cumulative
         </th>
     </tr>
-<tbody>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-            1.0 Hypertension
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Total number of patients transferred-in
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>    
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Total number of patients transferred-out
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Total number of patients alive and in care
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients with blood pressure controlled (bp ≤ 140/90)
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients with bp ≥ 180/110 at last visit
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Total number of patients who have defaulted
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients who currently drink alcohol
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients who are overweight
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients who are obese
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of adults (< 65) who have died
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients who currently smokes
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients categorized as high risk for adverse events such as heart attack, heart failure, stroke and death*
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients with abnormal urine/creatinine
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients who are obese
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients with stroke 
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients with other cardiovascular disease
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients with renal failure
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients with  renal failure and on dialysis*
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of diabetics with active or past TB
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of hypertensive patients with HIV
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of hypertensive patients with depression
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-           &nbsp;
-        </th>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Number of patients with hypertensive retinopathy
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;"id="new_registered_male" align="center">
-            &nbsp;
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="cumulative_registered_male" align="center">
-            &nbsp;
-        </td>
-    </tr>
-</tbody>
-</table>
-<table class="card">
     <tbody>
         <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+            <th class="condition">
+                1.0 Hypertension
+            </th>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                1
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Total number of patients transferred-in
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>    
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                2
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Total number of patients transferred-out
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                3
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Total number of patients alive and in care
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                4
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with blood pressure controlled (bp ≤ 140/90)
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                5
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with bp ≥ 180/110 at last visit
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                6
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Total number of patients who have defaulted
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                7
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients who currently drink alcohol
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                8
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients who are overweight
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                9
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients who are obese
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                10
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of adults (< 65) who have died
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                11
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients who currently smokes
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                12
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients categorized as high risk for adverse events such as heart attack, heart failure, stroke and death*
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                13
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with abnormal urine/creatinine
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                14
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients who are obese
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                15
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with stroke 
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                16
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with other cardiovascular disease
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                17
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with renal failure
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                18
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with  renal failure and on dialysis*
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                19
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of diabetics with active or past TB
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                20
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of hypertensive patients with HIV
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                21
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of hypertensive patients with depression
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+                22
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with hypertensive retinopathy
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;"id="new_registered_male" align="center">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="cumulative_registered_male" align="center">
+                &nbsp;
+            </td>
+        </tr>
+        <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
             2.0 Diabetes
         </th>
-         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of  patients with type 2 diabetes on insulin
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_under_14">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_under_14">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_under_14">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_under_14">
             &nbsp;
         </td>
     </tr>
@@ -388,13 +471,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of patients alive and in care
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_between_14_to_44" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_between_14_to_44" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_between_14_to_44" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_between_14_to_44" align="center">
             &nbsp;
         </td>
     </tr>
@@ -402,13 +488,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of adults who have died
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_between_45_to_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_between_45_to_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_between_45_to_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_between_45_to_64" align="center">
             &nbsp;
         </td>
     </tr>
@@ -416,13 +505,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of patients with blood sugar controlled (fbs <=7mmol/l)
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_above_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_above_64" align="center">
             &nbsp;
         </td>
     </tr>
@@ -430,13 +522,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of patients categorized as high risk for adverse events such as heart attack, heart failure, stroke and death
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_above_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_above_64" align="center">
             &nbsp;
         </td>
     </tr>
@@ -444,13 +539,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            6
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of patients with stroke
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_above_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_above_64" align="center">
             &nbsp;
         </td>
     </tr>
@@ -458,13 +556,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            7
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of patients with renal failure
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_above_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_above_64" align="center">
             &nbsp;
         </td>
     </tr>
@@ -472,13 +573,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            8
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of patients with  renal failure that are on dialysis*
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_above_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_above_64" align="center">
             &nbsp;
         </td>
     </tr>
@@ -486,13 +590,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
          Number of patients with diabetes foot ulcers
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_above_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_above_64" align="center">
             &nbsp;
         </td>
     </tr>
@@ -500,13 +607,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            10
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
          Number of patients with amputations
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_above_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_above_64" align="center">
             &nbsp;
         </td>
     </tr>
@@ -514,13 +624,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            11
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
          Number of patients with diabetes retinal complications
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_above_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_above_64" align="center">
             &nbsp;
         </td>
     </tr>
@@ -528,13 +641,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            12
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
          Number of diabetics with HIV
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_above_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_above_64" align="center">
             &nbsp;
         </td>
     </tr>
@@ -542,31 +658,33 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            13
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
          Number of diabetic patients with depression
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_above_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_above_64" align="center">
             &nbsp;
         </td>
     </tr>
-    </tbody>
-    </table>
-<table class="card">
-    <tbody>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
             Hypertension & Diabetes
         </th>
-         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of patients with  hypertension and diabetes diagnosis
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_diabetes_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_diabetes_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_diabetes_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_diabetes_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -574,13 +692,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
          Number of patients with blood pressure controlled (bp ≤ 140/90)
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_registered_above_64" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_above_64" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_above_64" align="center">
             &nbsp;
         </td>
     </tr>
@@ -588,13 +709,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of patients with blood sugar controlled (fbs <=7mmol/l)
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_hypertension_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_hypertension_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_hypertension_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_hypertension_alone" align="center">
             &nbsp;
         </td>
         </tr>
@@ -602,13 +726,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of patients categorized as high risk for adverse events such as heart attack, heart failure, stroke and death
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_diabetes_and_hypertension" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_diabetes_and_hypertension" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_diabetes_and_hypertension" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_diabetes_and_hypertension" align="center">
             &nbsp;
         </td>
     </tr>
@@ -616,46 +743,50 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of patients with retinopathy
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_asthma" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_asthma" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_asthma" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_asthma" align="center">
             &nbsp;
         </td>
     </tr>
-    </tbody>
-    </table>
-
-<table class="card">
-    <tbody>
     <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+        <th class="condition">
             3.0 Asthma
         </th>
-         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of patients transferred-in
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="new_registered_male" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="new_registered_male" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_attended_the_clinic" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_attended_the_clinic" align="center">
             &nbsp;
         </td>
     </tr>
-    <tr>
+    <tr style="border-top: 3px solid #305d97;">
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of patients that have defaulted
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="new_registered_female" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="new_registered_female" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_did_not_attend_in_quarter" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_did_not_attend_in_quarter" align="center">
             &nbsp;
         </td>
         </tr>
@@ -663,13 +794,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of patients alive and in care
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="new_registered_female" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="new_registered_female" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_treatment_stopped" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_treatment_stopped" align="center">
             &nbsp;
         </td>
     </tr>
@@ -677,13 +811,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of patients with poor Asthma control requiring admission
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="new_registered_female" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="new_registered_female" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_registered_female" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_registered_female" align="center">
             &nbsp;
         </td>
     </tr>
@@ -691,32 +828,33 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of patients with uncontrolled asthma in the last three visit? 
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;" id="new_registered_female" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%;" id="new_registered_female" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_transfer_out" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_transfer_out" align="center">
             &nbsp;
         </td>
     </tr>
-</tbody>
-</table>
-
-<table class="card">
-    <tbody>
-    <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
             4.0 Chronic Obstructive Pulmonary (Lung)  Disease
         </th>
-         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of COPD patients alive and in care
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_obese" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_obese" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_obese" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_obese" align="center">
             &nbsp;
         </td>
     </tr>
@@ -724,31 +862,33 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of patients with uncontrolled copd in the last three visit
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_current_smoker" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_current_smoker" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_current_smoker" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_current_smoker" align="center">
             &nbsp;
         </td>
     </tr>
-</tbody>
-</table>
-<table class="card">
-    <tbody>
     <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+        <th  class="condition">
             5.0 Epilepsy
         </th>
-         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of patients that have defaulted
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_attended_clinic_ht_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_attended_clinic_ht_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_attended_clinic_ht_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_attended_clinic_ht_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -756,13 +896,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of patients alive and in care
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_medication_prescribed_ht_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_medication_prescribed_ht_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_medication_prescribed_ht_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_medication_prescribed_ht_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -770,31 +913,33 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Number of patients with controlled  seizure  at last visit
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_blood_pressure_measured_ht_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_blood_pressure_measured_ht_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_blood_pressure_measured_ht_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_blood_pressure_measured_ht_alone" align="center">
             &nbsp;
         </td>
     </tr>
-</tbody>
-</table>
-<table class="card">
-    <tbody>
     <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+        <th  class="condition">
             7.0 Cancer
         </th>
-         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Cumulative number of patients on palliative care 
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_attended_clinic_ht_and_dt" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_attended_clinic_ht_and_dt" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_attended_clinic_ht_and_dt" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_attended_clinic_ht_and_dt" align="center">
             &nbsp;
         </td>
     </tr>
@@ -802,63 +947,67 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Newly registered cases of patients on palliative care 
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_medication_prescribed_ht_and_dt" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_medication_prescribed_ht_and_dt" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_medication_prescribed_ht_and_dt" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_medication_prescribed_ht_and_dt" align="center">
             &nbsp;
         </td>
     </tr>
-</tbody>
-</table>
-<table class="card">
-    <tbody>
     <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <th  class="condition">
             8.0 Mental Disorder
         </th>
-         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of patients with depression 
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_attended_clinic_diabetes_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_attended_clinic_diabetes_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_attended_clinic_diabetes_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_attended_clinic_diabetes_alone" align="center">
             &nbsp;
         </td>
     </tr>
-<table class="card">
-    <tbody>
      <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <th  class="condition">
             9.0 Road Traffic Accidents
         </th>
-         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Number of road traffic deaths at health facility 
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_attended_clinic_asthma_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_attended_clinic_asthma_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_attended_clinic_asthma_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_attended_clinic_asthma_alone" align="center">
             &nbsp;
         </td>
     </tr>
-<table class="card">
-    <tbody>
      <tr>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <th class="condition">
             Drugs
         </th>
-         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-           Stock-out of of essential NCDs medicine
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" align="center">
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 45%; text-align: centre">
+         Stock-out of of essential NCDs medicine
+        </th>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" align="center">
             &nbsp;<a href="/" id="new_attended_clinic_epilepsy_alone" class="drill-down"></a>
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_attended_clinic_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_attended_clinic_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -866,13 +1015,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97;border-left: 1px solid #305d97;border-bottom: 1px solid #305d97;width: 5%;" id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <th class="medicine">
             Anti-hypertensives
         </th>
-        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_medication_prescribed_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_medication_prescribed_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_medication_prescribed_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_medication_prescribed_epilepsy_alone" align="center">
             &nbsp;
         </td>
         </tr>
@@ -880,13 +1032,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Hydrochlorthizide
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -894,13 +1049,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Amlodipine
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -908,13 +1066,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Nifedipine
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -922,13 +1083,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Captopril
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -936,13 +1100,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Propranolol
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -950,13 +1117,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Antenolol
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -964,28 +1134,33 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <th  class="medicine">
             Anti-diabetics
         </th>
-        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_medication_prescribed_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_medication_prescribed_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_medication_prescribed_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_medication_prescribed_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        </tr>
-    <tr>
+    </tr>
     <tr>
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Mertiformin
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -993,13 +1168,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Soluble-insulin
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1007,13 +1185,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Lente-insulin
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1021,13 +1202,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Glibenclamide
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1035,13 +1219,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <th class="medicine">
             Anti-asthmas
         </th>
-        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_medication_prescribed_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_medication_prescribed_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_medication_prescribed_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_medication_prescribed_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1049,13 +1236,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Aminophylline tablets
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1063,13 +1253,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Iv aminophylline
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1077,13 +1270,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Salbutamol
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1091,13 +1287,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <th class="medicine">
             Anti-epileptics
         </th>
-        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_medication_prescribed_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_medication_prescribed_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_medication_prescribed_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_medication_prescribed_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1105,13 +1304,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Carbamazepine
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1119,13 +1321,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Diazepam
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1133,13 +1338,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Ethosuximide
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1147,13 +1355,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Magnesium Sulphate
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1161,13 +1372,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            Paraldehyde
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1175,13 +1389,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
             Phenobarbitone Sodium
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1189,13 +1406,16 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Pheytoin Sodium
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Pheytoin Sodium
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
@@ -1203,231 +1423,21 @@
         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
-            Sodium Valproate
-        </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" align="center">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Sodium Valproate
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_no_seizure_epilepsy_alone" align="center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_no_seizure_epilepsy_alone" align="center">
             &nbsp;
         </td>
     </tr>
 </tbody>
 </table>
-
-// <script>
-
-//     var path = window.location.href;
-
-//     var startDate = (path.match(/start_date\=(\d{4}\-\d{2}\-\d{2})/) ? path.match(/start_date\=(\d{4}\-\d{2}\-\d{2})/)[1] : "");
-
-//     var endDate = (path.match(/end_date\=(\d{4}\-\d{2}\-\d{2})/) ? path.match(/end_date\=(\d{4}\-\d{2}\-\d{2})/)[1] : "");
-
-//     function __$(id) {
-
-//         return document.getElementById(id);
-
-//     }
-
-//     var links = {
-//             "new_registered_male": "/integrated_reports/new_registered_male?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_registered_male": "/integrated_reports/cumulative_registered_male?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_registered_female": "/integrated_reports/new_registered_female?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_registered_female": "/integrated_reports/cumulative_registered_female?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_registered_under_14": "/integrated_reports/new_registered_under_14?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_registered_under_14": "/integrated_reports/cumulative_registered_under_14?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_registered_between_14_to_44": "/integrated_reports/new_registered_between_14_to_44?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_registered_between_14_to_44": "/integrated_reports/cumulative_registered_between_14_to_44?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_registered_between_45_to_64": "/integrated_reports/new_registered_between_45_to_64?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_registered_between_45_to_64": "/integrated_reports/cumulative_registered_between_45_to_64?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_registered_above_64": "/integrated_reports/new_registered_above_64?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_registered_above_64": "/integrated_reports/cumulative_registered_above_64?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_diabetes_alone": "/integrated_reports/new_diabetes_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_diabetes_alone": "/integrated_reports/cumulative_diabetes_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_hypertension_alone": "/integrated_reports/new_hypertension_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_hypertension_alone": "/integrated_reports/cumulative_hypertension_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_diabetes_and_hypertension": "/integrated_reports/new_diabetes_and_hypertension?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_diabetes_and_hypertension": "/integrated_reports/cumulative_diabetes_and_hypertension?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_asthma": "/integrated_reports/new_asthma?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_asthma": "/integrated_reports/cumulative_asthma?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_epilepsy": "/integrated_reports/new_epilepsy?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_epilepsy": "/integrated_reports/cumulative_epilepsy?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_other": "/integrated_reports/new_other?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_other": "/integrated_reports/cumulative_other?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_attended_the_clinic": "/integrated_reports/cumulative_attended_the_clinic?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_did_not_attend_in_quarter": "/integrated_reports/cumulative_did_not_attend_in_quarter?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_treatment_stopped": "/integrated_reports/cumulative_treatment_stopped?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_transfer_out": "/integrated_reports/cumulative_transfer_out?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_died": "/integrated_reports/cumulative_died?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_lost_to_follow_up": "/integrated_reports/cumulative_lost_to_follow_up?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_obese": "/integrated_reports/new_obese?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_obese": "/integrated_reports/cumulative_obese?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_current_smoker": "/integrated_reports/new_current_smoker?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_current_smoker": "/integrated_reports/cumulative_current_smoker?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_drinks_alcohol": "/integrated_reports/new_drinks_alcohol?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_drinks_alcohol": "/integrated_reports/cumulative_drinks_alcohol?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_attended_clinic_ht_alone": "/integrated_reports/new_attended_clinic_ht_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_attended_clinic_ht_alone": "/integrated_reports/cumulative_attended_clinic_ht_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_medication_prescribed_ht_alone": "/integrated_reports/new_medication_prescribed_ht_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_medication_prescribed_ht_alone": "/integrated_reports/cumulative_medication_prescribed_ht_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_blood_pressure_measured_ht_alone": "/integrated_reports/new_blood_pressure_measured_ht_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_blood_pressure_measured_ht_alone": "/integrated_reports/cumulative_blood_pressure_measured_ht_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_blood_pressure_controlled_ht_alone": "/integrated_reports/new_blood_pressure_controlled_ht_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_blood_pressure_controlled_ht_alone": "/integrated_reports/cumulative_blood_pressure_controlled_ht_alone?start_date=" + startDate + "&end_date=" + endDate,
-//              "new_attended_clinic_ht_and_dt": "/integrated_reports/new_attended_clinic_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_attended_clinic_ht_and_dt": "/integrated_reports/cumulative_attended_clinic_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_medication_prescribed_ht_and_dt": "/integrated_reports/new_medication_prescribed_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_medication_prescribed_ht_and_dt": "/integrated_reports/cumulative_medication_prescribed_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_blood_pressure_measured_ht_and_dt": "/integrated_reports/new_blood_pressure_measured_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_blood_pressure_measured_ht_and_dt": "/integrated_reports/cumulative_blood_pressure_measured_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_bgm_ht_and_dt": "/integrated_reports/new_bgm_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_bgm_ht_and_dt": "/integrated_reports/cumulative_bgm_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_bgc_fbg_ht_and_dt": "/integrated_reports/new_bgc_fbg_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_bgc_fbg_ht_and_dt": "/integrated_reports/cumulative_bgc_fbg_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_bpc_ht_and_dt": "/integrated_reports/new_bpc_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_bpc_ht_and_dt": "/integrated_reports/cumulative_bpc_ht_and_dt?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_attended_clinic_diabetes_alone": "/integrated_reports/new_attended_clinic_diabetes_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_attended_clinic_diabetes_alone": "/integrated_reports/cumulative_attended_clinic_diabetes_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_medication_prescribed_diabetes_alone": "/integrated_reports/new_medication_prescribed_diabetes_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_medication_prescribed_diabetes_alone": "/integrated_reports/cumulative_medication_prescribed_diabetes_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_bgm_diabetes_alone": "/integrated_reports/new_bgm_diabetes_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_bgm_diabetes_alone": "/integrated_reports/cumulative_bgm_diabetes_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_bgc_fbg_diabetes_alone": "/integrated_reports/new_bgc_fbg_diabetes_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_bgc_fbg_diabetes_alone": "/integrated_reports/cumulative_bgc_fbg_diabetes_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_attended_clinic_asthma_alone": "/integrated_reports/new_attended_clinic_asthma_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_attended_clinic_asthma_alone": "/integrated_reports/cumulative_attended_clinic_asthma_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_medication_prescribed_asthma_alone": "/integrated_reports/new_medication_prescribed_asthma_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_medication_prescribed_asthma_alone": "/integrated_reports/cumulative_medication_prescribed_asthma_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_no_asthma_in_3months_asthma_alone": "/integrated_reports/new_no_asthma_in_3months_asthma_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_no_asthma_in_3months_asthma_alone": "/integrated_reports/cumulative_no_asthma_in_3months_asthma_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_attended_clinic_epilepsy_alone": "/integrated_reports/new_attended_clinic_epilepsy_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_attended_clinic_epilepsy_alone": "/integrated_reports/cumulative_attended_clinic_epilepsy_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_medication_prescribed_epilepsy_alone": "/integrated_reports/new_medication_prescribed_epilepsy_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_medication_prescribed_epilepsy_alone": "/integrated_reports/cumulative_medication_prescribed_epilepsy_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_no_seizure_epilepsy_alone": "/integrated_reports/new_no_seizure_epilepsy_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_no_seizure_epilepsy_alone": "/integrated_reports/cumulative_no_seizure_epilepsy_alone?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_disease_complications_stroke": "/integrated_reports/new_disease_complications_stroke?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_disease_complications_stroke": "/integrated_reports/cumulative_disease_complications_stroke?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_disease_complications_mi": "/integrated_reports/new_disease_complications_mi?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_disease_complications_mi": "/integrated_reports/cumulative_disease_complications_mi?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_disease_complications_cd": "/integrated_reports/new_disease_complications_cd?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_disease_complications_cd": "/integrated_reports/cumulative_disease_complications_cd?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_disease_complications_blindness": "/integrated_reports/new_disease_complications_blindness?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_disease_complications_blindness": "/integrated_reports/cumulative_disease_complications_blindness?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_disease_complications_burns": "/integrated_reports/new_disease_complications_burns?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_disease_complications_burns": "/integrated_reports/cumulative_disease_complications_burns?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_diabetic_drug_metformin": "/integrated_reports/new_anti_diabetic_drug_metformin?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_diabetic_drug_metformin": "/integrated_reports/cumulative_anti_diabetic_drug_metformin?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_diabetic_drug_glibenclamide": "/integrated_reports/new_anti_diabetic_drug_glibenclamide?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_diabetic_drug_glibenclamide": "/integrated_reports/cumulative_anti_diabetic_drug_glibenclamide?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_diabetic_drug_insuline": "/integrated_reports/new_anti_diabetic_drug_insuline?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_diabetic_drug_insuline": "/integrated_reports/cumulative_anti_diabetic_drug_insuline?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_hypertensive_drug_hydro": "/integrated_reports/new_anti_hypertensive_drug_hydro?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_hypertensive_drug_hydro": "/integrated_reports/cumulative_anti_hypertensive_drug_hydro?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_hypertensive_drug_amlodipine": "/integrated_reports/new_anti_hypertensive_drug_amlodipine?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_hypertensive_drug_amlodipine": "/integrated_reports/cumulative_anti_hypertensive_drug_amlodipine?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_hypertensive_drug_captopril": "/integrated_reports/new_anti_hypertensive_drug_captopril?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_hypertensive_drug_captopril": "/integrated_reports/cumulative_anti_hypertensive_drug_captopril?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_hypertensive_drug_other": "/integrated_reports/new_anti_hypertensive_drug_other?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_hypertensive_drug_other": "/integrated_reports/cumulative_anti_hypertensive_drug_other?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_asthma_drug_salb_inhaler": "/integrated_reports/new_anti_asthma_drug_salb_inhaler?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_asthma_drug_salb_inhaler": "/integrated_reports/cumulative_anti_asthma_drug_salb_inhaler?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_asthma_drug_steroid_inhaler": "/integrated_reports/new_anti_asthma_drug_steroid_inhaler?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_asthma_drug_steroid_inhaler": "/integrated_reports/cumulative_anti_asthma_drug_steroid_inhaler?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_asthma_drug_other": "/integrated_reports/new_anti_asthma_drug_other?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_asthma_drug_other": "/integrated_reports/cumulative_anti_asthma_drug_other?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_epilepsy_drug_pherno": "/integrated_reports/new_anti_epilepsy_drug_pherno?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_epilepsy_drug_pherno": "/integrated_reports/cumulative_anti_epilepsy_drug_pherno?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_epilepsy_drug_pheny": "/integrated_reports/new_anti_epilepsy_drug_pheny?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_epilepsy_drug_pheny": "/integrated_reports/cumulative_anti_epilepsy_drug_pheny?start_date=" + startDate + "&end_date=" + endDate,
-//             "new_anti_epilepsy_drug_carb": "/integrated_reports/new_anti_epilepsy_drug_carb?start_date=" + startDate + "&end_date=" + endDate,
-//             "cumulative_anti_epilepsy_drug_carb": "/integrated_reports/cumulative_anti_epilepsy_drug_carb?start_date=" + startDate + "&end_date=" + endDate
-
-
-            
-//     }
-
-//     var  x = 0;
-//     function ajaxRequest(url, id,index, callback) {
-
-
-//             var httpRequest = new XMLHttpRequest();
-
-//             httpRequest.onreadystatechange = function () {
-
-//                 if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
-//                         httpRequest.status == 304)) {
-
-//                     if (httpRequest.responseText.trim().length > 0) {
-//                         var result = JSON.parse(httpRequest.responseText);
-
-//                         setTimeout(function(){
-
-//                             callback(result, id);
-
-//                         },500)   
-
-                         
-//                     } else {
-
-//                         callback(undefined);
-
-//                     }
-
-//                 }
-
-//             };
-//             try {
-//                 httpRequest.open("GET", url, true);
-//                 httpRequest.send(null);
-//             } catch (e) {
-//             }
-
-//     }
-
-//     function loadData() {
-
-
-//         var keys = Object.keys(links);
-
-
-//         for(var i = 0; i < keys.length; i++) {
-
-//             var key = keys[i];
-
-//             ajaxRequest(links[key], key,i, function(data, id) {
-
-//                 x++;
-
-//                 __$("progressbar").style.width = ((x)*100/Object.keys(links).length)+"%";
-
-
-//                 if(__$(id)) {
-
-//                     __$(id).innerHTML = data? data.total : "0";
-
-//                 }
-
-//             })
-
-//         }
-
-//     }
-
-//     function getQueryParams(qs) {
-//         qs = qs.split('+').join(' ');
-//         var params = {},
-//             tokens,
-//             re = /[?&]?([^=]+)=([^&]*)/g;
-
-//         while (tokens = re.exec(qs)) {
-//             params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-//         }
-
-//         return params;
-//     }
-   
-//     loadData();
-
-// </script>
+</tr>
+</tbody>
+</table>
