@@ -27,8 +27,7 @@ function init(){
         "OD":"Once a day (OD)",
         "BD":"Twice a day (BD)",
         "TDS":"Three a day (TDS)",  
-        "QID":"Four times a day (QID)", 
-        "5X/D":"Five times a day (5X/D)",
+        "QID":"Four times a day (QID)",
         "5XD":"Five times a day (5XD)",  
         "Q4HRS":"Six times a day (Q4HRS)", 
         "NOCTE":"Once a day at night (NOCTE)",
@@ -56,7 +55,6 @@ function generateGenerics(patient_id){
         "BD":"Twice a day (BD)",
         "TDS":"Three a day (TDS)",  
         "QID":"Four times a day (QID)", 
-        "5X/D":"Five times a day (5X/D)",
         "5XD":"Five times a day (5XD)",  
         "Q4HRS":"Six times a day (Q4HRS)", 
         "NOCTE":"Once a day at night (NOCTE)",
@@ -809,7 +807,7 @@ function askAfternoonDose(){
         question.id = "afternoonQuestion";
         question.style.position = "absolute";
         question.style.left = "170px";
-        question.style.top = "170px";
+        question.style.top = "140px";
         question.style.width = "390px";
         question.style.height = "420px";
         question.style.backgroundColor = "#fff";
@@ -951,7 +949,7 @@ function askEveningDose(){
         question.id = "eveningQuestion";
         question.style.position = "absolute";
         question.style.left = "200px";
-        question.style.top = "200px";
+        question.style.top = "140px";
         question.style.width = "390px";
         question.style.height = "420px";
         question.style.backgroundColor = "#fff";
@@ -1093,7 +1091,7 @@ function askNightDose(){
         question.id = "nightQuestion";
         question.style.position = "absolute";
         question.style.left = "230px";
-        question.style.top = "230px";
+        question.style.top = "140px";
         question.style.width = "390px";
         question.style.height = "420px";
         question.style.backgroundColor = "#fff";
@@ -1546,7 +1544,7 @@ function askDuration(){
         question.id = "durationQuestion";
         question.style.position = "absolute";
         question.style.left = "200px";
-        question.style.top = "200px";
+        question.style.top = "150px";
         question.style.width = "390px";
         question.style.height = "420px";
         question.style.backgroundColor = "#fff";
@@ -1663,14 +1661,14 @@ function askDuration(){
     if(__$("frequencyQuestion")){
         if(__$("frequencyQuestion").style.display == "block"){
             __$("durationQuestion").style.left = "200px";
-            __$("durationQuestion").style.top = "200px";
+            __$("durationQuestion").style.top = "150px";
         } else {
             __$("durationQuestion").style.left = "260px";
-            __$("durationQuestion").style.top = "200px";        
+            __$("durationQuestion").style.top = "150px";
         }
     } else {
         __$("durationQuestion").style.left = "260px";
-        __$("durationQuestion").style.top = "200px";        
+        __$("durationQuestion").style.top = "150px";
     }
     
     setTimeout("checkState(__$(\"btnForwardDuration\"), __$(\"editDuration\"))", timerTime);
@@ -1823,14 +1821,14 @@ function askPRN(){
     if(__$("frequencyQuestion")){
         if(__$("frequencyQuestion").style.display == "block"){
             __$("prnQuestion").style.left = "230px";
-            __$("prnQuestion").style.top = "230px";
+            __$("prnQuestion").style.top = "150px";
         } else {
             __$("prnQuestion").style.left = "290px";
-            __$("prnQuestion").style.top = "170px";        
+            __$("prnQuestion").style.top = "150px";
         }
     } else {
         __$("prnQuestion").style.left = "290px";
-        __$("prnQuestion").style.top = "170px";        
+        __$("prnQuestion").style.top = "150px";
     }
     
     setTimeout("checkState(__$(\"btnForwardPRN\"), __$(\"editPRN\"))", timerTime);
@@ -1953,12 +1951,6 @@ function processDrug(concept_id, statdose){
                 night = dose_strength;
                 break;
             case "5XD":
-                morning = dose_strength * 2;
-                afternoon = dose_strength;
-                evening = dose_strength;
-                night = dose_strength;
-                break;
-            case "5X/D":
                 morning = dose_strength * 2;
                 afternoon = dose_strength;
                 evening = dose_strength;
