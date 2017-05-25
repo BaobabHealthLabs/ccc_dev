@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Integrated Report</title>
+    <title>Biannual Report</title>
     <link rel="stylesheet" href="/touchscreentoolkit/lib/stylesheets/touch-fancy.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
 </head>
@@ -52,7 +52,7 @@
     }
     function loadIfrMain() {
 
-        var url = "/views/integrated_report_shell.html?start_date=" + startDate + "&end_date=" + endDate;
+        var url = "/views/biannual_report_shell.html?start_date=" + startDate + "&end_date=" + endDate;
 
         document.getElementById("ifrMain").src = url;
     }
@@ -62,8 +62,10 @@
 <div style="visibility: hidden" id='startdate'></div>
 <div style="visibility: hidden" id='enddate'></div>
 <div align="center"
-     style="font-size: 2.3em; background-color: rgb(98, 129, 167); color: rgb(238, 238, 238); padding: 15px;">
-        Chronic Care Clinic : Integrated CCC Cohort Report <br/>
+     style="font-size: 1.5em; background-color: rgb(98, 129, 167); color: rgb(238, 238, 238); padding: 15px;">
+            Ministry of Health<br/>
+        Non-Communicable Diseases Unit <br/>
+            Biannual Report <br/>
         Facility Name : <span id="facility"></span> (<span id="quarter"></span>)
 </div>
 
@@ -166,7 +168,7 @@
     function getQuarter(){
         return  getQueryParams(window.location.href)['quarter']
     }
-    ajaxRequest('/integrated_reports/site','facility',function(data){
+    ajaxRequest('/biannual_reports/site','facility',function(data){
                    __$('facility').innerHTML = data;
     });
     __$('quarter').innerHTML = getQueryParams(window.location.href)['quarter']
