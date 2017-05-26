@@ -243,6 +243,280 @@ module.exports = function (router) {
 
         });
 
+    router.route("/new_ht_bp_controlled")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = obs.encounter_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
+                      "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "WHERE obs.person_id IN(SELECT patient_id FROM patient_program WHERE program_id = 17) " + 
+                      "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric <= 140) OR (concept_name.name = 'Diastolic blood pressure' AND obs.value_numeric <= 90) " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ht_bp_controlled")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = obs.encounter_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
+                      "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "WHERE obs.person_id IN(SELECT patient_id FROM patient_program WHERE program_id = 17) " + 
+                      "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric <= 140) OR (concept_name.name = 'Diastolic blood pressure' AND obs.value_numeric <= 90) " + 
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_bp_last")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = obs.encounter_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
+                      "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "WHERE obs.person_id IN(SELECT patient_id FROM patient_program WHERE program_id = 17) " + 
+                      "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric >= 180) OR (concept_name.name = 'Diastolic blood pressure' AND obs.value_numeric >= 110) " + 
+                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_bp_last")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = obs.encounter_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
+                      "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "WHERE obs.person_id IN(SELECT patient_id FROM patient_program WHERE program_id = 17) " + 
+                      "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric >= 180) OR (concept_name.name = 'Diastolic blood pressure' AND obs.value_numeric <= 110) " + 
+                      "AND Date(obs.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_alcohol")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = obs.concept_id WHERE obs.person_id IN(SELECT patient_id FROM patient_program " + 
+                      "WHERE program_id = 17) AND concept_name.name = 'Are you a heavy alcohol drinker?' AND obs.value_text = 'Yes' AND obs.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_alcohol")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = obs.concept_id WHERE obs.person_id IN(SELECT patient_id FROM patient_program " + 
+                      "WHERE program_id = 17) AND concept_name.name = 'Are you a heavy alcohol drinker?' AND obs.value_text = 'Yes' AND obs.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_overweight")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(t1.person_id)) AS total from obs t1 " + 
+                      "INNER JOIN (select t2.person_id, t2.obs_datetime, t2.encounter_id, (ifnull(t2.value_numeric, t2.value_text) / 100) as height " + 
+                      "FROM obs t2 WHERE t2.concept_id = 5090) as t3 ON t3.encounter_id = t1.encounter_id " + 
+                      "WHERE t1.person_id IN(SELECT patient_id FROM patient_program WHERE program_id = 17) " + 
+                      "AND t1.concept_id = 5089 and t1.voided = 0 AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) >= 25 " + 
+                      "AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) < 30 AND Date(t1.obs_datetime) >='"+query.start_date+"' AND Date(t1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_overweight")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(t1.person_id)) AS total from obs t1 " + 
+                      "INNER JOIN (select t2.person_id, t2.obs_datetime, t2.encounter_id, (ifnull(t2.value_numeric, t2.value_text) / 100) as height " + 
+                      "FROM obs t2 WHERE t2.concept_id = 5090) as t3 ON t3.encounter_id = t1.encounter_id " + 
+                      "WHERE t1.person_id IN(SELECT patient_id FROM patient_program WHERE program_id = 17) " + 
+                      "AND t1.concept_id = 5089 and t1.voided = 0 AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) >= 25 " + 
+                      "AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) < 30 AND Date(t1.obs_datetime) >='"+query.start_date+"' AND Date(t1.obs_datetime) <='"+query.end_date+"'"
+
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ht_obese")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(t1.person_id)) AS total from obs t1 INNER JOIN " + 
+                      "(select t2.person_id, t2.obs_datetime, t2.encounter_id, (ifnull(t2.value_numeric, t2.value_text) / 100) as height " + 
+                      "FROM obs t2 WHERE t2.concept_id = 5090) as t3 ON t3.encounter_id = t1.encounter_id WHERE t1.person_id IN(SELECT patient_id FROM patient_program WHERE program_id = 17) AND t1.concept_id = 5089 and t1.voided = 0 " + 
+                      "AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) >= 30 " + 
+                      "AND Date(t1.obs_datetime) >='"+query.start_date+"' AND Date(t1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ht_obese")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(t1.person_id)) AS total from obs t1 INNER JOIN " + 
+                      "(select t2.person_id, t2.obs_datetime, t2.encounter_id, (ifnull(t2.value_numeric, t2.value_text) / 100) as height " + 
+                      "FROM obs t2 WHERE t2.concept_id = 5090) as t3 ON t3.encounter_id = t1.encounter_id WHERE t1.person_id IN(SELECT patient_id FROM patient_program WHERE program_id = 17) AND t1.concept_id = 5089 and t1.voided = 0 " + 
+                      "AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) >= 30 " + 
+                      "AND Date(t1.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+
 
     router.route("/site")
       .get(function(req,res){
