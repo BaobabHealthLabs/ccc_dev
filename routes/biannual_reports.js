@@ -422,7 +422,7 @@ module.exports = function (router) {
                       "INNER JOIN (select t2.person_id, t2.obs_datetime, t2.encounter_id, (ifnull(t2.value_numeric, t2.value_text) / 100) as height " + 
                       "FROM obs t2 WHERE t2.concept_id = 5090) as t3 ON t3.encounter_id = t1.encounter_id " + 
                       "WHERE t1.person_id IN(SELECT patient_id FROM patient_program WHERE program_id = 17) " + 
-                      "AND t1.concept_id = 5089 and t1.voided = 0 AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) >= 25 " + 
+                      "AND t1.concept_id = 5089 and t1.voided = 0 AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) > 24.9 " + 
                       "AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) < 30 AND Date(t1.obs_datetime) >='"+query.start_date+"' AND Date(t1.obs_datetime) <='"+query.end_date+"'"
 
         console.log(sql)
@@ -449,7 +449,7 @@ module.exports = function (router) {
                       "INNER JOIN (select t2.person_id, t2.obs_datetime, t2.encounter_id, (ifnull(t2.value_numeric, t2.value_text) / 100) as height " + 
                       "FROM obs t2 WHERE t2.concept_id = 5090) as t3 ON t3.encounter_id = t1.encounter_id " + 
                       "WHERE t1.person_id IN(SELECT patient_id FROM patient_program WHERE program_id = 17) " + 
-                      "AND t1.concept_id = 5089 and t1.voided = 0 AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) >= 25 " + 
+                      "AND t1.concept_id = 5089 and t1.voided = 0 AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) > 24.9 " + 
                       "AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) < 30 AND Date(t1.obs_datetime) >='"+query.start_date+"' AND Date(t1.obs_datetime) <='"+query.end_date+"'"
 
 
@@ -604,6 +604,56 @@ module.exports = function (router) {
                       "ON concept_name.concept_id = obs.concept_id WHERE obs.person_id IN(SELECT patient_id FROM patient_program WHERE program_id = 17) " + 
                       "AND concept_name.name IN('Smoking?', 'Do you currently smoke?', 'Smoke?') AND obs.value_text IN('Current smoker', 'Yes') " + 
                       "AND obs.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_stroke")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc_development.obs LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = obs.concept_id WHERE obs.person_id IN (SELECT patient_id FROM patient_program WHERE program_id = 17) " + 
+                      "AND concept_name.concept_id IN (6178, 9437, 9403) AND concept_name.name IN('Macrovascular Result', 'Past medical history', 'Years of stroke(s)') " + 
+                      "AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_stroke")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc_development.obs LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = obs.concept_id WHERE obs.person_id IN (SELECT patient_id FROM patient_program WHERE program_id = 17) " + 
+                      "AND concept_name.concept_id IN (6178, 9437, 9403) AND concept_name.name IN('Macrovascular Result', 'Past medical history', 'Years of stroke(s)') " + 
+                      "AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
