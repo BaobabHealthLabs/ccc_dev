@@ -666,6 +666,56 @@ module.exports = function (router) {
 
         });
 
+    router.route("/new_cardiovascular")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc_development.obs LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "WHERE obs.person_id IN (SELECT patient_id FROM patient_program WHERE program_id = 17) AND obs.concept_id IN(6773, 8487) AND obs.value_text = 'Other' " + 
+                      "AND concept_name.name IN('Type of cardiac problem', 'Other Type of Cardiac Problem') AND obs.voided = 0 AND concept_name.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_cardiovascular")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc_development.obs LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "WHERE obs.person_id IN (SELECT patient_id FROM patient_program WHERE program_id = 17) AND obs.concept_id IN(6773, 8487) AND obs.value_text = 'Other' " + 
+                      "AND concept_name.name IN('Type of cardiac problem', 'Other Type of Cardiac Problem') AND obs.voided = 0 AND concept_name.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
 
 
     router.route("/site")
