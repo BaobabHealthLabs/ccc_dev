@@ -1797,6 +1797,112 @@ module.exports = function (router) {
 
         });
 
+    router.route("/new_epilepsy_defaulted")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM " + database + ".encounter LEFT OUTER JOIN person ON person.person_id = encounter.patient_id " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE patient_id IN (SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
+                      "AND encounter_type.name NOT IN('EPILEPSY INITIAL QUESTIONS', 'PATIENT HISTORY AT ENROLMENT', 'MEDICAL AND SURGICAL HISTORY', 'EPILEPSY FAMILY HISTORY', 'VITALS', 'HIV/ART STATUS', 'VDRL STATUS', 'SEIZURE TYPE', 'TRIGGERS', 'PRE-ICTAL WARNING', 'POST-ICTAL FEATURES', 'EPILEPSY PATIENT OVERVIEW', 'EPILEPSY VISIT', 'UPDATE OUTCOME', 'TREATMENTS', 'APPOINTMENT') " + 
+                      "AND encounter.voided = 0 AND person.voided = 0 AND Date(encounter.encounter_datetime) >='"+query.start_date+"' AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_epilepsy_defaulted")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM " + database + ".encounter LEFT OUTER JOIN person ON person.person_id = encounter.patient_id " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE patient_id IN (SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
+                      "AND encounter_type.name NOT IN('EPILEPSY INITIAL QUESTIONS', 'PATIENT HISTORY AT ENROLMENT', 'MEDICAL AND SURGICAL HISTORY', 'EPILEPSY FAMILY HISTORY', 'VITALS', 'HIV/ART STATUS', 'VDRL STATUS', 'SEIZURE TYPE', 'TRIGGERS', 'PRE-ICTAL WARNING', 'POST-ICTAL FEATURES', 'EPILEPSY PATIENT OVERVIEW', 'EPILEPSY VISIT', 'UPDATE OUTCOME', 'TREATMENTS', 'APPOINTMENT') " + 
+                      "AND encounter.voided = 0 AND person.voided = 0 AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
+
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_epilepsy_alive")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 6538 " + 
+                      "AND obs.value_text = 'Alive' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_epilepsy_alive")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 6538 " + 
+                      "AND obs.value_text = 'Alive' AND obs.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+
     router.route("/site")
       .get(function(req,res){
           var site = require(__dirname + "/../config/site.json");
