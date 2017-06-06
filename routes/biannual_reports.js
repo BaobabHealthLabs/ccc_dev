@@ -1109,6 +1109,56 @@ module.exports = function (router) {
 
         });
 
+    router.route("/new_alive_in_care")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (16, 17, 19))) AND obs.concept_id = 6538 " + 
+                      "AND obs.value_text = 'Alive' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_alive_in_care")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (16, 17, 19))) AND obs.concept_id = 6538 " + 
+                      "AND obs.value_text = 'Alive' AND obs.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
     router.route("/new_dm_died")
         .get(function (req, res) {
 
@@ -1435,6 +1485,60 @@ module.exports = function (router) {
 
         });
 
+    router.route("/new_dm_renal_failure")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc_development.obs LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "WHERE obs.person_id IN (SELECT pp.patient_id from patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (16, 17, 19))) " + 
+                      "AND obs.concept_id IN(6444, 6712, 6713) AND obs.value_text LIKE '%Diabetic Retinopathy%' " + 
+                      "AND concept_name.name IN ('Diabetes test type', 'Left eye fundoscopy', 'Right eye fundoscopy') AND obs.voided = 0 " + 
+                      "AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_dm_renal_failure")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM ccc_development.obs LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "WHERE obs.person_id IN (SELECT pp.patient_id from patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (16, 17, 19))) " + 
+                      "AND obs.concept_id IN(6444, 6712, 6713) AND obs.value_text LIKE '%Diabetic Retinopathy%' " + 
+                      "AND concept_name.name IN ('Diabetes test type', 'Left eye fundoscopy', 'Right eye fundoscopy') AND obs.voided = 0 " + 
+                      "AND concept_name.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
     router.route("/new_dm_hiv")
         .get(function (req, res) {
 
@@ -1488,7 +1592,7 @@ module.exports = function (router) {
 
         });
 
-    router.route("/new_alive_in_care")
+ router.route("/new_ast_transferred")
         .get(function (req, res) {
 
             var url_parts = url.parse(req.url, true);
@@ -1498,8 +1602,113 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
-                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id = 13 " + 
-                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (16, 17, 19))) AND obs.concept_id = 6538 " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 3289 " + 
+                      "AND obs.value_text = 'Transfer in' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ast_transferred")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 3289 " + 
+                      "AND obs.value_text = 'Transfer in' AND obs.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ast_defaulted")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM " + database + ".encounter LEFT OUTER JOIN person ON person.person_id = encounter.patient_id " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE patient_id IN (SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
+                      "AND encounter_type.name NOT IN('ASTHMA INITIAL QUESTIONS', 'ASTHMA MEDICAL HISTORY', 'ASTHMA SOCIAL HISTORY', 'ASTHMA FAMILY HISTORY', 'VITALS', 'ASTHMA VISIT', 'HIV/ART STATUS', 'UPDATE OUTCOME', 'TREATMENTS', 'APPOINTMENT') " + 
+                      "AND encounter.voided = 0 AND person.voided = 0 AND Date(encounter.encounter_datetime) >='"+query.start_date+"' AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ast_defaulted")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM " + database + ".encounter LEFT OUTER JOIN person ON person.person_id = encounter.patient_id " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE patient_id IN (SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
+                      "AND encounter_type.name NOT IN('ASTHMA INITIAL QUESTIONS', 'ASTHMA MEDICAL HISTORY', 'ASTHMA SOCIAL HISTORY', 'ASTHMA FAMILY HISTORY', 'VITALS', 'ASTHMA VISIT', 'HIV/ART STATUS', 'UPDATE OUTCOME', 'TREATMENTS', 'APPOINTMENT') " + 
+                      "AND encounter.voided = 0 AND person.voided = 0 AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
+
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ast_alive")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 6538 " + 
                       "AND obs.value_text = 'Alive' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
         console.log(sql)
@@ -1513,7 +1722,7 @@ module.exports = function (router) {
 
         });
 
-    router.route("/cumulative_alive_in_care")
+    router.route("/cumulative_ast_alive")
         .get(function (req, res) {
 
             var url_parts = url.parse(req.url, true);
@@ -1523,8 +1732,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
-                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
-                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (16, 17, 19))) AND obs.concept_id = 6538 " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 6538 " + 
                       "AND obs.value_text = 'Alive' AND obs.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -1538,8 +1747,55 @@ module.exports = function (router) {
 
         });
 
+    router.route("/new_lung_alive")
+        .get(function (req, res) {
 
+            var url_parts = url.parse(req.url, true);
 
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 3065 " + 
+                      "AND obs.value_text = 'COPD' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_lung_alive")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (19) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 3065 " + 
+                      "AND obs.value_text = 'COPD' AND obs.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
 
     router.route("/site")
       .get(function(req,res){
