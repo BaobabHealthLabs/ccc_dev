@@ -2637,7 +2637,7 @@ module.exports = function (router) {
 
         });
 
-    router.route("/new_ep_diaz")
+    router.route("/new_ep_etho")
         .get(function (req, res) {
 
             var url_parts = url.parse(req.url, true);
@@ -2648,7 +2648,7 @@ module.exports = function (router) {
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
-                      "AND orders.concept_id = 247 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND orders.concept_id = 8972 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2661,7 +2661,7 @@ module.exports = function (router) {
 
         });
 
-    router.route("/cumulative_ep_diaz")
+    router.route("/cumulative_ep_etho")
         .get(function (req, res) {
 
             var url_parts = url.parse(req.url, true);
@@ -2672,7 +2672,247 @@ module.exports = function (router) {
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
                       "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
-                      "AND orders.concept_id = 247 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "AND orders.concept_id = 8972 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ep_mag")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 6811 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ep_mag")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 6811 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ep_para")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 6815 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ep_para")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 6815 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ep_pheno")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 8249 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ep_pheno")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 8249 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_epi_phey")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 8193 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_epi_phey")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 8193 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ep_sv")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 4060 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ep_sv")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 4060 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
