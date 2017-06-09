@@ -113,7 +113,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) AND obs.concept_id = 3289 " + 
                       "AND obs.value_text = 'Transfer in' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -163,7 +163,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) AND obs.concept_id = 6538 " + 
                       "AND obs.value_text = 'Transfer out' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -213,7 +213,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) AND obs.concept_id = 6538 " + 
                       "AND obs.value_text = 'Alive' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -268,7 +268,7 @@ module.exports = function (router) {
                       "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric <= 140) OR (concept_name.name = 'Diastolic blood pressure' AND obs.value_numeric <= 90) " + 
                       "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -328,7 +328,7 @@ module.exports = function (router) {
                       "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric >= 180) OR (concept_name.name = 'Diastolic blood pressure' AND obs.value_numeric >= 110) " + 
                       "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -385,7 +385,7 @@ module.exports = function (router) {
                       "AND encounter_type.name NOT IN('HYPERTENSION INITIAL QUESTIONS', 'HYPERTENSION SOCIAL HISTORY', 'PAST HYPERTENSION MEDICAL HISTORY', 'HYPERTENSION FAMILY HISTORY', 'VITALS', 'LAB RESULTS', 'HIV/ART STATUS', 'HYPERTENSION TEST', 'UPDATE OUTCOME', 'TREATMENTS', 'APPOINTMENT') " + 
                       "AND encounter.voided = 0 AND person.voided = 0 AND Date(encounter.encounter_datetime) >='"+query.start_date+"' AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -438,7 +438,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) AND concept_name.name = 'Are you a heavy alcohol drinker?' AND obs.value_text = 'Yes' AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -491,7 +491,7 @@ module.exports = function (router) {
                       "AND t1.concept_id = 5089 and t1.voided = 0 AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) > 24.9 " + 
                       "AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) < 30 AND Date(t1.obs_datetime) >='"+query.start_date+"' AND Date(t1.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -548,7 +548,7 @@ module.exports = function (router) {
                       "AND round(((ifnull(t1.value_numeric, t1.value_text) / (height * height))), 2) >= 30 " + 
                       "AND Date(t1.obs_datetime) >='"+query.start_date+"' AND Date(t1.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -604,7 +604,7 @@ module.exports = function (router) {
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -658,7 +658,7 @@ module.exports = function (router) {
                       "AND concept_name.name IN('Smoking?', 'Do you currently smoke?', 'Smoke?') AND obs.value_text IN('Current smoker', 'Yes') " + 
                       "AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -710,7 +710,7 @@ module.exports = function (router) {
                       "AND obs.value_text like '%Stroke%' AND concept_name.name = 'Macrovascular Result' AND obs.voided = 0 AND concept_name.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -762,7 +762,7 @@ module.exports = function (router) {
                       "AND obs.value_text = 'Creatinine' AND concept_name.name = 'Hypertension Test Type' AND obs.voided = 0 AND concept_name.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -814,7 +814,7 @@ module.exports = function (router) {
                       "AND concept_name.concept_id IN (6178, 9437, 9403) AND concept_name.name IN('Macrovascular Result', 'Past medical history', 'Years of stroke(s)') " + 
                       "AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -866,7 +866,7 @@ module.exports = function (router) {
                       "AND concept_name.name IN('Type of cardiac problem', 'Other Type of Cardiac Problem') AND obs.voided = 0 AND concept_name.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -917,7 +917,7 @@ module.exports = function (router) {
                       "AND obs.concept_id IN (7573, 8445) AND obs.value_text = 'Yes' AND concept_name.name IN ('Have you ever had TB?', 'Year(s) of TB Diagnosis') " + 
                       "AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -968,7 +968,7 @@ module.exports = function (router) {
                       "AND obs.value_text = 'Reactive' AND concept_name.name = 'HIV status' AND obs.voided = 0 AND concept_name.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1020,7 +1020,7 @@ module.exports = function (router) {
                       "AND obs.concept_id IN (6712, 6713) AND obs.value_text LIKE '%Abnormal,Abnormal: Hypertensive Retinopathy,Abnormal: Hypertensive Retinopathy:%' " + 
                       "AND concept_name.name IN ('Left eye fundoscopy', 'Right eye fundoscopy') AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1072,7 +1072,7 @@ module.exports = function (router) {
                       "AND obs.concept_id IN(6411, 8454, 8453) AND obs.value_text = 'Type 2 Diabetes' AND orders.concept_id IN (278, 279, 280, 281, 282) " + 
                       "AND obs.voided = 0 AND orders.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1123,7 +1123,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (16, 17, 19))) AND obs.concept_id = 6538 " + 
                       "AND obs.value_text = 'Alive' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1176,7 +1176,7 @@ module.exports = function (router) {
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1342,7 +1342,7 @@ module.exports = function (router) {
                       "AND concept_name.concept_id IN (6178, 9437, 9403) AND concept_name.name IN('Macrovascular Result', 'Past medical history', 'Years of stroke(s)') " + 
                       "AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1394,7 +1394,7 @@ module.exports = function (router) {
                       "AND obs.value_text LIKE '%Current foot ulceration%' AND concept_name.name IN ('Diabetes test type', 'Right Foot/Leg Foot Check', 'Left Foot/Leg Foot Check') " + 
                       "AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1447,7 +1447,7 @@ module.exports = function (router) {
                       "AND obs.value_text LIKE '%Amputation,Amputation:%' AND concept_name.name IN ('Diabetes test type', 'Right Foot/Leg Foot Check', 'Left Foot/Leg Foot Check') " + 
                       "AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1501,7 +1501,7 @@ module.exports = function (router) {
                       "AND concept_name.name IN ('Diabetes test type', 'Left eye fundoscopy', 'Right eye fundoscopy') AND obs.voided = 0 " + 
                       "AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1554,7 +1554,7 @@ module.exports = function (router) {
                      "AND obs.value_text = 'Reactive' AND concept_name.name = 'HIV status' AND obs.voided = 0 AND concept_name.voided = 0 " + 
                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1606,7 +1606,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 3289 " + 
                       "AND obs.value_text = 'Transfer in' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1711,7 +1711,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 6538 " + 
                       "AND obs.value_text = 'Alive' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1761,7 +1761,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 3065 " + 
                       "AND obs.value_text = 'COPD' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1813,7 +1813,7 @@ module.exports = function (router) {
                       "AND encounter_type.name NOT IN('EPILEPSY INITIAL QUESTIONS', 'PATIENT HISTORY AT ENROLMENT', 'MEDICAL AND SURGICAL HISTORY', 'EPILEPSY FAMILY HISTORY', 'VITALS', 'HIV/ART STATUS', 'VDRL STATUS', 'SEIZURE TYPE', 'TRIGGERS', 'PRE-ICTAL WARNING', 'POST-ICTAL FEATURES', 'EPILEPSY PATIENT OVERVIEW', 'EPILEPSY VISIT', 'UPDATE OUTCOME', 'TREATMENTS', 'APPOINTMENT') " + 
                       "AND encounter.voided = 0 AND person.voided = 0 AND Date(encounter.encounter_datetime) >='"+query.start_date+"' AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1866,7 +1866,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) AND obs.concept_id = 6538 " + 
                       "AND obs.value_text = 'Alive' AND obs.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1915,7 +1915,7 @@ module.exports = function (router) {
                       "WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id = 17) AND orders.concept_id IN(1243) " + 
                       "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1964,7 +1964,7 @@ module.exports = function (router) {
                       "WHERE pp.program_id = 17 AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
                       "AND orders.concept_id IN(3187) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2014,7 +2014,7 @@ module.exports = function (router) {
                       "WHERE pp.program_id = 17 AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
                       "AND orders.concept_id IN(250) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2064,7 +2064,7 @@ module.exports = function (router) {
                       "WHERE pp.program_id = 17 AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
                       "AND orders.concept_id IN(3182) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -2099,6 +2099,595 @@ module.exports = function (router) {
             });
 
         });
+
+    router.route("/new_ht_propa")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 17 AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
+                      "AND orders.concept_id IN(254) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ht_propa")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 17 AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
+                      "AND orders.concept_id IN(254) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ht_ant")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 17 AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
+                      "AND orders.concept_id IN(3186) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ht_ant")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 17 AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
+                      "AND orders.concept_id IN(3186) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_dm_met")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 13) AND orders.concept_id IN(4052) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_dm_met")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 13) AND orders.concept_id IN(4052) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_dm_insulin")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 13 AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (16, 17, 19))) " + 
+                      "AND orders.concept_id IN(280, 282) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_dm_insulin")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 13 AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (16, 17, 19))) " + 
+                      "AND orders.concept_id IN(280, 282) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_dm_lente")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 13 AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (16, 17, 19))) " + 
+                      "AND orders.concept_id IN(278, 279) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_dm_lente")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 13 AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN (16, 17, 19))) " + 
+                      "AND orders.concept_id IN(278, 279) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_dm_glib")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 13) AND orders.concept_id IN(4046) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_dm_glib")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 13) AND orders.concept_id IN(4046) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ast_amino")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 19) " + 
+                      "AND orders.concept_id = 928 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ast_amino")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 19) " + 
+                      "AND orders.concept_id = 928 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ast_ivamino")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 19) " + 
+                      "AND orders.concept_id = 347 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ast_ivamino")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 19) " + 
+                      "AND orders.concept_id = 347 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ast_salb")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 19) " + 
+                      "AND orders.concept_id = 798 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ast_salb")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 19) " + 
+                      "AND orders.concept_id = 798 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ep_carb")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 920 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ep_carb")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 920 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ep_diaz")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 247 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ep_diaz")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 247 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/new_ep_diaz")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 247 AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_ep_diaz")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 16) " + 
+                      "AND orders.concept_id = 247 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+
+
+
 
     router.route("/site")
       .get(function(req,res){
