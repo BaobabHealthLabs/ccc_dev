@@ -1796,6 +1796,60 @@ module.exports = function (router) {
 
         });
 
+    router.route("/new_hd_retinopathy")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "WHERE obs.person_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id IN (6712, 6713) AND obs.value_text LIKE '%Abnormal,Abnormal: Hypertensive Retinopathy,Abnormal: Hypertensive Retinopathy:%' " + 
+                      "AND concept_name.name IN ('Left eye fundoscopy', 'Right eye fundoscopy') AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/cumulative_hd_retinopathy")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "WHERE obs.person_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id IN (6712, 6713) AND obs.value_text LIKE '%Abnormal,Abnormal: Hypertensive Retinopathy,Abnormal: Hypertensive Retinopathy:%' " + 
+                      "AND concept_name.name IN ('Left eye fundoscopy', 'Right eye fundoscopy') AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
  router.route("/new_ast_transferred")
         .get(function (req, res) {
 
