@@ -3,7 +3,7 @@ Q.1.1. Epilepsy Category [pos:: 0$$id::epilepsy_category$$tt_requirenextclick::f
 O.1.1.1. Generalized Epilepsy
 O.1.1.2. Partial Epilepsy
 
-Q.1.2. Generalized Epilepsy [pos::1$$allowFreeText:: false$$condition::__$('epilepsy_category').value=="Generalized Epilepsy"$$parent::Epilepsy Category:Generalized Epilepsy]
+Q.1.2. Generalized Epilepsy [pos::1$$allowFreeText:: false$$ tt_pageStyleClass::NoKeyboard$$condition::__$('epilepsy_category').value=="Generalized Epilepsy"$$parent::Epilepsy Category:Generalized Epilepsy]
 O.1.2.1. Tonic clonic
 O.1.2.2. Absence
 O.1.2.3. Myoclonic

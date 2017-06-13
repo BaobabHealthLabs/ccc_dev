@@ -1,5 +1,5 @@
 P.1. EPILEPSY PATIENT OVERVIEW [program:: EPILEPSY PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;epilepsy]
-Q.1.1. Exposures [pos:: 0$$id:: exposures$$ multiple:: multiple$$ tt_beforeUnLoad:: loadCheckConditions()]
+Q.1.1. Exposures [pos:: 0$$id:: exposures$$ multiple:: multiple$$ tt_pageStyleClass::NoKeyboard$$ tt_beforeUnLoad:: loadCheckConditions()]
 O.1.1.1. Smoking
 O.1.1.2. Alcohol
 O.1.1.3. Pigs/pork
@@ -18,7 +18,7 @@ Q.1.6. Other Exposures Specify [pos:: 5$$id:: other0$$parent::Exposures:Other]
 
 Q.1.7. Other Exposures Date [pos:: 6$$field_type::date$$ id:: other1$$parent::Exposures:Other]
 
-Q.1.8. Complications [pos::7$$id::complications$$multiple:: multiple$$tt_beforeUnLoad:: loadCheckConditions()]
+Q.1.8. Complications [pos::7$$id::complications$$multiple:: multiple$$ tt_pageStyleClass::NoKeyboard$$tt_beforeUnLoad:: loadCheckConditions()]
 O.1.8.1. Injuries
 O.1.8.2. Burns
 O.1.8.3. Status Epilepticus
