@@ -36,10 +36,10 @@ Q.1.7. Night sx [pos::14$$field_type::number$$parent::Visit Date$$tt_pageStyleCl
 
 
 Q.1.8. Beta-agonist inhaler use: frequency [pos::15$$tt_requirenextclick::false$$parent::Visit Date]
-O.1.8.1. day
-O.1.8.2. wk
-O.1.8.3. mo
-O.1.8.4. yr
+O.1.8.1. Daily
+O.1.8.2. Weekly
+O.1.8.3. Monthly
+O.1.8.4. Yearly
 
 Q.1.9. Steroid inhaler daily? [pos::16$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.9.1. Yes
@@ -49,7 +49,7 @@ Q.1.10. Smoke? [pos::17$$id::do_smoke$$tt_requirenextclick::false$$parent::Visit
 O.1.10.1. Yes
 O.1.10.2. No
 
-Q.1.10.1.1. Number of cigarettes per day? [pos::18$$field_type::number$$condition::__$('do_smoke').value=='Yes'$$parent::Smoke?:Yes$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal$$min::0max::100]
+Q.1.10.1.1. Number of cigarettes per day? [pos::18$$field_type::number$$condition::__$('do_smoke').value=='Yes'$$parent::Smoke?:Yes$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal$$min::0max::100$$parent::Visit Date]
 
 Q.1.11. Passive smoking? [pos::19$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.11.1. Yes
@@ -64,12 +64,10 @@ O.1.13.1. Yes
 O.1.13.2. No
 
 Q.1.14. Asthma severity [pos::22$$tt_requirenextclick::false$$parent::Visit Date$$tt_pageStyleClass::NoKeyboard]
-O.1.14.1. Not Asthma
-O.1.14.2. Intemittent
-O.1.14.3. Mild persistent
-O.1.14.4. Mod persistent
-O.1.14.5. Severe persistent
-O.1.14.6. Uncontrolled
+O.1.14.1. Mild
+O.1.14.2. Moderate
+O.1.14.3. Severe
+O.1.14.4. Life Threatening
 
 
 Q.1.15. Treatment [pos::23$$id::visit_treament$$tt_requirenextclick::false$$parent::Visit Date]

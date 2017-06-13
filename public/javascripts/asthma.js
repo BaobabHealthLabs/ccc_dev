@@ -1176,7 +1176,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="day"){
+				if(response =="Daily"){
 
 
                     span.removeAttribute("class");
@@ -1206,7 +1206,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="wk"){
+				if(response =="Weekly"){
 
 
                     span.removeAttribute("class");
@@ -1235,7 +1235,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="mo"){
+				if(response =="Monthly"){
 
 
                     span.removeAttribute("class");
@@ -1264,7 +1264,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="yr"){
+				if(response =="Yearly"){
 
 				
                     span.removeAttribute("class");
@@ -1299,7 +1299,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="Not Asthma"){
+				if(response =="Mild"){
 
 					
                     span.removeAttribute("class");
@@ -1328,7 +1328,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="Intemittent"){
+				if(response =="Moderate"){
 
 				
                     span.removeAttribute("class");
@@ -1357,7 +1357,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="Mild persistent"){
+				if(response =="Severe"){
 
 
                     span.removeAttribute("class");
@@ -1386,7 +1386,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="Mod persistent"){
+				if(response =="Life Threatening"){
 
 				
                     span.removeAttribute("class");
@@ -1408,67 +1408,7 @@ function loadCardDashboard(){
 				td.appendChild(span);
 
 				tr.appendChild(td);
-
-				td = document.createElement("td");
-
-				var span  = document.createElement("span");
-
-				span.setAttribute("class", "square");
-
-				if(response =="Severe persistent"){
-
-
-                    span.removeAttribute("class");
-
-                    var img = document.createElement("img");
-
-                    img.style.height = "23px";
-
-                    img.style.width = "23px";
-
-                    img.style.float ="right";
-
-                    img.src = checked_checkbox;
-
-                    span.appendChild(img);
-
-                }
-
-				td.appendChild(span);
-
-				tr.appendChild(td);
-
-				td = document.createElement("td");
-
-				var span  = document.createElement("span");
-
-				span.setAttribute("class", "square");
-
-				if(response =="Uncontrolled"){
-
-
-                    span.removeAttribute("class");
-
-                    var img = document.createElement("img");
-
-                    img.style.height = "23px";
-
-                    img.style.width = "23px";
-
-                    img.style.float ="right";
-
-                    img.src = checked_checkbox;
-
-                    span.appendChild(img);
-
-                }
-
-				td.appendChild(span);
-
-				tr.appendChild(td);
-
-				
-
+                
 				continue;
 
 			}
