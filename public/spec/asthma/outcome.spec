@@ -1,11 +1,12 @@
 P.1. UPDATE OUTCOME [program:: DIABETES PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;asthma]
 
 Q.1.1. Discharge outcome [pos:: 0$$ concept:: OUTCOME $$ id :: outcome]
-O.1.1.1. Alive
+O.1.1.1. Admitted
 O.1.1.2. Dead
-O.1.1.3. Treatment changed
-O.1.1.4. Treatment stopped
-O.1.1.5. Transfer out
+O.1.1.3. Home
+O.1.1.4. Treatment changed
+O.1.1.5. Treatment stopped
+O.1.1.6. Transfer out
 
 Q.1.2. Refer to clinic [pos :: 1 $$ ajaxURL :: /static_locations?search_string= $$ allowFreeText :: true $$ condition :: __$("outcome").value == "Transfer out" $$ parent :: OUTCOME]
 

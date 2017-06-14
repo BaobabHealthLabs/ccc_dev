@@ -1,11 +1,12 @@
 P.1. UPDATE OUTCOME [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
 
-Q.1.1. Outcome [pos:: 0$$ concept:: OUTCOME]
-O.1.1.1. Alive
+Q.1.1. Outcome [pos:: 0$$ concept:: OUTCOME$$ tt_pageStyleClass::NoKeyboard]
+O.1.1.1. Admitted
 O.1.1.2. Dead
-O.1.1.3. Treatment changed
-O.1.1.4. Treatment stopped
-O.1.1.5. Transfer out
+O.1.1.3. Home
+O.1.1.4. Treatment changed
+O.1.1.5. Treatment stopped
+O.1.1.6. Transfer out
 
 Q.1.1.4.1. Refer to clinic [pos:: 1$$ ajaxURL:: /facilities?name=$$ allowFreeText:: true$$parent::Outcome:Transfer out]
 

@@ -1149,9 +1149,11 @@ function loadPatientOverView(dashboard){
            for(var i = 0 ; i <  keys.length; i++){
             
 
-                __$("alive").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+                __$("admitted").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
 
                 __$("dead").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
+
+                __$("home").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
 
                 __$("treatment_stopped").setAttribute("style","border-bottom:2px dotted #ffff4d;padding:0.2%;padding-left:0.5;padding-right:0.5;");
 
