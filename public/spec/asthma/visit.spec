@@ -16,15 +16,15 @@ O.1.4.1. Yes
 O.1.4.2. No
 
 Q.1.5. Symptoms[pos::4$$ multiple:: multiple$$parent::Visit Date]
-O.1.5.1. Chest tightiness
-O.1.5.2. Chronic cough
-O.1.5.3. Finger clubbing
+O.1.5.1. Coughing
+O.1.5.2. Shortness of breath
+O.1.5.3. Wheezing
 O.1.5.4. Stridor
 O.1.5.5. Prolonged expiration
 O.1.5.6. Central carinatus
-O.1.5.7. Wheezing
-O.1.5.8. Shortness of breath
-O.1.5.9. Coughing
+O.1.5.7. Finger clubbing
+O.1.5.8. Chronic cough
+O.1.5.9. Chest tightiness
 
 Q.1.5.2.1. Chronic dry cough duration [pos:: 11$$field_type::number$$id::chronic_dry_cough0$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnly]
 
