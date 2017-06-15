@@ -15,7 +15,7 @@ Q.1.4. Any triggers [pos::3$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.4.1. Yes 
 O.1.4.2. No
 
-Q.1.5. Symptoms[pos::4$$ multiple:: multiple$$parent::Visit Date]
+Q.1.5. Symptoms[pos::4$$ multiple:: multiple$$parent::Visit Date$$ tt_onLoad :: enlargeHeight()]
 O.1.5.1. Coughing
 O.1.5.2. Shortness of breath
 O.1.5.3. Wheezing

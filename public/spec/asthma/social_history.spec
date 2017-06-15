@@ -36,7 +36,7 @@ O.1.8.2. No
 Q.1.9. Patient lives or works near? [pos::8$$tt_requirenextclick::false$$parent:: Ever smoked?]
 O.1.9.1. Near factory
 O.1.9.2. Near hospital
-O.1.9.1. None
+O.1.9.3. None
 
 
 Q.1.10. Occupation [pos:: 9$$optional::true$$parent:: Ever smoked?]
