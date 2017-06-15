@@ -70,7 +70,7 @@ O.1.14.3. Severe
 O.1.14.4. Life Threatening
 
 
-Q.1.15. Treatment [pos::23$$id::visit_treament$$tt_requirenextclick::false$$parent::Visit Date]
+Q.1.15. Treatment [pos::23$$id::visit_treament$$ multiple:: multiple$$ tt_pageStyleClass::NoKeyboard$$parent::Visit Date]
 O.1.15.1. Inhaled B-agonist
 O.1.15.2. Inhaled steroid
 O.1.15.3. Oral steroid
