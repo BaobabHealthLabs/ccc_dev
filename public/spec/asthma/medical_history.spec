@@ -77,7 +77,7 @@ Q.1.10. Chest deformities at Birth? [pos:: 17$$tt_requirenextclick::false$$paren
 O.1.10.1. Yes
 O.1.10.2. No
 
-Q.1.11. Complications [pos:: 18$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$ helpText :: Does the patient have any of these complications$$parent::Diagnosis ]
+Q.1.11. Complications [pos:: 18$$multiple::multiple$$ helpText :: Does the patient have any of these complications$$parent::Diagnosis $$ tt_onLoad :: enlargeHeight() ]
 O.1.11.1. Amputation
 O.1.11.2. Stroke
 O.1.11.3. Ulcers

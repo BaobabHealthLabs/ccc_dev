@@ -1571,3 +1571,10 @@ function loadCardDashboard(){
 	}
 
 }
+
+function enlargeHeight(){
+    setTimeout(function(){
+         __$("inputFrame"+tstCurrentPage).style.height = "450px"
+    },100);
+   
+}
