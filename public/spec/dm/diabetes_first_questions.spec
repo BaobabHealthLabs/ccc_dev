@@ -3,7 +3,6 @@ P.1. DIABETES INITIAL QUESTIONS [program:: DIABETES PROGRAM$$ scope:: TODAY$$ in
 Q.1.1. Is the patient a: [pos:: 0$$ concept:: TYPE OF PATIENT$$ id:: patient_type$$ condition:: !existingDiabetesPatient() $$ tt_requireNextClick :: true]
 O.1.1.1. New Patient
 O.1.1.2. Transfer in
-O.1.1.3. Temporary Patient
 
 Q.1.1.2.1. Tranfered from [pos:: 1$$ ajaxURL:: /facilities?name=$$ allowFreeText:: true $$ parent::TYPE OF PATIENT$$ condition:: !existingDiabetesPatient()&&__$("patient_type").value !="New Patient"]
 

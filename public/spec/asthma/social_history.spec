@@ -22,11 +22,12 @@ Q.1.6. 	Do you do Exercises? [pos::5$$tt_requirenextclick::false$$parent:: Ever 
 O.1.6.1. Yes
 O.1.6.2. No
 
-Q.1.7. Patient mode of cooking? [pos::6$$tt_requirenextclick::false$$parent:: Ever smoked?]
+Q.1.7. Patient mode of cooking? [pos::6$$tt_requirenextclick::false$$ tt_pageStyleClass::NoKeyboard$$parent:: Ever smoked?]
 O.1.7.1. Gas
 O.1.7.2. Electricity
 O.1.7.3. Charcoal
-O.1.7.4. None
+O.1.7.4. Firewood
+O.1.7.5. None
 
 Q.1.8. Patient exposed to pollution?[pos ::7$$tt_requirenextclick::false$$parent:: Ever smoked?]
 O.1.8.1. Yes
