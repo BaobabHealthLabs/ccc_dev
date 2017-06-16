@@ -4,11 +4,11 @@ Q.1.1.  Book Appointment in next [pos :: 0 $$ id :: book_in $$ tt_pageStyleClass
 O.1.1.1. 1 week
 O.1.1.2. 2 weeks
 O.1.1.3. 3 weeks
-O.1.1.4. 4 weeks
-O.1.1.5. 5 weeks
-O.1.1.6. 6 weeks
-O.1.1.7. 7 weeks
-O.1.1.8. 8 weeks
+O.1.1.4. 1 month
+O.1.1.5. 2 months
+O.1.1.6. 3 months
+O.1.1.7. 4 months
+O.1.1.8. 5 months
 
 Q.1.2. Appointment [pos :: 1 $$ concept :: Appointment date $$ id :: appointment_calendar $$ field_type :: calendar $$ optional :: true $$ tt_onUnLoad :: validateAppointment()]
 

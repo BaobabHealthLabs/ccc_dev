@@ -75,6 +75,7 @@ O.1.15.1. Inhaled B-agonist
 O.1.15.2. Inhaled steroid
 O.1.15.3. Oral steroid
 O.1.15.4. Other
+O.1.15.5. None
 
 Q.1.16. Other Treatment Specify [pos::24$$condition::__$('visit_treament').value=='Other'$$parent::Visit Date]
 

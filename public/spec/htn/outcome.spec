@@ -10,8 +10,8 @@ O.1.1.6. Transfer out
 
 Q.1.1.4.1. Refer to clinic [pos:: 1$$ ajaxURL:: /facilities?name=$$ allowFreeText:: true]
 
-Q.1.2. Outcome Date [pos:: 2$$ field_type:: date]
+Q.1.2. Outcome Date [pos:: 2$$ field_type:: date $$ parent :: OUTCOME]
 
-Q.1.3. Notes [pos:: 3]
+Q.1.3. Notes [pos:: 3 $$ parent :: OUTCOME]
 
 Q.1.4. Summary [pos :: 4 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Outcome Summary $$condition::true]
