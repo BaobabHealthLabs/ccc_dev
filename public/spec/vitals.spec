@@ -1,4 +1,4 @@
-P.1. VITALS [program:: CROSS-CUTTING PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
+P.1. VITAL SIGNS [program:: CROSS-CUTTING PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 
 Q.1.1. Temperature (<sup>o</sup>C) [pos:: 0$$ concept:: Temperature (C)$$optional::true$$ condition:: window.parent.dashboard.modules[window.parent.dashboard.getCookie("currentProgram")].vitals && window.parent.dashboard.modules[window.parent.dashboard.getCookie("currentProgram")].vitals.ask_temperature$$ field_type:: number$$ min:: 20$$ max:: 45$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter a decimal between 0 and 9 (for example: 36<b>.6</b>) $$ tt_pageStyleClass:: Numeric NumbersOnlyWithDecimal]
 

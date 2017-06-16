@@ -22,7 +22,7 @@
         ["DIABETES FAMILY HISTORY", "Diabetes Patient family history"],
         ["PAST DIABETES MEDICAL HISTORY", "Past diabetes patient medical history"],
         ["GENERAL HEALTH", "Patient general health encounter"],
-        ["VITALS", "Patient vitals encounter"],
+        ["VITAL SIGNS", "Patient vitals encounter"],
         ["COMPLICATIONS", "Patient complications encounter"],
         ["TREATMENTS", "Patient treatments encounter"],
         ["HIV/ART STATUS", "Patient HIV/ART status encounter"],
