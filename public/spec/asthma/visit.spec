@@ -35,11 +35,12 @@ Q.1.6. Day sx [pos::13$$field_type::number$$parent::Visit Date$$tt_pageStyleClas
 Q.1.7. Night sx [pos::14$$field_type::number$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal$$condition::false]
 
 
-Q.1.8. Beta-agonist inhaler use: frequency [pos::15$$tt_requirenextclick::false$$parent::Visit Date]
+Q.1.8. Beta-agonist inhaler use: frequency [pos::15$$tt_pageStyleClass :: NoKeyboard$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.8.1. Daily
 O.1.8.2. Weekly
 O.1.8.3. Monthly
 O.1.8.4. Yearly
+O.1.8.5. None
 
 Q.1.9. Steroid inhaler daily? [pos::16$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.9.1. Yes
