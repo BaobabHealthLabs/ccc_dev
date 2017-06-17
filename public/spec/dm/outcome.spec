@@ -1,6 +1,6 @@
 P.1. UPDATE OUTCOME [program:: DIABETES PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 
-Q.1.1. Discharge outcome [pos:: 0$$ concept:: OUTCOME $$ tt_pageStyleClass::NoKeyboard $$ id :: outcome]
+Q.1.1. Outcome [pos:: 0$$ concept:: OUTCOME $$ tt_pageStyleClass::NoKeyboard $$ id :: outcome]
 O.1.1.1. Admitted
 O.1.1.2. Dead
 O.1.1.3. Home
