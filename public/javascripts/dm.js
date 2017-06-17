@@ -331,9 +331,19 @@ function setAppointmentCalendar(source, target){
 
             var date_today = new Date();
 
-            var week = parseInt(__$(source).value.replace("weeeks","").replace("week","").trim());
+            if(/week/i.test(__$(source).value)) {
 
-            var days = 7 * (week? week : 1) ;
+                var week = parseInt(__$(source).value.replace("weeks","").replace("week","").trim());
+
+                var days = 7 * (week? week : 1) ;
+
+            } else if(/month/i.test(__$(source).value)) {
+
+                var month = parseInt(__$(source).value.replace("months","").replace("month","").trim());
+
+                var days = 28 * (month? month : 1) ;
+
+            }
 
             var date_selected = addDay(date_today,days).format("YYYY-mm-dd");
 
