@@ -9,6 +9,7 @@ O.1.1.5. 2 months
 O.1.1.6. 3 months
 O.1.1.7. 4 months
 O.1.1.8. 5 months
+O.1.1.9. 6 months
 
 Q.1.2. Appointment [pos :: 1 $$ concept :: Appointment date $$ id :: appointment_calendar $$ field_type :: calendar $$ optional :: true $$ tt_onUnLoad :: validateAppointment()]
 
