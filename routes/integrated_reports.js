@@ -3105,7 +3105,7 @@ module.exports = function (router) {
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
                       "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9246) " + 
-                      "AND orders.concept_id IN(8249, 238) AND orders.voided = 0 " + 
+                      "AND orders.concept_id = 238 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -3132,7 +3132,7 @@ module.exports = function (router) {
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
                       "where concept_id IN (SELECT concept_id FROM " + database + ".concept_set where concept_set = 9246) " + 
-                      "AND orders.concept_id IN(8249, 238) AND orders.voided = 0 " + 
+                      "AND orders.concept_id = 238 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
