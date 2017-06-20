@@ -1114,10 +1114,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from " + database + ".orders " + 
-                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
-                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' " + 
-                      "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM " + database + ".encounter LEFT OUTER JOIN person ON person.person_id = encounter.patient_id " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE patient_id  IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (17) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
+                      "AND encounter_type.name IN('HYPERTENSION INITIAL QUESTIONS', 'HYPERTENSION SOCIAL HISTORY', 'PAST HYPERTENSION MEDICAL HISTORY', 'HYPERTENSION FAMILY HISTORY', 'VITAL SIGNS', 'LAB RESULTS', 'HIV/ART STATUS', 'HYPERTENSION TEST', 'UPDATE OUTCOME', 'APPOINTMENT', 'TREATMENTS') " + 
+                      "AND encounter.voided = 0 AND Date(encounter.encounter_datetime) >='"+query.start_date+"' AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1141,10 +1143,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total, program.name AS name, orders.voided AS voided from " + database + ".orders " + 
-                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
-                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id WHERE program.name = 'HYPERTENSION PROGRAM' " + 
-                      "AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM " + database + ".encounter LEFT OUTER JOIN person ON person.person_id = encounter.patient_id " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE patient_id  IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (17) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
+                      "AND encounter_type.name IN('HYPERTENSION INITIAL QUESTIONS', 'HYPERTENSION SOCIAL HISTORY', 'PAST HYPERTENSION MEDICAL HISTORY', 'HYPERTENSION FAMILY HISTORY', 'VITAL SIGNS', 'LAB RESULTS', 'HIV/ART STATUS', 'HYPERTENSION TEST', 'UPDATE OUTCOME', 'APPOINTMENT', 'TREATMENTS') " + 
+                      "AND encounter.voided = 0 AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1168,12 +1172,11 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total, patient_program.program_id FROM " + database + ".obs " + 
-                      "LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
-                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE obs.concept_id IN(9392, 9393) " + 
-                      "AND encounter.encounter_type = 158 AND patient_program.program_id = 17 AND obs.voided = 0 " + 
-                      "AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
-                      "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM " + database + ".encounter LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE patient_id  IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (17) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
+                      "AND encounter_type.name = 'TREATMENTS' AND encounter.voided = 0 " + 
+                      "AND Date(encounter.encounter_datetime) >='"+query.start_date+"' AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1197,12 +1200,11 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
-                      "LEFT OUTER JOIN orders ON orders.patient_id = obs.person_id LEFT OUTER JOIN encounter ON encounter.patient_id = obs.person_id " + 
-                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE obs.concept_id IN(9392, 9393) " + 
-                      "AND encounter.encounter_type = 158 AND patient_program.program_id = 17 AND obs.voided = 0 " + 
-                      "AND patient_program.voided = 0 AND encounter.voided = 0 AND orders.voided = 0 " + 
-                      "AND Date(obs.date_created) <='"+query.end_date+"'"
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM " + database + ".encounter LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE patient_id  IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (17) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
+                      "AND encounter_type.name = 'TREATMENTS' AND encounter.voided = 0 " + 
+                      "AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1229,7 +1231,9 @@ module.exports = function (router) {
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN concept_name ON obs.concept_id = concept_name.concept_id " + 
-                      "WHERE patient_program.program_id = 17 AND concept_name.name IN('Systolic blood pressure', 'Diastolic blood pressure') AND obs.voided = 0 " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (17) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
+                      "AND obs.concept_id IN (5085, 5086) AND obs.voided = 0 " + 
                       "AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -1257,7 +1261,9 @@ module.exports = function (router) {
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
                       "LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN concept_name ON obs.concept_id = concept_name.concept_id " + 
-                      "WHERE patient_program.program_id = 17 AND concept_name.name IN('Systolic blood pressure', 'Diastolic blood pressure') AND obs.voided = 0 " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (17) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
+                      "AND obs.concept_id IN (5085, 5086) AND obs.voided = 0 " + 
                       "AND Date(obs.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -1285,7 +1291,8 @@ module.exports = function (router) {
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN encounter_type " + 
                       "ON encounter_type.encounter_type_id = obs.encounter_id LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = obs.concept_id WHERE patient_program.program_id = 17 " + 
+                      "ON concept_name.concept_id = obs.concept_id WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (17) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
                       "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric <= 140) OR (concept_name.name = 'Diastolic blood pressure' " + 
                       "AND obs.value_numeric <= 90) AND obs.voided =  0 AND Date(obs.date_created) >='"+query.start_date+"' AND Date(obs.date_created) <='"+query.end_date+"'"
 
@@ -1315,9 +1322,11 @@ module.exports = function (router) {
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN encounter_type " + 
                       "ON encounter_type.encounter_type_id = obs.encounter_id LEFT OUTER JOIN patient_program ON obs.person_id = patient_program.patient_id " + 
                       "LEFT OUTER JOIN encounter ON encounter.encounter_type = obs.encounter_id LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = obs.concept_id WHERE patient_program.program_id = 17 " + 
-                      "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric <= 140) OR (concept_name.name = 'Diastolic blood pressure' AND obs.value_numeric <= 90) " + 
-                      "AND obs.voided = 0 AND Date(obs.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = obs.concept_id WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (17) " + 
+                      "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
+                      "AND (concept_name.name = 'Systolic blood pressure' AND obs.value_numeric <= 140) OR (concept_name.name = 'Diastolic blood pressure' " + 
+                      "AND obs.value_numeric <= 90) AND obs.voided =  0 AND Date(obs.date_created) <='"+query.end_date+"'"
+
 
             console.log(sql)
 
@@ -1341,12 +1350,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
-                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
-                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id " + 
-                      "WHERE patient_program.patient_id IN (SELECT DISTINCT p1.patient_id from patient_program p1, patient_program p2 " + 
-                      "WHERE p1.patient_id = p2.patient_id and p1.program_id = 13 and p2.program_id = 17) AND orders.voided = 0 AND " + 
-                      "Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM " + database + ".encounter LEFT OUTER JOIN person ON person.person_id = encounter.patient_id " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17)) " + 
+                      "AND encounter_type.name IN('DIABETES INITIAL QUESTIONS', 'PAST DIABETES MEDICAL HISTORY', 'DIABETES HISTORY', 'GENERAL HEALTH', 'DIABETES FAMILY HISTORY', 'VITAL SIGNS', 'LAB RESULTS', 'HIV/ART STATUS', 'UPDATE OUTCOME', 'DIABETES TEST', 'APPOINTMENT', 'TREATMENTS', 'HYPERTENSION INITIAL QUESTIONS', 'HYPERTENSION SOCIAL HISTORY', 'PAST HYPERTENSION MEDICAL HISTORY', 'HYPERTENSION FAMILY HISTORY', 'HYPERTENSION TEST') " + 
+                      "AND encounter.voided = 0 AND Date(encounter.encounter_datetime) >='"+query.start_date+"' AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1370,12 +1379,12 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
-                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = orders.patient_id " + 
-                      "LEFT OUTER JOIN program ON patient_program.program_id = program.program_id " + 
-                      "WHERE patient_program.patient_id IN (SELECT DISTINCT p1.patient_id from patient_program p1, patient_program p2 " + 
-                      "WHERE p1.patient_id = p2.patient_id and p1.program_id = 13 and p2.program_id = 17) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+            var sql = "SELECT COUNT(DISTINCT(encounter.patient_id)) AS total FROM " + database + ".encounter LEFT OUTER JOIN person ON person.person_id = encounter.patient_id " + 
+                      "LEFT OUTER JOIN encounter_type ON encounter_type.encounter_type_id = encounter.encounter_type " + 
+                      "WHERE patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17)) " + 
+                      "AND encounter_type.name IN('DIABETES INITIAL QUESTIONS', 'PAST DIABETES MEDICAL HISTORY', 'DIABETES HISTORY', 'GENERAL HEALTH', 'DIABETES FAMILY HISTORY', 'VITAL SIGNS', 'LAB RESULTS', 'HIV/ART STATUS', 'UPDATE OUTCOME', 'DIABETES TEST', 'APPOINTMENT', 'TREATMENTS', 'HYPERTENSION INITIAL QUESTIONS', 'HYPERTENSION SOCIAL HISTORY', 'PAST HYPERTENSION MEDICAL HISTORY', 'HYPERTENSION FAMILY HISTORY', 'HYPERTENSION TEST') " + 
+                      "AND encounter.voided = 0 AND Date(encounter.encounter_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
