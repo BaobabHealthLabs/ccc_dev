@@ -78,15 +78,10 @@ O.1.10.1. Yes
 O.1.10.2. No
 
 Q.1.11. Complications [pos:: 18$$multiple::multiple$$ helpText :: Does the patient have any of these complications$$parent::Diagnosis $$ tt_onLoad :: enlargeHeight() ]
-O.1.11.1. Amputation
-O.1.11.2. Stroke
-O.1.11.3. Ulcers
-O.1.11.4. Myocardial Injactia
-O.1.11.5. Impotence
-O.1.11.6. Visual Blindness
-O.1.11.7. Foot Ulcers
-O.1.11.8. Peripheral nueropathy
-0.1.11.9. CVA
+O.1.11.1. Chronic obstructive pulmonary disease
+O.1.11.2. Pneumonia
+O.1.11.3. Immnosupression
+O.1.11.4. Cardiac Arrhythmia
 
 Q.1.12. Advice on life changes [pos:: 19$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$parent::Diagnosis]
 O.1.12.1. Cigarette or smoke free enviroment
