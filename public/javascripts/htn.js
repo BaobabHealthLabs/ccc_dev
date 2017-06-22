@@ -1301,6 +1301,55 @@ function loadCardDashboard(){
                 continue;
 
             }
+
+            var drug = ['Diuretic','CCB','ACE-I','BB',"Other Treatment"]
+
+            ///mastercardtreatment
+            var drug_group = {
+                            "BB" : ["Atenolol", "Bisoprolol", "Metoprolol", "Masolol", "Propranol", "Timolol", "Ace Inihibitors"], 
+                            "ACE-I":[ "Benazepril", "Captopril", "Enalapril", "Lisinopril"],
+                            "CCB" : ["Amlodipine", "Nifedioine", "Diltiazem", "Verapamil", "Feloclipine"], 
+                            "Diuretic" : ["Frusmide", "Hydrochlorothiazide", "Sprinolactone"], 
+                            "Other Treatment" : ["Hydralazine", "Methyldopa", "Losartan", "Guanethidine", "Reserpine"]
+                            }
+
+
+            if(drug.indexOf(concept_keys[j]) >= 0){
+                var id  = dashboard.data.data['patientId']
+                var url = "/custom/treatment_for_day?date="+visitRows[i]['Visit Date']+"&person_id="+id+"&concept="+concept_keys[j];
+                td = document.createElement("td");
+                td.id = concept_keys[j]+visitRows[i]['Visit Date'].toLowerCase();
+                tr.appendChild(td);
+                dashboard.ajaxRequest(url,
+                    function(data){
+                        var drug_list = drug_group[data.concept];
+                        var treatment = data.data;
+                       var a = treatment.map(function(element){
+                            return element;
+                        }).reduce(function(c,e,i){
+                            c.push(e.name.replace(/ *\([^)]*\) */g, "").trim())
+                            return c;
+                        },[]);
+
+                        for(var index in a){
+
+                            console.log(drug_list.indexOf(a[index]) >= 0);
+                            console.log(index+"  "+data.concept)
+                            if (drug_list.indexOf(a[index]) >= 0){
+                                 __$(data.concept+data.date).innerHTML = "<span class='circle'>O</span>";
+                                 break;
+                            }else{
+                                 __$(data.concept+data.date).innerHTML = "<span class='circle'>X</span>";
+                                 continue;
+                            }
+                        }
+                        /*console.log(drug_list);
+                        console.log(a)*/
+                })
+                 continue;
+
+            }
+
             if(concept_keys[j]=="Next Appointment Date"){
 
                 var td = document.createElement("td");
