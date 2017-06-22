@@ -34,7 +34,7 @@ O.1.5.2. Primary
 O.1.5.3. Secondary
 O.1.5.4. Tertiary
 
-Q.1.6. Medication History [pos::5$$field_type::text$$parent::Date of onset]
+Q.1.6. Medication History [pos::5$$field_type::text$$optional::true$$parent::Date of onset]
 
 Q.1.7. Summary [pos :: 6 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Patient History at Enrollment Summary $$condition::true]
 

@@ -23,7 +23,7 @@ O.1.6.4. More than 5 minutes
 O.1.6.5. More than 30 minutes
 O.1.6.6. Unknown
 
-Q.1.7. What patient experiences before seizure [pos:: 6$$condition::__$('seizure_since_last_visit').value=="Yes"$$parent::Visit Date$$multiple:: multiple$$ tt_pageStyleClass :: MultiSelectList]
+Q.1.7. What patient experiences before seizure [pos:: 6$$condition::__$('seizure_since_last_visit').value=="Yes"$$parent::Visit Date$$multiple:: multiple$$ tt_pageStyleClass :: MultiSelectList$$ tt_onLoad :: enlargeHeight()]
 O.1.7.1. No memory recall
 O.1.7.2. Rising feeling in the stomach
 O.1.7.3. Heart palpitations
@@ -107,6 +107,6 @@ Q.1.24. On family planing? [pos::23$$parent::Visit Date$$tt_requirenextclick::fa
 O.1.24.1. Yes
 O.1.24.2. No
 
-Q.1.25. Comments [pos::24$$field_type::text$$parent::Visit Date]
+Q.1.25. Comments [pos::24$$optional::true$$field_type::text$$parent::Visit Date]
 
 Q.1.26. Summary [pos :: 25 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Visit Summary $$condition::true]
