@@ -82,6 +82,10 @@ O.1.11.1. Chronic obstructive pulmonary disease
 O.1.11.2. Pneumonia
 O.1.11.3. Immnosupression
 O.1.11.4. Cardiac Arrhythmia
+O.1.11.5. Pneumothorax
+O.1.11.6. Atelectasis
+O.1.11.7. Respiratory failure
+O.1.11.8. Status Asthmaticus
 
 Q.1.12. Advice on life changes [pos:: 19$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$parent::Diagnosis]
 O.1.12.1. Cigarette or smoke free enviroment

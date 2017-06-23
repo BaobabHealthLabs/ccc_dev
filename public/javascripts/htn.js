@@ -1306,10 +1306,10 @@ function loadCardDashboard(){
 
             ///mastercardtreatment
             var drug_group = {
-                            "BB" : ["Atenolol", "Bisoprolol", "Metoprolol", "Masolol", "Propranol", "Timolol", "Ace Inihibitors"], 
+                            "BB" : ["Atenolol", "Bisoprolol", "Metorpolol", "Masolol", "Propranol", "Timolol"], 
                             "ACE-I":[ "Benazepril", "Captopril", "Enalapril", "Lisinopril"],
-                            "CCB" : ["Amlodipine", "Nifedioine", "Diltiazem", "Verapamil", "Feloclipine"], 
-                            "Diuretic" : ["Frusmide", "Hydrochlorothiazide", "Sprinolactone"], 
+                            "CCB" : ["Amlodipine", "Nifedipine", "Diltiazem", "Verapamil", "Feloclipine"], 
+                            "Diuretic" : ["Frusemide", "Hydrochlorothiazide", "Spironolactone"], 
                             "Other Treatment" : ["Hydralazine", "Methyldopa", "Losartan", "Guanethidine", "Reserpine"]
                             }
 
