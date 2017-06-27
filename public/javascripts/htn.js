@@ -1336,10 +1336,10 @@ function loadCardDashboard(){
                             console.log(drug_list.indexOf(a[index]) >= 0);
                             console.log(index+"  "+data.concept)
                             if (drug_list.indexOf(a[index]) >= 0){
-                                 __$(data.concept+data.date).innerHTML = "<span class='circle'>O</span>";
+                                 __$(data.concept+data.date).innerHTML = "<span><img src ='"+checked_checkbox+"' height= '23px' width= '23px'></img></span>";
                                  break;
                             }else{
-                                 __$(data.concept+data.date).innerHTML = "<span class='circle'>X</span>";
+                                 __$(data.concept+data.date).innerHTML = "<span class='circle'>&nbsp;</span>";
                                  continue;
                             }
                         }
