@@ -255,8 +255,9 @@
     }
 
     var tmrInterval = setInterval(function () {
+        console.log(dashboard.workflow.length);
 
-        if (dashboard.workflow.length == 1 && dashboard.workflow[0] == "Mastercard") {
+        if (!(dashboard.workflow.includes("Treatments"))) {
 
             //clearInterval(tmrInterval);
 
