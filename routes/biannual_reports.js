@@ -1637,7 +1637,7 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "select COUNT(DISTINCT(o.person_id)) AS total from " + database + ".obs o where (o.concept_id = 5086 and o.value_numeric <= 90) " + 
-                      "and o.person_id In (select obs.person_id from obs obs where (obs.concept_id = 5085 and obs.value_numeric <= 140) " + 
+                      "AND o.person_id In (SELECT obs.person_id from obs obs where (obs.concept_id = 5085 and obs.value_numeric <= 140) " + 
                       "AND obs.person_id = o.person_id AND obs.encounter_id = o.encounter_id) AND o.person_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
                       "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) AND Date(o.date_created) >='"+query.start_date+"' AND Date(o.date_created) <='"+query.end_date+"'"
@@ -1809,8 +1809,9 @@ module.exports = function (router) {
                       "WHERE obs.person_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
                       "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
-                      "AND obs.concept_id IN (6712, 6713) AND obs.value_text LIKE '%Abnormal,Abnormal: Hypertensive Retinopathy,Abnormal: Hypertensive Retinopathy:%' " + 
-                      "AND concept_name.name IN ('Left eye fundoscopy', 'Right eye fundoscopy') AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+                      "AND obs.concept_id IN (6712, 6713) AND obs.value_text LIKE '%Hypertensive Retinopathy%' " + 
+                      "OR obs.value_text LIKE '%Diabetic Retinopathy%' AND concept_name.name IN ('Diabetes test type', 'Left eye fundoscopy', 'Right eye fundoscopy') " + 
+                      "AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -1836,8 +1837,9 @@ module.exports = function (router) {
                       "WHERE obs.person_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
                       "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
-                      "AND obs.concept_id IN (6712, 6713) AND obs.value_text LIKE '%Abnormal,Abnormal: Hypertensive Retinopathy,Abnormal: Hypertensive Retinopathy:%' " + 
-                      "AND concept_name.name IN ('Left eye fundoscopy', 'Right eye fundoscopy') AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+                      "AND obs.concept_id IN (6712, 6713) AND obs.value_text LIKE '%Hypertensive Retinopathy%' " + 
+                      "OR obs.value_text LIKE '%Diabetic Retinopathy%' AND concept_name.name IN ('Diabetes test type', 'Left eye fundoscopy', 'Right eye fundoscopy') " + 
+                      "AND obs.voided = 0 AND concept_name.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
             console.log(sql)
 
