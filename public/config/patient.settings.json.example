@@ -21,7 +21,7 @@
   "closestLandmark": "/list_closest_landmarks/html",
   "demographics": {
     "First Name": true,
-    "Middle Name": false,
+    "Middle Name": true,
     "Last Name": true,
     "Maiden Name": false,
     "Gender": true,
