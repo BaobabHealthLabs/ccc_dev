@@ -2421,6 +2421,1458 @@ module.exports = function (router) {
 
         });
 
+    router.route("/hdt_male_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'M' AND (year(patient_program.date_created) - year(person.birthdate)) > 0 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 " + 
+                      "AND patient_program.voided = 0 AND person.voided = 0 AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdt_male_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'M' AND (year(patient_program.date_created) - year(person.birthdate)) > 18 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND patient_program.voided = 0 AND person.voided = 0 AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdt_male_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'M' AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND patient_program.voided = 0 AND person.voided = 0 AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdt_female_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'F' AND (year(patient_program.date_created) - year(person.birthdate)) > 0 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 " + 
+                      "AND patient_program.voided = 0 AND person.voided = 0 AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdt_female_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'F' AND (year(patient_program.date_created) - year(person.birthdate)) > 18 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND patient_program.voided = 0 AND person.voided = 0 AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdt_female_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'F' AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " +  
+                      "AND patient_program.voided = 0 AND person.voided = 0 AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdt_total")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " +  
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " +  
+                      "AND patient_program.voided = 0 AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd1_male_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'M' AND (year(patient_program.date_created) - year(person.birthdate)) > 0 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 1 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd1_male_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'M' AND (year(patient_program.date_created) - year(person.birthdate)) > 18 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 1 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd1_male_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'M' AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 1 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd1_female_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'F' AND (year(patient_program.date_created) - year(person.birthdate)) > 0 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 1 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd1_female_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'F' AND (year(patient_program.date_created) - year(person.birthdate)) > 18 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 1 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd1_female_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'F' AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " +  
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 1 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd1_total")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 1 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd2_male_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) AND person.gender = 'M' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 0 AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 2 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd2_male_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) AND person.gender = 'M' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 18 AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 2 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd2_male_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) AND person.gender = 'M' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 2 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd2_female_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) AND person.gender = 'F' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 0 AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 2 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd2_female_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) AND person.gender = 'F' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 18 AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 2 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd2_female_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) AND person.gender = 'F' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 2 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hd2_total")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 6411 AND obs.value_text = 'Type 2 Diabetes' AND person.voided = 0 AND obs.voided = 0 " + 
+                      "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
+            console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdn_male_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'M' AND (year(patient_program.date_created) - year(person.birthdate)) > 0 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 AND patient_program.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdn_male_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'M' AND (year(patient_program.date_created) - year(person.birthdate)) > 18 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 AND patient_program.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdn_male_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'M' AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND patient_program.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdn_female_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'F' AND (year(patient_program.date_created) - year(person.birthdate)) > 0 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 AND patient_program.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdn_female_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'F' AND (year(patient_program.date_created) - year(person.birthdate)) > 18 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 AND patient_program.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdn_female_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND person.gender = 'F' AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND patient_program.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdn_total")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(patient_program.patient_id)) AS total FROM " + database + ".patient_program " + 
+                      "LEFT OUTER JOIN person ON person.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND patient_program.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdti_male_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'M' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 0 AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdti_male_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'M' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 18 AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdti_male_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'M' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdti_female_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'F' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 0 AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdti_female_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'F' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 18 AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdti_female_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'F' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdti_total")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND obs.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdto_male_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'M' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 0 AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdto_male_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'M' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 18 AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdto_male_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'M' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdto_female_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'F' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 0 AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdto_female_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'F' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 18 AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdto_female_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'F' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdto_total")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer out' AND obs.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+        router.route("/hdd_male_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE person.gender = 'M' AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 0 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
+                      "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdd_male_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE person.gender = 'M' AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 18 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
+                      "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdd_male_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE person.gender = 'M' AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
+                      "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdd_female_18")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'F' " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 0 AND (year(patient_program.date_created) - year(person.birthdate)) <= 18 " + 
+                      "AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdd_female_64")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE person.gender = 'F' AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 18 " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
+                      "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdd_female_65")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE person.gender = 'F' AND obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND (year(patient_program.date_created) - year(person.birthdate)) > 64 " + 
+                      "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
+                      "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/hdd_total")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+                      "WHERE obs.person_id IN(SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id = 13 " + 
+                      "AND pp.patient_id IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id = 17) " + 
+                      "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
+                      "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' AND obs.voided = 0 " + 
+                      "AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+
+
     router.route("/site")
       .get(function(req,res){
           var site = require(__dirname + "/../config/site.json");
