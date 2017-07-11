@@ -852,7 +852,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -880,7 +880,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -908,7 +908,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -936,7 +936,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -963,7 +963,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -991,7 +991,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1019,7 +1019,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1047,7 +1047,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' AND obs.voided = 0 " + 
                       "AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1075,7 +1075,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1103,7 +1103,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1131,7 +1131,7 @@ module.exports = function (router) {
                       "AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1159,7 +1159,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1187,7 +1187,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1215,7 +1215,7 @@ module.exports = function (router) {
                       "AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1242,7 +1242,7 @@ module.exports = function (router) {
                       "AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1674,7 +1674,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1702,7 +1702,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1730,7 +1730,7 @@ module.exports = function (router) {
                       "AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1758,7 +1758,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1786,7 +1786,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND patient_program.voided = 0 AND person.voided = 0 " + 
                       "AND Date(patient_program.date_enrolled) >='"+query.start_date+"' AND Date(patient_program.date_enrolled) <='"+query.end_date+"'"
 
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -1868,6 +1868,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -1895,6 +1896,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -1922,6 +1924,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -1949,6 +1952,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -1976,6 +1980,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2003,6 +2008,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2028,6 +2034,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2048,13 +2055,15 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'M' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 0 AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 " + 
                       "AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2075,13 +2084,15 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'M' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 18 AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 " + 
                       "AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2102,13 +2113,15 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'M' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 64 " + 
                       "AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2129,13 +2142,15 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'F' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 0 AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 " + 
                       "AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2156,13 +2171,15 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'F' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 18 AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 " + 
                       "AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2183,13 +2200,15 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'F' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 64 " + 
                       "AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2215,6 +2234,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2235,14 +2255,17 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
-                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE person.gender = 'M' AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 0 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2263,14 +2286,17 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
-                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE person.gender = 'M' AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 18 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2291,14 +2317,17 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
-                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE person.gender = 'M' AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 64 " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2319,13 +2348,15 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id WHERE person.gender = 'F' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 0 AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 " + 
                       "AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2346,14 +2377,17 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
-                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE person.gender = 'F' AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 18 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2374,14 +2408,17 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
-                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
+            var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE person.gender = 'F' AND obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 64 " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -2403,13 +2440,15 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(obs.person_id)) AS total FROM " + database + ".obs " + 
-                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
+                      "LEFT OUTER JOIN person ON person.person_id = obs.person_id " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = obs.concept_id " + 
                       "LEFT OUTER JOIN patient_program ON patient_program.patient_id = obs.person_id " + 
                       "WHERE obs.person_id IN(SELECT pp.patient_id from patient_program pp WHERE pp.program_id in (13) " + 
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (17, 16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' AND obs.voided = 0 " + 
                       "AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3275,6 +3314,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3304,6 +3344,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3333,6 +3374,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3362,6 +3404,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3391,6 +3434,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3420,6 +3464,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3446,6 +3491,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3475,6 +3521,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3504,6 +3551,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3533,6 +3581,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3562,6 +3611,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3591,6 +3641,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3620,6 +3671,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3646,6 +3698,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3677,6 +3730,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3708,6 +3762,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3739,6 +3794,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3768,6 +3824,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (SELECT p.patient_id FROM patient_program p WHERE p.program_id IN(16, 19))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3799,6 +3856,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3830,6 +3888,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -3860,6 +3919,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' AND obs.voided = 0 " + 
                       "AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4278,6 +4338,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4306,6 +4367,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4334,6 +4396,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4362,6 +4425,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4390,6 +4454,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4418,6 +4483,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4443,6 +4509,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4471,6 +4538,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4499,6 +4567,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4527,6 +4596,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4555,6 +4625,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4583,6 +4654,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4611,6 +4683,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4636,6 +4709,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4666,6 +4740,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4696,6 +4771,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4726,6 +4802,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4754,6 +4831,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 16, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4784,6 +4862,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4814,6 +4893,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4843,6 +4923,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' AND obs.voided = 0 " + 
                       "AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -4853,10 +4934,6 @@ module.exports = function (router) {
             });
 
         });
-
-
-
-//RESERVED FOR COPD 
 
     router.route("/copd_male_18")
         .get(function (req, res) {
@@ -5025,7 +5102,6 @@ module.exports = function (router) {
                       "AND obs.concept_id = 3065 AND obs.value_text = 'COPD' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 " + 
                       "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -5053,7 +5129,6 @@ module.exports = function (router) {
                       "WHERE obs.person_id IN (SELECT pp.patient_id FROM patient_program pp WHERE pp.program_id IN (19, 13, 16, 17)) " +  
                       "AND obs.concept_id = 3065 AND obs.value_text = 'COPD' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 " + 
                       "AND patient_program.voided = 0 AND Date(obs.obs_datetime) <='"+query.end_date+"'"
-
 
         console.log(sql)
 
@@ -5233,8 +5308,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 3065 AND obs.value_text = 'COPD' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 " + 
                       "AND patient_program.voided = 0 AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
 
-
-        console.log(sql)
+            console.log(sql)
 
             queryRaw(sql, function(data){
 
@@ -5702,6 +5776,7 @@ module.exports = function (router) {
                       "AND obs.person_id IN (SELECT obs.person_id FROM obs WHERE obs.concept_id = 6538 AND obs.value_text = 'Transfer out') " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -5921,6 +5996,7 @@ module.exports = function (router) {
                       "AND obs.person_id IN (SELECT obs.person_id FROM obs WHERE obs.concept_id = 6538 AND obs.value_text = 'Dead') " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6340,6 +6416,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6368,6 +6445,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6396,6 +6474,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6424,6 +6503,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6452,6 +6532,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6480,6 +6561,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6505,6 +6587,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 3289 AND obs.value_text = 'Transfer in' AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6533,6 +6616,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6561,6 +6645,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6589,6 +6674,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6617,6 +6703,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6645,6 +6732,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6673,6 +6761,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6698,6 +6787,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND obs.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6728,6 +6818,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 18 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6758,6 +6849,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6788,6 +6880,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6816,6 +6909,7 @@ module.exports = function (router) {
                       "AND pp.patient_id NOT IN (select p.patient_id FROM patient_program p WHERE p.program_id IN (13, 19, 17))) " + 
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Transfer out' AND patient_program.voided = 0 AND obs.voided = 0 AND person.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6846,6 +6940,7 @@ module.exports = function (router) {
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 64 AND obs.concept_id = 6538 AND obs.value_text = 'Dead' " + 
                       "AND concept_name.name = 'Outcome' AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6876,6 +6971,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' " + 
                       "AND obs.voided = 0 AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
@@ -6905,6 +7001,7 @@ module.exports = function (router) {
                       "AND obs.concept_id = 6538 AND obs.value_text = 'Dead' AND concept_name.name = 'Outcome' AND obs.voided = 0 " + 
                       "AND person.voided = 0 AND concept_name.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs.obs_datetime) >='"+query.start_date+"' AND Date(obs.obs_datetime) <='"+query.end_date+"'"
+
         console.log(sql)
 
             queryRaw(sql, function(data){
