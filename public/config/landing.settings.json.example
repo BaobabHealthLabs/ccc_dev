@@ -5,7 +5,7 @@
   "savePath": "/save_other",
   "dummyPatientCreatePath": "/save_dummy_patient",
   "facilityPath": "/facility",
-  "useStartSessionButton": true,
+  "useStartSessionButton": false,
   "afterCreatePath": "/save_patient",
   "supervisor": "HTS Coordinator",
   "prefix": "HTS",
