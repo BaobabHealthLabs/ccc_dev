@@ -46,10 +46,13 @@
 
         var path = "/views/integrated_report.html?start_date=" + quarters[qtr].startDate + "&end_date=" + quarters[qtr].endDate+"&quarter="+value 
 
-    }else {
+    }else if (report == "biannual"){
 
         var path = "/views/biannual_report.html?start_date=" + quarters[qtr].startDate + "&end_date=" + quarters[qtr].endDate+"&quarter="+value 
 
+    }else if (report == "monthly"){
+
+        var path = "/views/monthly_quarterly_report.html?start_date=" + quarters[qtr].startDate + "&end_date=" + quarters[qtr].endDate+"&quarter="+value   
         }
         window.location = path;
 

@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html><head lang="en">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>Biannual Report</title>
+    <style>
+    <style>
+        body {
+            padding: 0px;
+            margin: 1px;
+            font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
+            overflow: auto;
+            width: 99%;
+            -moz-user-select: none;
+        }
+
+        a {
+            color: #00B7FF;
+        }
+
+        button {
+            font-size: 22px !important;
+            padding: 15px;
+            min-width: 120px;
+            cursor: pointer;
+            min-height: 55px;
+            border-radius: 5px !important;
+            margin: 3px;
+        }
+
+        button:active {
+            background-color: #ffc579 !important;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ffc579), to(#fb9d23)) !important;
+            background-image: -webkit-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -moz-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -ms-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -o-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: linear-gradient(to bottom, #ffc579, #fb9d23);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ffc579, endColorstr=#fb9d23) !important;
+        }
+
+        .button {
+            font-size: 18px !important;
+            padding: 15px;
+            min-width: 120px;
+            cursor: pointer;
+            min-height: 55px;
+            border-radius: 0px !important;
+            margin: 3px;
+
+        }
+
+        .button:active {
+            color: white !important;
+            background-color: #ffc579 !important;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ffc579), to(#fb9d23)) !important;
+            background-image: -webkit-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -moz-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -ms-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -o-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: linear-gradient(to bottom, #ffc579, #fb9d23);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ffc579, endColorstr=#fb9d23) !important;
+        }
+
+        .blue {
+            border: 1px solid #7eb9d0;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #a7cfdf;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
+            background-image: -webkit-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: -moz-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: -ms-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: -o-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: linear-gradient(to bottom, #a7cfdf, #23538a);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#a7cfdf, endColorstr=#23538a);
+        }
+
+        .blue:hover {
+            border: 1px solid #5ca6c4;
+            background-color: #82bbd1;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#82bbd1), to(#193b61));
+            background-image: -webkit-linear-gradient(top, #82bbd1, #193b61);
+            background-image: -moz-linear-gradient(top, #82bbd1, #193b61);
+            background-image: -ms-linear-gradient(top, #82bbd1, #193b61);
+            background-image: -o-linear-gradient(top, #82bbd1, #193b61);
+            background-image: linear-gradient(to bottom, #82bbd1, #193b61);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#82bbd1, endColorstr=#193b61);
+        }
+
+        .green {
+            border: 1px solid #34740e;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #4ba614;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#4ba614), to(#008c00));
+            background-image: -webkit-linear-gradient(top, #4ba614, #008c00);
+            background-image: -moz-linear-gradient(top, #4ba614, #008c00);
+            background-image: -ms-linear-gradient(top, #4ba614, #008c00);
+            background-image: -o-linear-gradient(top, #4ba614, #008c00);
+            background-image: linear-gradient(to bottom, #4ba614, #008c00);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#4ba614, endColorstr=#008c00);
+        }
+
+        .green:hover {
+            border: 1px solid #224b09;
+            background-color: #36780f;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#36780f), to(#005900));
+            background-image: -webkit-linear-gradient(top, #36780f, #005900);
+            background-image: -moz-linear-gradient(top, #36780f, #005900);
+            background-image: -ms-linear-gradient(top, #36780f, #005900);
+            background-image: -o-linear-gradient(top, #36780f, #005900);
+            background-image: linear-gradient(to bottom, #36780f, #005900);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#36780f, endColorstr=#005900);
+        }
+
+        .red {
+            border: 1px solid #72021c;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #a90329;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#a90329), to(#6d0019));
+            background-image: -webkit-linear-gradient(top, #a90329, #6d0019);
+            background-image: -moz-linear-gradient(top, #a90329, #6d0019);
+            background-image: -ms-linear-gradient(top, #a90329, #6d0019);
+            background-image: -o-linear-gradient(top, #a90329, #6d0019);
+            background-image: linear-gradient(to bottom, #a90329, #6d0019);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#a90329, endColorstr=#6d0019);
+        }
+
+        .red:hover {
+            border: 1px solid #450111;
+            background-color: #77021d;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#77021d), to(#3a000d));
+            background-image: -webkit-linear-gradient(top, #77021d, #3a000d);
+            background-image: -moz-linear-gradient(top, #77021d, #3a000d);
+            background-image: -ms-linear-gradient(top, #77021d, #3a000d);
+            background-image: -o-linear-gradient(top, #77021d, #3a000d);
+            background-image: linear-gradient(to bottom, #77021d, #3a000d);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#77021d, endColorstr=#3a000d);
+        }
+
+        .gray {
+            border: 1px solid #ccc;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #ccc;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#999));
+            background-image: -webkit-linear-gradient(top, #ccc, #999);
+            background-image: -moz-linear-gradient(top, #ccc, #999);
+            background-image: -ms-linear-gradient(top, #ccc, #999);
+            background-image: -o-linear-gradient(top, #ccc, #999);
+            background-image: linear-gradient(to bottom, #ccc, #999);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ccc, endColorstr=#999);
+        }
+
+        .gray:hover {
+            border: 1px solid #ccc;
+            background-color: #ddd;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#ccc));
+            background-image: -webkit-linear-gradient(top, #333, #ccc);
+            background-image: -moz-linear-gradient(top, #333, #ccc);
+            background-image: -ms-linear-gradient(top, #333, #ccc);
+            background-image: -o-linear-gradient(top, #333, #ccc);
+            background-image: linear-gradient(to bottom, #333, #ccc);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#333, endColorstr=#ccc);
+        }
+
+        .textbox {
+            padding: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+
+        .table {
+            display: table;
+            border-spacing: 1px;
+        }
+
+        .row {
+            display: table-row;
+        }
+
+        .cell {
+            display: table-cell;
+        }
+
+        .bold {
+            font-weight: bold;
+            color: #284b38;
+        }
+
+        .label_cell {
+            font-size: 1.2em;
+            padding: 5px;
+            text-align: right;
+            border-bottom: 1px dotted #999;
+            border-right: 1px dotted #999;
+            width: 25%;
+        }
+
+        .input_cell {
+            font-size: 1.5em;
+            padding: 5px;
+            border-bottom: 1px dotted #999;
+        }
+
+        .no_bottom {
+            border-bottom: none;
+        }
+
+        .arrow-up {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-bottom: 30px solid #3465a4;
+        }
+
+        .arrow-up-gray {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-bottom: 30px solid #ccc;
+        }
+
+        .arrow-up:hover {
+            border-bottom: 30px solid #5ca6c4;
+        }
+
+        .arrow-up:active {
+            border-bottom: 30px solid #ef8544;
+        }
+
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-top: 30px solid #3465a4;
+        }
+
+        .arrow-down-gray {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-top: 30px solid #ccc;
+        }
+
+        .arrow-down:hover {
+            border-top: 30px solid #5ca6c4;
+        }
+
+        .arrow-down:active {
+            border-top: 30px solid #ef8544;
+        }
+
+        .listing {
+            overflow: auto;
+            height: 100%;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            padding-left: 0px;
+        }
+
+        .listing li {
+            color: black;
+            list-style: none;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 10px;
+            margin-top: 1px;
+            margin-bottom: 1px;
+            font-family: "Nimbus Sans L", "Arial Narrow", sans-serif;
+            font-size: 2.5em;
+        }
+
+        .selected {
+            background-color: lightblue !important;
+        }
+
+        .odd {
+            background-color: #eee;
+        }
+
+        .element {
+            border: 1px solid #999;
+            background-color: #cadcd3;
+            color: #000;
+            padding: 3px;
+            margin: 3px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 10px
+        }
+         .card {
+        border: 2px solid black;
+        }
+        .card{
+            margin-top:2%;
+            border: 1px solid;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .card thead{
+            border: 1px solid;
+        }
+        .card th{
+            #background: #6281a7;
+            #color: #ffffff;
+
+
+        }
+        .card th, .card td  {
+            border: 1px solid;
+            font-size: 0.9em;
+            padding: 0.4em;
+            
+        }
+        .card td{
+            text-align: left;
+            width: 30%;
+        }
+        .drill-down {
+            text-decoration: none;
+            color: black;
+        }
+        .condition {
+             border-right: 1px solid #305d97; 
+             border-top: 1px solid #305d97; 
+             border-bottom: 1px solid #ffffff; 
+             width: 25%;
+             background: #6281a7;
+        }
+        .medicine {
+            border-right: 1px solid #305d97; 
+            border-top: 1px solid #305d97; 
+            border-bottom: 1px solid #305d97; 
+            width: 40%;
+            background: #6281a7;
+        }
+</style>
+</head>
+<body oncontextmenu="return false;" style="margin: 1px; width: 99%; align: center;">
+<div style="background-color: rgb(98, 129, 167); color: rgb(238, 238, 238); padding: 2px;"><h2 align="center"
+     >
+        Non-Communicable Diseases Unit <br/>
+        Monthly and Quarterly Report <br/>
+        Facility Name : <span id="facility"></span> (<span id="quarter"></span>)
+</h2></div>
+
+<table>
+<table style="border-collapse: collapse;" border="1" cellpadding="10" width="85%" class="card">
+    <tr>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+            Condition
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            &nbsp;
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+            Patient Registration Details
+        </th>
+        <th colspan="3" style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 20%;">
+            Male
+        </th>
+        <th colspan="3" style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 20%;">
+            Female
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            Total
+        </th>
+    </tr>
+    <tr>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 20%;">
+            &nbsp;
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            &nbsp;
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 40%;">
+            Variables/Age Groups
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            <18
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            18-64
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            65+
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            <18
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            18-64
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            65+
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+           &nbsp;
+        </th>
+    </tr>
+
+    <tbody>
+        <tr>
+            <th class="condition">
+                1.0 Hypertension Only
+            </th>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                1
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Total number of patients ever registered
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="ht_male_18">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="ht_male_64">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="ht_male_65">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="ht_female_18">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="ht_female_64">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="ht_female_65">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="ht_total">
+                &nbsp;
+            </td>
+        </tr>    
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                2
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of  patients newly registered
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hn_male_18">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hn_male_64">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hn_male_65">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hn_female_18">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hn_female_64">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hn_female_65">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hn_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                3
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of  patients transferred-in
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hti_male_18">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hti_male_64">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hti_male_65">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hti_female_18">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hti_female_64">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hti_female_65">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hti_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                4
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of  patients transferred-out
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hto_male_18" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hto_male_64" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hto_male_65">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hto_female_18">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hto_female_64">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hto_female_65">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hto_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                5
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Total number of deaths
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hd_male_18">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd_male_64" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hd_male_65">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd_female_18">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hd_female_64">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd_female_65">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center"id="hd_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            2.0 Diabetes Only
+        </th>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Total number patients ever registered 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmt_male_18">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmt_male_64">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmt_male_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmt_female_18">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmt_female_64">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmt_female_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmt_total">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Cumulative number of  patients with type 1 Diabetes
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm1_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm1_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm1_male_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm1_female_18">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm1_female_64">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm1_female_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm1_total">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Cumulative number of  patients with type 2 Diabetes
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm2_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm2_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm2_male_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm2_female_18">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm2_female_64">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm2_female_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dm2_total">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients newly registered
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmn_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmn_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmn_male_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmn_female_18">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmn_female_64">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmn_female_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmn_total">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients transferred-in
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmti_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmti_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmti_male_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmti_female_18">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmti_female_64">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmti_female_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmti_total">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            6
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of  patients transferred-out
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmto_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmto_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmto_male_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmto_female_18">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmto_female_64">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmto_female_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmto_total">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            7
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Total number of deaths
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmd_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmd_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmd_male_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmd_female_18">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmd_female_64">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmd_female_65">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="dmd_total">
+            &nbsp;
+        </td>
+    </tr>
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            3.0 Hypertension & Diabetes
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Total number of patients ever registered
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdt_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdt_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdt_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdt_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdt_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdt_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdt_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+         Cumulative number of  patients with type 1 Diabetes
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd1_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd1_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd1_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd1_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd1_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd1_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd1_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Cumulative number of  patients with type 2 Diabetes
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd2_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd2_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd2_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd2_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd2_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd2_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hd2_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; ">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of  patients newly registered
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdn_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdn_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdn_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdn_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdn_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdn_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdn_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of  patients transferred-in
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdti_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdti_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdti_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdti_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdti_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdti_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdti_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            6
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of  patients transferred-out
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdto_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdto_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdto_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdto_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdto_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdto_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdto_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            7
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Total number of deaths
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdd_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdd_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdd_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdd_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdd_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdd_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="hdd_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            4.0 Asthma
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Total number of patients ever registered
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="ast_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="ast_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="ast_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="ast_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="ast_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="ast_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="ast_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients newly registered 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astn_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astn_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astn_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astn_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astn_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astn_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astn_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients transferred-in
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asti_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asti_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asti_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asti_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asti_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asti_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asti_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients transferred-out
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asto_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asto_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asto_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asto_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asto_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asto_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="asto_total" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Total number of deaths 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astd_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astd_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astd_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astd_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astd_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astd_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="astd_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            5.0 Chronic Obstructive Pulmonary (Lung) Disease
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Total number of patients ever registered
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copd_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copd_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copd_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copd_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copd_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copd_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copd_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients newly registered 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdn_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdn_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdn_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdn_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdn_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdn_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdn_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients transferred-in
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdti_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdti_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdti_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdti_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdti_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdti_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdti_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients transferred-out
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdto_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdto_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdto_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdto_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdto_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdto_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdto_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Total number of deaths
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdd_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdd_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdd_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdd_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdd_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdd_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="copdd_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr style="border-top: 3px solid #305d97;">
+        <th  class="condition">
+            6.0 Epilepsy
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Total number of patients ever registered
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epit_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epit_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epit_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epit_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epit_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epit_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epit_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients newly registered
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epin_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epin_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epin_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epin_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epin_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epin_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epin_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients transferred-in
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epiti_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epiti_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epiti_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epiti_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epiti_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epiti_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epiti_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients transferred-out
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epito_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epito_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epito_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epito_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epito_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epito_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epito_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Total number of deaths
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epid_male_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epid_male_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epid_male_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epid_female_18" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epid_female_64" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epid_female_65" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="epid_total" >
+            &nbsp;
+        </td>
+    </tr>
+</tbody>
+</table>
+</table>
+<script>
+
+    var path = window.location.href;
+
+    var startDate = (path.match(/start_date\=(\d{4}\-\d{2}\-\d{2})/) ? path.match(/start_date\=(\d{4}\-\d{2}\-\d{2})/)[1] : "");
+
+    var endDate = (path.match(/end_date\=(\d{4}\-\d{2}\-\d{2})/) ? path.match(/end_date\=(\d{4}\-\d{2}\-\d{2})/)[1] : "");
+
+    function __$(id) {
+
+        return document.getElementById(id);
+
+    }
+
+    var links = {
+            "ht_male_18": "/monthly_quarterly_reports/ht_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "ht_male_64": "/monthly_quarterly_reports/ht_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "ht_male_65": "/monthly_quarterly_reports/ht_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "ht_female_18": "/monthly_quarterly_reports/ht_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "ht_female_64": "/monthly_quarterly_reports/ht_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "ht_female_65": "/monthly_quarterly_reports/ht_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "ht_total": "/monthly_quarterly_reports/ht_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "hn_male_18": "/monthly_quarterly_reports/hn_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hn_male_64": "/monthly_quarterly_reports/hn_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hn_male_65": "/monthly_quarterly_reports/hn_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hn_female_18": "/monthly_quarterly_reports/hn_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hn_female_64": "/monthly_quarterly_reports/hn_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hn_female_65": "/monthly_quarterly_reports/hn_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hn_total": "/monthly_quarterly_reports/hn_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "hti_male_18": "/monthly_quarterly_reports/hti_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hti_male_64": "/monthly_quarterly_reports/hti_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hti_male_65": "/monthly_quarterly_reports/hti_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hti_female_18": "/monthly_quarterly_reports/hti_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hti_female_64": "/monthly_quarterly_reports/hti_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hti_female_65": "/monthly_quarterly_reports/hti_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hti_total": "/monthly_quarterly_reports/hti_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "hto_male_18": "/monthly_quarterly_reports/hto_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hto_male_64": "/monthly_quarterly_reports/hto_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hto_male_65": "/monthly_quarterly_reports/hto_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hto_female_18": "/monthly_quarterly_reports/hto_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hto_female_64": "/monthly_quarterly_reports/hto_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hto_female_65": "/monthly_quarterly_reports/hto_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hto_total": "/monthly_quarterly_reports/hto_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "hd_male_18": "/monthly_quarterly_reports/hd_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hd_male_64": "/monthly_quarterly_reports/hd_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hd_male_65": "/monthly_quarterly_reports/hd_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hd_female_18": "/monthly_quarterly_reports/hd_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hd_female_64": "/monthly_quarterly_reports/hd_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hd_female_65": "/monthly_quarterly_reports/hd_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hd_total": "/monthly_quarterly_reports/hd_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "dmt_male_18": "/monthly_quarterly_reports/dmt_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dmt_male_64": "/monthly_quarterly_reports/dmt_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dmt_male_65": "/monthly_quarterly_reports/dmt_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dmt_female_18": "/monthly_quarterly_reports/dmt_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dmt_female_64": "/monthly_quarterly_reports/dmt_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dmt_female_65": "/monthly_quarterly_reports/dmt_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dmt_total": "/monthly_quarterly_reports/dmt_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "dm1_male_18": "/monthly_quarterly_reports/dm1_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dm1_male_64": "/monthly_quarterly_reports/dm1_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dm1_male_65": "/monthly_quarterly_reports/dm1_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dm1_female_18": "/monthly_quarterly_reports/dm1_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dm1_female_64": "/monthly_quarterly_reports/dm1_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dm1_female_65": "/monthly_quarterly_reports/dm1_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dm1_total": "/monthly_quarterly_reports/dm1_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "dm2_male_18": "/monthly_quarterly_reports/dm2_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dm2_male_64": "/monthly_quarterly_reports/dm2_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dm2_male_65": "/monthly_quarterly_reports/dm2_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dm2_female_18": "/monthly_quarterly_reports/dm2_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dm2_female_64": "/monthly_quarterly_reports/dm2_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dm2_female_65": "/monthly_quarterly_reports/dm2_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dm2_total": "/monthly_quarterly_reports/dm2_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "dmn_male_18": "/monthly_quarterly_reports/dmn_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dmn_male_64": "/monthly_quarterly_reports/dmn_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dmn_male_65": "/monthly_quarterly_reports/dmn_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dmn_female_18": "/monthly_quarterly_reports/dmn_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dmn_female_64": "/monthly_quarterly_reports/dmn_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dmn_female_65": "/monthly_quarterly_reports/dmn_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dmn_total": "/monthly_quarterly_reports/dmn_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "dmti_male_18": "/monthly_quarterly_reports/dmti_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dmti_male_64": "/monthly_quarterly_reports/dmti_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dmti_male_65": "/monthly_quarterly_reports/dmti_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dmti_female_18": "/monthly_quarterly_reports/dmti_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dmti_female_64": "/monthly_quarterly_reports/dmti_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dmti_female_65": "/monthly_quarterly_reports/dmti_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dmti_total": "/monthly_quarterly_reports/dmti_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "dmto_male_18": "/monthly_quarterly_reports/dmto_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dmto_male_64": "/monthly_quarterly_reports/dmto_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dmto_male_65": "/monthly_quarterly_reports/dmto_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dmto_female_18": "/monthly_quarterly_reports/dmto_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dmto_female_64": "/monthly_quarterly_reports/dmto_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dmto_female_65": "/monthly_quarterly_reports/dmto_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dmto_total": "/monthly_quarterly_reports/dmto_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "dmd_male_18": "/monthly_quarterly_reports/dmd_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dmd_male_64": "/monthly_quarterly_reports/dmd_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dmd_male_65": "/monthly_quarterly_reports/dmd_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dmd_female_18": "/monthly_quarterly_reports/dmd_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "dmd_female_64": "/monthly_quarterly_reports/dmd_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "dmd_female_65": "/monthly_quarterly_reports/dmd_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "dmd_total": "/monthly_quarterly_reports/dmd_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "hdt_male_18": "/monthly_quarterly_reports/hdt_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hdt_male_64": "/monthly_quarterly_reports/hdt_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hdt_male_65": "/monthly_quarterly_reports/hdt_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hdt_female_18": "/monthly_quarterly_reports/hdt_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hdt_female_64": "/monthly_quarterly_reports/hdt_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hdt_female_65": "/monthly_quarterly_reports/hdt_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hdt_total": "/monthly_quarterly_reports/hdt_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "hd1_male_18": "/monthly_quarterly_reports/hd1_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hd1_male_64": "/monthly_quarterly_reports/hd1_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hd1_male_65": "/monthly_quarterly_reports/hd1_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hd1_female_18": "/monthly_quarterly_reports/hd1_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hd1_female_64": "/monthly_quarterly_reports/hd1_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hd1_female_65": "/monthly_quarterly_reports/hd1_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hd1_total": "/monthly_quarterly_reports/hd1_total?start_date=" + startDate + "&end_date=" + endDate,
+
+
+            "hd2_male_18": "/monthly_quarterly_reports/hd2_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hd2_male_64": "/monthly_quarterly_reports/hd2_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hd2_male_65": "/monthly_quarterly_reports/hd2_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hd2_female_18": "/monthly_quarterly_reports/hd2_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hd2_female_64": "/monthly_quarterly_reports/hd2_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hd2_female_65": "/monthly_quarterly_reports/hd2_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hd2_total": "/monthly_quarterly_reports/hd2_total?start_date=" + startDate + "&end_date=" + endDate,
+
+
+            "hdn_male_18": "/monthly_quarterly_reports/hdn_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hdn_male_64": "/monthly_quarterly_reports/hdn_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hdn_male_65": "/monthly_quarterly_reports/hdn_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hdn_female_18": "/monthly_quarterly_reports/hdn_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hdn_female_64": "/monthly_quarterly_reports/hdn_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hdn_female_65": "/monthly_quarterly_reports/hdn_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hdn_total": "/monthly_quarterly_reports/hdn_total?start_date=" + startDate + "&end_date=" + endDate,
+
+
+            "hdti_male_18": "/monthly_quarterly_reports/hdti_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hdti_male_64": "/monthly_quarterly_reports/hdti_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hdti_male_65": "/monthly_quarterly_reports/hdti_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hdti_female_18": "/monthly_quarterly_reports/hdti_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hdti_female_64": "/monthly_quarterly_reports/hdti_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hdti_female_65": "/monthly_quarterly_reports/hdti_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hdti_total": "/monthly_quarterly_reports/hdti_total?start_date=" + startDate + "&end_date=" + endDate,
+
+
+            "hdto_male_18": "/monthly_quarterly_reports/hdto_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hdto_male_64": "/monthly_quarterly_reports/hdto_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hdto_male_65": "/monthly_quarterly_reports/hdto_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hdto_female_18": "/monthly_quarterly_reports/hdto_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hdto_female_64": "/monthly_quarterly_reports/hdto_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hdto_female_65": "/monthly_quarterly_reports/hdto_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hdto_total": "/monthly_quarterly_reports/hdto_total?start_date=" + startDate + "&end_date=" + endDate,
+
+
+            "hdd_male_18": "/monthly_quarterly_reports/hdd_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hdd_male_64": "/monthly_quarterly_reports/hdd_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hdd_male_65": "/monthly_quarterly_reports/hdd_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hdd_female_18": "/monthly_quarterly_reports/hdd_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "hdd_female_64": "/monthly_quarterly_reports/hdd_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "hdd_female_65": "/monthly_quarterly_reports/hdd_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "hdd_total": "/monthly_quarterly_reports/hdd_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "ast_male_18": "/monthly_quarterly_reports/ast_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "ast_male_64": "/monthly_quarterly_reports/ast_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "ast_male_65": "/monthly_quarterly_reports/ast_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "ast_female_18": "/monthly_quarterly_reports/ast_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "ast_female_64": "/monthly_quarterly_reports/ast_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "ast_female_65": "/monthly_quarterly_reports/ast_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "ast_total": "/monthly_quarterly_reports/ast_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "astn_male_18": "/monthly_quarterly_reports/astn_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "astn_male_64": "/monthly_quarterly_reports/astn_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "astn_male_65": "/monthly_quarterly_reports/astn_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "astn_female_18": "/monthly_quarterly_reports/astn_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "astn_female_64": "/monthly_quarterly_reports/astn_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "astn_female_65": "/monthly_quarterly_reports/astn_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "astn_total": "/monthly_quarterly_reports/astn_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "asti_male_18": "/monthly_quarterly_reports/asti_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "asti_male_64": "/monthly_quarterly_reports/asti_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "asti_male_65": "/monthly_quarterly_reports/asti_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "asti_female_18": "/monthly_quarterly_reports/asti_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "asti_female_64": "/monthly_quarterly_reports/asti_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "asti_female_65": "/monthly_quarterly_reports/asti_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "asti_total": "/monthly_quarterly_reports/asti_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "asto_male_18": "/monthly_quarterly_reports/asto_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "asto_male_64": "/monthly_quarterly_reports/asto_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "asto_male_65": "/monthly_quarterly_reports/asto_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "asto_female_18": "/monthly_quarterly_reports/asto_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "asto_female_64": "/monthly_quarterly_reports/asto_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "asto_female_65": "/monthly_quarterly_reports/asto_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "asto_total": "/monthly_quarterly_reports/asto_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "astd_male_18": "/monthly_quarterly_reports/astd_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "astd_male_64": "/monthly_quarterly_reports/astd_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "astd_male_65": "/monthly_quarterly_reports/astd_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "astd_female_18": "/monthly_quarterly_reports/astd_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "astd_female_64": "/monthly_quarterly_reports/astd_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "astd_female_65": "/monthly_quarterly_reports/astd_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "astd_total": "/monthly_quarterly_reports/astd_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "copd_male_18": "/monthly_quarterly_reports/copd_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "copd_male_64": "/monthly_quarterly_reports/copd_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "copd_male_65": "/monthly_quarterly_reports/copd_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "copd_female_18": "/monthly_quarterly_reports/copd_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "copd_female_64": "/monthly_quarterly_reports/copd_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "copd_female_65": "/monthly_quarterly_reports/copd_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "copd_total": "/monthly_quarterly_reports/copd_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "copdn_male_18": "/monthly_quarterly_reports/copdn_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "copdn_male_64": "/monthly_quarterly_reports/copdn_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "copdn_male_65": "/monthly_quarterly_reports/copdn_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "copdn_female_18": "/monthly_quarterly_reports/copdn_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "copdn_female_64": "/monthly_quarterly_reports/copdn_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "copdn_female_65": "/monthly_quarterly_reports/copdn_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "copdn_total": "/monthly_quarterly_reports/copdn_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "copdti_male_18": "/monthly_quarterly_reports/copdti_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "copdti_male_64": "/monthly_quarterly_reports/copdti_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "copdti_male_65": "/monthly_quarterly_reports/copdti_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "copdti_female_18": "/monthly_quarterly_reports/copdti_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "copdti_female_64": "/monthly_quarterly_reports/copdti_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "copdti_female_65": "/monthly_quarterly_reports/copdti_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "copdti_total": "/monthly_quarterly_reports/copdti_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "copdto_male_18": "/monthly_quarterly_reports/copdto_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "copdto_male_64": "/monthly_quarterly_reports/copdto_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "copdto_male_65": "/monthly_quarterly_reports/copdto_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "copdto_female_18": "/monthly_quarterly_reports/copdto_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "copdto_female_64": "/monthly_quarterly_reports/copdto_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "copdto_female_65": "/monthly_quarterly_reports/copdto_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "copdto_total": "/monthly_quarterly_reports/copdto_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "copdd_male_18": "/monthly_quarterly_reports/copdd_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "copdd_male_64": "/monthly_quarterly_reports/copdd_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "copdd_male_65": "/monthly_quarterly_reports/copdd_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "copdd_female_18": "/monthly_quarterly_reports/copdd_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "copdd_female_64": "/monthly_quarterly_reports/copdd_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "copdd_female_65": "/monthly_quarterly_reports/copdd_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "copdd_total": "/monthly_quarterly_reports/copdd_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "epit_male_18": "/monthly_quarterly_reports/epit_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "epit_male_64": "/monthly_quarterly_reports/epit_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "epit_male_65": "/monthly_quarterly_reports/epit_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "epit_female_18": "/monthly_quarterly_reports/epit_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "epit_female_64": "/monthly_quarterly_reports/epit_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "epit_female_65": "/monthly_quarterly_reports/epit_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "epit_total": "/monthly_quarterly_reports/epit_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "epin_male_18": "/monthly_quarterly_reports/epin_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "epin_male_64": "/monthly_quarterly_reports/epin_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "epin_male_65": "/monthly_quarterly_reports/epin_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "epin_female_18": "/monthly_quarterly_reports/epin_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "epin_female_64": "/monthly_quarterly_reports/epin_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "epin_female_65": "/monthly_quarterly_reports/epin_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "epin_total": "/monthly_quarterly_reports/epin_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "epiti_male_18": "/monthly_quarterly_reports/epiti_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "epiti_male_64": "/monthly_quarterly_reports/epiti_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "epiti_male_65": "/monthly_quarterly_reports/epiti_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "epiti_female_18": "/monthly_quarterly_reports/epiti_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "epiti_female_64": "/monthly_quarterly_reports/epiti_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "epiti_female_65": "/monthly_quarterly_reports/epiti_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "epiti_total": "/monthly_quarterly_reports/epiti_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "epito_male_18": "/monthly_quarterly_reports/epito_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "epito_male_64": "/monthly_quarterly_reports/epito_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "epito_male_65": "/monthly_quarterly_reports/epito_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "epito_female_18": "/monthly_quarterly_reports/epito_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "epito_female_64": "/monthly_quarterly_reports/epito_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "epito_female_65": "/monthly_quarterly_reports/epito_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "epito_total": "/monthly_quarterly_reports/epito_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "epid_male_18": "/monthly_quarterly_reports/epid_male_18?start_date=" + startDate + "&end_date=" + endDate,
+            "epid_male_64": "/monthly_quarterly_reports/epid_male_64?start_date=" + startDate + "&end_date=" + endDate,
+            "epid_male_65": "/monthly_quarterly_reports/epid_male_65?start_date=" + startDate + "&end_date=" + endDate,
+            "epid_female_18": "/monthly_quarterly_reports/epid_female_18?start_date=" + startDate + "&end_date=" + endDate,
+            "epid_female_64": "/monthly_quarterly_reports/epid_female_64?start_date=" + startDate + "&end_date=" + endDate,
+            "epid_female_65": "/monthly_quarterly_reports/epid_female_65?start_date=" + startDate + "&end_date=" + endDate,
+            "epid_total": "/monthly_quarterly_reports/epid_total?start_date=" + startDate + "&end_date=" + endDate
+
+            
+    }
+
+    var  x = 0;
+    function ajaxRequest(url, id, callback) {
+
+
+            var httpRequest = new XMLHttpRequest();
+
+            httpRequest.onreadystatechange = function () {
+
+                if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                        httpRequest.status == 304)) {
+
+                    if (httpRequest.responseText.trim().length > 0) {
+                        var result = JSON.parse(httpRequest.responseText);
+
+                        setTimeout(function(){
+
+                            callback(result, id);
+
+                        },500)   
+
+                         
+                    } else {
+
+                        callback(undefined);
+
+                    }
+
+                }
+
+            };
+            try {
+                httpRequest.open("GET", url, true);
+                httpRequest.send(null);
+            } catch (e) {
+            }
+
+    }
+
+    function loadData() {
+
+
+        var keys = Object.keys(links);
+
+
+        for(var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            ajaxRequest(links[key], key,i, function(data, id) {
+
+                x++;
+
+                __$("progressbar").style.width = ((x)*100/Object.keys(links).length)+"%";
+
+
+                if(__$(id)) {
+
+                    __$(id).innerHTML = data? data.total : "0";
+
+                }
+
+            })
+
+        }
+
+    }
+    ajaxRequest('/mq_reports/site','facility',0,function(data,id){
+            __$(id).innerHTML = data
+    });
+
+    function getQueryParams(qs) {
+        qs = qs.split('+').join(' ');
+        var params = {},
+            tokens,
+            re = /[?&]?([^=]+)=([^&]*)/g;
+
+        while (tokens = re.exec(qs)) {
+            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+        }
+
+        return params;
+    }
+    ajaxRequest('/mq_reports/site','facility',function(data){
+                   __$('facility').innerHTML = data;
+    });
+    __$('quarter').innerHTML = getQueryParams(window.location.href)['quarter']
+   
+    loadData();
+
+</script>
+</html>
