@@ -293,6 +293,9 @@
 
             var btnContinue = dashboard.__$("btnContinue");
 
+            if(!btnContinue)
+                    return;
+
             btnContinue.innerHTML = "Continue";
 
             btnContinue.onmousedown = function () {
