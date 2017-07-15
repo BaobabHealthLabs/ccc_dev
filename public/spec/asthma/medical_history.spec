@@ -56,7 +56,7 @@ Q.1.5. History of chronic dry cough? [pos:: 11$$id::chronic_dry_cough$$tt_requir
 O.1.5.1. Yes
 O.1.5.2. No
 
-Q.1.6. Chronic dry cough duration [pos:: 12$$field_type::number$$parent:: History of chronic dry cough?$$condition::__$('chronic_dry_cough').value =="Yes"$$tt_pageStyleClass :: Numeric NumbersOnly]
+Q.1.6. Chronic dry cough duration (days) [pos:: 12$$field_type::number$$parent:: History of chronic dry cough?$$condition::__$('chronic_dry_cough').value =="Yes"$$tt_pageStyleClass :: Numeric NumbersOnly]
 
 Q.1.7. Chronic dry cough Age onset [pos::13$$field_type::number$$parent::History of chronic dry cough?$$condition::__$('chronic_dry_cough').value =="Yes"$$tt_pageStyleClass :: Numeric NumbersOnly]
 
@@ -86,6 +86,7 @@ O.1.11.5. Pneumothorax
 O.1.11.6. Atelectasis
 O.1.11.7. Respiratory failure
 O.1.11.8. Status Asthmaticus
+O.1.11.9. None
 
 Q.1.12. Advice on life changes [pos:: 19$$multiple::multiple$$tt_pageStyleClass::NoKeyboard$$parent::Diagnosis]
 O.1.12.1. Cigarette or smoke free enviroment
