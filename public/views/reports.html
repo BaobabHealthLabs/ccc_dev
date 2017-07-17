@@ -20,30 +20,30 @@
 
         var cohort_report = document.getElementById("cohort");
 
-            if(window.parent.landing.getCookie("currentProgram") == "Diabetes") {
+            // if(window.parent.landing.getCookie("currentProgram") == "Diabetes") {
 
-                dm_report.style.display="inline-block";
+            //     dm_report.style.display="inline-block";
 
-                integrated_report.style.display="inline-block";
+            //     integrated_report.style.display="inline-block";
 
-                cohort_report.style.display="inline-block";
-            }
+            //     cohort_report.style.display="inline-block";
+            // }
 
-            else if(window.parent.landing.getCookie("currentProgram") == "Asthma") {
+            // else if(window.parent.landing.getCookie("currentProgram") == "Asthma") {
 
-                asthma_report.style.display="inline-block";
-            } 
+            //     asthma_report.style.display="inline-block";
+            // } 
 
-            else if(window.parent.landing.getCookie("currentProgram") == "Epilepsy") {
+            // else if(window.parent.landing.getCookie("currentProgram") == "Epilepsy") {
                 
-                epilepsy_report.style.display="inline-block";
-            }
+            //     epilepsy_report.style.display="inline-block";
+            // }
 
     }
 
 </script>
 <body style="text-align: center; margin-top: 20px;" onLoad= "loadReports();" oncontextmenu="return false;">
-<div style="display: none; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
+<!-- <div style="display: none; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
             text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/dm/report_shell.html';" id = 'diabetes'>
     <img src="/images/report.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
@@ -55,7 +55,7 @@
     <img src="/images/report.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     <span id="program_report">Asthma Report</span>
-</div>
+</div> -->
 
 <div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
             text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/query_reports.html?report=integrated';" id = 'integrated'>
@@ -78,7 +78,7 @@
     <span id="program_report">Monthly&Qtry Report</span>
 </div>
 
-<div style="display: none; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
+<!-- <div style="display: none; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
             text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/epilepsy/report_shell.html';" id = 'epilepsy'>
     <img src="/images/report.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
@@ -96,8 +96,8 @@
             text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/epilepsy/report_shell.html';" id = 'epilepsy'>
     <img src="/images/report.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
-    Defaulters Report
-</div>
+    Defaulters Report -->
+<!-- </div> -->
 
 </body>
 </html>
