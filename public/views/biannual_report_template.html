@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html><head lang="en">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>Biannual Report</title>
+    <style>
+    <style>
+        body {
+            padding: 0px;
+            margin: 1px;
+            font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
+            overflow: auto;
+            -moz-user-select: none;
+        }
+
+        a {
+            color: #00B7FF;
+        }
+
+        button {
+            font-size: 22px !important;
+            padding: 15px;
+            min-width: 120px;
+            cursor: pointer;
+            min-height: 55px;
+            border-radius: 5px !important;
+            margin: 3px;
+        }
+
+        button:active {
+            background-color: #ffc579 !important;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ffc579), to(#fb9d23)) !important;
+            background-image: -webkit-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -moz-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -ms-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -o-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: linear-gradient(to bottom, #ffc579, #fb9d23);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ffc579, endColorstr=#fb9d23) !important;
+        }
+
+        .button {
+            font-size: 18px !important;
+            padding: 15px;
+            min-width: 120px;
+            cursor: pointer;
+            min-height: 55px;
+            border-radius: 0px !important;
+            margin: 3px;
+
+        }
+
+        .button:active {
+            color: white !important;
+            background-color: #ffc579 !important;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ffc579), to(#fb9d23)) !important;
+            background-image: -webkit-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -moz-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -ms-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -o-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: linear-gradient(to bottom, #ffc579, #fb9d23);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ffc579, endColorstr=#fb9d23) !important;
+        }
+
+        .blue {
+            border: 1px solid #7eb9d0;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #a7cfdf;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
+            background-image: -webkit-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: -moz-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: -ms-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: -o-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: linear-gradient(to bottom, #a7cfdf, #23538a);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#a7cfdf, endColorstr=#23538a);
+        }
+
+        .blue:hover {
+            border: 1px solid #5ca6c4;
+            background-color: #82bbd1;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#82bbd1), to(#193b61));
+            background-image: -webkit-linear-gradient(top, #82bbd1, #193b61);
+            background-image: -moz-linear-gradient(top, #82bbd1, #193b61);
+            background-image: -ms-linear-gradient(top, #82bbd1, #193b61);
+            background-image: -o-linear-gradient(top, #82bbd1, #193b61);
+            background-image: linear-gradient(to bottom, #82bbd1, #193b61);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#82bbd1, endColorstr=#193b61);
+        }
+
+        .green {
+            border: 1px solid #34740e;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #4ba614;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#4ba614), to(#008c00));
+            background-image: -webkit-linear-gradient(top, #4ba614, #008c00);
+            background-image: -moz-linear-gradient(top, #4ba614, #008c00);
+            background-image: -ms-linear-gradient(top, #4ba614, #008c00);
+            background-image: -o-linear-gradient(top, #4ba614, #008c00);
+            background-image: linear-gradient(to bottom, #4ba614, #008c00);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#4ba614, endColorstr=#008c00);
+        }
+
+        .green:hover {
+            border: 1px solid #224b09;
+            background-color: #36780f;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#36780f), to(#005900));
+            background-image: -webkit-linear-gradient(top, #36780f, #005900);
+            background-image: -moz-linear-gradient(top, #36780f, #005900);
+            background-image: -ms-linear-gradient(top, #36780f, #005900);
+            background-image: -o-linear-gradient(top, #36780f, #005900);
+            background-image: linear-gradient(to bottom, #36780f, #005900);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#36780f, endColorstr=#005900);
+        }
+
+        .red {
+            border: 1px solid #72021c;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #a90329;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#a90329), to(#6d0019));
+            background-image: -webkit-linear-gradient(top, #a90329, #6d0019);
+            background-image: -moz-linear-gradient(top, #a90329, #6d0019);
+            background-image: -ms-linear-gradient(top, #a90329, #6d0019);
+            background-image: -o-linear-gradient(top, #a90329, #6d0019);
+            background-image: linear-gradient(to bottom, #a90329, #6d0019);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#a90329, endColorstr=#6d0019);
+        }
+
+        .red:hover {
+            border: 1px solid #450111;
+            background-color: #77021d;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#77021d), to(#3a000d));
+            background-image: -webkit-linear-gradient(top, #77021d, #3a000d);
+            background-image: -moz-linear-gradient(top, #77021d, #3a000d);
+            background-image: -ms-linear-gradient(top, #77021d, #3a000d);
+            background-image: -o-linear-gradient(top, #77021d, #3a000d);
+            background-image: linear-gradient(to bottom, #77021d, #3a000d);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#77021d, endColorstr=#3a000d);
+        }
+
+        .gray {
+            border: 1px solid #ccc;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #ccc;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#999));
+            background-image: -webkit-linear-gradient(top, #ccc, #999);
+            background-image: -moz-linear-gradient(top, #ccc, #999);
+            background-image: -ms-linear-gradient(top, #ccc, #999);
+            background-image: -o-linear-gradient(top, #ccc, #999);
+            background-image: linear-gradient(to bottom, #ccc, #999);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ccc, endColorstr=#999);
+        }
+
+        .gray:hover {
+            border: 1px solid #ccc;
+            background-color: #ddd;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#ccc));
+            background-image: -webkit-linear-gradient(top, #333, #ccc);
+            background-image: -moz-linear-gradient(top, #333, #ccc);
+            background-image: -ms-linear-gradient(top, #333, #ccc);
+            background-image: -o-linear-gradient(top, #333, #ccc);
+            background-image: linear-gradient(to bottom, #333, #ccc);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#333, endColorstr=#ccc);
+        }
+
+        .textbox {
+            padding: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+
+        .table {
+            display: table;
+            border-spacing: 1px;
+        }
+
+        .row {
+            display: table-row;
+        }
+
+        .cell {
+            display: table-cell;
+        }
+
+        .bold {
+            font-weight: bold;
+            color: #284b38;
+        }
+
+        .label_cell {
+            font-size: 1.2em;
+            padding: 5px;
+            text-align: right;
+            border-bottom: 1px dotted #999;
+            border-right: 1px dotted #999;
+            width: 25%;
+        }
+
+        .input_cell {
+            font-size: 1.5em;
+            padding: 5px;
+            border-bottom: 1px dotted #999;
+        }
+
+        .no_bottom {
+            border-bottom: none;
+        }
+
+        .arrow-up {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-bottom: 30px solid #3465a4;
+        }
+
+        .arrow-up-gray {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-bottom: 30px solid #ccc;
+        }
+
+        .arrow-up:hover {
+            border-bottom: 30px solid #5ca6c4;
+        }
+
+        .arrow-up:active {
+            border-bottom: 30px solid #ef8544;
+        }
+
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-top: 30px solid #3465a4;
+        }
+
+        .arrow-down-gray {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-top: 30px solid #ccc;
+        }
+
+        .arrow-down:hover {
+            border-top: 30px solid #5ca6c4;
+        }
+
+        .arrow-down:active {
+            border-top: 30px solid #ef8544;
+        }
+
+        .listing {
+            overflow: auto;
+            height: 100%;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            padding-left: 0px;
+        }
+
+        .listing li {
+            color: black;
+            list-style: none;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 10px;
+            margin-top: 1px;
+            margin-bottom: 1px;
+            font-family: "Nimbus Sans L", "Arial Narrow", sans-serif;
+            font-size: 2.5em;
+        }
+
+        .selected {
+            background-color: lightblue !important;
+        }
+
+        .odd {
+            background-color: #eee;
+        }
+
+        .element {
+            border: 1px solid #999;
+            background-color: #cadcd3;
+            color: #000;
+            padding: 3px;
+            margin: 3px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 10px
+        }
+        .card {
+            border: 2px solid black;
+        }
+        .card{
+            margin-top:2%;
+            border: 1px solid;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .card thead{
+            border: 1px solid;
+        }
+        .card th{
+            #background: #6281a7;
+            #color: #ffffff;
+
+
+        }
+        .card th, .card td  {
+            border: 1px solid;
+            font-size: 0.9em;
+            padding: 0.4em;
+            
+        }
+        .card td{
+            text-align: left;
+            width: 30%;
+        }
+        .drill-down {
+            text-decoration: none;
+            color: black;
+        }
+        .condition {
+             border-right: 1px solid #305d97; 
+             border-top: 1px solid #305d97; 
+             border-bottom: 1px solid #ffffff; 
+             width: 25%;
+             background: #6281a7;
+        }
+        .medicine {
+            border-right: 1px solid #305d97; 
+            border-top: 1px solid #305d97; 
+            border-bottom: 1px solid #305d97; 
+            width: 40%;
+            background: #6281a7;
+        }
+
+    </style>
+</head>
+<body oncontextmenu="return false;" style="margin: 0px;">
+<div align="center"
+     style="font-size: 2.3em; background-color: rgb(98, 129, 167); color: rgb(238, 238, 238); padding: 15px;">
+            Ministry of Health<br/>
+        Non-Communicable Diseases Unit <br/>
+            Biannual Report <br/>
+        Facility Name : <span id="facility"></span> (<span id="quarter"></span>)
+</div>
+
+<div style="padding-left:1%; padding-right:1%">
+
+<table>
+
+<table style="border-collapse: collapse;" border="1" cellpadding="10" width="100%" class="card">
+    <tr>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+            Condition
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            &nbsp;
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 45%;">
+            Variables
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 15%;">
+            New
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 15%;">
+            Cumulative
+        </th>
+    </tr>
+    <tbody>
+        <tr>
+            <th class="condition">
+                1.0 Hypertension
+            </th>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                1
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Total number of patients transferred-in
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_ht_total_ti">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_total_ti">
+                &nbsp;
+            </td>
+        </tr>    
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                2
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Total number of patients transferred-out
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_ht_total_to">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_total_to">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                3
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Total number of patients alive and in care
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_ht_total_alive">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_total_alive">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                4
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with blood pressure controlled (bp ≤ 140/90)
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_ht_bp_controlled" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_bp_controlled" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                5
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with bp ≥ 180/110 at last visit
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_bp_last">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_bp_last" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                6
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Total number of patients who have defaulted
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_defaulted">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_defaulted">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                7
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients who currently drink alcohol
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_alcohol" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_alcohol" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                8
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients who are overweight
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_overweight" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_overweight" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                9
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients who are obese
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_ht_obese" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_obese" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                10
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of adults (< 65) who have died
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_ht_died" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_died" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                11
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients who currently smokes
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_smokes" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_smokes" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                12
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients categorized as high risk for adverse events such as heart attack, heart failure, stroke and death*
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_high_risk" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_high_risk" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                13
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with abnormal urine/creatinine
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_urine_creatinine" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_urine_creatinine" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                14
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with stroke 
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_stroke" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_stroke">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                15
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with other cardiovascular disease
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_cardiovascular">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_cardiovascular" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                16
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with renal failure
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_renal_failure"ssss >
+                -
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_renal_failure" >
+                -
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                17
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with  renal failure and on dialysis*
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_dialysis" >
+                -
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dialysis" >
+                -
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                18
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of hypertension with active or past TB
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_ht_tb" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_tb" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                19
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of hypertensive patients with HIV
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_ht_hiv" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_hiv" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                20
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Number of patients with hypertensive retinopathy
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center"id="new_retinopathy" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_retinopathy" >
+                &nbsp;
+            </td>
+        </tr>
+        <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            2.0 Diabetes
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of  patients with type 2 diabetes on insulin
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_type_2_diabetes">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_type_2_diabetes">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients alive and in care
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_alive_in_care" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_alive_in_care" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of adults who have died
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_died" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_died" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients with blood sugar controlled (fbs <=7mmol/l)
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_sugar_controlled" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_sugar_controlled" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients categorized as high risk for adverse events such as heart attack, heart failure, stroke and death
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_high_risk" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_high_risk" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            6
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients with stroke
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_stroke" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_stroke" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            7
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients with renal failure
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_renal_failure" >
+            -
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_renal_failure" >
+            -
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            8
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients with  renal failure that are on dialysis*
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_dialysis" >
+            -
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_dialysis" >
+            -
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+         Number of patients with diabetes foot ulcers
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_foot_ulcers" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_foot_ulcers" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            10
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+         Number of patients with amputations
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_amputations" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_amputations" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            11
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+         Number of patients with diabetes retinal complications
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_retinal_complications" >
+            -
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_retinal_complications" >
+            -
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            12
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+         Number of diabetics with HIV
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_hiv" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_hiv" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            Hypertension & Diabetes
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients with  hypertension and diabetes diagnosis
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_hd_diagnosis" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_hd_diagnosis" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+         Number of patients with blood pressure controlled (bp ≤ 140/90)
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_hd_bp_controlled" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_hd_bp_controlled" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients with blood sugar controlled (fbs <=7mmol/l)
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_hd_sugar_controlled" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_hd_sugar_controlled" >
+            &nbsp;
+        </td>
+        </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; "id="new_registered_male">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients categorized as high risk for adverse events such as heart attack, heart failure, stroke and death
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_hd_high_risk" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_hd_high_risk" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients with retinopathy
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_hd_retinopathy" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_hd_retinopathy" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <th class="condition">
+            3.0 Asthma
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients transferred-in
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ast_transferred" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ast_transferred" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr style="border-top: 3px solid #305d97;">
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients that have defaulted
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ast_defaulted" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ast_defaulted" >
+            &nbsp;
+        </td>
+        </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients alive and in care
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ast_alive" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ast_alive" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients with poor Asthma control requiring admission
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ast_control" >
+            -
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ast_control" >
+            -
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients with uncontrolled asthma in the last three visit? 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_uncontrolled_ast" >
+            -
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_uncontrolled_ast" >
+            -
+        </td>
+    </tr>
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            4.0 Chronic Obstructive Pulmonary (Lung)  Disease
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of COPD patients alive and in care
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_lung_alive" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_lung_alive" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients with uncontrolled copd in the last three visit
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_lung_uncontrolled" >
+            -
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_lung_uncontrolled" >
+            -
+        </td>
+    </tr>
+    <tr>
+        <th  class="condition">
+            5.0 Epilepsy
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients that have defaulted
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_epilepsy_defaulted" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_epilepsy_defaulted" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients alive and in care
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_epilepsy_alive" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_epilepsy_alive" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Number of patients with controlled  seizure  at last visit
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_epilepsy_seizure" >
+            -
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_epilepsy_seizure" >
+            -
+        </td>
+    </tr>
+    <tr>
+        <th  class="condition">
+            7.0 Cancer
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Cumulative number of patients on palliative care 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_cancer_alive" >
+            -
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_cancer_alive" >
+            -
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Newly registered cases of patients on palliative care 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_cancer_care" >
+            -
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_cancer_care" >
+            -
+        </td>
+    </tr>
+<!--     <tr>
+        <th  class="condition">
+            8.0 Mental Disorder
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of patients with depression 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_md_depression" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_md_depression" >
+            &nbsp;
+        </td>
+    </tr> -->
+     <tr>
+        <th  class="condition">
+            9.0 Road Traffic Accidents
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Number of road traffic deaths at health facility 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_rta_death" >
+            -
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_rta_death" >
+            -
+        </td>
+    </tr>
+     <tr>
+        <th class="condition">
+            Drugs
+        </th>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;"id="new_registered_male" >
+            &nbsp;
+        </td>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 45%; text-align: centre">
+         Stock-out of of essential NCDs medicine
+        </th>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" >
+            &nbsp;<a href="/" class="drill-down"></a>
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center ">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97;border-left: 1px solid #305d97;border-bottom: 1px solid #305d97;width: 5%;">
+            &nbsp;
+        </td>
+        <th class="medicine">
+            Anti-hypertensives
+        </th>
+        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center">
+            &nbsp;
+        </td>
+        </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Hydrochlorthizide
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ht_hydro" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_hydro" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Amlodipine
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ht_amlodipine" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_amlodipine" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Nifedipine
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ht_nife" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_nife" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Captopril
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ht_capto" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_capto" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Propranolol
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ht_propa" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_propa" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Antenolol
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ht_ant" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ht_ant" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <th  class="medicine">
+            Anti-diabetics
+        </th>
+        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Mertiformin
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_met" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_met" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Soluble-insulin
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_insulin" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_insulin" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Lente-insulin
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_lente" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_lente" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Glibenclamide
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_dm_glib" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_dm_glib" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <th class="medicine">
+            Anti-asthmas
+        </th>
+        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Aminophylline tablets
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ast_amino" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ast_amino" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Iv aminophylline
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ast_ivamino" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ast_ivamino" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Salbutamol
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ast_salb" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ast_salb" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <th class="medicine">
+            Anti-epileptics
+        </th>
+        <td style="border-right: 1px solid #ffffff; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Carbamazepine
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ep_carb" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ep_carb" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Diazepam
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ep_diaz" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ep_diaz" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Ethosuximide
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ep_etho" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ep_etho" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Magnesium Sulphate
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ep_mag" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ep_mag" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Paraldehyde
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ep_para" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ep_para" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Phenobarbitone Sodium
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ep_pheno" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ep_pheno" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Pheytoin Sodium
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_epi_phey" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_epi_phey" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 25%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            Sodium Valproate
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="new_ep_sv" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 15%; text-align: center" id="cumulative_ep_sv" >
+            &nbsp;
+        </td>
+    </tr>
+</tbody>
+</table>
+</table>
+<script>
+
+var path = window.location.href;
+
+    var startDate = (path.match(/start_date\=(\d{4}\-\d{2}\-\d{2})/) ? path.match(/start_date\=(\d{4}\-\d{2}\-\d{2})/)[1] : "");
+
+    var endDate = (path.match(/end_date\=(\d{4}\-\d{2}\-\d{2})/) ? path.match(/end_date\=(\d{4}\-\d{2}\-\d{2})/)[1] : "");
+
+    function __$(id) {
+
+        return document.getElementById(id);
+
+    }
+
+    var links = {
+            "new_ht_total_ti": "/biannual_reports/new_ht_total_ti?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_total_ti": "/biannual_reports/cumulative_ht_total_ti?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_total_to": "/biannual_reports/new_ht_total_to?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_total_to": "/biannual_reports/cumulative_ht_total_to?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_total_alive": "/biannual_reports/new_ht_total_alive?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_total_alive": "/biannual_reports/cumulative_ht_total_alive?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_bp_controlled": "/biannual_reports/new_ht_bp_controlled?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_bp_controlled": "/biannual_reports/cumulative_ht_bp_controlled?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_bp_last": "/biannual_reports/new_bp_last?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_bp_last": "/biannual_reports/cumulative_bp_last?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_defaulted": "/biannual_reports/new_defaulted?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_defaulted": "/biannual_reports/cumulative_defaulted?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_alcohol": "/biannual_reports/new_alcohol?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_alcohol": "/biannual_reports/cumulative_alcohol?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_overweight": "/biannual_reports/new_overweight?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_overweight": "/biannual_reports/cumulative_overweight?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_obese": "/biannual_reports/new_ht_obese?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_obese": "/biannual_reports/cumulative_ht_obese?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_died": "/biannual_reports/new_ht_died?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_died": "/biannual_reports/cumulative_ht_died?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_smokes": "/biannual_reports/new_smokes?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_smokes": "/biannual_reports/cumulative_smokes?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_high_risk": "/biannual_reports/new_high_risk?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_high_risk": "/biannual_reports/cumulative_high_risk?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_urine_creatinine": "/biannual_reports/new_urine_creatinine?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_urine_creatinine": "/biannual_reports/cumulative_urine_creatinine?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_stroke": "/biannual_reports/new_stroke?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_stroke": "/biannual_reports/cumulative_stroke?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_cardiovascular": "/biannual_reports/new_cardiovascular?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_cardiovascular": "/biannual_reports/cumulative_cardiovascular?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_renal_failure": "/biannual_reports/new_renal_failure?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_renal_failure": "/biannual_reports/cumulative_renal_failure?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_dialysis": "/biannual_reports/new_dialysis?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_dialysis": "/biannual_reports/cumulative_dialysis?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_tb": "/biannual_reports/new_ht_tb?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_tb": "/biannual_reports/cumulative_ht_tb?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_hiv": "/biannual_reports/new_ht_hiv?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_hiv": "/biannual_reports/cumulative_ht_hiv?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_retinopathy": "/biannual_reports/new_retinopathy?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_retinopathy": "/biannual_reports/cumulative_retinopathy?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_type_2_diabetes": "/biannual_reports/new_type_2_diabetes?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_type_2_diabetes": "/biannual_reports/cumulative_type_2_diabetes?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_alive_in_care": "/biannual_reports/new_alive_in_care?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_alive_in_care": "/biannual_reports/cumulative_alive_in_care?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_dm_died": "/biannual_reports/new_dm_died?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_dm_died": "/biannual_reports/cumulative_dm_died?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_sugar_controlled": "/biannual_reports/new_sugar_controlled?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_sugar_controlled": "/biannual_reports/cumulative_sugar_controlled?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_dm_high_risk": "/biannual_reports/new_dm_high_risk?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_dm_high_risk": "/biannual_reports/cumulative_dm_high_risk?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_dm_stroke": "/biannual_reports/new_dm_stroke?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_dm_stroke": "/biannual_reports/cumulative_dm_stroke?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_dm_renal_failure": "/biannual_reports/new_dm_renal_failure?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_dm_renal_failure": "/biannual_reports/cumulative_dm_renal_failure?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_dm_dialysis": "/biannual_reports/new_dm_dialysis?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_dm_dialysis": "/biannual_reports/cumulative_dm_dialysis?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_dm_foot_ulcers": "/biannual_reports/new_dm_foot_ulcers?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_dm_foot_ulcers": "/biannual_reports/cumulative_dm_foot_ulcers?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_dm_amputations": "/biannual_reports/new_dm_amputations?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_dm_amputations": "/biannual_reports/cumulative_dm_amputations?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_retinal_complications": "/biannual_reports/new_retinal_complications?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_retinal_complications": "/biannual_reports/cumulative_retinal_complications?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_dm_hiv": "/biannual_reports/new_dm_hiv?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_dm_hiv": "/biannual_reports/cumulative_dm_hiv?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_hd_diagnosis": "/biannual_reports/new_hd_diagnosis?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_hd_diagnosis": "/biannual_reports/cumulative_hd_diagnosis?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_hd_bp_controlled": "/biannual_reports/new_hd_bp_controlled?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_hd_bp_controlled": "/biannual_reports/cumulative_hd_bp_controlled?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_hd_sugar_controlled": "/biannual_reports/new_hd_sugar_controlled?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_hd_sugar_controlled": "/biannual_reports/cumulative_hd_sugar_controlled?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_hd_high_risk": "/biannual_reports/new_hd_high_risk?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_hd_high_risk": "/biannual_reports/cumulative_hd_high_risk?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_hd_retinopathy": "/biannual_reports/new_hd_retinopathy?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_hd_retinopathy": "/biannual_reports/cumulative_hd_retinopathy?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ast_transferred": "/biannual_reports/new_ast_transferred?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ast_transferred": "/biannual_reports/cumulative_ast_transferred?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ast_defaulted": "/biannual_reports/new_ast_defaulted?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ast_defaulted": "/biannual_reports/cumulative_ast_defaulted?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ast_alive": "/biannual_reports/new_ast_alive?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ast_alive": "/biannual_reports/cumulative_ast_alive?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_ast_control": "/biannual_reports/new_ast_control?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_ast_control": "/biannual_reports/cumulative_ast_control?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_uncontrolled_ast": "/biannual_reports/new_uncontrolled_ast?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_uncontrolled_ast": "/biannual_reports/cumulative_uncontrolled_ast?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_lung_alive": "/biannual_reports/new_lung_alive?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_lung_alive": "/biannual_reports/cumulative_lung_alive?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_lung_uncontrolled": "/biannual_reports/new_lung_uncontrolled?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_lung_uncontrolled": "/biannual_reports/cumulative_lung_uncontrolled?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_epilepsy_defaulted": "/biannual_reports/new_epilepsy_defaulted?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_epilepsy_defaulted": "/biannual_reports/cumulative_epilepsy_defaulted?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_epilepsy_alive": "/biannual_reports/new_epilepsy_alive?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_epilepsy_alive": "/biannual_reports/cumulative_epilepsy_alive?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_epilepsy_seizure": "/biannual_reports/new_epilepsy_seizure?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_epilepsy_seizure": "/biannual_reports/cumulative_epilepsy_seizure?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_cancer_alive": "/biannual_reports/new_cancer_alive?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_cancer_alive": "/biannual_reports/cumulative_cancer_alive?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_cancer_care": "/biannual_reports/new_cancer_care?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_cancer_care": "/biannual_reports/cumulative_cancer_care?start_date=" + startDate + "&end_date=" + endDate,
+
+            // "new_rta_death": "/biannual_reports/new_rta_death?start_date=" + startDate + "&end_date=" + endDate,
+            // "cumulative_rta_death": "/biannual_reports/cumulative_rta_death?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_hydro": "/biannual_reports/new_ht_hydro?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_hydro": "/biannual_reports/cumulative_ht_hydro?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_amlodipine": "/biannual_reports/new_ht_amlodipine?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_amlodipine": "/biannual_reports/cumulative_ht_amlodipine?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_nife": "/biannual_reports/new_ht_nife?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_nife": "/biannual_reports/cumulative_ht_nife?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_capto": "/biannual_reports/new_ht_capto?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_capto": "/biannual_reports/cumulative_ht_capto?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_propa": "/biannual_reports/new_ht_propa?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_propa": "/biannual_reports/cumulative_ht_propa?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ht_ant": "/biannual_reports/new_ht_ant?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ht_ant": "/biannual_reports/cumulative_ht_ant?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_dm_met": "/biannual_reports/new_dm_met?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_dm_met": "/biannual_reports/cumulative_dm_met?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_dm_insulin": "/biannual_reports/new_dm_insulin?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_dm_insulin": "/biannual_reports/cumulative_dm_insulin?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_dm_lente": "/biannual_reports/new_dm_lente?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_dm_lente": "/biannual_reports/cumulative_dm_lente?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_dm_glib": "/biannual_reports/new_dm_glib?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_dm_glib": "/biannual_reports/cumulative_dm_glib?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ast_amino": "/biannual_reports/new_ast_amino?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ast_amino": "/biannual_reports/cumulative_ast_amino?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ast_ivamino": "/biannual_reports/new_ast_ivamino?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ast_ivamino": "/biannual_reports/cumulative_ast_ivamino?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ast_salb": "/biannual_reports/new_ast_salb?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ast_salb": "/biannual_reports/cumulative_ast_salb?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ep_carb": "/biannual_reports/new_ep_carb?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ep_carb": "/biannual_reports/cumulative_ep_carb?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ep_diaz": "/biannual_reports/new_ep_diaz?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ep_diaz": "/biannual_reports/cumulative_ep_diaz?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ep_etho": "/biannual_reports/new_ep_etho?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ep_etho": "/biannual_reports/cumulative_ep_etho?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ep_mag": "/biannual_reports/new_ep_mag?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ep_mag": "/biannual_reports/cumulative_ep_mag?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ep_para": "/biannual_reports/new_ep_para?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ep_para": "/biannual_reports/cumulative_ep_para?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ep_pheno": "/biannual_reports/new_ep_pheno?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ep_pheno": "/biannual_reports/cumulative_ep_pheno?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_epi_phey": "/biannual_reports/new_epi_phey?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_epi_phey": "/biannual_reports/cumulative_epi_phey?start_date=" + startDate + "&end_date=" + endDate,
+
+            "new_ep_sv": "/biannual_reports/new_ep_sv?start_date=" + startDate + "&end_date=" + endDate,
+            "cumulative_ep_sv": "/biannual_reports/cumulative_ep_sv?start_date=" + startDate + "&end_date=" + endDate
+
+
+            
+    }
+
+    var  x = 0;
+    function ajaxRequest(url, id, callback) {
+
+
+            var httpRequest = new XMLHttpRequest();
+
+            httpRequest.onreadystatechange = function () {
+
+                if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                        httpRequest.status == 304)) {
+
+                    if (httpRequest.responseText.trim().length > 0) {
+                        var result = JSON.parse(httpRequest.responseText);
+
+                        setTimeout(function(){
+
+                            callback(result, id);
+
+                        },500)   
+
+                         
+                    } else {
+
+                        callback(undefined);
+
+                    }
+
+                }
+
+            };
+            try {
+                httpRequest.open("GET", url, true);
+                httpRequest.send(null);
+            } catch (e) {
+            }
+
+    }
+
+    function loadData() {
+
+
+        var keys = Object.keys(links);
+
+
+        for(var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            ajaxRequest(links[key], key,i, function(data, id) {
+
+                x++;
+
+                __$("progressbar").style.width = ((x)*100/Object.keys(links).length)+"%";
+
+
+                if(__$(id)) {
+
+                    __$(id).innerHTML = data? data.total : "0";
+
+                }
+
+            })
+
+        }
+
+    }
+    ajaxRequest('/biannual_reports/site','facility',0,function(data,id){
+            __$(id).innerHTML = data
+    });
+
+    function getQueryParams(qs) {
+        qs = qs.split('+').join(' ');
+        var params = {},
+            tokens,
+            re = /[?&]?([^=]+)=([^&]*)/g;
+
+        while (tokens = re.exec(qs)) {
+            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+        }
+
+        return params;
+    }
+    ajaxRequest('/biannual_reports/site','facility',function(data){
+                   __$('facility').innerHTML = data;
+    });
+    __$('quarter').innerHTML = getQueryParams(window.location.href)['quarter']
+   
+    loadData();
+
+</script>
+</html>
