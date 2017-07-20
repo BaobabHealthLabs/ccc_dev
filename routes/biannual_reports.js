@@ -2213,10 +2213,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id " + 
-                      "WHERE orders.concept_id IN(1243) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
+                      "LEFT OUTER JOIN concept_name ON concept_name.concept_id = orders.concept_id " + 
+                      "WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) AND orders.concept_id IN(1243) " + 
+                      "AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2240,7 +2240,7 @@ module.exports = function (router) {
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
                       "LEFT OUTER JOIN concept_name ON concept_name.concept_id = orders.concept_id " + 
-                      "WHERE orders.concept_id IN(1243) " + 
+                      "WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) AND orders.concept_id IN(1243) " + 
                       "AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2264,8 +2264,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(3187) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id IN(3187) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2288,8 +2288,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(3187) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id IN(3187) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2312,8 +2312,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(250) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id IN(250) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2336,8 +2336,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(250) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id IN(250) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2360,8 +2360,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(3182) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id IN(3182) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2384,8 +2384,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(3182) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id IN(3182) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2408,8 +2408,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(254) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id IN(254) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2432,8 +2432,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(254) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id IN(254) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2456,8 +2456,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(3186) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id IN(3186) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2480,8 +2480,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(3186) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id IN(3186) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2503,10 +2503,9 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
-                      "where concept_id IN (SELECT concept_id FROM concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 4052 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT patient_id FROM patient_program WHERE program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id IN(4052) AND orders.voided = 0 AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2528,10 +2527,10 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
-                      "where concept_id IN (SELECT concept_id FROM concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 4052 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id IN(4052) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
+
 
             console.log(sql)
 
@@ -2554,7 +2553,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(280, 282) AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id IN(280, 282) AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2578,8 +2578,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(280, 282) AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id IN(280, 282) AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2602,7 +2602,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(278, 279) AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id IN(278, 279) AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2626,7 +2627,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id IN(278, 279) AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id IN(278, 279) AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2649,9 +2651,9 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
-                      "WHERE concept_id IN (SELECT concept_id FROM concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 4046 AND orders.voided = 0 " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id IN(4046) AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2674,9 +2676,9 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders " + 
-                      "WHERE concept_id IN (SELECT concept_id FROM concept_set where concept_set = 6871) " + 
-                      "AND orders.concept_id = 4046 AND orders.voided = 0 " + 
+            var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id IN(4046) AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2700,7 +2702,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 928 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 928 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2724,7 +2727,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 928 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 928 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2748,7 +2752,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 347 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 347 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2772,8 +2777,9 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 347 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id = 347 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2796,7 +2802,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 798 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 798 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2820,7 +2827,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 798 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 798 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2844,7 +2852,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 920 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 920 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2868,8 +2877,9 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 920 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id = 920 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2892,7 +2902,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 247 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 247 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2916,8 +2927,9 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 247 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id = 247 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2940,7 +2952,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 8972 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 8972 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -2964,8 +2977,9 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 8972 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id = 8972 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -2988,7 +3002,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 6811 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 6811 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -3012,7 +3027,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 6811 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 6811 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -3036,7 +3052,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 6815 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 6815 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -3060,8 +3077,9 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 6815 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id = 6815 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -3084,7 +3102,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 8249 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 8249 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -3108,8 +3127,9 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 8249 AND orders.voided = 0 " + 
-                      "AND Date(orders.date_created) <='"+query.end_date+"'"
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) " + 
+                      "AND orders.concept_id = 8249 AND orders.voided = 0 AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
 
@@ -3132,7 +3152,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 8193 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 8193 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -3156,7 +3177,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 8193 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 8193 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -3180,7 +3202,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 4060 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 4060 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) >='"+query.start_date+"' AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
@@ -3204,7 +3227,8 @@ module.exports = function (router) {
             var result = 0;
 
             var sql = "SELECT COUNT(DISTINCT(orders.patient_id)) AS total FROM " + database + ".orders LEFT OUTER JOIN concept_name " + 
-                      "ON concept_name.concept_id = orders.concept_id WHERE orders.concept_id = 4060 AND orders.voided = 0 " + 
+                      "ON concept_name.concept_id = orders.concept_id WHERE orders.patient_id IN (SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id IN(13, 16, 17, 19)) AND orders.concept_id = 4060 AND orders.voided = 0 " + 
                       "AND Date(orders.date_created) <='"+query.end_date+"'"
 
             console.log(sql)
