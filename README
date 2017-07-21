@@ -1,0 +1,19 @@
+# ccc_dev
+CLone the application on github
+Check node version by running node -v (Should be 5.10.1)
+Then run "nvm list" system default should be "5.10.1" 
+If there is no node.js or nvm installed, follow the instrunctions on this link 
+"https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04"
+Verify the following; config file- copy couchdb.json.example to couchdb.json
+                                 - database.json.example to database.json
+                                 - dde.json
+                                 - site.json.example to site.json
+copy the .examples in public/config to .json
+Then run ./setup.sh
+DDE application username should be "admin"
+DDE application password should be "test"
+Threshold should be less than the batch size e.g if you set threshold to 10 then batch size can be 100 or more
+Sync targets should be zero "0" if you are setting on a local machine
+Then you can run the application while dde2 is already running on another server 
+
+NOTE: If the application server is not running, check the public/config .jsonfiles and make sure the basePath and ddePaths are the same as your machine's ip address
