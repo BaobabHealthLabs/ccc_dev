@@ -1,0 +1,12 @@
+{
+  "default": {
+    "username": "admin",
+    "password": "admin"
+  },
+  "app": {
+    "username": "ccc_user",
+    "password": "ccc_password",
+    "application": "ccc",
+    "site_code": "KAW"
+  }
+}
