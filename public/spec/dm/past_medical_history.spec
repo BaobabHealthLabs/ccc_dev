@@ -1,10 +1,11 @@
 P.1. PAST DIABETES MEDICAL HISTORY [program:: DIABETES PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 
-Q.1.1. Select past medical history [pos:: 0$$ concept:: Past medical history$$ id:: medical_history$$ multiple:: multiple$$ tt_pageStyleClass:: MultiSelectList NoKeyboard$$ optional:: true$$ tt_beforeUnLoad:: loadMultipleYears(__$("touchscreenInput" + tstCurrentPage).value.trim())]
+Q.1.1. Select past medical history [pos:: 0$$ concept:: Past medical history$$ id:: medical_history$$ multiple:: multiple$$ tt_pageStyleClass:: MultiSelectList NoKeyboard$$ tt_beforeUnLoad:: loadMultipleYears(__$("touchscreenInput" + tstCurrentPage).value.trim())]
 O.1.1.1. Strokes
 O.1.1.2. Serious Cardiac Problems
 O.1.1.3. Hypertension
 O.1.1.4. Other Medical Conditions
+O.1.1.5. None
 
 Q.1.2. Years of stroke(s) [pos:: 1$$ condition:: __$("medical_history").selectedOptions.map().indexOf("Strokes") >= 0$$ tt_pageStyleClass:: longSelectList NoKeyboard$$ id:: strokes$$ multiple:: multiple$$parent:: Past medical history]
 O.1.2.1. 1950
