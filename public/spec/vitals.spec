@@ -8,7 +8,7 @@ Q.1.3. Diastolic Blood Pressure [pos:: 2$$ concept:: Diastolic Blood Pressure$$ 
 
 C.1.4. Blood Pressure Graph [pos:: 3$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard$$ tt_onLoad:: showBloodPressureGraphs()]
 
-Q.1.5. Weight (kg) [pos:: 4$$ field_type:: number$$ absoluteMin:: 0$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter a decimal between 0 and 9 (for example: 54<b>.6</b>)$$ tt_pageStyleClass:: Numeric NumbersOnlyWithDecimal]
+Q.1.5. Weight (kg) [pos:: 4$$ field_type:: number$$ min:: 2.5$$ Max:: 140$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter a decimal between 0 and 9 (for example: 54<b>.6</b>)$$ tt_pageStyleClass:: Numeric NumbersOnlyWithDecimal]
 
 Q.1.6. Height (cm) [pos:: 5$$ field_type:: number$$ absoluteMin:: 10$$ absoluteMax:: 228$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter numbers only (for example 157)$$ tt_pageStyleClass:: Numeric NumbersOnly$$ condition:: !window.parent.dashboard.queryAnyExistingObs("Height (cm)") || (window.parent.dashboard.queryAnyExistingObs("Height (cm)") && window.parent.dashboard.age <= 14)]
 
