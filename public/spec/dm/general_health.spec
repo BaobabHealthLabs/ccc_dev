@@ -22,7 +22,7 @@ O.1.4.2. Weekly
 O.1.4.3. Less Than Once a Month
 O.1.4.4. Monthly
 
-Q.1.5. Drug allergy/side affects [pos:: 4$$ id:: drug_allergy$$ concept:: Drug Allergy$$parent:: Smoking?$$ tt_pageStyleClass:: NoKeyboard]
+Q.1.5. Drug allergy/side effects [pos:: 4$$ id:: drug_allergy$$ concept:: Drug Allergy$$parent:: Smoking?$$ tt_pageStyleClass:: NoKeyboard]
 O.1.5.1. Aspirin
 O.1.5.2. Sulphur containing drugs
 O.1.5.3. Aspirin + other drugs
