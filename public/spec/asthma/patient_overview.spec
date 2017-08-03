@@ -8,7 +8,7 @@ O.1.7.4. TB Contact
 O.1.7.5. Smoking
 O.1.7.6. Secondhand smoking
 
-Q.1.7.1.1. Chronic dry cough duration [pos:: 7$$field_type::number$$id::chronic_dry_cough0$$parent::Patient History and Exposures:Chronic dry cough$$tt_pageStyleClass :: Numeric NumbersOnly]
+Q.1.7.1.1. Chronic dry cough duration [pos:: 7$$field_type::number$$id::chronic_dry_cough0$$parent::Patient History and Exposures:Chronic dry cough$$tt_pageStyleClass :: Numeric NumbersOnly$$ min:: 1$$ Max:: 18]
 
 Q.1.7.1.2. Chronic dry cough Age onset   [pos::8 $$field_type::number$$ id::chronic_dry_cough1$$parent::Patient History and Exposures:Chronic dry cough]
 

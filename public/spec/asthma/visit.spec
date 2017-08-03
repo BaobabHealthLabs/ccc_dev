@@ -26,7 +26,7 @@ O.1.5.7. Finger clubbing
 O.1.5.8. Chronic cough
 O.1.5.9. Chest tightiness
 
-Q.1.5.2.1. Chronic dry cough duration [pos:: 11$$field_type::number$$id::chronic_dry_cough0$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnly]
+Q.1.5.2.1. Chronic dry cough duration [pos:: 11$$field_type::number$$id::chronic_dry_cough0$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnly$$ min:: 1$$ Max:: 18]
 
 Q.1.5.2.2. Chronic dry cough Age onset   [pos::12$$field_type::number$$ id::chronic_dry_cough1$$parent::Visit Date]
 

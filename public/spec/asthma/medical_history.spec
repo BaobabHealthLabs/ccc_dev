@@ -56,7 +56,7 @@ Q.1.5. History of chronic dry cough? [pos:: 11$$id::chronic_dry_cough$$tt_requir
 O.1.5.1. Yes
 O.1.5.2. No
 
-Q.1.6. Chronic dry cough duration (days) [pos:: 12$$field_type::number$$parent:: History of chronic dry cough?$$condition::__$('chronic_dry_cough').value =="Yes"$$tt_pageStyleClass :: Numeric NumbersOnly]
+Q.1.6. Chronic dry cough duration (days) [pos:: 12$$field_type::number$$parent:: History of chronic dry cough?$$condition::__$('chronic_dry_cough').value =="Yes"$$tt_pageStyleClass :: Numeric NumbersOnly$$ min:: 1$$ Max:: 18]
 
 Q.1.7. Chronic dry cough Age onset [pos::13$$field_type::number$$parent::History of chronic dry cough?$$condition::__$('chronic_dry_cough').value =="Yes"$$tt_pageStyleClass :: Numeric NumbersOnly]
 
