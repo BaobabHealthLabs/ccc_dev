@@ -1,6 +1,6 @@
 P.1. ASTHMA VISIT [program:: ASTHMA PROGRAM$$ scope:: EXISTS$$includejs:: touchScreenToolkit;asthma]
 
-Q.1.1. Visit Date [pos::0$$field_type::date]
+Q.1.1. Visit Date [pos::0$$field_type::date$$tt_onUnLoad::validateWithBirthDate()]
 
 Q.1.2. Planned Visit? [pos::1$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.2.1. Yes

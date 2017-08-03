@@ -4,9 +4,9 @@ Q.1.1. Diagnosis [pos:: 0$$id:: diagnosis$$ multiple:: multiple$$tt_beforeUnLoad
 O.1.1.1. Asthma
 O.1.1.2. COPD
 
-Q.1.1.1.1. Asthma diagnosis date [pos:: 1$$field_type::date$$ id:: asthma_date$$condition::false$$parent::Diagnosis]
+Q.1.1.1.1. Asthma diagnosis date [pos:: 1$$field_type::date$$ id:: asthma_date$$condition::false$$parent::Diagnosis $$tt_onUnLoad::validateWithBirthDate()]
 
-Q.1.1.2.1. COPD diagnosis date [pos:: 2$$field_type::date$$ id:: copd_date$$condition::false$$parent::Diagnosis]
+Q.1.1.2.1. COPD diagnosis date [pos:: 2$$field_type::date$$ id:: copd_date$$condition::false$$parent::Diagnosis $$tt_onUnLoad::validateWithBirthDate()]
 
 Q.1.3. Allergic to:[pos::3$$tt_pageStyleClass::MultiSelectList$$parent::Diagnosis]
 O.1.3.1. Exposure to cold water or cold weather
@@ -21,13 +21,13 @@ O.1.4.4. Indoor cooking
 O.1.4.5. Exposure to allergy
 O.1.4.6. Occupational Exposure
 
-Q.1.4.1.1. Smoking Date [pos:: 5$$field_type::date$$ id:: smoking_date$$parent::Exposures:Smoking]
+Q.1.4.1.1. Smoking Date [pos:: 5$$field_type::date$$ id:: smoking_date$$parent::Exposures:Smoking $$tt_onUnLoad::validateWithBirthDate()]
 
-Q.1.4.2.1. TB Contact Date [pos::6$$field_type::date$$ id::tb_contact_date$$parent::Exposures: TB Contact]
+Q.1.4.2.1. TB Contact Date [pos::6$$field_type::date$$ id::tb_contact_date$$parent::Exposures: TB Contact $$tt_onUnLoad::validateWithBirthDate()]
 
-Q.1.4.3.1. Secondhand smoking Date [pos:: 7$$field_type::date$$ id::secondhand_smoking_date$$parent::Exposures:Secondhand smoking]
+Q.1.4.3.1. Secondhand smoking Date [pos:: 7$$field_type::date$$ id::secondhand_smoking_date$$parent::Exposures:Secondhand smoking $$tt_onUnLoad::validateWithBirthDate()]
 
-Q.1.4.4.1. Indoor cooking date [pos:: 8$$field_type::date$$id::indoor_cooking_date$$parent::Exposures:Indoor cooking]
+Q.1.4.4.1. Indoor cooking date [pos:: 8$$field_type::date$$id::indoor_cooking_date$$parent::Exposures:Indoor cooking $$tt_onUnLoad::validateWithBirthDate()]
 
 Q.1.4.6.1. Occupation [pos:: 9$$ id:: occupation$$optional::true$$id::occupational_exposure0$$parent::Exposures:Occupational Exposure]
 O.1.4.6.1.1. Business
@@ -50,7 +50,7 @@ O.1.4.6.1.17. Student
 O.1.4.6.1.18. Teacher
 O.1.4.6.1.19. Other
 
-Q.1.4.6.2. Occupation Exposure Date[pos:: 10$$field_type::date$$id::occupational_exposure1$$parent::Exposures:Occupational Exposure]
+Q.1.4.6.2. Occupation Exposure Date[pos:: 10$$field_type::date$$id::occupational_exposure1$$parent::Exposures:Occupational Exposure $$tt_onUnLoad::validateWithBirthDate()]
 
 Q.1.5. History of chronic dry cough? [pos:: 11$$id::chronic_dry_cough$$tt_requirenextclick::true$$parent::Diagnosis]
 O.1.5.1. Yes
