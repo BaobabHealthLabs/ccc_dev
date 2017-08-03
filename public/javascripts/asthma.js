@@ -303,6 +303,20 @@ function loadYears(id){
 
 }
 
+function validateinputyear() {
+       
+        var date = __$("touchscreenInput" + tstCurrentPage).value
+        var birthyear = (new Date(window.parent.dashboard.data.data.birthdate)).getFullYear();
+            if (date < birthyear) {
+                setTimeout(function(){
+                    gotoPage(tstCurrentPage - 1, false, true);
+                    showMessage("The year is less than birthdate")},100)
+            }else{
+            
+            }
+
+}
+
 function validateWithBirthDate() {
         var input_date = new Date(__$("touchscreenInput" + tstCurrentPage).value).format('YYYY-mm-dd');
         var birthdate = (new Date(window.parent.dashboard.data.data.birthdate)).format('YYYY-mm-dd');
