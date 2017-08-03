@@ -10,6 +10,6 @@ O.1.1.6. Dead
 
 Q.1.2. Refer to clinic [pos :: 1 $$ ajaxURL :: /facilities?name= $$ allowFreeText :: true $$ condition :: __$("outcome").value == "Transfer out" $$ parent :: OUTCOME]
 
-Q.1.3. Outcome Date [pos:: 2$$ field_type :: date $$ parent :: OUTCOME]
+Q.1.3. Outcome Date [pos:: 2$$ field_type :: date $$ parent :: OUTCOME $$tt_onUnLoad::validateWithBirthDate()]
 
 Q.1.4. Summary [pos :: 3 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Outcome Summary $$condition::true]
