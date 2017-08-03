@@ -272,6 +272,19 @@ function loadYears(id){
 
 }
 
+function validateWithBirthDate() {
+        var input_date = new Date(__$("touchscreenInput" + tstCurrentPage).value).format('YYYY-mm-dd');
+        var birthdate = (new Date(window.parent.dashboard.data.data.birthdate)).format('YYYY-mm-dd');
+        if (input_date < birthdate) {
+            setTimeout(function(){
+                gotoPage(tstCurrentPage - 1, false, true);
+                showMessage("Date selected is less than birthdate")},100)
+        }else{
+        
+        }
+
+}
+
 function existingDiabetesPatient() {
 
     var existing = false;
