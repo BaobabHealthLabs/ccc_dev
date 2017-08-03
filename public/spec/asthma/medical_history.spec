@@ -58,7 +58,7 @@ O.1.5.2. No
 
 Q.1.6. Chronic dry cough duration (days) [pos:: 12$$field_type::number$$parent:: History of chronic dry cough?$$condition::__$('chronic_dry_cough').value =="Yes"$$tt_pageStyleClass :: Numeric NumbersOnly$$ min:: 1$$ Max:: 18]
 
-Q.1.7. Chronic dry cough Age onset [pos::13$$field_type::number$$parent::History of chronic dry cough?$$condition::__$('chronic_dry_cough').value =="Yes"$$tt_pageStyleClass :: Numeric NumbersOnly]
+Q.1.7. Chronic dry cough Age onset [pos::13$$field_type::number$$parent::History of chronic dry cough?$$condition::__$('chronic_dry_cough').value =="Yes"$$tt_pageStyleClass :: Numeric NumbersOnly $$tt_onUnLoad::validateinputyear()]
 
 Q.1.8. Asthma history in the past month? [pos:: 14$$tt_requirenextclick::false$$parent::Diagnosis]
 O.1.8.1. Yes

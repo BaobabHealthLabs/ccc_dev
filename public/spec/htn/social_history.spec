@@ -8,7 +8,7 @@ Q.1.2. 	Do you currently smoke? [pos::1$$condition::__$("smoke").value == "Yes"$
 O.1.2.1. Yes
 O.1.2.2. No
 
-Q.1.3. 	Number of cigarettes per day? [pos::2$$condition::__$("current_smoke").value.trim().toLowerCase() == "Yes"$$parent::Do you currently smoke?$$field_type::number$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal$$min::0max::100]
+Q.1.3. 	Number of cigarettes per day? [pos::2$$condition::__$("current_smoke").value.trim().toLowerCase() == "Yes"$$parent::Do you currently smoke?$$field_type::number$$tt_pageStyleClass :: Numeric NumbersOnly$$min::1max::20]
 
 Q.1.4. 	Do you drink alcohol? [pos::3$$id::alcohol$$tt_requirenextclick::false]
 O.1.4.1. Yes

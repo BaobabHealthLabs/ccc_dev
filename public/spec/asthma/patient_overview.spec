@@ -10,7 +10,7 @@ O.1.7.6. Secondhand smoking
 
 Q.1.7.1.1. Chronic dry cough duration [pos:: 7$$field_type::number$$id::chronic_dry_cough0$$parent::Patient History and Exposures:Chronic dry cough$$tt_pageStyleClass :: Numeric NumbersOnly$$ min:: 1$$ Max:: 18]
 
-Q.1.7.1.2. Chronic dry cough Age onset   [pos::8 $$field_type::number$$ id::chronic_dry_cough1$$parent::Patient History and Exposures:Chronic dry cough]
+Q.1.7.1.2. Chronic dry cough Age onset   [pos::8 $$field_type::number$$ id::chronic_dry_cough1$$parent::Patient History and Exposures:Chronic dry cough $$tt_onUnLoad::validateinputyear()]
 
 Q.1.7.2.1. Indoor cooking date [pos:: 8$$field_type::date$$id::indoor_cooking_date$$parent::Patient History and Exposures:TB Contact $$tt_onUnLoad::validateWithBirthDate()]
 

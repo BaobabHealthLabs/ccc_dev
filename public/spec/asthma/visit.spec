@@ -28,7 +28,7 @@ O.1.5.9. Chest tightiness
 
 Q.1.5.2.1. Chronic dry cough duration [pos:: 11$$field_type::number$$id::chronic_dry_cough0$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnly$$ min:: 1$$ Max:: 18]
 
-Q.1.5.2.2. Chronic dry cough Age onset   [pos::12$$field_type::number$$ id::chronic_dry_cough1$$parent::Visit Date]
+Q.1.5.2.2. Chronic dry cough Age onset   [pos::12$$field_type::number$$ id::chronic_dry_cough1$$parent::Visit Date $$tt_onUnLoad::validateinputyear()]
 
 Q.1.6. Day sx [pos::13$$field_type::number$$parent::Visit Date$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal$$condition::false]
 
@@ -50,7 +50,7 @@ Q.1.10. Smoke? [pos::17$$id::do_smoke$$tt_requirenextclick::false$$parent::Visit
 O.1.10.1. Yes
 O.1.10.2. No
 
-Q.1.10.1.1. Number of cigarettes per day? [pos::18$$field_type::number$$condition::__$('do_smoke').value=='Yes'$$parent::Smoke?:Yes$$tt_pageStyleClass :: Numeric NumbersOnlyWithDecimal$$min::0max::100$$parent::Visit Date]
+Q.1.10.1.1. Number of cigarettes per day? [pos::18$$field_type::number$$condition::__$('do_smoke').value=='Yes'$$parent::Smoke?:Yes$$tt_pageStyleClass :: Numeric NumbersOnly$$min::1max::20$$parent::Visit Date]
 
 Q.1.11. Passive smoking? [pos::19$$tt_requirenextclick::false$$parent::Visit Date]
 O.1.11.1. Yes
