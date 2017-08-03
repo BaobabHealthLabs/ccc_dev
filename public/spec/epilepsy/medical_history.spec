@@ -1,5 +1,5 @@
 P.1. MEDICAL AND SURGICAL HISTORY [program:: EPILEPSY PROGRAM$$ scope:: EXISTS$$ includejs:: touchScreenToolkit;epilepsy]
-Q.1.1. Year of first seizure? [pos::0$$field_type::number$$tt_pageStyleClass ::NumbersWithUnknown nota]
+Q.1.1. Year of first seizure? [pos::0$$field_type::number$$tt_pageStyleClass ::NumbersWithUnknown nota$$tt_onUnLoad::validateinputyear()]
 
 Q.1.2. What triggered the seizure?[pos::1 $$ multiple :: multiple $$ tt_pageStyleClass :: MultiSelectList$$parent::Year of first seizure? $$ tt_onLoad :: enlargeHeight() ]
 O.1.2.1. Head or Brain Trauma
