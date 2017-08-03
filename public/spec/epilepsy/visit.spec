@@ -1,5 +1,5 @@
 P.1. EPILEPSY VISIT [program:: EPILEPSY PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;epilepsy]
-Q.1.1. Visit Date [pos::0$$field_type::date]
+Q.1.1. Visit Date [pos::0$$field_type::date $$tt_onUnLoad::validateWithBirthDate()]
 
 Q.1.2. Seizure since last visit? [pos::1$$tt_requirenextclick::false$$id::seizure_since_last_visit$$parent::Visit Date]
 O.1.2.1. Yes

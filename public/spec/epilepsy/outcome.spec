@@ -10,7 +10,7 @@ O.1.1.6. Dead
 
 Q.1.1.4.1. Refer to clinic [pos:: 1$$ ajaxURL:: /facilities?name=$$ allowFreeText:: true$$parent::Outcome:Transfer out]
 
-Q.1.2. Outcome Date [pos:: 2$$ field_type:: date$$parent::Outcome]
+Q.1.2. Outcome Date [pos:: 2$$ field_type:: date$$parent::Outcome $$tt_onUnLoad::validateWithBirthDate()]
 
 Q.1.3. Notes [pos:: 3$$optional::true$$parent::Outcome]
 
