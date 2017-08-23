@@ -307,12 +307,24 @@ function validateinputyear() {
        
         var date = __$("touchscreenInput" + tstCurrentPage).value
         var birthyear = (new Date(window.parent.dashboard.data.data.birthdate)).getFullYear();
+        var today = new Date().getFullYear();
+        
             if (date < birthyear) {
                 setTimeout(function(){
                     gotoPage(tstCurrentPage - 1, false, true);
                     showMessage("The year is less than birthdate")},100)
-            }else{
+            }
+            else if (date.length != 4){
+                setTimeout(function(){
+                    gotoPage(tstCurrentPage - 1, false, true);
+                    showMessage("The year entered is invalid")},100)
+            }else if (date > today){
+                setTimeout(function(){
+                    gotoPage(tstCurrentPage - 1, false, true);
+                    showMessage("The year entered is greater than current year")},100)  
             
+            }else{
+
             }
 
 }
