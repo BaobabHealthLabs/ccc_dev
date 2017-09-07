@@ -14,6 +14,7 @@ var timerTime = 300;
 
 // This function exists in the TouchScreenToolkit but repeated here in case it's
 // not referenced
+
 function __$(id){
     return document.getElementById(id);
 }
@@ -2406,6 +2407,63 @@ String.prototype.toProperCase = function()
         function($1) {
             return $1.toUpperCase();
         });
+}
+
+var confirmation = null;
+var confirmationTimeout = null
+function hideConfirmation(){
+            if (confirmation != null) confirmation.setAttribute('style', 'display:none');
+            if (confirmationTimeout != null) window.clearTimeout(confirmationTimeout);
+}
+function cancelForm(){
+    hideConfirmation();
+            //window.top.location.href ="/people/new_person_type";
+}
+function confirmYesNo(message, yes, no,element,time) {
+    hideConfirmation();
+
+            if (confirmation == null) {
+                confirmation = document.createElement("div");
+                confirmation.setAttribute('id', 'confirmation');
+               
+                document.body.appendChild(confirmation);
+            }
+            confirmation.innerHTML = ''+
+            '<div class="confirmation" >'+ message+ '<div>'+
+            '<button id="yes"><span>Yes</span></button>'+
+            '<button id="no"><span>No</span></button></div>'+
+            '</div>';
+
+            if(yes){
+                __$(yes).onmousedown =  function(){
+                        __$(element).value = "Yes"
+                        hideConfirmation()
+                };  
+            }
+           
+            if(no){
+               __$(no).onmousedown =  function(){
+               
+                        __$(element).value = "No";
+                        hideConfirmation()
+                }; 
+            }
+           
+            confirmation.setAttribute('style', 'display:block');
+            if(time){
+
+                confirmationTimeout = window.setTimeout("hideConfirmation()", time);
+            }else{
+                confirmationTimeout = window.setTimeout("hideConfirmation()", 5000);
+            }
+}
+
+function refill(){
+
+    if (window.parent.dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM","TREATMENTS"))
+        
+        confirmYesNo("Refill medication?", "yes", "no",'Refill',60000)
+
 }
 
 // init();
