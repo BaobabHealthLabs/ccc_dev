@@ -476,7 +476,7 @@ function validateAppointment(){
 
             var appointment_data =  JSON.parse(this.responseText);
 
-            if(appointment_data[appointment] && parseInt(appointment_data[appointment]) > 100){
+            if(appointment_data[appointment] && parseInt(appointment_data[appointment]) > 40){
 
                 var count = parseInt(appointment_data[appointment]);
 
@@ -485,7 +485,7 @@ function validateAppointment(){
                 var weeks = Math.round((booked-date_today)/ 604800000);
 
 
-                if(weeks > 4){
+                if(weeks > 1){
 
                         var recommended = new Date(appointment);
 
@@ -496,11 +496,13 @@ function validateAppointment(){
                         __$("appointment_calendar").value = recommended.format("YYYY-mm-dd");
 
 
-                        window.parent.dashboard.showMsg("The date booked is has "+ count+ "patient , recommend "+ recommended.format(),"Date tightly booked");
+                        window.parent.dashboard.showMsg("The date booked has "+ count+ "patient , recommend "+ recommended.format(),"Date tightly booked");
 
                 }else{
 
-                     if(count > 100  && count <=110){
+                    alert(count);
+
+                     if(count > 1  && count <=40){
 
                         window.parent.dashboard.showMsg("The date booked is has "+ count +" patients","Date already Booked");
 
