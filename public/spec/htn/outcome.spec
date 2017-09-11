@@ -12,6 +12,6 @@ Q.1.1.4.1. Refer to clinic [pos:: 1$$ ajaxURL:: /facilities?name=$$ allowFreeTex
 
 Q.1.2. Outcome Date [pos:: 2$$ field_type:: date $$ parent :: OUTCOME validateWithBirthDate()]
 
-Q.1.3. Notes [pos:: 3 $$ parent :: OUTCOME]
+Q.1.3. Notes [pos:: 3 $$ optional:: true $$ parent :: OUTCOME]
 
 Q.1.4. Summary [pos :: 4 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Outcome Summary $$condition::true]
