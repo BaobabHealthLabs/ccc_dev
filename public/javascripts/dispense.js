@@ -2460,7 +2460,7 @@ function confirmYesNo(message, yes, no,element,time) {
 
 function refill(){
 
-    if (window.parent.dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM","TREATMENTS"))
+    if (window.parent.dashboard.queryAnyExistingEncounters("HYPERTENSION PROGRAM","TREATMENTS")||("DIABETES PROGRAM","TREATMENTS")||("ASTHMA PROGRAM","TREATMENTS")||("EPILEPSY PROGRAM","TREATMENTS"))
         
         confirmYesNo("Refill medication?", "yes", "no",'Refill',60000)
 
