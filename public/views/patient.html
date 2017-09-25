@@ -255,6 +255,7 @@
     }
 
     var tmrInterval = setInterval(function () {
+
         console.log(dashboard.workflow.length);
 
         if (!(dashboard.workflow.includes("Treatments"))) {
@@ -282,6 +283,23 @@
 
     }, 200);
 
+    var printTreatment = true
+
+    var printTreatmnetInterval = setInterval(function() {
+        if(printTreatment){
+              if (!(dashboard.workflow.includes("Treatments")) && printTreatment) {
+                  printSummary(null, function () {
+
+                    dashboard.workflow.push("printed");
+                    printTreatment = false;
+
+                  });
+              }
+        }else{
+            clearInterval(printTreatment);
+            return;
+        }   
+    }, 200);
 
     var currentProgram = dashboard.getCookie("currentProgram");
 
