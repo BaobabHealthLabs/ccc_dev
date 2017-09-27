@@ -1,14 +1,14 @@
 P.1. GENERAL HEALTH [program:: DIABETES PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm]
 
 Q.1.1. Smoking? [pos:: 0$$ tt_requireNextClick:: true$$ id:: smoking]
-O.1.1.1. Current Smoker
+O.1.1.1. Current smoker
 O.1.1.2. Past Smoker
 O.1.1.3. Never Smoked
 
-Q.1.2. Smoking Frequency [pos:: 1$$ condition:: ["Current Smoker", "Past Smoker"].indexOf(__$("smoking").value.trim()) >= 0$$ tt_requireNextClick:: true $$parent:: Smoking?]
+Q.1.2. Smoking frequency [pos:: 1$$ condition:: ["Current smoker", "Past smoker"].indexOf(__$("smoking").value.trim()) >= 0$$ tt_requireNextClick:: true $$parent:: Smoking?]
 O.1.2.1. Daily
 O.1.2.2. Weekly
-O.1.2.3. Less Than Once a Month
+O.1.2.3. Less than once a month
 O.1.2.4. Monthly
 
 Q.1.3. Alcohol? [pos:: 2$$ tt_requireNextClick:: true$$ id:: alcohol$$ tt_requireNextClick:: false$$parent:: Smoking?]
@@ -16,10 +16,10 @@ O.1.3.1. Current
 O.1.3.2. Past
 O.1.3.3. Never
 
-Q.1.4. Alcohol Frequency [pos:: 3$$ condition:: ["Current", "Past"].indexOf(__$("alcohol").value.trim()) >= 0$$ tt_requireNextClick:: true$$parent::Alcohol?]
+Q.1.4. Alcohol frequency [pos:: 3$$ condition:: ["Current", "Past"].indexOf(__$("alcohol").value.trim()) >= 0$$ tt_requireNextClick:: true$$parent::Alcohol?]
 O.1.4.1. Daily
 O.1.4.2. Weekly
-O.1.4.3. Less Than Once a Month
+O.1.4.3. Less than once a month
 O.1.4.4. Monthly
 
 Q.1.5. Drug allergy/side effects [pos:: 4$$ id:: drug_allergy$$ concept:: Drug Allergy$$parent:: Smoking?$$ tt_pageStyleClass:: NoKeyboard]

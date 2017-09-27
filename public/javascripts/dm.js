@@ -138,7 +138,7 @@ function loadSummary() {
 
             if(__$("helpText"+tstCurrentPage)){
 
-                __$("helpText"+tstCurrentPage).innerHTML = __$("helpText"+tstCurrentPage).innerHTML.beautify("1.2em", "0.8em");
+                __$("helpText"+tstCurrentPage).innerHTML = __$("helpText"+tstCurrentPage).innerHTML;
 
             }
 
@@ -197,7 +197,7 @@ function loadSummary() {
                 td.style.verticalAlign = "top";
 
                 if(tstFormElements[i] && tstFormElements[i].getAttribute("helpText"))
-                    td.innerHTML = tstFormElements[i].getAttribute("helpText").beautify("0.9em", "0.55em");
+                    td.innerHTML = tstFormElements[i].getAttribute("helpText");
 
                 tr.appendChild(td);
 
@@ -692,7 +692,7 @@ function loadPatientOverView(dashboard){
 
 
 
-                case "Type 1 Diabetes":
+                case "Type 1 diabetes":
 
 
                     if(__$("type_1")){
@@ -721,7 +721,7 @@ function loadPatientOverView(dashboard){
                    
                 break;
 
-                case "Type 2 Diabetes":
+                case "Type 2 diabetes":
 
                     if(__$("type_2")){
 
