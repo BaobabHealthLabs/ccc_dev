@@ -17,4 +17,4 @@ Q.1.7. Pulse Rate [pos:: 6$$ concept:: Pulse$$ field_type:: number$$ id:: pulse_
 Q.1.8. Oxygen Saturation [pos:: 7$$ concept:: Blood oxygen saturation$$ field_type:: number$$ id:: oxygen_saturation$$ condition:: window.parent.dashboard.modules[window.parent.dashboard.getCookie("currentProgram")].vitals && window.parent.dashboard.modules[window.parent.dashboard.getCookie("currentProgram")].vitals.ask_oxygen_saturation$$ absoluteMin:: 50$$ absoluteMax:: 120$$ validationRule:: ^([0-9]+)|Unknown$ $$ validationMessage:: You must enter numbers only (for example 50)$$ tt_pageStyleClass:: Numeric NumbersOnly]
 
 
-Q.1.9. Summary [pos :: 8 $$ id:: summary $$ tt_onLoad::showSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.9. Summary [pos :: 8 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]

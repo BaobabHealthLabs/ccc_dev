@@ -18,7 +18,7 @@ Q.1.5. 	Are you a heavy alcohol drinker? [pos::4$$condition::__$("alcohol").valu
 O.1.5.1. Yes
 O.1.5.2. No
 
-Q.1.6. 	Do you do Exercises? [pos::5$$tt_requirenextclick::false]
+Q.1.6. 	Do you do exercises? [pos::5$$tt_requirenextclick::false]
 O.1.6.1. Yes
 O.1.6.2. No
 
