@@ -1442,14 +1442,14 @@ function loadCardDashboard(){
 
 			if(concept_keys[j]=="Treatment"){
 
+
 				var td = document.createElement("td");
 
 				var span  = document.createElement("span");
 
 				span.setAttribute("class", "square");
 
-				if(response =="Inhaled B-agonist"){
-
+				if(response.indexOf("Inhaled B-agonist") !== -1){
 					
                     span.removeAttribute("class");
 
@@ -1477,7 +1477,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="Inhaled steroid"){
+				if(response.indexOf("Inhaled steroid") !== -1){
 
 
                     span.removeAttribute("class");
@@ -1506,7 +1506,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="Oral steroid"){
+				if(response.indexOf("Oral steroid") !== -1){
 
 
                     span.removeAttribute("class");
@@ -1535,7 +1535,7 @@ function loadCardDashboard(){
 
 				span.setAttribute("class", "square");
 
-				if(response =="Other"){
+				if(response.indexOf("Other") !== -1){
 
 
                     span.removeAttribute("class");
