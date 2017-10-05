@@ -172,7 +172,7 @@ function loadSummary() {
 
             if(__$("helpText"+tstCurrentPage)){
 
-                __$("helpText"+tstCurrentPage).innerHTML = __$("helpText"+tstCurrentPage).innerHTML.beautify("1.2em", "0.8em");
+                __$("helpText"+tstCurrentPage).innerHTML = __$("helpText"+tstCurrentPage).innerHTML;
 
             }
 
@@ -229,7 +229,7 @@ function loadSummary() {
                 td.style.borderBottom = "1px dotted #ccc";
                 td.style.color = "#333";
                 td.style.verticalAlign = "top";
-                td.innerHTML = tstFormElements[i].getAttribute("helpText").beautify("0.9em", "0.55em");
+                td.innerHTML = tstFormElements[i].getAttribute("helpText");
 
                 tr.appendChild(td);
 
@@ -726,15 +726,15 @@ function drawResponse(encounter,encounter_data,visit){
 
 	}
 
-	if(encounter == "ASTHMA INITIAL QUESTIONS"){
+	// if(encounter == "ASTHMA INITIAL QUESTIONS"){
 
-		  var date = new Date(visit).format();
+	// 	  var date = new Date(visit).format();
 
-		__$("transfer_in_date").innerHTML = date;
+	// 	__$("transfer_in_date").innerHTML = date;
 
-		return;
+	// 	return;
 
-	}
+	// }
 
 
 
