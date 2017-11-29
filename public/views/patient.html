@@ -403,6 +403,17 @@
 
     }, 100);
 
+   setInterval(function(){
+            dashboard.ajaxRequest("/custom/outcomedead?patient_id="+dashboard.getCookie("patient_id").trim(),function(data){
+                 if(data.dead){
+                    var workflow = window.parent.dashboard.workflow
+                    for(var i = 0 ; i < workflow.length ; i++){
+                        window.parent.dashboard.workflow = []
+                        dashboard.$(workflow[i]).className = "disabled"
+                    }
+                 }
+            })
+    },500)
 
 </script>
 
