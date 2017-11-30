@@ -160,11 +160,11 @@ module.exports = function (router) {
 
         var sql = " SELECT value_text FROM obs WHERE encounter_id = (SELECT encounter_id FROM "+database+".encounter "+
                   " WHERE encounter_type = (SELECT encounter_type_id FROM "+database+".encounter_type "+
-                  " WHERE name = 'UPDATE OUTCOME' LIMIT 1) AND patient_id = "+
+                  " WHERE name = 'UPDATE OUTCOME' AND voided = 0 LIMIT 1) AND patient_id = "+
                   " (SELECT patient_id FROM "+database+".patient_identifier WHERE identifier = '"+query.patient_id
                   +"')) AND concept_id IN(SELECT concept_id FROM "+database+".concept_name WHERE name = 'Outcome');"
            queryRaw(sql, function(data){
-               res.send({dead: (data[0][0].value_text =='Dead'? true : false)})
+               res.send({dead: (data[0][0]!==undefined && data[0][0].value_text =='Dead'? true : false)})
             });
 
 
