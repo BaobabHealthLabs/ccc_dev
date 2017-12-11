@@ -1,6 +1,6 @@
 P.1. LAB RESULTS [program:: CROSS-CUTTING PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;dm;lab]
 
-Q.1.1. Select the type of test taken: [pos :: 0 $$ id :: test_types$$ tt_pageStyleClass :: MultiSelectList NoKeyboard$$ optional :: true $$ concept :: Blood Sugar Test Type]
+Q.1.1. Select the type of test taken: [pos :: 0 $$ id :: test_types$$ multiple:: multiple$$ tt_pageStyleClass :: MultiSelectList NoKeyboard$$ optional :: true $$ concept :: Blood Sugar Test Type]
 O.1.1.1. Fasting Blood Sugar
 O.1.1.2. Random Blood Sugar
 O.1.1.3. Cholesterol Fasting
@@ -10,12 +10,22 @@ O.1.1.5. HbA1c
 Q.1.2. Select blood sugar units of measure [pos:: 1$$ condition:: __$("test_types").selectedOptions.map().indexOf("Fasting Blood Sugar") >= 0$$ concept:: Fasting Blood Sugar Units$$ tt_onLoad:: __$('infoBar'+tstCurrentPage).innerHTML = ' Fasting Blood Sugar'$$ tt_requireNextClick:: false$$ id:: fbs_unit$$ tt_onUnLoad:: resetPageAttributes(__$("fbs_value"), "fbs")]
 O.1.2.1. mmol/l
 O.1.2.2. mg/dl
+O.1.2.3. Lo/Hi
+
+Q.1.13. Fasting Blood Sugar value [pos:: 12$$ id:: fbs_value$$ concept:: Fasting Blood Sugar Lo/Hi Value$$ condition:: __$("test_types").selectedOptions.map().indexOf("Fasting Blood Sugar") >= 0 && __$("fbs_unit").value == "Lo/Hi"]
+O.1.13.1. Lo
+O.1.13.2. Hi
 
 Q.1.3. Fasting Blood Sugar value [pos:: 2$$ field_type:: number$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter a decimal between 0 and 9 (for example: 36<b>.6</b>)$$ tt_pageStyleClass:: Numeric NumbersOnlyWithDecimal$$condition::__$("fbs_unit").value=="mmol/l" || __$("fbs_unit").value=="mg/dl"$$ id:: fbs_value]
 
 Q.1.4. Select blood sugar units of measure [pos:: 3$$ condition:: __$("test_types").selectedOptions.map().indexOf("Random Blood Sugar") >= 0$$ concept:: Random Blood Sugar Units$$ tt_onLoad:: __$('infoBar'+tstCurrentPage).innerHTML = ' Random Blood Sugar'$$ tt_requireNextClick:: false$$ id:: rbs_unit$$ tt_onUnLoad:: resetPageAttributes(__$("rbs_value"), "rbs")]
 O.1.4.1. mmol/l
 O.1.4.2. mg/dl
+O.1.4.3. Lo/Hi
+
+Q.1.14. Random Blood Sugar value [pos:: 13$$ id:: rbs_value$$ concept:: Random Blood Sugar Lo/Hi Value$$ condition:: __$("test_types").selectedOptions.map().indexOf("Fasting Blood Sugar") >= 0 && __$("rbs_unit").value == "Lo/Hi"]
+O.1.14.1. Lo
+O.1.14.2. Hi
 
 Q.1.5. Random Blood Sugar value [pos:: 4$$ field_type:: number$$ validationRule:: ([0-9]+(\\.)*[0-9]*)|Unknown$ $$ validationMessage:: You must enter a decimal between 0 and 9 (for example: 36<b>.6</b>)$$ tt_pageStyleClass:: Numeric NumbersOnlyWithDecimal$$condition::__$("rbs_unit").value=="mmol/l" || __$("rbs_unit").value=="mg/dl"$$ id:: rbs_value]
 
@@ -43,4 +53,4 @@ Q.1.12. Cholesterol Not Fasting value [pos:: 11$$ id:: cnf_value$$ concept:: Cho
 O.1.12.1. Lo
 O.1.12.2. Hi
 
-Q.1.13. Summary [pos :: 12 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]
+Q.1.15. Summary [pos :: 14 $$ id:: summary $$ tt_onLoad::loadSummary() $$ tt_pageStyleClass::NoControls $$ helpText::Summary $$condition::true]

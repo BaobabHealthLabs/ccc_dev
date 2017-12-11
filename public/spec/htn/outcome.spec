@@ -8,7 +8,7 @@ O.1.1.4. Treatment stopped
 O.1.1.5. Transfer out
 O.1.1.6. Dead
 
-Q.1.1.4.1. Refer to clinic [pos:: 1$$ ajaxURL:: /facilities?name=$$ allowFreeText:: true]
+Q.1.1.5.1. Refer to clinic [pos:: 1$$ ajaxURL:: /facilities?name=$$ allowFreeText:: true]
 
 Q.1.2. Outcome Date [pos:: 2$$ field_type:: date $$ parent :: OUTCOME validateWithBirthDate()]
 
