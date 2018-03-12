@@ -6,6 +6,7 @@
     <script src="/modules/usermanagement.js"></script>
     <script src="/modules/landing.js"></script>
     <script src="/modules/patient_registration.js"></script>
+    <script src="/javascripts/patient_registration_remote.js"></script>
     <script src="/modules/stockmanagement.js"></script>
 </head>
 <body oncontextmenu="return false;">
@@ -73,8 +74,13 @@
 
             clearInterval(tmr_interval);
 
-            if (document.getElementsByClassName("gray old").length > 0)
-                document.getElementsByClassName("gray old")[0].className = "green";
+            if (document.getElementsByClassName("gray old").length > 0){
+                var button =  document.getElementsByClassName("gray old")[0]
+                button.className = "green";
+                button.removeAttribute("onmousedown")
+                button.removeAttribute("onclick")
+                button.setAttribute("onmousedown","window.patientRemote.buildAddPage()")
+            }
 
         } else {
 
