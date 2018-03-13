@@ -80,6 +80,13 @@
                 button.removeAttribute("onmousedown")
                 button.removeAttribute("onclick")
                 button.setAttribute("onmousedown","window.patientRemote.buildAddPage()")
+            }else{
+                setTimeout(function(){
+                    var button =  document.getElementsByClassName("green")[0]
+                    button.removeAttribute("onmousedown")
+                    button.removeAttribute("onclick")
+                    button.setAttribute("onmousedown","window.patientRemote.buildAddPage()");
+                },300)
             }
 
         } else {

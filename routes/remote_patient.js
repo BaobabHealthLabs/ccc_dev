@@ -1,10 +1,13 @@
 module.exports = function (router) {
 
+    var path = require("path");
     var async = require('async');
     var url = require('url');
     var connection = require("../config/database.json");
     var fs = require("fs");
     var database = connection.database;
+
+    var RestClient = require('node-rest-client').Client;
 
     if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
@@ -106,9 +109,33 @@ module.exports = function (router) {
     });
 
     router.route('/create').post(function(req,res){
-        console.log(req.body.data);
+        var settings = require(path.resolve("public", "config", "patient.settings.json"));
+        var remote_settings = settings.remote_settings
 
-        res.send(1);
+        var options_auth = {user: remote_settings.username, password: remote_settings.password};
+
+        var remote_url = remote_settings.protocol + "://" + remote_settings.host +(remote_settings.port  ? ":"+remote_settings.port  : "");
+        remote_url = remote_url  + remote_settings.createPath
+
+
+        var remote_data = {
+            data: req.body.remote_data,
+            headers: { "Content-Type": "application/json" }
+        }
+
+        console.log(remote_data);
+
+        (new RestClient(options_auth).post(remote_url, remote_data, function(data, response){
+            if (data) {
+                res.status(200).json(data);
+            }else{
+                res.status(200).json({message: "Unable to save!"});;
+            }
+
+        }));
+        
+
+        
     });
 
     return router;

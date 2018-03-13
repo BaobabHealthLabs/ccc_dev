@@ -28,7 +28,7 @@
           "port" : "3000",
           "createPath" : "/patient/create_remote",
           "searchPath" : "/people/demographics"
-  }
+  },
   "demographics": {
     "First Name": true,
     "Middle Name": true,
