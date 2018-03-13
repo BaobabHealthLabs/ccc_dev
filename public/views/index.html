@@ -80,7 +80,7 @@
                 if (window.parent.patient.settings.create_from_remote) {
                     button.removeAttribute("onmousedown")
                     button.removeAttribute("onclick")
-                    button.setAttribute("onmousedown","window.patientRemote.buildAddPage()")                    
+                    button.setAttribute("onmousedown","window.parent.patientRemote.buildAddPage()")                    
                 }
                 
             }else{
@@ -89,9 +89,9 @@
                     if (window.parent.patient.settings.create_from_remote) {
                         button.removeAttribute("onmousedown")
                         button.removeAttribute("onclick")
-                        button.setAttribute("onmousedown","window.patientRemote.buildAddPage()")                    
+                        button.setAttribute("onmousedown","window.parent.patientRemote.buildAddPage()")                    
                     }
-                },300)
+                },300);
             }
 
         } else {
