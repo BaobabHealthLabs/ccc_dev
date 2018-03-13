@@ -77,15 +77,20 @@
             if (document.getElementsByClassName("gray old").length > 0){
                 var button =  document.getElementsByClassName("gray old")[0]
                 button.className = "green";
-                button.removeAttribute("onmousedown")
-                button.removeAttribute("onclick")
-                button.setAttribute("onmousedown","window.patientRemote.buildAddPage()")
+                if (window.parent.patient.settings.create_from_remote) {
+                    button.removeAttribute("onmousedown")
+                    button.removeAttribute("onclick")
+                    button.setAttribute("onmousedown","window.patientRemote.buildAddPage()")                    
+                }
+                
             }else{
                 setTimeout(function(){
                     var button =  document.getElementsByClassName("green")[0]
-                    button.removeAttribute("onmousedown")
-                    button.removeAttribute("onclick")
-                    button.setAttribute("onmousedown","window.patientRemote.buildAddPage()");
+                    if (window.parent.patient.settings.create_from_remote) {
+                        button.removeAttribute("onmousedown")
+                        button.removeAttribute("onclick")
+                        button.setAttribute("onmousedown","window.patientRemote.buildAddPage()")                    
+                    }
                 },300)
             }
 

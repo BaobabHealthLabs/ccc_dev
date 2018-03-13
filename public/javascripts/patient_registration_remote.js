@@ -752,23 +752,24 @@ var patientRemote = ({
     },
 
     doSubmitData: function (args, url) {
-
+        var data = args;
         patientRemote.ajaxAuthPostRequest(url, args, function (result) {
 
-            console.log(result)
+            var results = ((typeof result == typeof String()) ? JSON.parse(result) : result);
+          
+            var json = data
 
-            return;
-            var json = ((typeof result == typeof String()) ? JSON.parse(result) : result);
+            json["patient"]["identifiers"]["National id"] = results["person"]["patient"]["identifiers"]["National id"];
 
-            if (json.status == "OK") {
+            if (json["patient"]["identifiers"]["National id"] != null) {
 
                 json.token = patient.getCookie("token");
 
-                json.prefix = (patientRemote.modules[patientRemote.getCookie("currentProgram")] &&
-                patientRemote.modules[patientRemote.getCookie("currentProgram")].clinicPrefix ?
-                    patientRemote.modules[patientRemote.getCookie("currentProgram")].clinicPrefix : "DMY");
+                json.prefix = (patient.modules[patientRemote.getCookie("currentProgram")] &&
+                patient.modules[patientRemote.getCookie("currentProgram")].clinicPrefix ?
+                    patient.modules[patientRemote.getCookie("currentProgram")].clinicPrefix : "DMY");
 
-                patientRemote.ajaxPostRequest(patientRemote.settings.afterCreatePath, {data: json}, function (response) {
+                patientRemote.ajaxPostRequest(patient.settings.afterCreatePath, {data: json}, function (response) {
 
                     var npid = JSON.parse(response).npid;
 

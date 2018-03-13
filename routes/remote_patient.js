@@ -126,8 +126,9 @@ module.exports = function (router) {
         console.log(remote_data);
 
         (new RestClient(options_auth).post(remote_url, remote_data, function(data, response){
-            if (data) {
-                res.status(200).json(data);
+            var person = JSON.parse(data.toString('utf8'))
+            if (person.person) {
+                res.send(person);
             }else{
                 res.status(200).json({message: "Unable to save!"});;
             }
