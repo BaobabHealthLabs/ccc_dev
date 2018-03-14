@@ -101,7 +101,47 @@ module.exports = function (router) {
         knex.destroy(sql);    
 
     }
+    function getAge(birthdate, estimated) {
 
+        var age;
+
+        if (birthdate == null || (new Date(birthdate)) == "Invalid Date") {
+
+            return "???";
+
+        }
+
+        if ((((new Date()) - (new Date(birthdate))) / (365 * 24 * 60 * 60 * 1000)) > 1) {
+
+            age = Math.round((((new Date()) - (new Date(birthdate))) / (365 * 24 * 60 * 60 * 1000)), 0);
+
+        } else if ((((new Date()) - (new Date(birthdate))) / (30 * 24 * 60 * 60 * 1000)) > 1) {
+
+            age = Math.round((((new Date()) - (new Date(birthdate))) / (30 * 24 * 60 * 60 * 1000)), 0) + " months";
+
+        } else if ((((new Date()) - (new Date(birthdate))) / (7 * 24 * 60 * 60 * 1000)) > 1) {
+
+            age = Math.round((((new Date()) - (new Date(birthdate))) / (7 * 24 * 60 * 60 * 1000)), 0) + " weeks";
+
+        } else if ((((new Date()) - (new Date(birthdate))) / (24 * 60 * 60 * 1000)) > 1) {
+
+            age = Math.round((((new Date()) - (new Date(birthdate))) / (24 * 60 * 60 * 1000)), 0) + " days";
+
+        } else if ((((new Date()) - (new Date(birthdate))) / (60 * 60 * 1000)) > 1) {
+
+            age = Math.round((((new Date()) - (new Date(birthdate))) / (60 * 60 * 1000)), 0) + " hours";
+
+        } else {
+
+            age = "< 1hr";
+
+        }
+
+        age = (estimated != undefined && parseInt(estimated) == 1 ? "~" + age : age);
+
+        return age;
+
+    }
     router.route('/create').get(function(req,res){
         console.log(req.body.data);
 
@@ -184,6 +224,96 @@ module.exports = function (router) {
             res.send(data.toString('utf8'));
         });
     });
+
+    router.route('/search_for_patient').get(function(req,res){
+        var url = require("url");
+
+        var query = url.parse(req.url, true).query;
+
+        var settings = require(path.resolve("public", "config", "patient.settings.json"));
+        var remote_settings = settings.remote_settings
+
+        var remote_url = remote_settings.protocol + "://" + remote_settings.host +(remote_settings.port  ? ":"+remote_settings.port  : "");
+        remote_url = remote_url+ remote_settings.searchPath + "?"
+        remote_url = remote_url + "person[names][given_name]="+ query.first_name;
+        remote_url = remote_url + "&person[names][family_name]="+ query.last_name;
+        remote_url = remote_url + "&person[gender]="+ query.gender;
+
+        var options_auth = {user: remote_settings.username, password: remote_settings.password};
+
+        var client = new RestClient(options_auth);
+
+        try{
+            client.get(remote_url,function(data,response){
+
+                res.send(data.toString('utf8'));
+            });
+        }catch(e){
+
+        }
+
+       
+    });
+
+    router.route('/ccc_demographics').get(function(req,res){
+        var url = require("url");
+        var query = url.parse(req.url, true).query;
+        var npid = query.npid
+        var patient_id = null
+        var data = {npid: npid, pos: query.pos}
+        async.series([
+            function(icallback){
+                var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = \"" + npid + "\" AND voided = 0";
+
+                queryRaw(sql, function (res) {
+
+                    if (res[0].length > 0){
+                        data["patient_id"]= res[0][0].patient_id;
+                        patient_id = res[0][0].patient_id;                        
+                    }
+
+                    icallback();
+
+                });
+
+            },
+            function(icallback){
+                var sql = "SELECT birthdate, birthdate_estimated  FROM person WHERE person_id="+patient_id;
+
+                queryRaw(sql, function (res) {
+
+                    if (res[0].length > 0){
+                        data["birthdate"]= res[0][0].birthdate;
+                        data["birthdate_estimated"]= res[0][0].birthdate_estimated;
+                        data["age"] = getAge(res[0][0].birthdate, res[0][0].birthdate_estimated)                        
+                    }
+
+                    icallback();
+
+                });
+            },
+            function(icallback){
+                var sql = "SELECT * FROM person_address WHERE person_id="+patient_id;
+
+                queryRaw(sql, function (res) {
+
+                    if (res[0].length > 0){
+                        var keys = Object.keys(res[0][0]);
+                        for(var i = 0 ; i < keys.length ; i++ ){
+                            data[keys[i]] = res[0][0][keys[i]];
+                        }                   
+                    }
+
+                    icallback();
+
+                });
+            }
+            ],function (err, results){
+                 res.send(data);
+            })
+       
+    });
+
 
     return router;
 

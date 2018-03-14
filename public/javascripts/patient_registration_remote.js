@@ -591,7 +591,7 @@ var patientRemote = ({
 
         if (patientRemote.$("patient.navPanel")) {
 
-            document.body.removeChild(patient.$("patient.navPanel"));
+            document.body.removeChild(patientRemote.$("patient.navPanel"));
 
         } else {
 
@@ -864,6 +864,688 @@ var patientRemote = ({
 
         })
 
+    },
+    buildSearchPage: function () {
+
+        if (typeof(tstCurrentDate) === "undefined") {
+
+            var script = document.createElement("script");
+
+            script.innerText = "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "'; " +
+                "tt_cancel_destination = (window.parent.user.settings.defaultPath ? " +
+                "window.parent.user.settings.defaultPath : '/'); tt_cancel_show = " +
+                "(window.parent.user.settings.defaultPath ? window.parent.user.settings.defaultPath : '/');";
+
+            document.head.appendChild(script);
+
+        }
+
+        var div = document.createElement("div");
+        div.id = "content";
+
+        document.body.appendChild(div);
+
+        var style = this.sheet(patientRemote.$("content"));
+        this.addCSSRule(style, ".hidekeyboard", "display: none !important");
+        this.addCSSRule(style, ".element", "border: 1px solid #999");
+        this.addCSSRule(style, ".element", "background-color: #cadcd3");
+        this.addCSSRule(style, ".element", "color: #000");
+        this.addCSSRule(style, ".element", "padding: 3px");
+        this.addCSSRule(style, ".element", "margin: 3px");
+        this.addCSSRule(style, ".element", "font-size: 24px");
+        this.addCSSRule(style, ".element", "cursor: pointer");
+        this.addCSSRule(style, ".element", "border-radius: 10px");
+
+        this.addCSSRule(style, "div.odd", "background-color: #B2C4B4 !important");
+
+        this.addCSSRule(style, "div.highlighted", "background-color: lightblue !important");
+        this.addCSSRule(style, "div.highlighted", "color: #000");
+
+        this.addCSSRule(style, "div.female", "border-radius: 150px");
+        this.addCSSRule(style, "div.female", "border-right: 5px solid magenta");
+        this.addCSSRule(style, "div.female", "border-bottom: 1px solid magenta");
+        this.addCSSRule(style, "div.female", "padding: 15px");
+        this.addCSSRule(style, "div.female", "color: magenta");
+        this.addCSSRule(style, "div.female", "background-color: rgba(223, 47, 229, 0.1)");
+        this.addCSSRule(style, "div.female", "width: 260px");
+        this.addCSSRule(style, "div.female", "height: 260px");
+        this.addCSSRule(style, "div.female", "margin: auto");
+
+        this.addCSSRule(style, "div.male", "border-radius: 150px");
+        this.addCSSRule(style, "div.male", "border-right: 5px solid #2f66e5");
+        this.addCSSRule(style, "div.male", "border-bottom: 1px solid #2f66e5");
+        this.addCSSRule(style, "div.male", "padding: 15px");
+        this.addCSSRule(style, "div.male", "color: magenta");
+        this.addCSSRule(style, "div.male", "background-color: rgba(47, 102, 229, 0.1)");
+        this.addCSSRule(style, "div.male", "width: 260px");
+        this.addCSSRule(style, "div.male", "height: 260px");
+        this.addCSSRule(style, "div.male", "margin: auto");
+
+        this.addCSSRule(style, ".arrow-up", "width: 0");
+        this.addCSSRule(style, ".arrow-up", "height: 0");
+        this.addCSSRule(style, ".arrow-up", "border-left: 30px solid transparent");
+        this.addCSSRule(style, ".arrow-up", "border-right: 30px solid transparent");
+        this.addCSSRule(style, ".arrow-up", "cursor: pointer");
+        this.addCSSRule(style, ".arrow-up", "border-bottom: 30px solid #3465a4");
+
+        this.addCSSRule(style, ".arrow-up:hover", "border-bottom: 30px solid #5ca6c4");
+
+        this.addCSSRule(style, ".arrow-up:active", "border-bottom: 30px solid #ef8544");
+
+        this.addCSSRule(style, ".arrow-down", "width: 0");
+        this.addCSSRule(style, ".arrow-down", "height: 0");
+        this.addCSSRule(style, ".arrow-down", "border-left: 30px solid transparent");
+        this.addCSSRule(style, ".arrow-down", "border-right: 30px solid transparent");
+        this.addCSSRule(style, ".arrow-down", "cursor: pointer");
+        this.addCSSRule(style, ".arrow-down", "border-top: 30px solid #3465a4");
+
+        this.addCSSRule(style, ".arrow-down:hover", "border-top: 30px solid #5ca6c4");
+
+        this.addCSSRule(style, ".arrow-down:active", "border-top: 30px solid #ef8544");
+
+        patient.page = 1;
+
+        var form = document.createElement("form");
+        form.id = "patient.form.main";
+        form.style.display = "none";
+        form.setAttribute("action", "javascript:patientRemote.submitSearch()");
+
+        div.appendChild(form);
+
+        var table = document.createElement("table");
+        table.border = 0;
+        table.cellPadding = 5;
+
+        form.appendChild(table);
+
+        var fields = ["First Name", "Last Name", "Gender", "Select or Create New Patient"];
+
+        for (var i = 0; i < fields.length; i++) {
+
+            if (patient.settings.demographics[fields[i]] || ["Current Region", "Region of Origin",
+                    "Select or Create New Patient"].indexOf(fields[i]) >= 0) {
+
+                var tr = document.createElement("tr");
+
+                table.appendChild(tr);
+
+                var td1 = document.createElement("td");
+                td1.innerHTML = fields[i];
+
+                tr.appendChild(td1);
+
+                var td2 = document.createElement("td");
+
+                tr.appendChild(td2);
+
+                var input = document.createElement((["Gender", "Current Region",
+                    "Region of Origin"].indexOf(fields[i]) >= 0 ? "select" : "input"));
+                input.id = fields[i].toLowerCase().replace(/\s/g, "_").replace(/\//g, "_");
+                input.name = fields[i].toLowerCase().replace(/\s/g, "_").replace(/\//g, "_");
+                input.setAttribute("helpText", fields[i]);
+
+                switch (fields[i]) {
+
+                    case "First Name":
+
+                        input.setAttribute("ajaxURL", "/fnames_query?name=");
+
+                        input.setAttribute("tt_onLoad", "");
+
+                        input.setAttribute("allowFreeText", true);
+
+                        var userId = document.createElement("input");
+                        userId.type = "hidden";
+                        userId.name = "data.User ID";
+                        userId.value = patient.userId;
+
+                        td2.appendChild(userId);
+
+                        var patientId = document.createElement("input");
+                        patientId.type = "hidden";
+                        patientId.id = "patient";
+                        patientId.value = patient.patientId;
+
+                        td2.appendChild(patientId);
+
+                        break;
+
+                    case "Last Name":
+
+                        input.setAttribute("ajaxURL", "/lnames_query?name=");
+
+                        input.setAttribute("tt_onLoad", "");
+
+                        input.setAttribute("allowFreeText", true);
+
+                        break;
+
+                    case "Select or Create New Patient":
+
+                        input.id = "selected_patient";
+                        input.name = "selected_patient";
+                        input.value = "";
+                        input.setAttribute("helpText", "Select or Create New Patient");
+                        input.setAttribute("tt_onLoad", "patientRemote.loadNames(); patient.hidekeyboard(); __$('nextButton').onmousedown = " +
+                            "function(){};");
+                        input.setAttribute("tt_pageStyleClass", "NoControls");
+                        input.setAttribute("tt_onUnLoad", "__$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown " +
+                            "= function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras'));");
+
+                        break;
+
+                }
+
+                if (fields[i] == "Gender") {
+
+                    var opts = ["Male", "Female"];
+
+                    for (var j = opts.length; j >= 0; j--) {
+
+                        var opt = document.createElement("option");
+
+                        if (j < opts.length) {
+
+                            opt.innerHTML = opts[j];
+                            opt.setAttribute("value", opts[j].substring(0, 1));
+
+                        }
+
+                        input.appendChild(opt);
+
+                    }
+
+                } else {
+
+                    input.type = "text";
+
+                }
+
+                td2.appendChild(input);
+
+            }
+
+        }
+
+        var base = document.createElement("base");
+        base.href = patient.settings.basePath;
+
+        document.head.appendChild(base);
+
+        var script = document.createElement("script");
+        script.setAttribute("src", patient.settings.basePath + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+
+        document.head.appendChild(script);
+
+        var form2js = document.createElement("script");
+        form2js.setAttribute("src", "/modules/bht-form2js.js");
+
+        document.head.appendChild(form2js);
+
+    },
+    submitSearch: function (url) {
+        alert("Hello");
+        return;
+        var shield = document.createElement("div");
+        shield.style.backgroundColor = "rgba(128,128,128,0.5)";
+        shield.style.position = "absolute";
+        shield.style.left = "0px";
+        shield.style.top = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.style.zIndex = 840;
+
+        document.body.appendChild(shield);
+
+        var data = form2js(document.getElementById('patient.form.main'), undefined, true);
+
+    },
+    showPatient: function (pos) {
+
+        patientRemote.$("leftpanel").innerHTML = "";
+
+        if (patientRemote.$("json")) {
+            patientRemote.$("json").innerHTML = JSON.stringify(patientRemote.patients[pos]);
+        }
+
+        var table = document.createElement("table");
+        table.style.margin = "auto";
+        table.style.paddingTop = "10px";
+        table.setAttribute("cellpadding", 10);
+        table.setAttribute("cellspacing", 0);
+        table.style.fontSize = "28px";
+        table.style.color = "#000";
+        table.style.width = "100%";
+
+        patientRemote.$("leftpanel").appendChild(table);
+
+        var tbody = document.createElement("tbody");
+
+        table.appendChild(tbody);
+
+        var tr1 = document.createElement("tr");
+
+        tbody.appendChild(tr1);
+
+        var cell1_1 = document.createElement("th");
+        cell1_1.style.textAlign = "right";
+        cell1_1.style.color = "#000";
+        cell1_1.innerHTML = "Patient Name:";
+        cell1_1.style.borderRight = "1px dotted #000";
+
+        tr1.appendChild(cell1_1);
+
+        var cell1_2 = document.createElement("td");
+        cell1_2.style.fontStyle = "italic";
+        cell1_2.innerHTML = patientRemote.patients[pos]["person"]["names"]["given_name"] + " " + patientRemote.patients[pos]["person"]["names"]["family_name"];
+
+        tr1.appendChild(cell1_2);
+
+        var tr2 = document.createElement("tr");
+
+        tbody.appendChild(tr2);
+
+        var cell2_1 = document.createElement("th");
+        cell2_1.style.textAlign = "right";
+        cell2_1.style.color = "#000";
+        cell2_1.innerHTML = "Age:";
+        cell2_1.style.borderRight = "1px dotted #000";
+
+        tr2.appendChild(cell2_1);
+
+        var cell2_2 = document.createElement("td");
+        cell2_2.style.fontStyle = "italic";
+        cell2_2.innerHTML = (patientRemote.patients[pos]["enhanched"]["age"] ? patientRemote.patients[pos]["enhanched"]["age"] : "~");
+
+        tr2.appendChild(cell2_2);
+
+        var tr3 = document.createElement("tr");
+
+        tbody.appendChild(tr3);
+
+        var cell3_1 = document.createElement("th");
+        cell3_1.style.textAlign = "right";
+        cell3_1.style.color = "#000";
+        cell3_1.innerHTML = "National ID:";
+        cell3_1.style.borderRight = "1px dotted #000";
+
+        tr3.appendChild(cell3_1);
+
+        var cell3_2 = document.createElement("td");
+        cell3_2.style.fontStyle = "italic";
+        cell3_2.innerHTML = patientRemote.patients[pos]["person"]["patient"]["identifiers"]["National id"];
+
+        tr3.appendChild(cell3_2);
+
+        for (var k = 0; k < patientRemote.patients[pos]["person"]["patient"]["identifiers"].length; k++) {
+
+            if (String(patientRemote.patients[pos]["patient"]["identifiers"][k][Object.keys(patientRemote.patients[pos]["patient"]
+                    ["identifiers"][k])[0]]).trim().length <= 0)
+                continue;
+
+            var tr3 = document.createElement("tr");
+
+            tbody.appendChild(tr3);
+
+            var cell3_1 = document.createElement("th");
+            cell3_1.style.textAlign = "right";
+            cell3_1.style.color = "#000";
+            cell3_1.innerHTML = Object.keys(patientRemote.patients[pos]["patient"]["identifiers"][k])[0] + ":";
+            cell3_1.style.borderRight = "1px dotted #000";
+
+            tr3.appendChild(cell3_1);
+
+            var cell3_2 = document.createElement("td");
+            cell3_2.style.fontStyle = "italic";
+            cell3_2.innerHTML = patientRemote.patients[pos]["patient"]["identifiers"][k][Object.keys(patientRemote.patients[pos]
+                ["patient"]["identifiers"][k])[0]];
+
+            tr3.appendChild(cell3_2);
+
+        }
+
+        var tr4 = document.createElement("tr");
+
+        tbody.appendChild(tr4);
+
+        var cell4_1 = document.createElement("th");
+        cell4_1.style.textAlign = "right";
+        cell4_1.style.color = "#000";
+        cell4_1.innerHTML = "Gender:";
+        cell4_1.style.borderRight = "1px dotted #000";
+
+        tr4.appendChild(cell4_1);
+
+        var cell4_2 = document.createElement("td");
+        cell4_2.style.fontStyle = "italic";
+
+        cell4_2.innerHTML = (patientRemote.patients[pos]["person"]["gender"] == "M" ? "Male" : (patientRemote.patients[pos]["gender"] == "F" ? "Female" : ""));
+
+        tr4.appendChild(cell4_2);
+
+        var tr5 = document.createElement("tr");
+
+        tbody.appendChild(tr5);
+
+        var cell5_1 = document.createElement("th");
+        cell5_1.style.textAlign = "right";
+        cell5_1.style.color = "#000";
+        cell5_1.innerHTML = "Residence:";
+        cell5_1.style.borderRight = "1px dotted #000";
+
+        tr5.appendChild(cell5_1);
+
+        var cell5_2 = document.createElement("td");
+        cell5_2.style.fontStyle = "italic";
+        cell5_2.innerHTML = (patientRemote.patients[pos]["enhanched"]["current_village"] ? patientRemote.patients[pos]["enhanched"]["current_village"] : "");
+
+        tr5.appendChild(cell5_2);
+
+    },
+    loadNames: function () {
+
+        patientRemote.$("inputFrame" + tstCurrentPage).style.display = "none";
+
+        var panel = document.createElement("div");
+        panel.style.borderRadius = "10px";
+        panel.style.width = "99%";
+        panel.style.height = "100%";
+        panel.style.padding = "10px";
+        panel.style.backgroundColor = "white";
+        // panel.style.margin = "-10px";
+
+        patientRemote.$("page" + tstCurrentPage).appendChild(panel);
+
+        var tbl = document.createElement("div");
+        tbl.style.display = "table";
+        tbl.style.width = "100%";
+        tbl.style.height = "100%";
+
+        panel.appendChild(tbl);
+
+        var row = document.createElement("div");
+        row.style.display = "table-row";
+
+        tbl.appendChild(row);
+
+        var cell0 = document.createElement("div");
+        cell0.style.display = "table-cell";
+        cell0.style.height = "100%";
+        cell0.style.verticalAlign = "top";
+
+        row.appendChild(cell0);
+
+        var cell1 = document.createElement("div");
+        cell1.style.display = "table-cell";
+        cell1.style.height = "100%";
+        cell1.style.width = "70px";
+        cell1.style.verticalAlign = "top";
+
+        row.appendChild(cell1);
+
+        var navpanel0 = document.createElement("div");
+        navpanel0.style.width = "70px";
+        navpanel0.style.height = "calc(100% - 100px)";
+        navpanel0.id = "navpanel0";
+        navpanel0.style.cssFloat = "right";
+        navpanel0.style.backgroundColor = "#e7efeb";
+        navpanel0.style.overflow = "hidden";
+        navpanel0.style.verticalAlign = "top";
+        navpanel0.style.textAlign = "center";
+
+        cell1.appendChild(navpanel0);
+
+        var navUp = document.createElement("div");
+        navUp.id = "navUp";
+        navUp.className = "arrow-up";
+        navUp.style.margin = "auto";
+
+        navUp.onmousedown = function () {
+            if (patient.page - 1 > 0) {
+                patient.page -= 1;
+            }
+
+            var url = "/remote_patient/search_for_patient?first_name=" +
+            patientRemote.$("first_name").value.trim() + "&last_name=" + patientRemote.$("last_name").value.trim() + "&gender=" +
+            patientRemote.$("gender").value.trim() + "&page=" + patient.page;
+
+            patientRemote.ajaxSearch(patient.page, url);
+        }
+
+        navpanel0.appendChild(navUp);
+
+        var navpanel1 = document.createElement("div");
+        navpanel1.style.width = "70px";
+        navpanel1.style.height = "30px";
+        navpanel1.id = "navpanel1";
+        navpanel1.style.cssFloat = "right";
+        navpanel1.style.backgroundColor = "#e7efeb";
+        navpanel1.style.overflow = "hidden";
+        navpanel1.style.verticalAlign = "bottom";
+
+        cell1.appendChild(navpanel1);
+
+        var navDown = document.createElement("div");
+        navDown.id = "navDown";
+        navDown.className = "arrow-down";
+        navDown.style.margin = "auto";
+
+        navDown.onmousedown = function () {
+            patient.page += 1;
+
+            var url = "/remote_patient/search_for_patient?first_name=" +
+            patientRemote.$("first_name").value.trim() + "&last_name=" + patientRemote.$("last_name").value.trim() + "&gender=" +
+            patientRemote.$("gender").value.trim() + "&page=" + patient.page;
+
+            patientRemote.ajaxSearch(patient.page, url);
+        }
+
+        navpanel1.appendChild(navDown);
+
+        var leftpanel = document.createElement("div");
+        leftpanel.style.border = "2px solid #B2C4B4";
+        leftpanel.style.width = "49.3%";
+        leftpanel.style.height = "calc(100% - 75px)";
+        leftpanel.id = "leftpanel";
+        leftpanel.style.cssFloat = "left";
+        leftpanel.style.borderRadius = "8px";
+        leftpanel.style.backgroundColor = "#e7efeb";
+        leftpanel.style.overflow = "auto";
+
+        cell0.appendChild(leftpanel);
+
+        var rightpanel = document.createElement("div");
+        rightpanel.style.border = "2px solid #B2C4B4";
+        rightpanel.style.width = "49.3%";
+        rightpanel.style.height = "calc(100% - 75px)";
+        rightpanel.id = "rightpanel";
+        rightpanel.style.cssFloat = "right";
+        rightpanel.style.borderRadius = "10px";
+        rightpanel.style.backgroundColor = "#e7efeb";
+        rightpanel.style.overflow = "auto";
+
+        cell0.appendChild(rightpanel);
+
+        var footer = document.createElement("div");
+        footer.id = "extras";
+        footer.style.cssFloat = "right";
+
+        patientRemote.$("buttons").appendChild(footer);
+
+        var newPatient = document.createElement("button");
+        newPatient.innerHTML = "<span>New Patient</span>";
+        newPatient.id = "newPatient";
+        newPatient.style.cssFloat = "right";
+
+        newPatient.onmousedown = function () {
+
+            patientRemote.buildAddPage(patientRemote.$("first_name").value.trim(), patientRemote.$("last_name").value.trim(),
+                patientRemote.$("gender").value.trim());
+
+        }
+
+        footer.appendChild(newPatient);
+
+        var editPatient = document.createElement("button");
+        editPatient.innerHTML = "<span>Edit Patient</span>";
+        editPatient.id = "editPatient";
+        editPatient.style.cssFloat = "right";
+        editPatient.className = "gray";
+
+        editPatient.onmousedown = function () {
+
+            if (this.className.match(/gray/))
+                return;
+
+            var targetPatientId = this.getAttribute("patient_id");
+
+            patientRemote.ajaxRequest("/does_patient_exist_locally/" + this.getAttribute("patient_id"), function (data) {
+
+                if (JSON.parse(data).exists) {
+
+                    patientRemote.buildEditPage(targetPatientId);
+
+                } else {
+
+                    window.location = "/fetch_remote_if_not_exists/" + targetPatientId;
+
+                }
+
+            });
+
+        }
+
+        footer.appendChild(editPatient);
+
+        var url = "/remote_patient/search_for_patient?first_name=" +
+            patientRemote.$("first_name").value.trim() + "&last_name=" + patientRemote.$("last_name").value.trim() + "&gender=" +
+            patientRemote.$("gender").value.trim() + "&page=" + patient.page;
+
+        patientRemote.ajaxSearch(patient.page, url);
+
+    },
+    ajaxSearch: function (page, url) {
+
+        if (patientRemote.$("nextButton")) {
+            patientRemote.$("nextButton").className = "button gray navButton";
+            patientRemote.$("nextButton").onclick = function () {
+            };
+        }
+
+        if (patientRemote.$("editPatient")) {
+
+            patientRemote.$("editPatient").className = "gray";
+
+        }
+
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = function () {
+            patientRemote.handleAjaxRequest(httpRequest);
+        };
+        try {
+            httpRequest.open('GET', url, true);
+            httpRequest.send(null);
+        } catch (e) {
+        }
+
+    },
+     handleAjaxRequest: function (aXMLHttpRequest) {
+
+        if (!aXMLHttpRequest) return;
+
+        patientRemote.$("leftpanel").innerHTML = "";
+        patientRemote.$("rightpanel").innerHTML = "";
+
+        if (patientRemote.$("nextButton")) {
+            patientRemote.$("nextButton").className = "button gray navButton";
+            patientRemote.$("nextButton").onclick = function () {
+            }
+        }
+
+        if (patientRemote.$("editPatient")) {
+
+            patientRemote.$("editPatient").className = "gray";
+
+        }
+
+        if (aXMLHttpRequest.readyState == 4 && aXMLHttpRequest.status == 200) {
+
+            var result = aXMLHttpRequest.responseText;
+
+            patientRemote.patients = JSON.parse(result);
+
+            if (Object.keys(patientRemote.patients).length == 0) {
+                patientRemote.$("rightpanel").innerHTML = "<div style='margin: auto; padding: 20px; font-size: 24px; font-style: italic;'>No matching people found!</div>";
+            }
+
+
+            for (var i = 0; i < patientRemote.patients.length; i++) {
+                var div = document.createElement("div");
+                div.id = i;
+                div.className = "element " + (i % 2 > 0 ? "odd" : "");
+                div.setAttribute("tag", (i % 2 > 0 ? "odd" : "even"));
+                div.setAttribute("npid", patientRemote.patients[i]["person"]["patient"]["identifiers"]["National id"]);
+                var npid = patientRemote.patients[i]["person"]["patient"]["identifiers"]["National id"]
+                div.setAttribute("patient_id", patientRemote.patients[i]["person"]["person_id"]);
+
+                div.onclick = function () {
+                    patient.deselectAllAndSelect(this.id);
+
+                    patientRemote.patientId = this.getAttribute("npid");
+
+                    patientRemote.showPatient(this.id);
+
+                    patientRemote.$("patient").value = this.id;
+
+                    patientRemote.$("selected_patient").value = this.getAttribute("npid");
+
+                    if (patientRemote.$("editPatient")) {
+
+                        patientRemote.$("editPatient").className = "blue";
+
+                        patientRemote.$("editPatient").setAttribute("pos", this.id);
+
+                        patientRemote.$("editPatient").setAttribute("patient_id", this.getAttribute("patient_id"));
+
+                    }
+
+                    if (patientRemote.$('nextButton')) {
+                        patientRemote.$("nextButton").innerHTML = "<span>Select</span>"
+                        patientRemote.$("nextButton").className = "green navButton";
+                        patientRemote.$("nextButton").setAttribute("pos", this.id);
+
+                        patientRemote.$('nextButton').onmousedown = function () {
+
+                            if (this.className.match(/gray/))
+                                return;
+
+                           window.location = patient.settings.basePath +
+                                                        (patient.settings.defaultPath ? patient.settings.defaultPath :
+                                                            "") + "/patient/" + patientRemote.patients[parseInt(patientRemote.$("nextButton").getAttribute("pos"))]["enhanched"]["npid"];
+
+                            // window.location = patient.settings.basePath + "/patient/" + patientRemote.$("selected_patient").value.trim();
+
+                        }
+                    }
+                }
+
+                div.innerHTML = "<table width='100%'><tr><td style='width: 50%'>" +
+                    patientRemote.patients[i]["person"]["names"]["given_name"] + " " + patientRemote.patients[i]["person"]["names"]["family_name"] +
+                    " (<span id='age"+npid+"'></span>)" + "</td><td>" + npid +
+                    "</td><td style='width: 30px; background-color: white; border-radius: 60px; padding: 5px; border: 1px solid #666;'>" +
+                    (patientRemote.patients[i]["person"]["gender"] == "M" ? "<img src='" + patient.icoMale + "' width='47px' alt='Male' />" :
+                        (patientRemote.patients[i]["person"]["gender"] == "F" ? "<img src='" + patient.icoFemale + "' width='47px' alt='Female' />" : "")) + "</td></tr></table>";
+
+                 patientRemote.ajaxRequest("/remote_patient/ccc_demographics?npid="+npid+"&pos="+i,function(result){
+                        var data = JSON.parse(result);
+                        patientRemote.patients[data.pos]["enhanched"] = data
+                        patientRemote.$("age"+data.npid).innerHTML =(data.age !== undefined ? data.age : "~") ;
+                 });
+                patientRemote.$("rightpanel").appendChild(div);
+
+            }
+
+        }
     },
     buildAddPage: function (first_name, last_name, gender, npid) {
         var form = document.createElement("form");
@@ -1483,9 +2165,9 @@ var patientRemote = ({
 
         btn.onclick = function () {
 
-            if (patient.$("msg.shield")) {
+            if (patientRemote.$("msg.shield")) {
 
-                document.body.removeChild(patient.$("msg.shield"));
+                document.body.removeChild(patientRemote.$("msg.shield"));
 
                 if (this.getAttribute("nextURL"))
                     window.location = this.getAttribute("nextURL");
@@ -1597,9 +2279,9 @@ var patientRemote = ({
 
         btn.onclick = function () {
 
-            if (patient.$("msg.shield")) {
+            if (patientRemote.$("msg.shield")) {
 
-                document.body.removeChild(patient.$("msg.shield"));
+                document.body.removeChild(patientRemote.$("msg.shield"));
 
             }
 
