@@ -744,6 +744,8 @@ var patientRemote = ({
             action: "UPDATE"
         };
 
+
+
         patientRemote.jsonOriginalRecord = args;
 
 
@@ -756,12 +758,29 @@ var patientRemote = ({
         patientRemote.ajaxAuthPostRequest(url, args, function (result) {
 
             var results = ((typeof result == typeof String()) ? JSON.parse(result) : result);
+
+            if(!results.saved){
+                patient.showAlertMsg("Oops! Something went wrong! Unable to save record", "Error", function () {
+                    window.location = (patient.settings.defaultPath ? patient.settings.defaultPath : "/");
+                });
+            }
           
             var json = data
 
-            json["patient"]["identifiers"]["National id"] = results["person"]["patient"]["identifiers"]["National id"];
 
-            if (json["patient"]["identifiers"]["National id"] != null) {
+            if(data){
+                json.status = "OK"
+            }
+
+            var gender = json["gender"][0]
+            delete json["gender"];
+            json["gender"] = gender.split("")[0]
+
+            json["canPrintBarcode"] = true;
+            json["printBarcode"] = true;
+            json["npid"] = results["person"]["patient"]["identifiers"]["National id"];
+
+            if (results.status == "OK") {
 
                 json.token = patient.getCookie("token");
 
@@ -769,13 +788,16 @@ var patientRemote = ({
                 patient.modules[patientRemote.getCookie("currentProgram")].clinicPrefix ?
                     patient.modules[patientRemote.getCookie("currentProgram")].clinicPrefix : "DMY");
 
+                //console.log(json);
+                //return;
+
                 patientRemote.ajaxPostRequest(patient.settings.afterCreatePath, {data: json}, function (response) {
 
                     var npid = JSON.parse(response).npid;
 
                     if (json.canPrintBarcode) {
 
-                        patient.printBarcode(undefined, npid, function () {
+                        patientRemote.printBarcode(undefined, npid, function () {
 
                             if (patient.settings.basePath != undefined) {
 
@@ -909,7 +931,7 @@ var patientRemote = ({
 
                     case "Current District":
 
-                        input['ajaxURL'] = patient.settings.ddePath + patient.settings.districtQueryPath + "?region=&district=";
+                        input['ajaxURL'] = "/district_query?region=&district=";
 
                         var targetId = (fields[i] == "Current District" ? "current_ta" : "home_ta");
 
@@ -932,7 +954,7 @@ var patientRemote = ({
 
                     case "Current T/A":
 
-                        input['ajaxURL'] = patient.settings.ddePath + patient.settings.taQueryPath + "?region=&district=&ta=";
+                        input['ajaxURL'] = "/ta_query?region=&district=&ta=";
 
                         var targetId = (fields[i] == "Current T/A" ? "current_village" : "home_village");
 
@@ -949,7 +971,7 @@ var patientRemote = ({
 
                     case "Current Village":
 
-                        input['ajaxURL'] = patient.settings.ddePath + patient.settings.villageQueryPath + "?region=&district=&ta=&village=";
+                        input['ajaxURL'] = "/village_query?region=&district=&ta=&village=";
 
                         input['tt_requireNextClick'] = false;
 
@@ -984,7 +1006,7 @@ var patientRemote = ({
 
                     case "Nationality":
 
-                        input['ajaxURL'] = patient.settings.ddePath + patient.settings.nationalityQueryPath;
+                        input['ajaxURL'] = "/nationality_query/search?nationality";
 
                         input['allowFreeText'] = true;
 
@@ -992,16 +1014,13 @@ var patientRemote = ({
 
                     case "Occupation":
 
-                        input['ajaxURL'] = patient.settings.ddePath + patient.settings.occupationsQueryPath;
+                        input['ajaxURL'] = "/occupations_query?occupation=";
 
                         input['allowFreeText'] = true;
 
                         break;
 
                     case "Closest Landmark":
-
-                        if (patient.settings.closestLandmark)
-                            input['ajaxURL'] = patient.settings.ddePath + patient.settings.closestLandmark + "?name=";
 
                         input['allowFreeText'] = true;
 
@@ -1011,7 +1030,7 @@ var patientRemote = ({
 
                         input.optional = true;
 
-                        input['ajaxURL'] = patient.settings.ddePath + patient.settings.firstNamesPath + "?name=";
+                        input['ajaxURL'] = "/fnames_query?name=";
 
                         input['allowFreeText'] = true;
 
@@ -1019,7 +1038,8 @@ var patientRemote = ({
 
                     case "First Name":
 
-                        input['ajaxURL'] = patient.settings.ddePath + patient.settings.firstNamesPath + "?name=";
+
+                        input['ajaxURL'] = "/fnames_query?name=";
 
                         input['allowFreeText'] = true;
 
@@ -1033,7 +1053,7 @@ var patientRemote = ({
 
                     case "Last Name":
 
-                        input['ajaxURL'] = patient.settings.ddePath + patient.settings.lastNamesPath + "?name=";
+                        input['ajaxURL'] = "/lnames_query?name=";
 
                         input['allowFreeText'] = true;
 
@@ -1625,11 +1645,11 @@ var patientRemote = ({
 
             var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + data.npid + "\"\nA40,50,0,2,2,2,N,\"" +
                 data.first_name + " " + data.family_name + "\"\nA40,96,0,2,2,2,N,\"" +
-                data.npid.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
+                data.npid + " " +
                 (parseInt(data.birthdate_estimated) == 1 ? "~" : "") + (new Date(data.date_of_birth)).format("dd/mmm/YYYY") +
                 "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + data.residence + "\"\nP1\n";
 
-            patient.saveAs(text, callback);
+            patientRemote.saveAs(text, callback);
 
         });
 

@@ -123,20 +123,66 @@ module.exports = function (router) {
             headers: { "Content-Type": "application/json" }
         }
 
-        console.log(remote_data);
+        try{
 
-        (new RestClient(options_auth).post(remote_url, remote_data, function(data, response){
-            var person = JSON.parse(data.toString('utf8'))
-            if (person.person) {
-                res.send(person);
-            }else{
-                res.status(200).json({message: "Unable to save!"});;
-            }
+             (new RestClient(options_auth).post(remote_url, remote_data, function(data, response){
+                    var person = JSON.parse(data.toString('utf8'))
+                    if (person.person) {
+                        person["status"] = "OK"
+                        person["saved"] = true
+                        res.send(person);
+                    }else{
+                        res.status(200).json({saved:false, message: "Unable to save!"});;
+                    }
 
-        }));
+                }));
+
+        }catch(e){
+
+            res.status(200).json({saved:false, message: "Unable to save!"});
+
+        }
         
+    });
 
-        
+    router.route('/given_names').get(function(req,res){
+        var url = require("url");
+
+        var query = url.parse(req.url, true).query;
+
+        var settings = require(path.resolve("public", "config", "patient.settings.json"));
+        var remote_settings = settings.remote_settings
+
+        var remote_url = remote_settings.protocol + "://" + remote_settings.host +(remote_settings.port  ? ":"+remote_settings.port  : "");
+        remote_url = remote_url + "/person_names/given_names?search_string="+(query.search_string ? query.search_string  : "")
+
+        var options_auth = {user: remote_settings.username, password: remote_settings.password};
+
+        var client = new RestClient(options_auth);
+
+        client.get(remote_url,function(data,response){
+            res.send(data.toString('utf8'));
+        });
+    });
+
+    router.route('/family_names').get(function(req,res){
+        var url = require("url");
+
+        var query = url.parse(req.url, true).query;
+
+        var settings = require(path.resolve("public", "config", "patient.settings.json"));
+        var remote_settings = settings.remote_settings
+
+        var remote_url = remote_settings.protocol + "://" + remote_settings.host +(remote_settings.port  ? ":"+remote_settings.port  : "");
+        remote_url = remote_url + "/person_names/family_names?search_string="+(query.search_string ? query.search_string  : "")
+
+        var options_auth = {user: remote_settings.username, password: remote_settings.password};
+
+        var client = new RestClient(options_auth);
+
+        client.get(remote_url,function(data,response){
+            res.send(data.toString('utf8'));
+        });
     });
 
     return router;
