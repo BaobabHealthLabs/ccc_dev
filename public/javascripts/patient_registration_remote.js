@@ -1384,37 +1384,6 @@ var patientRemote = ({
 
         footer.appendChild(newPatient);
 
-        var editPatient = document.createElement("button");
-        editPatient.innerHTML = "<span>Edit Patient</span>";
-        editPatient.id = "editPatient";
-        editPatient.style.cssFloat = "right";
-        editPatient.className = "gray";
-
-        editPatient.onmousedown = function () {
-
-            if (this.className.match(/gray/))
-                return;
-
-            var targetPatientId = this.getAttribute("patient_id");
-
-            patientRemote.ajaxRequest("/does_patient_exist_locally/" + this.getAttribute("patient_id"), function (data) {
-
-                if (JSON.parse(data).exists) {
-
-                    patientRemote.buildEditPage(targetPatientId);
-
-                } else {
-
-                    window.location = "/fetch_remote_if_not_exists/" + targetPatientId;
-
-                }
-
-            });
-
-        }
-
-        footer.appendChild(editPatient);
-
         var url = "/remote_patient/search_for_patient?first_name=" +
             patientRemote.$("first_name").value.trim() + "&last_name=" + patientRemote.$("last_name").value.trim() + "&gender=" +
             patientRemote.$("gender").value.trim() + "&page=" + patient.page;
@@ -2242,7 +2211,7 @@ var patientRemote = ({
 
                             btn.onclick = function () {
 
-                                patient.buildEditFieldPage(this.getAttribute("field"),
+                                patientRemote.buildEditFieldPage(this.getAttribute("field"),
                                     this.getAttribute("field_target_id"), this.getAttribute("field_target_id_value"))
 
                             }
@@ -2259,8 +2228,473 @@ var patientRemote = ({
 
         }
 
-    }
-    ,
+    },
+    buildEditFieldPage: function (field, field_target_id, field_target_id_value) {
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var fields = ["First Name", "Last Name", "Gender", "Middle Name", "Maiden Name", "Date of birth", "Nationality",
+            "Current Region", "Current District", "Current T/A", "Current Village", "Region of Origin", "Home District",
+            "Home T/A", "Home Village", "Closest Landmark", "Cell Phone Number", "Home Phone Number",
+            "Office Phone Number", "Occupation"];
+
+        switch (field) {
+
+            case "first_name":
+
+                fields.splice(1, fields.length);
+
+                break;
+
+            case "last_name":
+
+                fields.splice(0, 1);
+
+                fields.splice(1, fields.length);
+
+                break;
+
+            case "gender":
+
+                fields.splice(0, 2);
+
+                fields.splice(1, fields.length);
+
+                break;
+
+            case "middle_name":
+
+                fields.splice(0, 3);
+
+                fields.splice(1, fields.length);
+
+                break;
+
+            case "maiden_name":
+
+                fields.splice(0, 4);
+
+                fields.splice(1, fields.length);
+
+                break;
+
+            case "date_of_birth":
+
+                fields.splice(0, 5);
+
+                fields.splice(1, fields.length);
+
+                break;
+
+            case "nationality":
+
+                fields.splice(0, 6);
+
+                fields.splice(1, fields.length);
+
+                break;
+
+            case "current_district":
+
+            case "current_ta":
+
+            case "current_village":
+
+                fields.splice(0, 7);
+
+                fields.splice(4, fields.length);
+
+                break;
+
+            case "home_district":
+
+            case "home_ta":
+
+            case "home_village":
+
+                fields.splice(0, 11);
+
+                fields.splice(4, fields.length);
+
+                break;
+
+            case "closest_landmark":
+
+                fields.splice(0, 15);
+
+                fields.splice(1, fields.length);
+
+                break;
+
+            case "cell_phone_number":
+
+                fields.splice(0, 16);
+
+                fields.splice(1, fields.length);
+
+                break;
+
+            case "home_phone_number":
+
+                fields.splice(0, 17);
+
+                fields.splice(1, fields.length);
+
+                break;
+
+            case "office_phone_number":
+
+                fields.splice(0, 18);
+
+                fields.splice(1, fields.length);
+
+                break;
+
+            case "occupation":
+
+                fields.splice(0, 19);
+
+                fields.splice(1, fields.length);
+
+                break;
+
+        }
+
+        var tableFields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "edit_demographics"
+            },
+            "Target Field": {
+                field_type: "hidden",
+                id: "data.target_field",
+                value: field
+            },
+            "Target Field ID": {
+                field_type: "hidden",
+                id: "data.target_field_id",
+                value: field_target_id
+            },
+            "Target Field ID Value": {
+                field_type: "hidden",
+                id: "data.target_field_id_value",
+                value: field_target_id_value
+            }
+        }
+
+        for (var i = 0; i < fields.length; i++) {
+
+            if (patient.settings.demographics[fields[i]] || ["Current Region", "Region of Origin"].indexOf(fields[i]) >= 0) {
+
+                if (fields[i] != "Date of birth") {
+
+                    var input = {};
+
+                    input.id = "data." + fields[i].replace(/\s/g, "_").replace(/\//g, "").toLowerCase();
+
+                    input.name = "data." + fields[i].replace(/\s/g, "_").replace(/\//g, "").toLowerCase();
+
+                    input.helpText = fields[i];
+
+                }
+
+                switch (fields[i]) {
+
+                    case "Home District":
+
+                    case "Current District":
+
+                        input['ajaxURL'] = "/district_query?region=&district=";
+
+                        var targetId = (fields[i] == "Current District" ? "current_ta" : "home_ta");
+
+                        var targetId2 = (fields[i] == "Current District" ? "current_village" : "home_village");
+
+                        input["tt_onUnload"] = "if(__$('data." + targetId + "')){var url = __$('data." + targetId +
+                            "').getAttribute('ajaxURL').replace(/district\=[^&]+|district=&/,'district='+" +
+                            "__$('touchscreenInput'+tstCurrentPage).value.trim()+'&'); __$('data." +
+                            targetId + "').setAttribute('ajaxURL', url)}; if(__$('data." + targetId2 +
+                            "')){var url = __$('data." + targetId2 + "').getAttribute('ajaxURL').replace(" +
+                            "/district\=[^&]+|district=&/,'district='+__$('touchscreenInput'+" +
+                            "tstCurrentPage).value.trim()+'&'); __$('data." + targetId2 +
+                            "').setAttribute('ajaxURL', url);} __$('nextButton').style.display = 'none';";
+
+                        input['tt_requireNextClick'] = false;
+
+                        break;
+
+                    case "Home T/A":
+
+                    case "Current T/A":
+
+                        input['ajaxURL'] = "/ta_query?region=&district=&ta="
+
+                        var targetId = (fields[i] == "Current T/A" ? "current_village" : "home_village");
+
+                        input['tt_onUnload'] = "if(__$('data." + targetId + "')){var url = __$('data." + targetId +
+                            "').getAttribute('ajaxURL').replace(/ta\=[^&]+|ta=/,'ta='+__$('touchscreenInput'+" +
+                            "tstCurrentPage).value.trim()); __$('data." +
+                            targetId + "').setAttribute('ajaxURL', url);} __$('nextButton').style.display = 'none';";
+
+                        input['tt_requireNextClick'] = false;
+
+                        break;
+
+                    case "Home Village":
+
+                    case "Current Village":
+
+                        input['ajaxURL'] = "/village_query?region=&district=&ta=&village=";
+
+                        input['tt_requireNextClick'] = false;
+
+                        break;
+
+                    case "Current Region":
+
+                    case "Region of Origin":
+
+                        var targetDistrict = (fields[i] == "Current Region" ? "current_district" : "home_district");
+
+                        var targetTa = (fields[i] == "Current Region" ? "current_ta" : "home_ta");
+
+                        var targetVillage = (fields[i] == "Current Region" ? "current_village" : "home_village");
+
+                        input["tt_onUnload"] = "if(__$('data." + targetDistrict + "')){var url = __$('data." + targetDistrict +
+                            "').getAttribute('ajaxURL').replace(/region\=[^&]+|region=&/,'region='+__$('touchscreenInput'" +
+                            "+tstCurrentPage).value.trim()+'&'); __$('data." +
+                            targetDistrict + "').setAttribute('ajaxURL', url);}; if(__$('data." + targetTa +
+                            "')){var url = __$('data." + targetTa +
+                            "').getAttribute('ajaxURL').replace(/region\=[^&]+|region=&/,'region='+__$('touchscreenInput'" +
+                            "+tstCurrentPage).value.trim()+'&'); __$('data." +
+                            targetTa + "').setAttribute('ajaxURL', url);}; if(__$('data." + targetVillage +
+                            "')){var url = __$('data." + targetVillage +
+                            "').getAttribute('ajaxURL').replace(/region\=[^&]+|region=&/,'region='+__$('touchscreenInput'" +
+                            "+tstCurrentPage).value.trim()+'&'); __$('data." +
+                            targetVillage + "').setAttribute('ajaxURL', url);} ";
+
+                        input['tt_requireNextClick'] = false;
+
+                        break;
+
+                    case "Nationality":
+
+                        input['ajaxURL'] = "/nationality_query/search?nationality"
+
+                        input['allowFreeText'] = true;
+
+                        break;
+
+                    case "Occupation":
+
+                        input['ajaxURL'] = "/occupations_query?occupation=";
+
+                        input['allowFreeText'] = true;
+
+                        break;
+
+                    case "Middle Name":
+
+                        input.optional = true;
+
+                        input['ajaxURL'] = "/fnames_query?name=";
+
+                        input['allowFreeText'] = true;
+
+                        break;
+
+                    case "First Name":
+
+                        input['ajaxURL'] = "/fnames_query?name=";
+
+                        input['allowFreeText'] = true;
+
+                        break;
+
+                    case "Last Name":
+
+                       input['ajaxURL'] = "/lnames_query?name=";
+
+                        input['allowFreeText'] = true;
+
+                        break;
+
+                    case "Cell Phone Number":
+
+                    case "Home Phone Number":
+
+                    case "Office Phone Number":
+
+                        input['tt_pageStyleClass'] = "NumbersWithUnknown nota";
+
+                        input['validationRule'] = "^0\\d{7}$|Unknown|Not Available|^0\\d{9}$|^N\\/A$";
+
+                        input['validationMessage'] = "Not a valid phone number";
+
+                        input['field_type'] = "number";
+
+                        break;
+
+                    case "Date of birth":
+
+                        var elements = ["Year of Birth", "Month of Birth", "Day of Birth", "Age Estimate"];
+
+                        for (var e = 0; e < elements.length; e++) {
+
+                            var input = {};
+
+                            input.id = "data." + elements[e].replace(/\s/g, "_").replace(/\//g, "").toLowerCase();
+
+                            input.name = "data." + elements[e].replace(/\s/g, "_").replace(/\//g, "").toLowerCase();
+
+                            input.helpText = elements[e];
+
+                            switch (elements[e]) {
+
+                                case "Year of Birth":
+
+                                    input.field_type = "number";
+
+                                    input.tt_pageStyleClass = "Numeric NumbersWithUnknown";
+
+                                    input.tt_onUnLoad = "validateMaxMinYear()";
+
+                                    break;
+
+                                case "Month of Birth":
+
+                                    input.field_type = "select";
+
+                                    input.condition = "__$('data.year_of_birth').value.toLowerCase().trim() != 'unknown'";
+
+                                    input.tt_pageStyleClass = "LongSelectList NoKeyboard";
+
+                                    input.tt_onUnLoad = "validateAndProcessMonth()";
+
+                                    input.options = ["January", "February", "March", "April", "May", "June", "July",
+                                        "August", "September", "October", "November", "December", "Unknown"];
+
+                                    break;
+
+                                case "Day of Birth":
+
+                                    input.field_type = "number";
+
+                                    input.tt_pageStyleClass = "Numeric NumbersOnly";
+
+                                    input.tt_onLoad = "monthDaysKeyPad()";
+
+                                    input.tt_onUnLoad = "setAgeValues()";
+
+                                    input.condition = "__$('data.year_of_birth').value.toLowerCase().trim() != 'unknown' && __$('data.month_of_birth').value.toLowerCase().trim() != 'unknown'";
+
+                                    break;
+
+                                case "Age Estimate":
+
+                                    input.field_type = "number";
+
+                                    input.tt_pageStyleClass = "Numeric NumbersOnly";
+
+                                    input.min = 1;
+
+                                    input.max = 127;
+
+                                    input.tt_onUnLoad = "setEstimatedAgeValue()";
+
+                                    input.condition = "__$('data.year_of_birth').value.toLowerCase().trim() == 'unknown'";
+
+                                    break;
+
+                            }
+
+                            tableFields[elements[e]] = input;
+
+                        }
+
+                        var birthdate = {
+                            type: "hidden",
+                            id: "data.date_of_birth",
+                            name: "data.date_of_birth",
+                            value: 0
+                        }
+
+                        tableFields["Date of Birth"] = birthdate;
+
+                        var birthdateEstimated = {
+                            type: "hidden",
+                            id: "birthdate_estimated",
+                            name: "data.birthdate_estimated",
+                            value: 0
+                        }
+
+                        tableFields["Birtdate Estimated"] = birthdateEstimated;
+
+                        break;
+
+                }
+
+                if (fields[i] != "Date of birth") {
+
+                    if (fields[i] == "Gender") {
+
+                        input['field_type'] = "select";
+
+                        input.options = ["Male", "Female"];
+
+                    } else if (fields[i] == "Current Region" || fields[i] == "Region of Origin") {
+
+                        input['field_type'] = "select";
+
+                        input.options = ["Central Region", "Northern Region", "Southern Region"];
+
+                        input['tt_requireNextClick'] = false;
+
+                    } else {
+
+                        input.type = "text";
+
+                    }
+
+                    tableFields[fields[i]] = input;
+
+                }
+
+            }
+
+        }
+
+        patientRemote.buildFields(tableFields, table);
+
+        var div = document.createElement("div");
+
+        var script = document.createElement("script");
+
+        var functions = [
+            monthDaysKeyPad.toString(),
+            setAgeValues.toString(),
+            validateMaxMinYear.toString(),
+            validateAndProcessMonth.toString(),
+            setEstimatedAgeValue.toString()
+        ];
+
+        script.innerHTML = functions.join("\n\n");
+
+        div.appendChild(script);
+
+        div.appendChild(form);
+
+        patient.navPanel(div.outerHTML);
+
+    },
     ajaxRequest: function (url, callback) {
 
         var httpRequest = new XMLHttpRequest();
