@@ -314,6 +314,31 @@ module.exports = function (router) {
        
     });
 
+    router.route('/search_by_id').get(function(req,res){
+        var url = require("url");
+        var query = url.parse(req.url, true).query;
+        var npid = query.npid
+
+        var settings = require(path.resolve("public", "config", "patient.settings.json"));
+        var remote_settings = settings.remote_settings
+
+        var remote_url = remote_settings.protocol + "://" + remote_settings.host +(remote_settings.port  ? ":"+remote_settings.port  : "");
+        remote_url = remote_url + remote_settings.search_by_id + npid;
+
+        var options_auth = {user: remote_settings.username, password: remote_settings.password};
+
+        var client = new RestClient(options_auth);
+
+        try{
+            client.get(remote_url,function(data,response){
+
+                res.send(data.toString('utf8'));
+            });
+        }catch(e){
+
+        }
+    });
+
 
     return router;
 

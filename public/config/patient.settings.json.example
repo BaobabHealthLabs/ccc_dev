@@ -27,7 +27,8 @@
           "host" : "localhost",
           "port" : "3000",
           "createPath" : "/patient/create_remote",
-          "searchPath" : "/check_for_duplicates/remote_app_search"
+          "searchPath" : "/people/search_remote_people",
+          "search_by_id": "/people/demographics_remote?person[patient][identifiers][national_id]="
   },
   "demographics": {
     "First Name": true,
