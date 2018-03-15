@@ -1084,8 +1084,6 @@ var patientRemote = ({
 
     },
     submitSearch: function (url) {
-        alert("Hello");
-        return;
         var shield = document.createElement("div");
         shield.style.backgroundColor = "rgba(128,128,128,0.5)";
         shield.style.position = "absolute";
@@ -1519,11 +1517,16 @@ var patientRemote = ({
                             if (this.className.match(/gray/))
                                 return;
 
-                           window.location = patient.settings.basePath +
+                           if(patientRemote.patients[parseInt(patientRemote.$("nextButton").getAttribute("pos"))]["enhanched"]["patient_id"]){
+                                window.location = patient.settings.basePath +
                                                         (patient.settings.defaultPath ? patient.settings.defaultPath :
                                                             "") + "/patient/" + patientRemote.patients[parseInt(patientRemote.$("nextButton").getAttribute("pos"))]["enhanched"]["npid"];
 
-                            // window.location = patient.settings.basePath + "/patient/" + patientRemote.$("selected_patient").value.trim();
+                           }else{
+                                var record = patientRemote.patients[parseInt(patientRemote.$("nextButton").getAttribute("pos"))]
+                                patientRemote.saveLocal(record)
+                           }
+                           // window.location = patient.settings.basePath + "/patient/" + patientRemote.$("selected_patient").value.trim();
 
                         }
                     }
@@ -1546,6 +1549,85 @@ var patientRemote = ({
             }
 
         }
+    },
+    saveLocal: function(record){
+            var agrs = record;
+            var birthdate = record["person"]["birthdate"].split("/").join("-");
+            var birthdate_estimated = 0;
+            if(record["person"]["year_of_month"] == "Unknown"){
+                birthdate_estimated = 1 
+            }
+            var data = {
+            npid: (record["person"]["patient"]["identifiers"]["National id"] ? record["person"]["patient"]["identifiers"]["National id"] : null),
+            application: (patient.getCookie("app").trim().length > 0 ? patient.getCookie("app") : "test"),
+            site_code: patient.settings.ddeSiteCode,
+            names:record["person"]["names"],
+            gender: record["person"]["gender"],
+            attributes: {
+                occupation: "",
+                cell_phone_number: ""
+            },
+            birthdate: birthdate,
+            patient: {
+                identifiers: record["person"]["patient"]["identifiers"]
+            },
+            birthdate_estimated: birthdate_estimated,
+            addresses: {
+                closest_landmark: (record["person"]["addresses"]["address1"] ? record["person"]["addresses"]["address1"] : ""),
+                current_residence: "",
+                current_village: (record["person"]["addresses"]["city_village"]? record["person"]["addresses"]["city_village"] : ""),
+                current_ta: (record["person"]["addresses"]["township_division"] ? record["person"]["addresses"]["township_division"] : ""),
+                current_district: (record["person"]["addresses"]["state_province"] ? record["person"]["addresses"]["state_province"] : ""),
+                home_village:  (record["person"]["addresses"]["neighborhood_cell"] ? record["person"]["addresses"]["neighborhood_cell"] : ""),
+                home_ta: (record["person"]["addresses"]["county_district"] ? record["person"]["addresses"]["county_district"] : ""),
+                home_district:(record["person"]["addresses"]["address2"] ? record["person"]["addresses"]["address2"] : "")
+            },
+            status: 'NEW RECORD',
+            action: "UPDATE",
+            canPrintBarcode: true,
+            printBarcode: true,
+            token: patientRemote.getCookie("token")
+        }
+
+
+
+        patientRemote.ajaxPostRequest(patient.settings.afterCreatePath, {data: data}, function (response) {
+
+                    var npid = JSON.parse(response).npid;
+
+                    if (data.canPrintBarcode) {
+
+                        patientRemote.printBarcode(undefined, npid, function () {
+
+                            if (patient.settings.basePath != undefined) {
+
+                                window.location = patient.settings.basePath +
+                                    (patient.settings.defaultPath ? patient.settings.defaultPath :
+                                        "") + "/patient/" + npid;
+
+                            } else {
+
+                                window.location = (patient.settings.defaultPath ? patient.settings.defaultPath : "/");
+
+                            }
+
+                        })
+
+                    } else {
+
+                        if (patient.settings.basePath != undefined) {
+
+                            window.location = patient.settings.basePath + "/patient/" + npid;
+
+                        } else {
+
+                            window.location = (patient.settings.defaultPath ? patient.settings.defaultPath : "/");
+
+                        }
+
+                    }
+
+        })
     },
     buildAddPage: function (first_name, last_name, gender, npid) {
         var form = document.createElement("form");
@@ -1929,7 +2011,256 @@ var patientRemote = ({
         patientRemote.navPanel(div.outerHTML);
 
     },
+    buildEditPage: function (patient_id) {
 
+        if (typeof(tstCurrentDate) === "undefined") {
+
+            var script = document.createElement("script");
+
+            script.innerText = "var tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "'";
+
+            document.head.appendChild(script);
+
+        }
+
+        document.body.innerHTML = "";
+
+        document.body.style.backgroundColor = "#fff";
+
+        var style = this.sheet();
+        this.addCSSRule(style, ".nota #na", "display: block");
+        this.addCSSRule(style, ".tt_controls_occupation .keyboard", "display:none !important");
+        this.addCSSRule(style, "#tt_page_occupation .options", "height:500px");
+        this.addCSSRule(style, "#tt_page_occupation .options li", "font-size:30px");
+        this.addCSSRule(style, "body", "font-family: 'Nimbus Sans L', 'Arial Narrow', sans-serif");
+
+        var div = document.createElement("div");
+        div.style.fontSize = "2.3em";
+        div.style.backgroundColor = "#6281A7";
+        div.style.color = "#eee";
+        div.style.padding = "15px";
+        div.align = "center";
+        div.innerHTML = "Edit Demographics";
+        // div.style.fontFamily = "";
+
+        document.body.appendChild(div);
+
+        var div = document.createElement("div");
+        div.id = "divMain";
+        div.style.backgroundColor = "#fff";
+        div.style.overflow = "auto";
+        div.style.height = "calc(100vh - 155px)";
+        div.innerHTML = "&nbsp;";
+
+        document.body.appendChild(div);
+
+        var div = document.createElement("div");
+        div.style.backgroundColor = "#333";
+        div.style.height = "80px";
+        div.style.overflow = "hidden";
+        div.style.padding = "0px";
+        div.innerHTML = "&nbsp;";
+
+        document.body.appendChild(div);
+
+        var nextButton = document.createElement("button");
+        nextButton.className = "green";
+        nextButton.style.cssFloat = "right";
+        nextButton.id = "nextButton";
+        nextButton.innerHTML = "Finish";
+        nextButton.style.margin = "15px";
+        nextButton.style.marginTop = "10px";
+        nextButton.style.minWidth = "140px";
+
+        nextButton.onclick = function () {
+
+            if (window.parent) {
+
+                window.parent.location = window.parent.location.href;
+
+            } else {
+
+                window.location = window.location.href;
+
+            }
+
+        }
+
+        div.appendChild(nextButton);
+
+        var printButton = document.createElement("button");
+        printButton.className = "blue";
+        printButton.style.cssFloat = "right";
+        printButton.id = "printButton";
+        printButton.innerHTML = "Print Barcode";
+        printButton.style.margin = "15px";
+        printButton.style.marginRight = "0px";
+        printButton.style.marginTop = "10px";
+        printButton.style.minWidth = "140px";
+        printButton.setAttribute("patient_id", patient_id);
+
+        printButton.onclick = function () {
+
+            if (patient) {
+
+                patient.printBarcode(undefined, this.getAttribute("patient_id"), function () {
+                });
+
+            }
+
+        }
+
+        div.appendChild(printButton);
+
+        var table = document.createElement("table");
+        table.border = 0;
+        table.width = "100%";
+        table.cellPadding = 2;
+
+        patient.$("divMain").appendChild(table);
+
+        var fields = ["First Name", "Last Name", "Gender", "Middle Name", "Maiden Name", "Date of birth", "Nationality",
+            "Current Region", "Current District", "Current T/A", "Current Village", "Region of Origin", "Home District",
+            "Home T/A", "Home Village", "Closest Landmark", "Cell Phone Number", "Home Phone Number",
+            "Office Phone Number", "Occupation"];
+
+        for (var i = 0; i < fields.length; i++) {
+
+            if (patient.settings.demographics[fields[i]]) {
+
+                var tr = document.createElement("tr");
+
+                table.appendChild(tr);
+
+                for (var j = 0; j < 4; j++) {
+
+                    var td = document.createElement("td");
+
+                    tr.appendChild(td);
+
+                    switch (j) {
+
+                        case 0:
+
+                            td.innerHTML = fields[i].beautify("28px", "18px");
+
+                            td.style.fontSize = "24px";
+
+                            td.style.minWidth = "40%";
+
+                            td.style.color = "#333";
+
+                            td.align = "right";
+
+                            td.style.paddingRight = "15px";
+
+                            break;
+
+                        case 1:
+
+                            td.innerHTML = ":"
+
+                            td.style.width = "20px";
+
+                            td.align = "center";
+
+                            break;
+
+                        case 2:
+
+                            var field = fields[i].trim().toLowerCase().replace(/\s/g, "_").replace(/\//g, "");
+
+                            td.id = field;
+
+                            td.style.fontSize = "28px";
+
+                            td.style.borderBottom = "1px dotted #ccc";
+
+                            td.style.paddingLeft = "15px";
+
+                            var url = patient.settings.basePath + (patient.settings.defaultPath ?
+                                    patient.settings.defaultPath : "") + patient.settings.demographicsQueryByIdentifierPath +
+                                "/?identifier=" + patient_id + "&field=" + field + "&token=" + patient.getCookie("token");
+
+                            patient.ajaxAuthRequest(url, function (result) {
+
+                                var json = JSON.parse(result);
+
+                                var field = json.field;
+
+                                if (patient.$(field)) {
+
+                                    if (field == "date_of_birth") {
+
+                                        patient.$(field).innerHTML = (json["birthdate_estimated"] == "1" ? "~" : "") +
+                                            (json[field] ? ((new Date(json[field])).format("dd/mm/YYYY")) : "");
+
+                                    } else if (field == "gender") {
+
+                                        var genders = {
+                                            F: "Female",
+                                            M: "Male"
+                                        }
+
+                                        patient.$(field).innerHTML = (json[field] ? genders[json[field]] : "");
+
+                                    } else {
+
+                                        patient.$(field).innerHTML = (json[field] ? json[field] : "");
+
+                                    }
+
+                                }
+
+                                if (patient.$("btn_" + field)) {
+
+                                    patient.$("btn_" + field).setAttribute("field_target_id", (json["field_id"] ?
+                                        json["field_id"] : ""));
+
+                                    patient.$("btn_" + field).setAttribute("field_target_id_value",
+                                        (json[json["field_id"]] ? json[json["field_id"]] : ""));
+
+                                }
+
+                            })
+
+                            break;
+
+                        case 3:
+
+                            var field = fields[i].trim().toLowerCase().replace(/\s/g, "_").replace(/\//g, "");
+
+                            td.style.width = "150px";
+                            var btn = document.createElement("button");
+                            btn.className = "blue";
+                            btn.style.minWidth = "120px";
+                            btn.style.cssFloat = "right";
+                            btn.innerHTML = "Edit";
+                            btn.style.marginRight = "10px";
+                            btn.id = "btn_" + field;
+                            btn.setAttribute("field", field);
+
+                            btn.onclick = function () {
+
+                                patient.buildEditFieldPage(this.getAttribute("field"),
+                                    this.getAttribute("field_target_id"), this.getAttribute("field_target_id_value"))
+
+                            }
+
+                            td.appendChild(btn);
+
+                            break;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+    ,
     ajaxRequest: function (url, callback) {
 
         var httpRequest = new XMLHttpRequest();
