@@ -475,19 +475,19 @@ if (process.argv.indexOf("-c") < 0) {
 
     commands.push({
         message: "Dropping '" + connection.database + "' database...",
-        cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+        cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
             " -e 'DROP SCHEMA IF EXISTS " + connection.database + "'"
     });
 
     commands.push({
         message: "Creating '" + connection.database + "' database...",
-        cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+        cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
             " -e 'CREATE SCHEMA " + connection.database + "'"
     });
 
     commands.push({
         message: "Loading '" + connection.database + "' Metadata...",
-        cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+        cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
             " " + connection.database + " < openmrs_1_7_2_concept_server_full_db.sql"
     });
 
@@ -497,19 +497,19 @@ if (process.argv.indexOf("-o") < 0 && process.argv.indexOf("-c") < 0) {
 
     commands.push({
         message: "Dropping '" + connection.stockDatabase + "' database...",
-        cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+        cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
             " -e 'DROP SCHEMA IF EXISTS " + connection.stockDatabase + "'"
     });
 
     commands.push({
         message: "Creating '" + connection.stockDatabase + "' database...",
-        cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+        cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
             " -e 'CREATE SCHEMA " + connection.stockDatabase + "'"
     });
 
     commands.push({
         message: "Loading '" + connection.stockDatabase + "' Metadata...",
-        cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+        cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
             " " + connection.stockDatabase + " < inventory.sql"
     });
 
@@ -549,7 +549,7 @@ async.each(commands, function (cmd, callback) {
 
                 console.log("Loading '" + connection.stockDatabase + "' Triggers...");
 
-                var cmd = "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                var cmd = "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
                     " " + connection.stockDatabase + " < triggers.sql";
 
                 runCmd(cmd, function (error, stdout, stderr) {
@@ -588,32 +588,32 @@ async.each(commands, function (cmd, callback) {
 
                 commands.push({
                     message: "Loading 'HTS Roles' seed data...",
-                    cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                    cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
                         " " + connection.database + " < htc.roles.sql"
                 });
 
                 commands.push({
                     message: "Loading '" + connection.database + "' Extra Metadata...",
-                    cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                    cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
                     " " + connection.database + " < ccc_data.sql"
                 });
 
                 commands.push({
 
                     message: "Loading 'Nationalities' seed data...",
-                    cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                    cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
                         " " + connection.database + " < nationalities.sql"
                 });
 
                 commands.push({
                     message: "Initializing HTC triggers...",
-                    cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                    cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
                         " " + connection.database + " < htc_triggers.sql"
                 });
 
                 commands.push({
                     message: "Loading 'Locations' seed data...",
-                    cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                    cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
                     " " + connection.database + " < locations.sql"
                 });
 
@@ -669,7 +669,7 @@ async.each(commands, function (cmd, callback) {
 
             commands.push({
                 message: "Initializing user admin...",
-                cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
                 " " + connection.database + " -e 'DELETE FROM person_attribute WHERE person_id = 1; " +
                 "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) " +
                 "VALUES((SELECT person_id FROM person LIMIT 1), \"HTS-0001\", (SELECT person_attribute_type_id FROM " +
