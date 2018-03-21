@@ -53,13 +53,23 @@ function queryRaw(sql, callback) {
 }
 
 function runCmd(cmd, callBack) {
+
     var exec = require('child_process').exec;
 
-    exec(cmd, function (error, stdout, stderr) {
+    try {
 
-        callBack(error, stdout, stderr);
+        exec(cmd, function (error, stdout, stderr) {
 
-    });
+            callBack(error, stdout, stderr);
+
+        });
+
+    } catch (e) {
+
+        console.log(e);
+
+    }
+
 }
 
 function loadSeedData(eCallback) {
@@ -124,7 +134,7 @@ function loadSeedData(eCallback) {
 
                 console.log("Loading encounter_types...");
 
-                async.each(seed.encounter_types, function (encounter_type, callback) {
+                async.mapSeries(seed.encounter_types, function (encounter_type, callback) {
 
                     knex.raw("SELECT * FROM encounter_type  WHERE name = '" + encounter_type[0] + "' AND retired = 0 LIMIT 1")
                         .then(function (encounter_types) {
@@ -181,7 +191,7 @@ function loadSeedData(eCallback) {
 
                 console.log("Loading patient_identifier_types...");
 
-                async.each(seed.patient_identifier_types, function (patient_identifier_type, callback) {
+                async.mapSeries(seed.patient_identifier_types, function (patient_identifier_type, callback) {
 
                     knex.raw("SELECT * FROM patient_identifier_type  WHERE name = '" + patient_identifier_type[0] + "' AND retired = 0 LIMIT 1")
                         .then(function (patient_identifier_types) {
@@ -236,7 +246,7 @@ function loadSeedData(eCallback) {
 
                 console.log("Loading person_attribute_types...");
 
-                async.each(seed.person_attribute_types, function (person_attribute_type, callback) {
+                async.mapSeries(seed.person_attribute_types, function (person_attribute_type, callback) {
 
                     knex.raw("SELECT * FROM person_attribute_type  WHERE name = '" + person_attribute_type[0] + "' AND retired = 0 LIMIT 1")
                         .then(function (person_attribute_types) {
@@ -291,7 +301,7 @@ function loadSeedData(eCallback) {
 
                 console.log("Loading programs...");
 
-                async.each(seed.programs, function (program, callback) {
+                async.mapSeries(seed.programs, function (program, callback) {
 
                     knex.raw("SELECT * FROM program WHERE name = '" + program + "' AND retired = 0")
                         .then(function (programs) {
@@ -400,7 +410,7 @@ function loadSeedData(eCallback) {
 
                 console.log("Loading concepts...");
 
-                async.each(seed.concepts, function (concept, callback) {
+                async.mapSeries(seed.concepts, function (concept, callback) {
 
                     knex.raw("SELECT * FROM concept_name LEFT OUTER JOIN concept ON concept.concept_id = concept_name.concept_id WHERE name = '" + concept + "' AND voided = 0 LIMIT 1")
                         .then(function (concepts) {
@@ -515,7 +525,7 @@ if (process.argv.indexOf("-o") < 0 && process.argv.indexOf("-c") < 0) {
 
 }
 
-async.each(commands, function (cmd, callback) {
+async.mapSeries(commands, function (cmd, callback) {
 
     console.log(cmd.message);
 
@@ -535,7 +545,11 @@ async.each(commands, function (cmd, callback) {
 
         }
 
-        callback();
+        process.nextTick(function () {
+
+            callback();
+
+        })
 
     });
 
@@ -587,15 +601,15 @@ async.each(commands, function (cmd, callback) {
             if (process.argv.indexOf("-c") < 0) {
 
                 commands.push({
-                    message: "Loading 'HTS Roles' seed data...",
+                    message: "Loading '" + connection.database + "' Extra Metadata...",
                     cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
-                        " " + connection.database + " < htc.roles.sql"
+                        " " + connection.database + " < ccc_data.sql"
                 });
 
                 commands.push({
-                    message: "Loading '" + connection.database + "' Extra Metadata...",
+                    message: "Loading 'HTS Roles' seed data...",
                     cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
-                    " " + connection.database + " < ccc_data.sql"
+                        " " + connection.database + " < htc.roles.sql"
                 });
 
                 commands.push({
@@ -614,12 +628,12 @@ async.each(commands, function (cmd, callback) {
                 commands.push({
                     message: "Loading 'Locations' seed data...",
                     cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
-                    " " + connection.database + " < locations.sql"
+                        " " + connection.database + " < locations.sql"
                 });
 
             }
 
-            async.each(commands, function (cmd, callback) {
+            async.mapSeries(commands, function (cmd, callback) {
 
                 console.log(cmd.message);
 
@@ -670,14 +684,14 @@ async.each(commands, function (cmd, callback) {
             commands.push({
                 message: "Initializing user admin...",
                 cmd: "export MYSQL_PWD=" + connection.password + " && mysql -h " + connection.host + " -u " + connection.user +
-                " " + connection.database + " -e 'DELETE FROM person_attribute WHERE person_id = 1; " +
-                "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) " +
-                "VALUES((SELECT person_id FROM person LIMIT 1), \"HTS-0001\", (SELECT person_attribute_type_id FROM " +
-                "person_attribute_type WHERE name = \"HTS Provider ID\"), (SELECT user_id FROM users LIMIT 1), " +
-                "NOW(), \"" + uuid.v1() + "\")'"
+                    " " + connection.database + " -e 'DELETE FROM person_attribute WHERE person_id = 1; " +
+                    "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) " +
+                    "VALUES((SELECT person_id FROM person LIMIT 1), \"HTS-0001\", (SELECT person_attribute_type_id FROM " +
+                    "person_attribute_type WHERE name = \"HTS Provider ID\"), (SELECT user_id FROM users LIMIT 1), " +
+                    "NOW(), \"" + uuid.v1() + "\")'"
             });
 
-            async.each(commands, function (cmd, callback) {
+            async.mapSeries(commands, function (cmd, callback) {
 
                 console.log(cmd.message);
 
@@ -718,7 +732,7 @@ async.each(commands, function (cmd, callback) {
 
             queryRaw(sql, function (data) {
 
-                if(data && data[0].length > 0) {
+                if (data && data[0].length > 0) {
 
                     var generic_drugs = [];
 
@@ -728,14 +742,14 @@ async.each(commands, function (cmd, callback) {
 
                     var json = data[0];
 
-                    for(var i = 0; i < json.length; i++) {
+                    for (var i = 0; i < json.length; i++) {
 
                         var row = json[i];
 
                         if (generic_drugs.indexOf([row.conceptName, row.conceptId]) < 0)
                             generic_drugs.push([row.conceptName, row.conceptId]);
 
-                        if(!drug_dosages[row.conceptId])
+                        if (!drug_dosages[row.conceptId])
                             drug_dosages[row.conceptId] = {};
 
                         var leaf = (row.dose_strength ? row.dose_strength : "") + (row.units ? row.units : "");
@@ -743,7 +757,7 @@ async.each(commands, function (cmd, callback) {
                         drug_dosages[row.conceptId][leaf] = [row.dose_strength, (row.units ? String(row.units).toUpperCase() :
                             row.units), row.dose_strength];
 
-                        if(!drugs[row.conceptId])
+                        if (!drugs[row.conceptId])
                             drugs[row.conceptId] = {};
 
                         drugs[row.conceptId][row.drugName] = [row.dose_strength, row.units];
