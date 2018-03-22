@@ -1,0 +1,65 @@
+# ccc_dev
+
+#Dependencies
+1.nodejs version 5.10.1
+	useful links for installing nodejs: "https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04"
+					    "https://uk.godaddy.com/help/install-nodejs-ubuntu-17395"
+2.java version 8 or higher
+	useful links for installing java: "https://thishosting.rocks/install-java-ubuntu/"
+					  "https://askubuntu.com/questions/521145/how-to-install-oracle-java-on-ubuntu-14-04"
+3.npm
+4.nvm
+5.couchdb
+6.ubuntu 14.04
+7.firefox v54 or less
+
+#Setup
+Clone the ccc application on github
+	 url = https://github.com/BaobabHealthTrust/ccc_dev.git
+Clone dde3.0 application on github, configure it and makesure it is running
+Clone National ART application on github, configure it and makesure it is running on the tag 3.7.5 or 3.7.7-1 
+
+Check node version by running node -v (The default should be 5.10.1 and nvm version should be 3.8.3)
+Then run "nvm list" system default should be "5.10.1"
+Copy .examples files in both config folder and public/config folder to .json
+Then run ./setup.sh
+#Window promps will be initated
+1.Mysql found "OK"(If not found the setup will install the Mysql)
+2.Nodejs found "OK"
+3.couchdb configuration found "OK"
+4.Mysql configuration found "OK"
+5.Site configuration found "OK"
+6.Install or update shared dependencies "YES"
+7.Enter github.com username
+8.Enter github.com password for 'entered username'
+9.Updating ../common/modules
+10.Updating ../common/touchscreentoolkit "OK"
+11.Configure application "YES"
+12.Enter DDE application username (This is the username configured in couchdb)
+13.Enter DDE application username for "couchdb username entered"
+14.Enter site code (For example "MCH", "KCH" etc without the quotes)
+15.Enter DDE host protocol (This should be http)
+16.Enter DDE host IP ADDRESS(Type in the IP ADDRESS where ddde3.0 is running)
+17.Enter DDE host port (Default is 3009)
+18.Enter target application environment (Select either "development", "production" or "test")
+19.Enter Mysql database host ip address (Default is local)
+20.Enter Mysql username
+21.Enter Mysql password
+22.Enter ccc database name(default is either "ccc_development", "ccc_production" or "ccc_test")
+23.Enter Facility full name (Name of health facility e.g "Mzuzu Central Hospital" without the quotes)
+24.Enter Facility location (Where entry 23 is located which could either be "North", "Centre" or "South")
+25.Is the facility location the same as ccc_location "YES"
+26.Enter auto incremental CCC identifiers reset month (default is "january")
+27.Is the facility location the same as CCC location? "YES"
+28.Configure application database? "YES"
+29.Do you want to install full database (WARNING: This will drop database so make sure this is not a live database)
+30.Enter number of locations to create (These are number of Rooms or worstations the application will be e.g "3", "5", "10" etc)
+31.Enter location 1 till the number of locations you have inputed on step 29 (i.e "Room 1", "Room 2" etc)
+Done!
+
+Run the application using node app.js
+
+NOTE: If the application server is not running check the following;
+	- check the public/config/patient_settings.json file and make sure the basePath and ddePaths are the same as the divice ip address
+	- Run npm install --save --verbose to install node modules
+
