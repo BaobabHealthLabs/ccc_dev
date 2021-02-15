@@ -19,6 +19,17 @@
   "afterCreatePath": "/save_patient",
   "patientBarcodeDataPath": "/patient_barcode_data?token=",
   "closestLandmark": "/list_closest_landmarks/html",
+  "create_from_remote" : false,
+  "remote_settings":{
+          "protocol" : "http",
+          "username" : "admin",
+          "password" : "test",
+          "host" : "localhost",
+          "port" : "3000",
+          "createPath" : "/patient/create_remote",
+          "searchPath" : "/people/search_remote_people",
+          "search_by_id": "/people/demographics_remote?person[patient][identifiers][national_id]="
+  },
   "demographics": {
     "First Name": true,
     "Middle Name": true,
