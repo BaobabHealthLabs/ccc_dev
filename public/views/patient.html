@@ -1,392 +1,461 @@
 <html>
-<head></head>
-<body oncontextmenu="return false;">
-<script src="/modules/usermanagement.js"></script>
-<script src="/modules/dashboard.js"></script>
-<script src="/modules/patient_registration.js"></script>
-<script>
+  <head></head>
+  <body oncontextmenu="return false;">
+    <script src="/modules/usermanagement.js"></script>
+    <script src="/modules/dashboard.js"></script>
+    <script src="/modules/patient_registration.js"></script>
+    <script>
+      user.init("/config/user.settings.json");
 
-    user.init("/config/user.settings.json");
+      patient.init(
+        "/config/patient.settings.json",
+        user.getCookie("username"),
+        "/config/patient.modules.json"
+      );
 
-    patient.init("/config/patient.settings.json", user.getCookie("username"), "/config/patient.modules.json");
+      dashboard.init(
+        "/data/person.json",
+        "/config/patient.modules.json",
+        "/config/dashboard.settings.json"
+      );
 
-    dashboard.init("/data/person.json", "/config/patient.modules.json", "/config/dashboard.settings.json");
+      dashboard.subscription.addEventlistener("done", function() {
+        if (
+          dashboard.activeTask == "Complications" &&
+          dashboard.getCookie("currentProgram") == "Diabetes"
+        ) {
+          dashboard.navURLPanel("/spec/dm/complications.html");
 
-    dashboard.subscription.addEventlistener("done", function () {
-
-        if (dashboard.activeTask == "Complications" && dashboard.getCookie("currentProgram") == "Diabetes") {
-
-            dashboard.navURLPanel('/spec/dm/complications.html');
-
-            setTimeout(function () {
-
-                dashboard.$("ifrMain").contentWindow.location = '/spec/dm/complications.html';
-
-            }, 200);
-
+          setTimeout(function() {
+            dashboard.$("ifrMain").contentWindow.location =
+              "/spec/dm/complications.html";
+          }, 200);
         }
 
-        if (dashboard.activeTask == "Complications" && dashboard.getCookie("currentProgram") == "HTN") {
+        if (
+          dashboard.activeTask == "Complications" &&
+          dashboard.getCookie("currentProgram") == "HTN"
+        ) {
+          dashboard.navURLPanel("/spec/htn/complications.html");
 
-            dashboard.navURLPanel('/spec/htn/complications.html');
-
-            setTimeout(function () {
-
-                dashboard.$("ifrMain").contentWindow.location = '/spec/htn/complications.html';
-
-            }, 200);
-
+          setTimeout(function() {
+            dashboard.$("ifrMain").contentWindow.location =
+              "/spec/htn/complications.html";
+          }, 200);
         }
 
-        if (dashboard.activeTask == "Patient History" && dashboard.getCookie("currentProgram") == "HTN") {
-
-            dashboard.loadCustomScript('/javascripts/htn_medical_history.js', 'details');
-
+        if (
+          dashboard.activeTask == "Patient History" &&
+          dashboard.getCookie("currentProgram") == "HTN"
+        ) {
+          dashboard.loadCustomScript(
+            "/javascripts/htn_medical_history.js",
+            "details"
+          );
         }
-        if (dashboard.activeTask == "Patient History" && dashboard.getCookie("currentProgram") == "Asthma") {
-
-            dashboard.loadCustomScript('/javascripts/asthma_medical_history.js', 'details');
-
+        if (
+          dashboard.activeTask == "Patient History" &&
+          dashboard.getCookie("currentProgram") == "Asthma"
+        ) {
+          dashboard.loadCustomScript(
+            "/javascripts/asthma_medical_history.js",
+            "details"
+          );
         }
-
-    });
-    if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
-
+      });
+      if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
         Object.defineProperty(Date.prototype, "format", {
-            value: function (format) {
-                var date = this;
+          value: function(format) {
+            var date = this;
 
-                var result = "";
+            var result = "";
 
-                if (!format) {
-
-                    format = ""
-
-                }
-
-                var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-                var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-                    "October", "November", "December"];
-
-                if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
-
-                    result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                            window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
-                            window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
-
-                } else if (format.match(/YYYY\-mm\-dd/)) {
-
-                    result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                            window.parent.dashboard.padZeros(date.getDate(), 2);
-
-                } else if (format.match(/mmm\/d\/YYYY/)) {
-
-                    result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
-
-                } else if (format.match(/d\smmmm,\sYYYY/)) {
-
-                    result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
-
-                } else {
-
-                    result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
-
-                }
-
-                return result;
+            if (!format) {
+              format = "";
             }
+
+            var months = [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ];
+
+            var monthNames = [
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December"
+            ];
+
+            if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+              result =
+                date.getFullYear() +
+                "-" +
+                window.parent.dashboard.padZeros(
+                  parseInt(date.getMonth()) + 1,
+                  2
+                ) +
+                "-" +
+                window.parent.dashboard.padZeros(date.getDate(), 2) +
+                " " +
+                window.parent.dashboard.padZeros(date.getHours(), 2) +
+                ":" +
+                window.parent.dashboard.padZeros(date.getMinutes(), 2) +
+                ":" +
+                window.parent.dashboard.padZeros(date.getSeconds(), 2);
+            } else if (format.match(/YYYY\-mm\-dd/)) {
+              result =
+                date.getFullYear() +
+                "-" +
+                window.parent.dashboard.padZeros(
+                  parseInt(date.getMonth()) + 1,
+                  2
+                ) +
+                "-" +
+                window.parent.dashboard.padZeros(date.getDate(), 2);
+            } else if (format.match(/mmm\/d\/YYYY/)) {
+              result =
+                months[parseInt(date.getMonth())] +
+                "/" +
+                date.getDate() +
+                "/" +
+                date.getFullYear();
+            } else if (format.match(/d\smmmm,\sYYYY/)) {
+              result =
+                date.getDate() +
+                " " +
+                monthNames[parseInt(date.getMonth())] +
+                ", " +
+                date.getFullYear();
+            } else {
+              result =
+                date.getDate() +
+                "/" +
+                months[parseInt(date.getMonth())] +
+                "/" +
+                date.getFullYear();
+            }
+
+            return result;
+          }
         });
+      }
 
-    }
+      function printSummary(data, callback) {
+        dashboard.ajaxRequest(
+          dashboard.settings.patientBarcodeDataPath +
+            dashboard.getCookie("token") +
+            "&npid=",
+          function(data) {
+            var intial_drug_postion = 90;
 
-    function printSummary(data, callback) {
+            var data = dashboard.data.data;
 
-        dashboard.ajaxRequest(dashboard.settings.patientBarcodeDataPath + dashboard.getCookie("token") + "&npid=",
-                function (data) {
+            var programs = {
+              Diabetes: "DIABETES PROGRAM",
+              HTN: "HYPERTENSION PROGRAM",
+              Asthma: "ASTHMA PROGRAM",
+              Epilepsy: "EPILEPSY PROGRAM"
+            };
 
-                    var intial_drug_postion = 90;
+            var patient_programs =
+              data.programs[programs[dashboard.getCookie("currentProgram")]]
+                .patient_programs;
 
-                    var data = dashboard.data.data;
+            var patient_program_keys = Object.keys(patient_programs);
 
-                    var programs = {
-                        "Diabetes": "DIABETES PROGRAM",
-                        "HTN": "HYPERTENSION PROGRAM",
-                        "Asthma": "ASTHMA PROGRAM",
-                        "Epilepsy": "EPILEPSY PROGRAM"
+            var date = new Date();
+
+            var treaments = "";
+
+            for (var i = 0; i < patient_program_keys.length; i++) {
+              var visit = date.format("YYYY-mm-dd");
+
+              var encounter_data =
+                patient_programs[patient_program_keys[i]]["visits"][visit][
+                  "TREATMENTS"
+                ];
+
+              for (var j = 0; j < encounter_data.length; j++) {
+                var concepts = Object.keys(encounter_data[j]);
+
+                for (var k = 0; k < concepts.length; k++) {
+                  var current_drug_position = intial_drug_postion + 20 * j + 1;
+
+                  var days = "";
+
+                  var start_date = new Date(
+                    encounter_data[j][concepts[k]].start_date
+                  );
+
+                  var end_date = new Date(
+                    encounter_data[j][concepts[k]].auto_expire_date
+                  );
+
+                  if (end_date) {
+                    days = parseInt(
+                      ((end_date - start_date) / (1000 * 60 * 60 * 24)).toFixed(
+                        0
+                      )
+                    );
+
+                    if (days == 1) {
+                      days = days + " day";
+                    } else {
+                      days = days + " days";
                     }
-
-                    var patient_programs = data.programs[programs[dashboard.getCookie("currentProgram")]].patient_programs;
-
-
-                    var patient_program_keys = Object.keys(patient_programs);
-
-                    var date = new Date();
-
-                    var treaments = "";
-
-                    for (var i = 0; i < patient_program_keys.length; i++) {
-
-                        var visit = date.format("YYYY-mm-dd");
-
-                        var encounter_data = patient_programs[patient_program_keys[i]]["visits"][visit]["TREATMENTS"];
-
-                        for (var j = 0; j < encounter_data.length; j++) {
-
-                            var concepts = Object.keys(encounter_data[j]);
-
-                            for (var k = 0; k < concepts.length; k++) {
-
-
-                                var current_drug_position = intial_drug_postion + 20 * j + 1;
-
-                                var days = "";
-
-                                var start_date = new Date(encounter_data[j][concepts[k]].start_date);
-
-                                var end_date = new Date(encounter_data[j][concepts[k]].auto_expire_date);
-
-
-                                if (end_date) {
-
-                                    days = parseInt(((end_date - start_date) / (1000 * 60 * 60 * 24)).toFixed(0));
-
-                                    if (days == 1) {
-
-                                        days = days + " day";
-
-                                    }
-                                    else {
-
-                                        days = days + " days";
-                                    }
-                                    if (k < concepts.length - 2) {
-
-                                        days = days + ",";
-
-                                    }
-
-                                }
-
-                                treaments = treaments + "A25," + current_drug_position + ",0,2,1,1,N,\"" +
-                                        encounter_data[j][concepts[k]].quantity + " tab(s). " +
-                                        encounter_data[j][concepts[k]].instructions + " " + days
-                                        + "\"\n"
-
-                            }
-                        }
-
-
+                    if (k < concepts.length - 2) {
+                      days = days + ",";
                     }
+                  }
 
-                    var name = data.names[0]["First Name"] + " " + data.names[0]["Family Name"] + "(" + data.gender + ")";
+                  treaments =
+                    treaments +
+                    "A25," +
+                    current_drug_position +
+                    ',0,2,1,1,N,"' +
+                    encounter_data[j][concepts[k]].quantity +
+                    " tab(s). " +
+                    encounter_data[j][concepts[k]].instructions +
+                    " " +
+                    days +
+                    '"\n';
+                }
+              }
+            }
 
+            var name =
+              data.names[0]["First Name"] +
+              " " +
+              data.names[0]["Family Name"] +
+              "(" +
+              data.gender +
+              ")";
 
-                    var arr = Object.keys(dashboard.weightsArray).sort();
+            var arr = Object.keys(dashboard.weightsArray).sort();
 
-                    var latestWeight = (arr.length > 0 ? dashboard.weightsArray[arr[arr.length - 1]] : "?");
+            var latestWeight =
+              arr.length > 0
+                ? dashboard.weightsArray[arr[arr.length - 1]]
+                : "?";
 
-                    var bmi = "?";
+            var bmi = "?";
 
-                    dashboard.queryExistingObsArray("Height (cm)", function (data) {
+            dashboard.queryExistingObsArray("Height (cm)", function(data) {
+              var heightArray = data;
 
-                        var heightArray = data;
+              var keys = Object.keys(heightArray).sort();
 
-                        var keys = Object.keys(heightArray).sort();
+              var height =
+                keys.length > 0 ? heightArray[keys[keys.length - 1]] : 0;
 
-                        var height = (keys.length > 0 ? heightArray[keys[keys.length - 1]] : 0);
+              dashboard.queryExistingObsArray("Weight (kg)", function(data) {
+                var weightArray = data;
 
-                        dashboard.queryExistingObsArray("Weight (kg)", function (data) {
+                var keys = Object.keys(weightArray).sort();
 
-                            var weightArray = data;
+                var weight =
+                  keys.length > 0 ? weightArray[keys[keys.length - 1]] : 0;
 
-                            var keys = Object.keys(weightArray).sort();
+                bmi =
+                  weight > 0 && height > 0
+                    ? (weight / ((height / 100) * (height / 100))).toFixed(1)
+                    : "?";
+              });
+            });
 
-                            var weight = (keys.length > 0 ? weightArray[keys[keys.length - 1]] : 0);
+            var bp = "?/?";
 
-                            bmi = (weight > 0 && height > 0 ? (weight / ((height / 100) * (height / 100))).toFixed(1) : "?");
+            dashboard.queryExistingObsArray("Systolic blood pressure", function(
+              data
+            ) {
+              var systolic = data;
 
+              dashboard.queryExistingObsArray(
+                "Diastolic blood pressure",
+                function(data) {
+                  var diastolic = data;
 
-                        })
+                  var today = new Date().format("YYYY-mm-dd");
 
-                    });
+                  bp =
+                    (systolic[today] ? systolic[today] : "?") +
+                    "/" +
+                    (diastolic[today] ? diastolic[today] : "?");
+                }
+              );
+            });
 
-                    var bp = "?/?";
+            var life_style = "";
 
-                    dashboard.queryExistingObsArray("Systolic blood pressure", function (data) {
+            var text =
+              "\nN\n" +
+              "q801\n" +
+              "Q329,026\n" +
+              "ZT\n" +
+              'A25,10,0,3,1,1,N,"' +
+              name +
+              '"\n' +
+              'A25,35,0,2,1,1,N,"   ' +
+              latestWeight +
+              "kg  BMI:" +
+              bmi +
+              "  BP :" +
+              bp +
+              '"\n' +
+              'A25,55,0,3,1,1,N,"Drug(s) Prescribed"\n' +
+              "LO25,80,800,5\n" +
+              treaments +
+              "LO25,210,800,5\n" +
+              'A25,220,0,1,1,1,N,"Life Style Given: ' +
+              life_style +
+              '"\n' +
+              'A597,220,0,1,1,1,N,"Recorded by:' +
+              dashboard.getCookie("username") +
+              '"\n' +
+              'A597,240,0,1,1,1,N,"Printed: ' +
+              new Date().format() +
+              '"\n' +
+              "P1";
 
-                        var systolic = data;
+            dashboard.saveAs(text, callback);
+          }
+        );
+      }
 
-                        dashboard.queryExistingObsArray("Diastolic blood pressure", function (data) {
-
-                            var diastolic = data;
-
-                            var today = (new Date()).format("YYYY-mm-dd");
-
-                            bp = (systolic[today] ? systolic[today] : "?") + "/" + (diastolic[today] ? diastolic[today] : "?");
-
-
-                        })
-
-                    });
-
-                    var life_style = "";
-
-
-                    var text = "\nN\n" +
-                            "q801\n" +
-                            "Q329,026\n" +
-                            "ZT\n" +
-                            "A25,10,0,3,1,1,N,\"" + name + "\"\n" +
-                            "A25,35,0,2,1,1,N,\"   " + latestWeight + "kg  BMI:" + bmi + "  BP :" + bp + "\"\n" +
-                            "A25,55,0,3,1,1,N,\"Drug(s) Prescribed\"\n" +
-                            "LO25,80,800,5\n" + treaments +
-                            "LO25,210,800,5\n" +
-                            "A25,220,0,1,1,1,N,\"Life Style Given: " + life_style + "\"\n" +
-                            "A597,220,0,1,1,1,N,\"Recorded by:" + dashboard.getCookie("username") + "\"\n" +
-                            "A597,240,0,1,1,1,N,\"Printed: " + new Date().format() + "\"\n" +
-                            "P1";
-
-                    dashboard.saveAs(text, callback);
-
-                });
-
-
-    }
-
-    var tmrInterval = setInterval(function () {
+      var tmrInterval = setInterval(function() {
         console.log(dashboard.workflow.length);
 
-        if (!(dashboard.workflow.includes("Treatments"))) {
+        if (!dashboard.workflow.includes("Treatments")) {
+          //clearInterval(tmrInterval);
 
-            //clearInterval(tmrInterval);
+          var btn = dashboard.__$("btnContinue");
 
-            var btn = dashboard.__$("btnContinue");
+          btn.innerHTML = "Print prescription label";
 
-            btn.innerHTML = "Print prescription label";
+          btn.removeAttribute("onmousedown");
 
-            btn.removeAttribute("onmousedown");
+          btn.removeAttribute("onclick");
 
-            btn.removeAttribute("onclick");
-
-            btn.onmousedown = function () {
-
-                printSummary(null, function () {
-
-                    dashboard.workflow.push("printed");
-
-                });
-            }
-
+          btn.onmousedown = function() {
+            printSummary(null, function() {
+              dashboard.workflow.push("printed");
+            });
+          };
         }
+      }, 200);
 
-    }, 200);
+      var currentProgram = dashboard.getCookie("currentProgram");
 
-
-    var currentProgram = dashboard.getCookie("currentProgram");
-
-    var programInterval = setInterval(function () {
-
+      var programInterval = setInterval(function() {
         if (dashboard.getCookie("currentProgram") != currentProgram) {
+          currentProgram = dashboard.getCookie("currentProgram");
 
-            currentProgram = dashboard.getCookie("currentProgram");
+          var btnContinue = dashboard.__$("btnContinue");
 
-            var btnContinue = dashboard.__$("btnContinue");
+          if (!btnContinue) return;
 
-            if(!btnContinue)
-                    return;
+          btnContinue.innerHTML = "Continue";
 
-            btnContinue.innerHTML = "Continue";
+          btnContinue.onmousedown = function() {
+            if (this.className.match(/gray/)) return;
 
-            btnContinue.onmousedown = function () {
+            if (dashboard.workflow.length > 0) {
+              dashboard.autoContinue = true;
 
-                if (this.className.match(/gray/))
-                    return;
-
-                if (dashboard.workflow.length > 0) {
-
-                    dashboard.autoContinue = true;
-
-                    dashboard.$(dashboard.workflow[0]).click();
-
-                }
-
+              dashboard.$(dashboard.workflow[0]).click();
             }
-
+          };
         }
+      }, 50);
 
-    }, 50);
-
-    var changeTreatmentInterval = setInterval(function () {
-
+      var changeTreatmentInterval = setInterval(function() {
         var programs = {
-            "Diabetes": "DIABETES PROGRAM",
-            "HTN": "HYPERTENSION PROGRAM",
-            "Asthma": "ASTHMA PROGRAM",
-            "Epilepsy": "EPILEPSY PROGRAM"
-        }
+          Diabetes: "DIABETES PROGRAM",
+          HTN: "HYPERTENSION PROGRAM",
+          Asthma: "ASTHMA PROGRAM",
+          Epilepsy: "EPILEPSY PROGRAM"
+        };
 
-        if (!dashboard.treatmentChanged)
-            dashboard.treatmentChanged = {}
+        if (!dashboard.treatmentChanged) dashboard.treatmentChanged = {};
 
         var date = new Date();
 
         var program = dashboard.getCookie("currentProgram");
 
-        if (!dashboard.treatmentChanged[program] && dashboard.queryActiveObs(programs[program], date.format("YYYY-mm-dd"), "UPDATE OUTCOME", "Outcome") && dashboard.queryActiveObs(programs[program], date.format("YYYY-mm-dd"), "UPDATE OUTCOME", "Outcome") == "Treatment changed") {
+        if (
+          !dashboard.treatmentChanged[program] &&
+          dashboard.queryActiveObs(
+            programs[program],
+            date.format("YYYY-mm-dd"),
+            "UPDATE OUTCOME",
+            "Outcome"
+          ) &&
+          dashboard.queryActiveObs(
+            programs[program],
+            date.format("YYYY-mm-dd"),
+            "UPDATE OUTCOME",
+            "Outcome"
+          ) == "Treatment changed"
+        ) {
+          dashboard.treatmentChanged[program] = true;
 
-            dashboard.treatmentChanged[program] = true;
+          switch (program) {
+            case "Diabetes":
+              dashboard.navPanel("/spec/dm/treatment.spec");
 
-            switch (program) {
-                case "Diabetes":
+              break;
+            case "HTN":
+              dashboard.navPanel("/spec/htn/treatment.spec");
 
-                    dashboard.navPanel('/spec/dm/treatment.spec');
+              break;
 
-                    break;
-                case "HTN":
+            case "Asthma":
+              dashboard.navPanel("/spec/asthma/treatment.spec");
 
-                    dashboard.navPanel('/spec/htn/treatment.spec');
+              break;
 
-                    break;
+            case "Epilepsy":
+              dashboard.navPanel("/spec/epilepsy/treatment.spec");
 
-                case "Asthma":
-
-                    dashboard.navPanel('/spec/asthma/treatment.spec');
-
-                    break;
-
-                case "Epilepsy":
-
-                    dashboard.navPanel('/spec/epilepsy/treatment.spec');
-
-                    break;
-            }
-
+              break;
+          }
         }
+      }, 200);
 
-    }, 200)
+      /*Handling complication Magically appearing in workfol*/
 
-    /*Handling complication Magically appearing in workfol*/
+      var tmrWorkflow = setInterval(function() {
+        if (
+          dashboard.complicationWorkFlow &&
+          dashboard.complicationWorkFlow.length == 0
+        ) {
+          clearInterval(tmrWorkflow);
 
-    var tmrWorkflow = setInterval(function () {
+          window.parent.dashboard.autoContinue = true;
 
-        if (dashboard.complicationWorkFlow && dashboard.complicationWorkFlow.length == 0) {
+          var index = window.parent.dashboard.workflow.indexOf("Complications");
 
-            clearInterval(tmrWorkflow);
-
-            window.parent.dashboard.autoContinue = true;
-
-            var index = window.parent.dashboard.workflow.indexOf("Complications");
-
-            if (index >= 0)
-                window.parent.dashboard.workflow.splice(index, 1);
-
+          if (index >= 0) window.parent.dashboard.workflow.splice(index, 1);
         }
-
-    }, 100);
-
-
-</script>
-
-</body>
+      }, 100);
+    </script>
+  </body>
 </html>

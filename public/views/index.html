@@ -1,90 +1,71 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
+  <head lang="en">
+    <meta charset="UTF-8" />
     <title></title>
     <script src="/modules/usermanagement.js"></script>
     <script src="/modules/landing.js"></script>
     <script src="/modules/patient_registration.js"></script>
     <script src="/modules/stockmanagement.js"></script>
-</head>
-<body oncontextmenu="return false;">
-
-
-<script>
-
-    function loadInfo() {
-
+  </head>
+  <body oncontextmenu="return false;">
+    <script>
+      function loadInfo() {
         clearInterval(tmrInterval);
 
         var done1 = false;
         var done2 = false;
 
         if (user.$("user")) {
+          user.$("user").innerHTML = user.getCookie("username");
 
-            user.$("user").innerHTML = user.getCookie("username");
-
-            done1 = true;
-
+          done1 = true;
         }
 
         if (user.$("location")) {
+          user.$("location").innerHTML = user.getCookie("location");
 
-            user.$("location").innerHTML = user.getCookie("location");
-
-            done2 = true;
-
+          done2 = true;
         }
 
         if (!done1 || !done2) {
-
-            tmrInterval = setInterval(function () {
-
-                loadInfo();
-
-            }, 10);
-
+          tmrInterval = setInterval(function() {
+            loadInfo();
+          }, 10);
         }
-    }
+      }
 
-    function submitData(data) {
-
+      function submitData(data) {
         // landing.submitData(data);
+      }
 
-    }
+      user.init("/config/user.settings.json");
 
-    user.init("/config/user.settings.json");
+      landing.init("/config/landing.settings.json");
 
-    landing.init("/config/landing.settings.json");
+      patient.init(
+        "/config/patient.settings.json",
+        user.getCookie("username"),
+        "/config/patient.modules.json"
+      );
 
-    patient.init("/config/patient.settings.json", user.getCookie("username"), "/config/patient.modules.json");
+      stock.init("/config/stock.settings.json", user.getCookie("username"));
 
-    stock.init("/config/stock.settings.json", user.getCookie("username"));
-
-    var tmrInterval = setInterval(function () {
-
+      var tmrInterval = setInterval(function() {
         loadInfo();
+      }, 10);
 
-    }, 10);
-
-    var tmr_interval = setInterval(function () {
-
+      var tmr_interval = setInterval(function() {
         if (landing.getCookie("currentProgram") != "") {
+          clearInterval(tmr_interval);
 
-            clearInterval(tmr_interval);
-
-            if (document.getElementsByClassName("gray old").length > 0)
-                document.getElementsByClassName("gray old")[0].className = "green";
-
+          if (document.getElementsByClassName("gray old").length > 0)
+            document.getElementsByClassName("gray old")[0].className = "green";
         } else {
-
-            if (document.getElementsByClassName("green").length > 0)
-                document.getElementsByClassName("green")[0].className = "gray old";
-
+          if (document.getElementsByClassName("green").length > 0)
+            document.getElementsByClassName("green")[0].className = "gray old";
         }
-
-    }, 100);
-    
-</script>
-</body>
+      }, 100);
+    </script>
+  </body>
 </html>
